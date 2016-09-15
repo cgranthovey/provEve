@@ -8,6 +8,8 @@ target 'ProvoEvents' do
   # Pods for ProvoEvents
 	
 pod 'Firebase'
+pod 'Firebase/Auth'
+
 
 
   target 'ProvoEventsTests' do
