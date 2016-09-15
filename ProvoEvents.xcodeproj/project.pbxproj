@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6DD68AE38D22E1C90D4E95C2 /* Pods_ProvoEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CEEDFE570AF207240677E /* Pods_ProvoEvents.framework */; };
 		A1B117AD1D8A2AA40036A24E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */; };
 		A1B117AF1D8A2AA40036A24E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B117AE1D8A2AA40036A24E /* ViewController.swift */; };
 		A1B117B21D8A2AA40036A24E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B117B01D8A2AA40036A24E /* Main.storyboard */; };
 		A1B117B41D8A2AA40036A24E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B117B31D8A2AA40036A24E /* Assets.xcassets */; };
 		A1B117B71D8A2AA50036A24E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B117B51D8A2AA50036A24E /* LaunchScreen.storyboard */; };
 		A1B117C21D8A2AA50036A24E /* ProvoEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B117C11D8A2AA50036A24E /* ProvoEventsTests.swift */; };
+		A1B117CD1D8A2B090036A24E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1B117CC1D8A2B090036A24E /* GoogleService-Info.plist */; };
+		F00DC745C3144A27B523A670 /* Pods_ProvoEventsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D888B180E351CC3B9136BA51 /* Pods_ProvoEventsTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +29,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15261CE4335352C84F8AB820 /* Pods-ProvoEventsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEventsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		213CEEDFE570AF207240677E /* Pods_ProvoEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProvoEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		27DFAFEF7A7F645CC0C7372B /* Pods-ProvoEventsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEventsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests.release.xcconfig"; sourceTree = "<group>"; };
+		80F2A0096ED62EADEC04EF20 /* Pods-ProvoEvents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEvents.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents.debug.xcconfig"; sourceTree = "<group>"; };
 		A1B117A91D8A2AA40036A24E /* ProvoEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProvoEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1B117AE1D8A2AA40036A24E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +43,9 @@
 		A1B117BD1D8A2AA50036A24E /* ProvoEventsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProvoEventsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B117C11D8A2AA50036A24E /* ProvoEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvoEventsTests.swift; sourceTree = "<group>"; };
 		A1B117C31D8A2AA50036A24E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1B117CC1D8A2B090036A24E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C3AC09ECD68FACB7EF481B7B /* Pods-ProvoEvents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEvents.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents.release.xcconfig"; sourceTree = "<group>"; };
+		D888B180E351CC3B9136BA51 /* Pods_ProvoEventsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProvoEventsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DD68AE38D22E1C90D4E95C2 /* Pods_ProvoEvents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,18 +61,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F00DC745C3144A27B523A670 /* Pods_ProvoEventsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FE1F2C50122F5AC4B75A325 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				213CEEDFE570AF207240677E /* Pods_ProvoEvents.framework */,
+				D888B180E351CC3B9136BA51 /* Pods_ProvoEventsTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A1B117A01D8A2AA40036A24E = {
 			isa = PBXGroup;
 			children = (
 				A1B117AB1D8A2AA40036A24E /* ProvoEvents */,
 				A1B117C01D8A2AA50036A24E /* ProvoEventsTests */,
 				A1B117AA1D8A2AA40036A24E /* Products */,
+				F119E2AC70AE1F08B6FBF1D5 /* Pods */,
+				0FE1F2C50122F5AC4B75A325 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,6 +106,7 @@
 				A1B117B31D8A2AA40036A24E /* Assets.xcassets */,
 				A1B117B51D8A2AA50036A24E /* LaunchScreen.storyboard */,
 				A1B117B81D8A2AA50036A24E /* Info.plist */,
+				A1B117CC1D8A2B090036A24E /* GoogleService-Info.plist */,
 			);
 			path = ProvoEvents;
 			sourceTree = "<group>";
@@ -96,6 +120,17 @@
 			path = ProvoEventsTests;
 			sourceTree = "<group>";
 		};
+		F119E2AC70AE1F08B6FBF1D5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				80F2A0096ED62EADEC04EF20 /* Pods-ProvoEvents.debug.xcconfig */,
+				C3AC09ECD68FACB7EF481B7B /* Pods-ProvoEvents.release.xcconfig */,
+				15261CE4335352C84F8AB820 /* Pods-ProvoEventsTests.debug.xcconfig */,
+				27DFAFEF7A7F645CC0C7372B /* Pods-ProvoEventsTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,9 +138,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A1B117C61D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "ProvoEvents" */;
 			buildPhases = (
+				9834DDD0F3E6227005DC5153 /* [CP] Check Pods Manifest.lock */,
 				A1B117A51D8A2AA40036A24E /* Sources */,
 				A1B117A61D8A2AA40036A24E /* Frameworks */,
 				A1B117A71D8A2AA40036A24E /* Resources */,
+				11449BCF72E8808BFDAF7A22 /* [CP] Embed Pods Frameworks */,
+				FE95D18DC54E38703B3B2FED /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -120,9 +158,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A1B117C91D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "ProvoEventsTests" */;
 			buildPhases = (
+				7C00F45C525BD2C3C524D4C9 /* [CP] Check Pods Manifest.lock */,
 				A1B117B91D8A2AA50036A24E /* Sources */,
 				A1B117BA1D8A2AA50036A24E /* Frameworks */,
 				A1B117BB1D8A2AA50036A24E /* Resources */,
+				1A8C5E169A7CDB3F88A99A4C /* [CP] Embed Pods Frameworks */,
+				F497EA16C73BD3114E50A9E2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -178,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1B117B71D8A2AA50036A24E /* LaunchScreen.storyboard in Resources */,
+				A1B117CD1D8A2B090036A24E /* GoogleService-Info.plist in Resources */,
 				A1B117B41D8A2AA40036A24E /* Assets.xcassets in Resources */,
 				A1B117B21D8A2AA40036A24E /* Main.storyboard in Resources */,
 			);
@@ -191,6 +233,99 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		11449BCF72E8808BFDAF7A22 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1A8C5E169A7CDB3F88A99A4C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7C00F45C525BD2C3C524D4C9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9834DDD0F3E6227005DC5153 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F497EA16C73BD3114E50A9E2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE95D18DC54E38703B3B2FED /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A1B117A51D8A2AA40036A24E /* Sources */ = {
@@ -327,6 +462,7 @@
 		};
 		A1B117C71D8A2AA50036A24E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80F2A0096ED62EADEC04EF20 /* Pods-ProvoEvents.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ProvoEvents/Info.plist;
@@ -338,6 +474,7 @@
 		};
 		A1B117C81D8A2AA50036A24E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3AC09ECD68FACB7EF481B7B /* Pods-ProvoEvents.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ProvoEvents/Info.plist;
@@ -349,6 +486,7 @@
 		};
 		A1B117CA1D8A2AA50036A24E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 15261CE4335352C84F8AB820 /* Pods-ProvoEventsTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = ProvoEventsTests/Info.plist;
@@ -361,6 +499,7 @@
 		};
 		A1B117CB1D8A2AA50036A24E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27DFAFEF7A7F645CC0C7372B /* Pods-ProvoEventsTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = ProvoEventsTests/Info.plist;
@@ -390,6 +529,7 @@
 				A1B117C81D8A2AA50036A24E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A1B117C91D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "ProvoEventsTests" */ = {
 			isa = XCConfigurationList;
@@ -398,6 +538,7 @@
 				A1B117CB1D8A2AA50036A24E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
