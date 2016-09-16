@@ -3,24 +3,133 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--LoginVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ProvoEvents" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LoginVC" customModule="ProvoEvents" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mountainBlur" translatesAutoresizingMaskIntoConstraints="NO" id="ijc-K5-DYk">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <view alpha="0.34999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bd5-bk-hQF">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X2S-KI-prJ" customClass="LoginTextField" customModule="ProvoEvents" customModuleProvider="target">
+                                <rect key="frame" x="31" y="170" width="258" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" secureTextEntry="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="0.24870671452702703" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
+                                        <color key="value" red="0.8862745098" green="0.23529411759999999" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="opacity">
+                                        <real key="value" value="0.10000000000000001"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wdH-Ff-bpb" customClass="LoginTextField" customModule="ProvoEvents" customModuleProvider="target">
+                                <rect key="frame" x="31" y="220" width="258" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="0.24841638513513514" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
+                                        <color key="value" red="0.8862745098" green="0.23529411759999999" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="opacity">
+                                        <real key="value" value="3.2000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QvP-mX-nWS" customClass="LoginButton" customModule="ProvoEvents" customModuleProvider="target">
+                                <rect key="frame" x="31" y="270" width="258" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ofu-2T-F9Z"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.8862745098" green="0.23529411759999999" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="loginBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XUY-Ky-KtT"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Bd5-bk-hQF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="0pK-xU-BaZ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ijc-K5-DYk" secondAttribute="bottom" id="3LP-yK-CN1"/>
+                            <constraint firstItem="X2S-KI-prJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="150" id="8fg-DH-DeC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wdH-Ff-bpb" secondAttribute="trailing" constant="15" id="CSt-sB-uht"/>
+                            <constraint firstItem="X2S-KI-prJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="EYh-5i-LwF"/>
+                            <constraint firstAttribute="trailing" secondItem="Bd5-bk-hQF" secondAttribute="trailing" id="M1l-wx-9ta"/>
+                            <constraint firstItem="Bd5-bk-hQF" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Q3P-h3-Cmt"/>
+                            <constraint firstItem="ijc-K5-DYk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Rix-Ml-YQV"/>
+                            <constraint firstItem="QvP-mX-nWS" firstAttribute="top" secondItem="wdH-Ff-bpb" secondAttribute="bottom" constant="20" id="Xfk-h7-xg2"/>
+                            <constraint firstItem="ijc-K5-DYk" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="XuN-aF-lU8"/>
+                            <constraint firstAttribute="trailing" secondItem="ijc-K5-DYk" secondAttribute="trailing" id="ZCL-1O-6OH"/>
+                            <constraint firstItem="QvP-mX-nWS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="efG-7Y-ZAy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QvP-mX-nWS" secondAttribute="trailing" constant="15" id="hQM-vP-IDg"/>
+                            <constraint firstItem="wdH-Ff-bpb" firstAttribute="top" secondItem="X2S-KI-prJ" secondAttribute="bottom" constant="20" id="nkR-aK-9ro"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bd5-bk-hQF" secondAttribute="bottom" id="oRM-Cz-I61"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="X2S-KI-prJ" secondAttribute="trailing" constant="15" id="suW-Xx-Oer"/>
+                            <constraint firstItem="wdH-Ff-bpb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="uYO-dW-ZFM"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="emailField" destination="X2S-KI-prJ" id="jog-ft-aXj"/>
+                        <outlet property="passwordField" destination="wdH-Ff-bpb" id="WWg-sN-JSa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="323" y="250"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="mountainBlur" width="520" height="790"/>
+    </resources>
 </document>

@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		6DD68AE38D22E1C90D4E95C2 /* Pods_ProvoEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CEEDFE570AF207240677E /* Pods_ProvoEvents.framework */; };
+		A1239C971D8B3DD800272F67 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1239C961D8B3DD800272F67 /* LoginTextField.swift */; };
+		A1239C991D8B427000272F67 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1239C981D8B427000272F67 /* LoginButton.swift */; };
 		A1B117AD1D8A2AA40036A24E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */; };
-		A1B117AF1D8A2AA40036A24E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B117AE1D8A2AA40036A24E /* ViewController.swift */; };
+		A1B117AF1D8A2AA40036A24E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B117AE1D8A2AA40036A24E /* LoginVC.swift */; };
 		A1B117B21D8A2AA40036A24E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B117B01D8A2AA40036A24E /* Main.storyboard */; };
 		A1B117B41D8A2AA40036A24E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B117B31D8A2AA40036A24E /* Assets.xcassets */; };
 		A1B117B71D8A2AA50036A24E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B117B51D8A2AA50036A24E /* LaunchScreen.storyboard */; };
@@ -33,9 +35,11 @@
 		213CEEDFE570AF207240677E /* Pods_ProvoEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProvoEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DFAFEF7A7F645CC0C7372B /* Pods-ProvoEventsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEventsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests.release.xcconfig"; sourceTree = "<group>"; };
 		80F2A0096ED62EADEC04EF20 /* Pods-ProvoEvents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEvents.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents.debug.xcconfig"; sourceTree = "<group>"; };
+		A1239C961D8B3DD800272F67 /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
+		A1239C981D8B427000272F67 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		A1B117A91D8A2AA40036A24E /* ProvoEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProvoEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A1B117AE1D8A2AA40036A24E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A1B117AE1D8A2AA40036A24E /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		A1B117B11D8A2AA40036A24E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A1B117B31D8A2AA40036A24E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1B117B61D8A2AA50036A24E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -77,6 +81,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A1239C931D8B3D9100272F67 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A1239C941D8B3D9E00272F67 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		A1239C951D8B3DAB00272F67 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A1239C961D8B3DD800272F67 /* LoginTextField.swift */,
+				A1239C981D8B427000272F67 /* LoginButton.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		A1B117A01D8A2AA40036A24E = {
 			isa = PBXGroup;
 			children = (
@@ -100,8 +127,11 @@
 		A1B117AB1D8A2AA40036A24E /* ProvoEvents */ = {
 			isa = PBXGroup;
 			children = (
+				A1239C931D8B3D9100272F67 /* Model */,
+				A1239C951D8B3DAB00272F67 /* View */,
+				A1239C941D8B3D9E00272F67 /* Controller */,
 				A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */,
-				A1B117AE1D8A2AA40036A24E /* ViewController.swift */,
+				A1B117AE1D8A2AA40036A24E /* LoginVC.swift */,
 				A1B117B01D8A2AA40036A24E /* Main.storyboard */,
 				A1B117B31D8A2AA40036A24E /* Assets.xcassets */,
 				A1B117B51D8A2AA50036A24E /* LaunchScreen.storyboard */,
@@ -332,7 +362,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1B117AF1D8A2AA40036A24E /* ViewController.swift in Sources */,
+				A1239C971D8B3DD800272F67 /* LoginTextField.swift in Sources */,
+				A1239C991D8B427000272F67 /* LoginButton.swift in Sources */,
+				A1B117AF1D8A2AA40036A24E /* LoginVC.swift in Sources */,
 				A1B117AD1D8A2AA40036A24E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
