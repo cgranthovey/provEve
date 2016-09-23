@@ -17,6 +17,9 @@ class EventDetailsVC: GeneralVC {
     @IBOutlet weak var eventImg: UIImageView!
     @IBOutlet weak var email: UIButton!
     
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     var event: Event!
     var img: UIImage!
     
@@ -25,9 +28,15 @@ class EventDetailsVC: GeneralVC {
 
         setUpUI()
         
+        
         eventImg.userInteractionEnabled = true
         var tap = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.toLargeImg))
         eventImg.addGestureRecognizer(tap)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        scrollView.contentSize.height = stackView.frame.height + 110
+
     }
     
     func toLargeImg(){
@@ -42,6 +51,12 @@ class EventDetailsVC: GeneralVC {
                 destVC.img = img
             }
         }
+    }
+    
+    
+    
+    @IBAction func toMailVC(){
+        
     }
     
     func setUpUI(){

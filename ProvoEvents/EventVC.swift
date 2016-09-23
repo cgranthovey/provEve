@@ -28,42 +28,67 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         
         
-//        DataService.instance.mainRef.child("Events").queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { snapshot in
-//            print("snapshot \(snapshot)")
-//            if snapshot.value == nil{
-//                print("nil snapshot")
-//            } else{
-//                if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
-//                    for snap in snapshots{
-//                        if let postDict = snap.value as? Dictionary<String, AnyObject>{
-//                            let key = snap.key
-//                            let post = Event(key: key, dict: postDict)
-//                            self.events.append(post)
-//                            self.timeStampOfLast = post.timeStampOfEvent
-//                            self.keyOfLast = post.key
-//                            print("post email \(post.email)")
-//                        }
-//                    }
-//                }
-//            }
-//            print("i'm called")
-//            self.tableView.reloadData()
-//
-//        })
-        
-        
-        
-        
-        
-        
-        
-        var x = 1
-        DataService.instance.eventRef.queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeEventType(.ChildAdded, withBlock: { snapshot in
-            print("\(x). snapShot: \(snapshot)")
-            x = x + 1
+        DataService.instance.mainRef.child("Events").queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { snapshot in
+            print("snapshot \(snapshot)")
+            if snapshot.value == nil{
+                print("nil snapshot")
+            } else{
+                if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
+                    for snap in snapshots{
+                        if let postDict = snap.value as? Dictionary<String, AnyObject>{
+                            let key = snap.key
+                            let post = Event(key: key, dict: postDict)
+                            self.events.append(post)
+                            self.timeStampOfLast = post.timeStampOfEvent
+                            self.keyOfLast = post.key
+                            print("post email \(post.email)")
+                        }
+                    }
+                }
+            }
+            print("i'm called")
+            self.tableView.reloadData()
+
         })
         
         
+        
+        
+        
+//        
+//        var x = 1
+//        DataService.instance.eventRef.queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeEventType(.ChildAdded, withBlock: { snapshot in
+//            print("\(x). snapShot: \(snapshot)")
+//            if snapshot.value == nil{
+//                print("nil snapshot")
+//            } else{
+//                if let postDict = snapshot.value as? Dictionary<String, AnyObject>{
+//                    let key = snapshot.key
+//                    let event = Event(key: key, dict: postDict)
+//                    print("myEvent: \(event.description)")
+//                    self.events.append(event)
+//                    self.timeStampOfLast = event.timeStampOfEvent
+//                    self.keyOfLast = event.key
+//                    
+//                    print("event count: \(self.events.count)")
+//                    let holdIndexPath = NSIndexPath(forRow: self.events.count, inSection: 1)
+//                   // self.tableView.reloadData()
+//                    self.tableView.beginUpdates()
+//                    self.tableView.insertRowsAtIndexPaths([holdIndexPath], withRowAnimation: .Automatic)
+//                    
+//
+//                    if let cell = self.tableView.cellForRowAtIndexPath(holdIndexPath) as? EventCell{
+//                        print("me!")
+//                        cell.configureCell(event)
+//                    }
+//                }
+//            }
+//            
+//            
+//            x = x + 1
+//        })
+//        tableView.reloadData()
+//        
         
         
         

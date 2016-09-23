@@ -31,6 +31,7 @@
 		A1D385481D908B3D00365348 /* AddEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385471D908B3C00365348 /* AddEventVC.swift */; };
 		A1D3854A1D909A1F00365348 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385491D909A1F00365348 /* TextView.swift */; };
 		A1EECA4B1D8C72FF0013406A /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EECA4A1D8C72FF0013406A /* DataService.swift */; };
+		A1FBADA11D95C70E004EF835 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FBADA01D95C70E004EF835 /* MessageUI.framework */; };
 		A1FBBD3C1D8DE86700366761 /* LoginImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FBBD3B1D8DE86700366761 /* LoginImg.swift */; };
 		A1FBBD3E1D8DE9AC00366761 /* GeneralVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */; };
 		F00DC745C3144A27B523A670 /* Pods_ProvoEventsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D888B180E351CC3B9136BA51 /* Pods_ProvoEventsTests.framework */; };
@@ -78,6 +79,7 @@
 		A1D385471D908B3C00365348 /* AddEventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventVC.swift; sourceTree = "<group>"; };
 		A1D385491D909A1F00365348 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		A1EECA4A1D8C72FF0013406A /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		A1FBADA01D95C70E004EF835 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A1FBBD3B1D8DE86700366761 /* LoginImg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginImg.swift; sourceTree = "<group>"; };
 		A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralVC.swift; sourceTree = "<group>"; };
 		C3AC09ECD68FACB7EF481B7B /* Pods-ProvoEvents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEvents.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents.release.xcconfig"; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1FBADA11D95C70E004EF835 /* MessageUI.framework in Frameworks */,
 				6DD68AE38D22E1C90D4E95C2 /* Pods_ProvoEvents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,6 +110,7 @@
 		0FE1F2C50122F5AC4B75A325 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A1FBADA01D95C70E004EF835 /* MessageUI.framework */,
 				213CEEDFE570AF207240677E /* Pods_ProvoEvents.framework */,
 				D888B180E351CC3B9136BA51 /* Pods_ProvoEventsTests.framework */,
 			);
