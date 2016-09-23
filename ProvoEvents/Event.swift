@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Post {
+class Event{
     private var _title: String!
     private var _location: String!
     private var _date: String!

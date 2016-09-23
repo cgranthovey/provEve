@@ -8,28 +8,66 @@
 
 import UIKit
 
-class EventDetailsVC: UIViewController {
+class EventDetailsVC: GeneralVC {
 
+    @IBOutlet weak var eventTitle: UILabel!
+    @IBOutlet weak var eventDescription: UILabel!
+    @IBOutlet weak var eventLoc: UILabel!
+    @IBOutlet weak var eventDate: UILabel!
+    @IBOutlet weak var eventImg: UIImageView!
+    @IBOutlet weak var email: UIButton!
+    
+    var event: Event!
+    var img: UIImage!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        setUpUI()
+        
+        eventImg.userInteractionEnabled = true
+        var tap = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.toLargeImg))
+        eventImg.addGestureRecognizer(tap)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func toLargeImg(){
+        if img != nil{
+            performSegueWithIdentifier("ImageLargeVC", sender: nil)
+        }
     }
-    */
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ImageLargeVC"{
+            if let destVC = segue.destinationViewController as? ImageLargeVC{
+                destVC.img = img
+            }
+        }
+    }
+    
+    func setUpUI(){
+        eventTitle.text = event.title
+        eventDescription.text = event.description
+        eventLoc.text = event.location
+        eventDate.text = event.date
+        
+        
+
+
+        
+        if let holdEmail = event.email{
+        }else{
+            email.hidden = true
+        }
+        
+        if let holdEventImg = event.imgURL{
+            ImgCacheLoader.sharedLoader.imageForUrl(holdEventImg) { (image, url) in
+                self.img = image
+                self.eventImg.image = self.img!
+                self.eventImg.roundCornersForAspectFit(5)
+            }
+        }else{
+            eventImg.hidden = true
+        }
+    }
 
 }

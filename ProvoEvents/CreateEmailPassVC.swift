@@ -8,28 +8,59 @@
 
 import UIKit
 
-class createEmailPassVC: UIViewController {
+class CreateEmailPassVC: GeneralVC {
 
+    @IBOutlet weak var emailField: LoginTextField!
+    @IBOutlet weak var passwordField: LoginTextField!
+    @IBOutlet weak var verifyPasswordField: LoginTextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func next(){
+        if let email = emailField.text, let password = passwordField.text, let passwordV = verifyPasswordField.text where (password.characters.count > 0 && email.characters.count > 0 && passwordV.characters.count > 0){
+            
+            guard password.characters.count >= 6 else {
+                alerts("Minimum Length", message: "Password must be at least 6 characters")
+                return
+            }
+            guard password == passwordV else{
+                alerts("Password", message: "Passwords do not match")
+                return
+            }
+            let userInfoDict = ["email": email, "password": password]
+            performSegueWithIdentifier("CreateUserInfoVC", sender: userInfoDict)
+            
+        } else {
+            alerts("Username and Password Required", message: "You must enter a username and password.")
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        print("Tiger 1")
+        if segue.identifier == "CreateUserInfoVC"{
+            print("Tiger 2")
+            if let newVC = segue.destinationViewController as? CreateUserInfoVC{
+                print("Tiger 3")
+                if let send = sender as? Dictionary<String, AnyObject>{
+                    print("Tiger 4")
+                    newVC.userInfoDict = send
+                }
+            }
+        }
     }
-    */
-
+    
+    func alerts(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func popBack(){
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
 }

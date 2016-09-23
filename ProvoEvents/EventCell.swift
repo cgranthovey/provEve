@@ -10,15 +10,20 @@ import UIKit
 
 class EventCell: UITableViewCell {
 
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var location: UILabel!
+    @IBOutlet weak var desc: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func configureCell(event: Event){
+        title.text = event.title     //so these are all guaranteed a value of at least "" but what about property that isn't guaranteed like email
+        location.text = event.location
+        desc.text = event.description
     }
+
 
 }
