@@ -6,7 +6,7 @@
 //  Copyright © 2016 Chris Hovey. All rights reserved.
 //
 
-// theNounProject - profile Julynn B., photo album Michal Kučera,  checkmark Adam Stevenson
+// theNounProject - profile Julynn B., photo album Michal Kučera,  checkmark Adam Stevenson, textmessage Gregor Črešnar, alarmClock IconfactoryTeam, calendar David Ly
 // icons 8 - back, 
 
 import Foundation

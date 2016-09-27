@@ -43,7 +43,6 @@ class DateTimeVC: UIViewController {
     }
     
     @IBAction func set(){
-        print("I'm called")
         let nsDate = timeDatePicker.date
         delegate?.getTheDateTime(nsDate)
 
@@ -51,7 +50,6 @@ class DateTimeVC: UIViewController {
     }
     
     @IBAction func cancel(){
-        print("hehe")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

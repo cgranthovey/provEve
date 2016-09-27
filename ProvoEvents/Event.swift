@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseDatabase
 
 class Event{
     private var _title: String!
@@ -19,6 +20,7 @@ class Event{
     private var _description: String!
     private var _user: String!
     private var _key: String!
+    private var _likes: Int!
     
     var title: String{
         if _title == nil{
@@ -45,6 +47,9 @@ class Event{
         return _datePosted
     }
     var email: String?{
+        if _email == nil{
+            _email = ""
+        }
         return _email
     }
     var imgURL: String?{
@@ -63,6 +68,12 @@ class Event{
     var key: String{
         return _key
     }
+    var likes: Int{
+        if _likes == nil{
+            _likes = 0
+        }
+        return _likes
+    }
     
     
     init(key: String, dict: Dictionary<String, AnyObject>){
@@ -76,6 +87,28 @@ class Event{
         _description = dict["description"] as? String
         _user = dict["user"] as? String
         _key = key
+        _likes = dict["likes"] as? Int
+    }
+    
+    func adjustLikes(addLike: Bool){
+        DataService.instance.eventRef.child(_key).child("likes").observeSingleEventOfType(.Value, withBlock: {snapshot in
+            if let doesNotExist = snapshot.value as? NSNull{
+                self._likes = 0
+                self.finalAdjust(addLike)
+            } else{
+                self._likes = snapshot.value as! Int
+                self.finalAdjust(addLike)
+            }
+        })
+    }
+    
+    func finalAdjust(addLike: Bool){
+        if addLike{
+            _likes = _likes + 1
+        } else{
+            _likes = _likes - 1
+        }
+        DataService.instance.eventRef.child(_key).child("likes").setValue(_likes)
     }
     
 }

@@ -27,6 +27,9 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
     }
     
     override func viewDidLoad() {
+        backImg.userInteractionEnabled = true
+        let tap3 = UITapGestureRecognizer(target: self, action: #selector(ImageLargeVC.holdDown(_:)))
+        
         
         super.viewDidLoad()
         scrollView.delegate = self
@@ -44,6 +47,8 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
         let oneTap = UITapGestureRecognizer(target: self, action: #selector(ImageLargeVC.handleSingleTap))
         oneTap.requireGestureRecognizerToFail(doubleTap)
         scrollView.addGestureRecognizer(oneTap)
+        
+        
         
         
         downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdDown(_:)), forControlEvents: UIControlEvents.TouchDown)
@@ -73,28 +78,34 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
     func holdReleaseOutside(sender: UIButton){
         sender.backgroundColor = UIColor.clearColor()
     }
+
     
     func showCheckmark(){
-        var checkmarkImgView = UIImageView(image: UIImage(named: "checkmark"))
-        checkmarkImgView.frame = CGRectMake(0, 0, 150, 150)
-        checkmarkImgView.contentMode = .ScaleAspectFit
-        checkmarkImgView.center = view.center
-        checkmarkImgView.center.y = checkmarkImgView.center.y + 50
-        view.addSubview(checkmarkImgView)
-        view.bringSubviewToFront(checkmarkImgView)
-        checkmarkImgView.alpha = 0
-        
-        UIView.animateWithDuration(0.3, delay: 0.1, usingSpringWithDamping: 2.0, initialSpringVelocity: 3.0, options: .CurveEaseIn, animations: { 
-            checkmarkImgView.alpha = 1
-            checkmarkImgView.center.y = checkmarkImgView.center.y - 75
-            }) { (true) in
-                UIView.animateWithDuration(0.3, delay: 0.3, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .CurveEaseIn, animations: { 
-                    checkmarkImgView.alpha = 0
-                    }, completion: { (true) in
-                        checkmarkImgView.removeFromSuperview()
-                })
-        }
+        let checkmarkImgView = UIImageView(image: UIImage(named: "checkmark"))
+        checkmarkImgView.showCheckmarkAnimatedTempImg(view)
     }
+    
+//    func showCheckmark(){
+//        var checkmarkImgView = UIImageView(image: UIImage(named: "checkmark"))
+//        checkmarkImgView.frame = CGRectMake(0, 0, 150, 150)
+//        checkmarkImgView.contentMode = .ScaleAspectFit
+//        checkmarkImgView.center = view.center
+//        checkmarkImgView.center.y = checkmarkImgView.center.y + 50
+//        view.addSubview(checkmarkImgView)
+//        view.bringSubviewToFront(checkmarkImgView)
+//        checkmarkImgView.alpha = 0
+//        
+//        UIView.animateWithDuration(0.3, delay: 0.1, usingSpringWithDamping: 2.0, initialSpringVelocity: 3.0, options: .CurveEaseIn, animations: { 
+//            checkmarkImgView.alpha = 1
+//            checkmarkImgView.center.y = checkmarkImgView.center.y - 75
+//            }) { (true) in
+//                UIView.animateWithDuration(0.3, delay: 0.3, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .CurveEaseIn, animations: { 
+//                    checkmarkImgView.alpha = 0
+//                    }, completion: { (true) in
+//                        checkmarkImgView.removeFromSuperview()
+//                })
+//        }
+//    }
     
     
     

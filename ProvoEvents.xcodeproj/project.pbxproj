@@ -31,6 +31,9 @@
 		A1D385481D908B3D00365348 /* AddEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385471D908B3C00365348 /* AddEventVC.swift */; };
 		A1D3854A1D909A1F00365348 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385491D909A1F00365348 /* TextView.swift */; };
 		A1EECA4B1D8C72FF0013406A /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EECA4A1D8C72FF0013406A /* DataService.swift */; };
+		A1F12B7F1D997A58007A9447 /* CreateEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F12B7E1D997A58007A9447 /* CreateEvent.swift */; };
+		A1F12B811D998F9A007A9447 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F12B801D998F9A007A9447 /* UIViewExtensions.swift */; };
+		A1F12B831D99B347007A9447 /* ReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F12B821D99B347007A9447 /* ReminderVC.swift */; };
 		A1FBADA11D95C70E004EF835 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FBADA01D95C70E004EF835 /* MessageUI.framework */; };
 		A1FBBD3C1D8DE86700366761 /* LoginImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FBBD3B1D8DE86700366761 /* LoginImg.swift */; };
 		A1FBBD3E1D8DE9AC00366761 /* GeneralVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */; };
@@ -79,6 +82,9 @@
 		A1D385471D908B3C00365348 /* AddEventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventVC.swift; sourceTree = "<group>"; };
 		A1D385491D909A1F00365348 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		A1EECA4A1D8C72FF0013406A /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		A1F12B7E1D997A58007A9447 /* CreateEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEvent.swift; sourceTree = "<group>"; };
+		A1F12B801D998F9A007A9447 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		A1F12B821D99B347007A9447 /* ReminderVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVC.swift; sourceTree = "<group>"; };
 		A1FBADA01D95C70E004EF835 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A1FBBD3B1D8DE86700366761 /* LoginImg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginImg.swift; sourceTree = "<group>"; };
 		A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralVC.swift; sourceTree = "<group>"; };
@@ -136,6 +142,7 @@
 				A1C466B71D91AB9E00A62A70 /* DateTimeVC.swift */,
 				A10A93CF1D92F54200D07E8E /* EventVC.swift */,
 				A181FD011D943D6800007264 /* EventDetailsVC.swift */,
+				A1F12B821D99B347007A9447 /* ReminderVC.swift */,
 				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
 			);
 			name = Controller;
@@ -159,6 +166,7 @@
 				A149F6811D8C64EF009AE58C /* AuthService.swift */,
 				A1EECA4A1D8C72FF0013406A /* DataService.swift */,
 				A181FD031D94677F00007264 /* ImgCacheLoader.swift */,
+				A1F12B7E1D997A58007A9447 /* CreateEvent.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -214,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				A1C466B51D91988800A62A70 /* UIImageViewExtension.swift */,
+				A1F12B801D998F9A007A9447 /* UIViewExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -430,8 +439,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1F12B811D998F9A007A9447 /* UIViewExtensions.swift in Sources */,
 				A1FBBD3C1D8DE86700366761 /* LoginImg.swift in Sources */,
 				A1239C971D8B3DD800272F67 /* LoginTextField.swift in Sources */,
+				A1F12B7F1D997A58007A9447 /* CreateEvent.swift in Sources */,
+				A1F12B831D99B347007A9447 /* ReminderVC.swift in Sources */,
 				A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */,
 				A1239C991D8B427000272F67 /* LoginButton.swift in Sources */,
 				A149F6821D8C64EF009AE58C /* AuthService.swift in Sources */,

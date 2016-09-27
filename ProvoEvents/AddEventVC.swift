@@ -112,6 +112,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     var currentDate: NSDate?
     var dateString: String!
     var timeStampOfEvent: Int!
+    
     func getTheDateTime(date: NSDate){
         
         timeStampOfEvent = Int(date.timeIntervalSince1970)
