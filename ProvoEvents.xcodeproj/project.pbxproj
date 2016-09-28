@@ -11,6 +11,7 @@
 		A10A93D01D92F54200D07E8E /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93CF1D92F54200D07E8E /* EventVC.swift */; };
 		A10A93D21D92F5D200D07E8E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93D11D92F5D200D07E8E /* Event.swift */; };
 		A10A93D41D93011700D07E8E /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93D31D93011700D07E8E /* EventCell.swift */; };
+		A10D44901D9AE57200966BC0 /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */; };
 		A1157C041D8C9A27000ADB0E /* CreateEmailPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1157C031D8C9A27000ADB0E /* CreateEmailPassVC.swift */; };
 		A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */; };
 		A1239C971D8B3DD800272F67 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1239C961D8B3DD800272F67 /* LoginTextField.swift */; };
@@ -58,6 +59,7 @@
 		A10A93CF1D92F54200D07E8E /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		A10A93D11D92F5D200D07E8E /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		A10A93D31D93011700D07E8E /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
+		A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
 		A1157C031D8C9A27000ADB0E /* CreateEmailPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEmailPassVC.swift; sourceTree = "<group>"; };
 		A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserInfoVC.swift; sourceTree = "<group>"; };
 		A1239C961D8B3DD800272F67 /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				A1D385471D908B3C00365348 /* AddEventVC.swift */,
 				A1C466B71D91AB9E00A62A70 /* DateTimeVC.swift */,
 				A10A93CF1D92F54200D07E8E /* EventVC.swift */,
+				A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */,
 				A181FD011D943D6800007264 /* EventDetailsVC.swift */,
 				A1F12B821D99B347007A9447 /* ReminderVC.swift */,
 				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
@@ -447,6 +450,7 @@
 				A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */,
 				A1239C991D8B427000272F67 /* LoginButton.swift in Sources */,
 				A149F6821D8C64EF009AE58C /* AuthService.swift in Sources */,
+				A10D44901D9AE57200966BC0 /* FavoritesVC.swift in Sources */,
 				A10A93D41D93011700D07E8E /* EventCell.swift in Sources */,
 				A1C466B81D91AB9E00A62A70 /* DateTimeVC.swift in Sources */,
 				A1157C041D8C9A27000ADB0E /* CreateEmailPassVC.swift in Sources */,

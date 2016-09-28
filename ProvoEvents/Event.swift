@@ -22,6 +22,7 @@ class Event{
     private var _key: String!
     private var _likes: Int!
     
+    
     var title: String{
         if _title == nil{
             _title = ""
@@ -74,7 +75,6 @@ class Event{
         }
         return _likes
     }
-    
     
     init(key: String, dict: Dictionary<String, AnyObject>){
         _title = dict["title"] as? String

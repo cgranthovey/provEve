@@ -20,21 +20,23 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var timeStampOfLast: Int?
     var keyOfLast: String?
     
+    var likesArray = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
         
-        
-        
         DataService.instance.mainRef.child("Events").queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { snapshot in
             print("snapshot \(snapshot)")
             if snapshot.value == nil{
                 print("nil snapshot")
             } else{
+                print("tiger 1")
                 if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
                     for snap in snapshots{
+                        print("tiger 2")
                         if let postDict = snap.value as? Dictionary<String, AnyObject>{
                             let key = snap.key
                             let post = Event(key: key, dict: postDict)
@@ -48,9 +50,34 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
             print("i'm called")
             self.tableView.reloadData()
+            
+        })
 
+        print("yo")
+        DataService.instance.currentUser.child("likes").observeEventType(.ChildRemoved, withBlock: { snapshot in
+            if snapshot.value == nil{
+                print("this snapshot = nil")
+            } else {
+                if let key = snapshot.key as? String{
+                    if let indexToRemvoe = self.likesArray.indexOf(key){
+                        self.likesArray.removeAtIndex(indexToRemvoe)
+                    }
+                }
+            }
         })
         
+        DataService.instance.currentUser.child("likes").observeEventType(.ChildAdded, withBlock: { snapshot in
+            print("tiger 3")
+            if snapshot.value == nil{
+                print("this snapshot = nil")
+            } else{
+                print("tiger 4")
+                if let key = snapshot.key as? String{
+                    self.likesArray.append(key)
+                }
+            }
+            
+        })
         
         
         
@@ -114,11 +141,23 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //        refreshControl.endRefreshing()
 //    }
     
+    
+    override func viewDidAppear(animated: Bool) {
+        print("moonray \(likesArray.count) \(likesArray)")
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let post = events[indexPath.row]
         if let cell = tableView.dequeueReusableCellWithIdentifier("EventCell") as? EventCell{
             // add cell.request?.cancel() to cancel the request so we don't load date when we don't want to
-            cell.configureCell(post)
+            var isPostLiked = false
+            for like in likesArray{
+                if like == post.key{
+                    isPostLiked = true
+                }
+            }
+            
+            cell.configureCell(post, eventLiked: isPostLiked)
             return cell
         } else {
             return UITableViewCell()
@@ -200,6 +239,10 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
 
+    @IBAction func heartTapped(sender: AnyObject){
+        performSegueWithIdentifier("FavoritesVC", sender: nil)
+    }
+    
 
 }
 
