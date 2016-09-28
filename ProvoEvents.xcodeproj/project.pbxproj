@@ -12,6 +12,8 @@
 		A10A93D21D92F5D200D07E8E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93D11D92F5D200D07E8E /* Event.swift */; };
 		A10A93D41D93011700D07E8E /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93D31D93011700D07E8E /* EventCell.swift */; };
 		A10D44901D9AE57200966BC0 /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */; };
+		A10D44921D9B799900966BC0 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D44911D9B799900966BC0 /* MapVC.swift */; };
+		A10D44941D9C0E1E00966BC0 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D44931D9C0E1E00966BC0 /* LocationSearchTable.swift */; };
 		A1157C041D8C9A27000ADB0E /* CreateEmailPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1157C031D8C9A27000ADB0E /* CreateEmailPassVC.swift */; };
 		A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */; };
 		A1239C971D8B3DD800272F67 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1239C961D8B3DD800272F67 /* LoginTextField.swift */; };
@@ -60,6 +62,8 @@
 		A10A93D11D92F5D200D07E8E /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		A10A93D31D93011700D07E8E /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
+		A10D44911D9B799900966BC0 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		A10D44931D9C0E1E00966BC0 /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
 		A1157C031D8C9A27000ADB0E /* CreateEmailPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEmailPassVC.swift; sourceTree = "<group>"; };
 		A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserInfoVC.swift; sourceTree = "<group>"; };
 		A1239C961D8B3DD800272F67 /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
@@ -141,12 +145,14 @@
 				A1B117AE1D8A2AA40036A24E /* LoginVC.swift */,
 				A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */,
 				A1D385471D908B3C00365348 /* AddEventVC.swift */,
+				A10D44911D9B799900966BC0 /* MapVC.swift */,
+				A10D44931D9C0E1E00966BC0 /* LocationSearchTable.swift */,
 				A1C466B71D91AB9E00A62A70 /* DateTimeVC.swift */,
 				A10A93CF1D92F54200D07E8E /* EventVC.swift */,
 				A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */,
-				A181FD011D943D6800007264 /* EventDetailsVC.swift */,
 				A1F12B821D99B347007A9447 /* ReminderVC.swift */,
 				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
+				A181FD011D943D6800007264 /* EventDetailsVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -455,8 +461,10 @@
 				A1C466B81D91AB9E00A62A70 /* DateTimeVC.swift in Sources */,
 				A1157C041D8C9A27000ADB0E /* CreateEmailPassVC.swift in Sources */,
 				A1D385481D908B3D00365348 /* AddEventVC.swift in Sources */,
+				A10D44941D9C0E1E00966BC0 /* LocationSearchTable.swift in Sources */,
 				A1EECA4B1D8C72FF0013406A /* DataService.swift in Sources */,
 				A181FD041D94677F00007264 /* ImgCacheLoader.swift in Sources */,
+				A10D44921D9B799900966BC0 /* MapVC.swift in Sources */,
 				A181FD021D943D6800007264 /* EventDetailsVC.swift in Sources */,
 				A181FD081D946D4100007264 /* ImageLargeVC.swift in Sources */,
 				A1FBBD3E1D8DE9AC00366761 /* GeneralVC.swift in Sources */,

@@ -8,8 +8,13 @@
 
 import UIKit
 import FirebaseAuth
+import MapKit
 
-class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, GetDateTime {
+protocol HandleGetEventLoc {
+    func getEventLoc(address:String?, name: String?, longitude: Double?, latitude: Double?, placemark: MKPlacemark?)
+}
+
+class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, GetDateTime, HandleGetEventLoc {
 
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -31,7 +36,44 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         imgPickerController = UIImagePickerController()
         imgPickerController.delegate = self
         
-        scrollView.contentSize.height = 670
+        scrollView.contentSize.height = 700
+        
+        
+        //google
+        
+//        if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
+//            UIApplication.sharedApplication().openURL(NSURL(string:
+//                "comgooglemaps://?saddr=&daddr=\(25.813814),\(-80.223727)&directionsmode=driving")!)
+//            
+//        } else {
+//            NSLog("Can't use comgooglemaps://");
+//        }
+    
+        
+        //apple maps
+        
+//        let cord = CLLocationCoordinate2D(latitude: 25.813814, longitude: -80.223727)
+//        let placemark = MKPlacemark(coordinate: cord, addressDictionary: nil)
+//        let mapItem = MKMapItem(placemark: placemark)
+//        mapItem.name = "Christopher's Neighborhood"
+//        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+//        mapItem.openInMapsWithLaunchOptions(launchOptions)
+//        
+        
+    }
+    
+    var locationDict: Dictionary<String, AnyObject>! = [:]
+    var holdPlacemark: MKPlacemark!
+    var holdAddress: String!
+    
+    func getEventLoc(address: String?, name: String?, longitude: Double?, latitude: Double?, placemark: MKPlacemark?) {
+        holdAddress = address
+        holdPlacemark = placemark
+        locationDict["address"] = address
+        locationDict["name"] = name
+        locationDict["longitude"] = longitude
+        locationDict["latitude"] = latitude
+        print("the address of the event is \(address), name: \(name), longitude: \(longitude), latitude: \(latitude)")
     }
     
     @IBAction func dateButtonTapped(sender: UIButton){
@@ -39,6 +81,13 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         emailTextField.resignFirstResponder()
         locationTextField.resignFirstResponder()
         performSegueWithIdentifier("DateTimeVC", sender: nil)
+    }
+    
+    @IBAction func addPinButtonTapped(sender: UIButton){
+        
+        
+        
+        performSegueWithIdentifier("MapVC", sender: nil)
     }
     
     @IBAction func submit(sender: AnyObject){
@@ -136,6 +185,17 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                 }
             }
         }
+        if segue.identifier == "MapVC"{
+            if let destinationVC = segue.destinationViewController as? MapVC{
+                destinationVC.handleGetEventLocDelegate = self
+                if let pm = holdPlacemark, let ad = holdAddress{
+                    print("holdTo \(ad)")
+                    destinationVC.mkPlacemarkPassed = pm
+                    destinationVC.addressPassed = ad
+                }
+            }
+        }
+        
     }
     
     func setUpDelegates(){

@@ -9,6 +9,7 @@
 import UIKit
 import MessageUI
 import EventKit
+import MapKit
 
 
 class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, getReminderInfo {
@@ -27,6 +28,9 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     
     var event: Event!
     var img: UIImage!
@@ -47,12 +51,12 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         scrollView.delaysContentTouches = false
         setBottomButtons()
         
+
     }
     
     override func viewDidAppear(animated: Bool) {
         scrollView.contentSize.height = stackView.frame.height + 95
     }
-    
     
     func setUpUI(){
         eventTitle.text = event.title
@@ -60,6 +64,9 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         eventLoc.text = event.location
         eventDate.text = event.date
         eventEmail.setTitle(event.email, forState: .Normal)
+        
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.hidesWhenStopped = true
         
         if event.email == nil || event.email == ""{
             emailStack.hidden = true
@@ -70,9 +77,11 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
                 self.img = image
                 self.eventImg.image = self.img!
                 self.eventImg.roundCornersForAspectFit(5)
+                self.activityIndicator.stopAnimating()
             }
         }else{
             eventImg.hidden = true
+            self.activityIndicator.stopAnimating()
         }
     }
     
@@ -224,6 +233,8 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
     //////////////////////////////////////////////////
     //to mail vc
+    
+    
     
     @IBAction func toMailVC(){
         var mailVC = MFMailComposeViewController()
