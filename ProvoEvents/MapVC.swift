@@ -25,7 +25,12 @@ class MapVC: UIViewController {
     
     var addressPassed: String!
     var mkPlacemarkPassed: MKPlacemark!
-    var hasCenteredMapOnce = false
+    var shouldMapCenter = false
+    var hasUserLocBeenFound = false
+    
+    var searchBar = UISearchBar()
+    
+    var currentLoc = CLLocation()
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -56,9 +61,9 @@ class MapVC: UIViewController {
         locationSearchTable.handleMapSearchDelegate = self
         
         
-        let searchBar = resultSearchController!.searchBar
+        searchBar = resultSearchController!.searchBar
         searchBar.sizeToFit()
-        searchBar.placeholder = "Search for places"
+        searchBar.placeholder = "Search for places to set pin"
         
         navigationItem.titleView = resultSearchController?.searchBar
 
@@ -69,10 +74,20 @@ class MapVC: UIViewController {
             print("addressPassed \(addressPassed) placemark \(mkPlacemarkPassed.countryCode)")
             dropPinZoomIn(mkPlacemarkPassed, addressString: addressPassed)
             searchBar.text = addressPassed
-            hasCenteredMapOnce = true
+            shouldMapCenter = true
         }
         
         
+    }
+    
+    @IBAction func removePinBtn(sender: AnyObject){
+        mapView.removeAnnotations(mapView.annotations)
+        searchBar.text = ""
+    }
+    
+    @IBAction func cancelBtn(sender: AnyObject){
+        handleGetEventLocDelegate?.getEventLoc(nil, name: nil, longitude: nil, latitude: nil, placemark: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func setPin(sender: AnyObject){
@@ -80,6 +95,14 @@ class MapVC: UIViewController {
             handleGetEventLocDelegate?.getEventLoc(addressString, name: selectedPin?.name, longitude: selectedPin?.coordinate.longitude, latitude: selectedPin?.coordinate.latitude, placemark: selectedPin)
         }
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func userLocBtn(sender: AnyObject){
+        if hasUserLocBeenFound{
+            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            let region = MKCoordinateRegion(center: currentLoc.coordinate, span: span)
+            mapView.setRegion(region, animated: true)
+        }
     }
     
     func getDirections(){
@@ -140,6 +163,8 @@ extension MapVC: HandleMapSearch {
         let span = MKCoordinateSpanMake(0.05, 0.05)
         let region = MKCoordinateRegionMake(placemark.coordinate, span)
         mapView.setRegion(region, animated: true)
+        searchBar.text = addressString
+        shouldMapCenter = true
     }
 }
 
@@ -153,11 +178,13 @@ extension MapVC : CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            if !hasCenteredMapOnce{
+            hasUserLocBeenFound = true
+            currentLoc = location
+            if !shouldMapCenter{
                 let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
                 let region = MKCoordinateRegion(center: location.coordinate, span: span)
                 mapView.setRegion(region, animated: true)
-                hasCenteredMapOnce = true
+                shouldMapCenter = true
             }
         }
     }

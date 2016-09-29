@@ -24,6 +24,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     @IBOutlet weak var descriptionTextView: TextView!
     @IBOutlet weak var eventImg: UIImageView!
     @IBOutlet weak var dateButtonTappedOutlet: UIButton!
+    @IBOutlet weak var setPinBtnOutlet: UIButton!
     
     var imgPickerController: UIImagePickerController!
     
@@ -38,41 +39,24 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         
         scrollView.contentSize.height = 700
         
-        
-        //google
-        
-//        if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
-//            UIApplication.sharedApplication().openURL(NSURL(string:
-//                "comgooglemaps://?saddr=&daddr=\(25.813814),\(-80.223727)&directionsmode=driving")!)
-//            
-//        } else {
-//            NSLog("Can't use comgooglemaps://");
-//        }
-    
-        
-        //apple maps
-        
-//        let cord = CLLocationCoordinate2D(latitude: 25.813814, longitude: -80.223727)
-//        let placemark = MKPlacemark(coordinate: cord, addressDictionary: nil)
-//        let mapItem = MKMapItem(placemark: placemark)
-//        mapItem.name = "Christopher's Neighborhood"
-//        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-//        mapItem.openInMapsWithLaunchOptions(launchOptions)
-//        
-        
     }
     
-    var locationDict: Dictionary<String, AnyObject>! = [:]
+    var pinLocDict: Dictionary<String, AnyObject>! = [:]
     var holdPlacemark: MKPlacemark!
     var holdAddress: String!
     
     func getEventLoc(address: String?, name: String?, longitude: Double?, latitude: Double?, placemark: MKPlacemark?) {
+        
+        if name != nil && address != nil{
+            setPinBtnOutlet.setTitle("\(name!) - \(address!)", forState: .Normal)
+        }
+    
         holdAddress = address
         holdPlacemark = placemark
-        locationDict["address"] = address
-        locationDict["name"] = name
-        locationDict["longitude"] = longitude
-        locationDict["latitude"] = latitude
+        pinLocDict["address"] = address
+        pinLocDict["name"] = name
+        pinLocDict["longitude"] = longitude
+        pinLocDict["latitude"] = latitude
         print("the address of the event is \(address), name: \(name), longitude: \(longitude), latitude: \(latitude)")
     }
     
@@ -116,7 +100,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         
         var timePosted: Int = Int(NSDate().timeIntervalSince1970)
         
-        let toFirebaseDict: Dictionary<String, AnyObject> = ["title": titleTextField.text!, "location": locationTextField.text!, "date": dateString!, "timeStampOfEvent": timeStampOfEvent,"email": emailTextField.text!, "timePosted": timePosted, "description": descriptionTextView.text!, "user": (FIRAuth.auth()?.currentUser?.uid)!]
+        let toFirebaseDict: Dictionary<String, AnyObject> = ["title": titleTextField.text!, "location": locationTextField.text!, "pinInfo": pinLocDict,"date": dateString!, "timeStampOfEvent": timeStampOfEvent,"email": emailTextField.text!, "timePosted": timePosted, "description": descriptionTextView.text!, "user": (FIRAuth.auth()?.currentUser?.uid)!]
         
         let key = DataService.instance.eventRef.childByAutoId().key
 

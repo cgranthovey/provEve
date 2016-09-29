@@ -10,14 +10,14 @@ import UIKit
 import MessageUI
 import EventKit
 import MapKit
-
+import FirebaseDatabase
 
 class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, getReminderInfo {
 
     
     @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var eventDescription: UILabel!
-    @IBOutlet weak var eventLoc: UILabel!
+    @IBOutlet weak var eventLocBtn: UIButton!
     @IBOutlet weak var eventDate: UILabel!
     @IBOutlet weak var eventImg: UIImageView!
     @IBOutlet weak var emailStack: UIStackView!
@@ -31,6 +31,8 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var heartBtn: UIButton!
+    
     
     var event: Event!
     var img: UIImage!
@@ -42,6 +44,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         
         bottomTextMessageBtn.imageView?.contentMode = .ScaleAspectFit
         bottomCalenarBtn.imageView?.contentMode = .ScaleAspectFit
+        heartBtn.imageView?.contentMode = .ScaleAspectFit
         
         eventImg.userInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.toLargeImg))
@@ -61,7 +64,19 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     func setUpUI(){
         eventTitle.text = event.title
         eventDescription.text = event.description
-        eventLoc.text = event.location
+        eventLocBtn.setTitle(event.location, forState: .Normal)
+        
+        if event.isLiked{
+            heartBtn.imageView?.image = UIImage(named: "heartFilled")
+        } else{
+            heartBtn.imageView?.image = UIImage(named: "heartEmpty")
+        }
+        
+        if event.pinInfoLongitude == nil || event.pinInfoLatitude == nil{
+            eventLocBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            eventLocBtn.userInteractionEnabled = false
+        }
+        
         eventDate.text = event.date
         eventEmail.setTitle(event.email, forState: .Normal)
         
@@ -121,18 +136,20 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     }
 
     //////////////////////////////////////////////////
-    //Notification access
+    //Like Heart access
     
-//    func notificationsReleaseInside(sender: UIButton){
-//        let status = EKEventStore.authorizationStatusForEntityType(EKEntityType.Reminder)
-//        switch status {
-//        case EKAuthorizationStatus.Denied:
-//            <#code#>
-//        default:
-//            <#code#>
-//        }
-//    }
-//    
+
+    @IBAction func heartBtnPressed(sender: AnyObject){
+        if event.isLiked{
+            heartBtn.imageView?.image = UIImage(named: "heartEmpty")
+            event.adjustLikes(false)
+        } else{
+            heartBtn.imageView?.image = UIImage(named: "heartFilled")
+            event.adjustLikes(true)
+        }
+    }
+    
+    
     
     //////////////////////////////////////////////////
     //Calendar access
@@ -234,7 +251,34 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //////////////////////////////////////////////////
     //to mail vc
     
-    
+    @IBAction func eventLocBtnPressed(sender: AnyObject){
+        
+        
+        //google
+        
+        if let eventLong = event.pinInfoLongitude, let eventLat = event.pinInfoLatitude{
+            
+            
+            print("cats \(event.pinInfoLatitude!) \(event.pinInfoLongitude!)")
+            
+            if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
+                UIApplication.sharedApplication().openURL(NSURL(string:
+                    "comgooglemaps://?saddr=&daddr=\(eventLat),\(eventLong)&directionsmode=driving")!)
+
+            } else {
+                print("Can't use comgooglemaps://, trying apple maps")
+                let cord = CLLocationCoordinate2D(latitude: eventLat, longitude: eventLong)
+                let placemark = MKPlacemark(coordinate: cord, addressDictionary: nil)
+                let mapItem = MKMapItem(placemark: placemark)
+                mapItem.name = "Christopher's Neighborhood"
+                let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+                mapItem.openInMapsWithLaunchOptions(launchOptions)
+            }
+        }
+
+        
+        
+    }
     
     @IBAction func toMailVC(){
         var mailVC = MFMailComposeViewController()

@@ -17,8 +17,6 @@ class EventCell: UITableViewCell {
     
     @IBOutlet weak var heartImg: UIImageView!
     var event: Event!
-    var likeRef: FIRDatabaseReference!
-    var likeTimeStampRef: FIRDatabaseReference!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,11 +26,10 @@ class EventCell: UITableViewCell {
         heartImg.addGestureRecognizer(tap)
     }
 
-    func configureCell(event: Event, eventLiked: Bool){
+    func configureCell(event: Event){
         self.event = event
-        self.likeRef = DataService.instance.currentUser.child("likes").child(event.key)
-        self.likeTimeStampRef = likeRef.child("timeStampOfEvent")
         
+        var eventLiked = event.isLiked
         title.text = event.title     //so these are all guaranteed a value of at least "" but what about property that isn't guaranteed like email
         location.text = event.location
         desc.text = event.description
@@ -40,41 +37,30 @@ class EventCell: UITableViewCell {
         if self.tag == 2{       //tag 2 is the favorites vc
             self.heartImg.image = UIImage(named: "heartFilled")
         } else {
-            
             if eventLiked{
                 self.heartImg.image = UIImage(named: "heartFilled")
             } else{
                 self.heartImg.image = UIImage(named: "heartEmpty")
             }
-            
-//            likeRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
-//                print("reload")
-//                if let doesNotExist = snapshot.value as? NSNull{
-//                    self.heartImg.image = UIImage(named: "heartEmpty")
-//                } else {
-//                    self.heartImg.image = UIImage(named: "heartFilled")
-//                }
-//            })
         }
     }
 
     
     func heartTapped(){
-        
-        
-        likeRef.observeSingleEventOfType(.Value, withBlock: {snapshot in
-            if let doesNotExist = snapshot.value as? NSNull{
-                self.heartImg.image = UIImage(named: "heartFilled")
-                self.event.adjustLikes(true)
-                self.likeTimeStampRef.setValue(self.event.timeStampOfEvent)
-                
-            } else{
-                self.heartImg.image = UIImage(named: "heartEmpty")
-                self.event.adjustLikes(false)
-                self.likeRef.removeValue()
-                NSNotificationCenter.defaultCenter().postNotificationName("heartDeleted", object: nil, userInfo: ["key": self.event.key])
-            }
-        })
+        if !event.isLiked{
+            print("eventCell heart tapped called - liking")
+            self.heartImg.image = UIImage(named: "heartFilled")
+            NSNotificationCenter.defaultCenter().postNotificationName("heartAdded", object: self.event.key, userInfo: nil)
+            self.event.adjustLikes(true)
+        } else{
+            print("eventCell heart tapped called - disliking")
+
+            self.heartImg.image = UIImage(named: "heartEmpty")
+            NSNotificationCenter.defaultCenter().postNotificationName("heartDeleted", object: self.event.key, userInfo: nil)
+            self.event.adjustLikes(false)
+        }
+
+
     }
     
     

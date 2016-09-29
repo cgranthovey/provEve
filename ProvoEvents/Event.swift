@@ -22,6 +22,11 @@ class Event{
     private var _key: String!
     private var _likes: Int!
     
+    private var _pinInfoAddress: String?
+    private var _pinInfoName: String?
+    private var _pinInfoLatitude: Double?
+    private var _pinInfoLongitude: Double?
+    private var _isLiked: Bool!
     
     var title: String{
         if _title == nil{
@@ -76,7 +81,25 @@ class Event{
         return _likes
     }
     
-    init(key: String, dict: Dictionary<String, AnyObject>){
+    var pinInfoAddress: String?{
+        return _pinInfoAddress
+    }
+    var pinInfoName: String?{
+        return _pinInfoName
+    }
+    var pinInfoLatitude: Double?{
+        return _pinInfoLatitude
+    }
+    var pinInfoLongitude: Double?{
+        return _pinInfoLongitude
+    }
+    var isLiked: Bool{
+        return _isLiked
+    }
+    
+    
+    
+    init(key: String, dict: Dictionary<String, AnyObject>, isLiked: Bool){
         _title = dict["title"] as? String
         _location = dict["location"] as? String
         _date = dict["date"] as? String
@@ -88,14 +111,49 @@ class Event{
         _user = dict["user"] as? String
         _key = key
         _likes = dict["likes"] as? Int
+        _isLiked = isLiked
+        if let pinInfoDict = dict["pinInfo"] as? Dictionary<String, AnyObject>{
+            _pinInfoAddress = pinInfoDict["address"] as? String
+            _pinInfoName = pinInfoDict["name"] as? String
+            _pinInfoLatitude = pinInfoDict["latitude"] as? Double
+            _pinInfoLongitude = pinInfoDict["longitude"] as? Double
+        }
+    }
+    
+    func adjustHeartImgIsLiked(isLiked: Bool){
+        if isLiked{
+            _isLiked = true
+        } else{
+            _isLiked = false
+        }
     }
     
     func adjustLikes(addLike: Bool){
+        
+        adjustHeartImgIsLiked(addLike)
+        
+        var likeRef: FIRDatabaseReference!
+        var likeTimeStampRef: FIRDatabaseReference!
+        
+        likeRef = DataService.instance.currentUser.child("likes").child(key)
+        likeTimeStampRef = likeRef.child("timeStampOfEvent")
+        
+        if addLike{
+            print("should be liked")
+            likeTimeStampRef.setValue(self.timeStampOfEvent)
+        } else{
+            print("should be removed")
+            likeRef.removeValue()
+        }
+        
+        _isLiked = addLike  // will set the event to whether it is liked or not
         DataService.instance.eventRef.child(_key).child("likes").observeSingleEventOfType(.Value, withBlock: {snapshot in
             if let doesNotExist = snapshot.value as? NSNull{
                 self._likes = 0
+
                 self.finalAdjust(addLike)
             } else{
+
                 self._likes = snapshot.value as! Int
                 self.finalAdjust(addLike)
             }

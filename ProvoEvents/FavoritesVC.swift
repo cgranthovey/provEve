@@ -43,7 +43,7 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
                                     print("tiger: \(snapshot)")
                                     
                                     if let postDict = snapshot.value as? Dictionary<String, AnyObject>{
-                                        let event = Event(key: snapshot.key, dict: postDict)
+                                        let event = Event(key: snapshot.key, dict: postDict, isLiked: true)
                                         print("moose: \(event.description)")
                                         self.events.append(event)
                                         print("tableViewCalled")
@@ -78,13 +78,14 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func removeCell(notif: NSNotification){
-        var dict = notif.userInfo as? Dictionary<String, String>
-        var key = dict!["key"]
-        var indexValue = self.likesArray.indexOf(key!)
-        self.likesArray.removeAtIndex(indexValue!)
-        self.events.removeAtIndex(indexValue!)
-        let indexPath = NSIndexPath(forRow: indexValue!, inSection: 0)
-        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        if let key = notif.object as? String{
+            if let indexValue = self.likesArray.indexOf(key){
+                self.likesArray.removeAtIndex(indexValue)
+                self.events.removeAtIndex(indexValue)
+                let indexPath = NSIndexPath(forRow: indexValue, inSection: 0)
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -93,7 +94,7 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
         if let cell = tableView.dequeueReusableCellWithIdentifier("favCell") as? EventCell{
 
             
-            cell.configureCell(event, eventLiked: true)
+            cell.configureCell(event)
             return cell
         } else{
             print("catilac")

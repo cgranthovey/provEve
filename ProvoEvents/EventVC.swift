@@ -28,99 +28,60 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
-        DataService.instance.mainRef.child("Events").queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { snapshot in
-            print("snapshot \(snapshot)")
+        DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.value == nil{
-                print("nil snapshot")
+                print("this snapshot = nil for likes .value")
             } else{
-                print("tiger 1")
+                self.likesArray = []
                 if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
                     for snap in snapshots{
-                        print("tiger 2")
-                        if let postDict = snap.value as? Dictionary<String, AnyObject>{
-                            let key = snap.key
-                            let post = Event(key: key, dict: postDict)
-                            self.events.append(post)
-                            self.timeStampOfLast = post.timeStampOfEvent
-                            self.keyOfLast = post.key
-                            print("post email \(post.email)")
+                        let key = snap.key
+                        self.likesArray.append(key)
+                    }
+                }
+                print("munch")
+                print("Likes Array \(self.likesArray.count) \(self.likesArray)")
+                
+            }
+
+            DataService.instance.mainRef.child("Events").queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { snapshot in
+                print("snapshot \(snapshot)")
+                if snapshot.value == nil{
+                    print("nil snapshot")
+                } else{
+                    print("tiger 1")
+                    if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
+                        for snap in snapshots{
+                            print("tiger 2")
+                            if let postDict = snap.value as? Dictionary<String, AnyObject>{
+                                let key = snap.key
+                                
+                                var isEventLiked = false
+                                for like in self.likesArray{
+                                    if like == key{
+                                        isEventLiked = true
+                                    }
+                                }
+                                
+                                
+                                let post = Event(key: key, dict: postDict, isLiked: isEventLiked)
+                                self.events.append(post)
+                                self.timeStampOfLast = post.timeStampOfEvent
+                                self.keyOfLast = post.key
+                                print("post email \(post.email)")
+                            }
                         }
                     }
                 }
-            }
-            print("i'm called")
-            self.tableView.reloadData()
-            
-        })
-
-        print("yo")
-        DataService.instance.currentUser.child("likes").observeEventType(.ChildRemoved, withBlock: { snapshot in
-            if snapshot.value == nil{
-                print("this snapshot = nil")
-            } else {
-                if let key = snapshot.key as? String{
-                    if let indexToRemvoe = self.likesArray.indexOf(key){
-                        self.likesArray.removeAtIndex(indexToRemvoe)
-                    }
-                }
-            }
-        })
-        
-        DataService.instance.currentUser.child("likes").observeEventType(.ChildAdded, withBlock: { snapshot in
-            print("tiger 3")
-            if snapshot.value == nil{
-                print("this snapshot = nil")
-            } else{
-                print("tiger 4")
-                if let key = snapshot.key as? String{
-                    self.likesArray.append(key)
-                }
-            }
+                print("i'm called")
+                self.tableView.reloadData()
+                
+            })
             
         })
         
-        
-        
-        
-//        
-//        var x = 1
-//        DataService.instance.eventRef.queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeEventType(.ChildAdded, withBlock: { snapshot in
-//            print("\(x). snapShot: \(snapshot)")
-//            if snapshot.value == nil{
-//                print("nil snapshot")
-//            } else{
-//                if let postDict = snapshot.value as? Dictionary<String, AnyObject>{
-//                    let key = snapshot.key
-//                    let event = Event(key: key, dict: postDict)
-//                    print("myEvent: \(event.description)")
-//                    self.events.append(event)
-//                    self.timeStampOfLast = event.timeStampOfEvent
-//                    self.keyOfLast = event.key
-//                    
-//                    print("event count: \(self.events.count)")
-//                    let holdIndexPath = NSIndexPath(forRow: self.events.count, inSection: 1)
-//                   // self.tableView.reloadData()
-//                    self.tableView.beginUpdates()
-//                    self.tableView.insertRowsAtIndexPaths([holdIndexPath], withRowAnimation: .Automatic)
-//                    
-//
-//                    if let cell = self.tableView.cellForRowAtIndexPath(holdIndexPath) as? EventCell{
-//                        print("me!")
-//                        cell.configureCell(event)
-//                    }
-//                }
-//            }
-//            
-//            
-//            x = x + 1
-//        })
-//        tableView.reloadData()
-//        
-        
-        
-        
-        
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
         
         
         
@@ -142,22 +103,47 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //    }
     
     
+    
+    func addLike(notif: NSNotification){
+        if let holdKey = notif.object as? String{
+            likesArray.append(holdKey)
+        }
+    }
+    
+    func subtractLike(notif: NSNotification){
+        print("help")
+        if let holdKey = notif.object as? String{
+            print("rhinosaurus")
+            if let index = likesArray.indexOf(holdKey){
+                likesArray.removeAtIndex(index)
+                print("elephant")
+                for event in events{
+                    print("iguana")
+                    if event.key == holdKey{
+                        print("hyenna")
+                        event.adjustHeartImgIsLiked(false)
+                    }
+                }
+                
+                tableView.reloadData()      //seems wasteful
+            }
+        }
+    }
+    
+    
+    
+    
     override func viewDidAppear(animated: Bool) {
         print("moonray \(likesArray.count) \(likesArray)")
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let post = events[indexPath.row]
+        print("\(events.count) and post \(post)")
         if let cell = tableView.dequeueReusableCellWithIdentifier("EventCell") as? EventCell{
             // add cell.request?.cancel() to cancel the request so we don't load date when we don't want to
-            var isPostLiked = false
-            for like in likesArray{
-                if like == post.key{
-                    isPostLiked = true
-                }
-            }
             
-            cell.configureCell(post, eventLiked: isPostLiked)
+            cell.configureCell(post)
             return cell
         } else {
             return UITableViewCell()
@@ -204,7 +190,15 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 if let postDict = snap.value as? Dictionary<String, AnyObject>{
                                     print("tiger4")
                                     let key = snap.key
-                                    let post = Event(key: key, dict: postDict)
+                                    
+                                    var isEventLiked: Bool = false
+                                    for likes in self.likesArray{
+                                        if likes == key{
+                                            isEventLiked = true
+                                        }
+                                    }
+                                    
+                                    let post = Event(key: key, dict: postDict, isLiked: isEventLiked)
                                     self.timeStampOfLast = post.self.timeStampOfEvent
                                     self.keyOfLast = post.key
                                     self.events.append(post)

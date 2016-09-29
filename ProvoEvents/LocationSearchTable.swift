@@ -14,7 +14,7 @@ class LocationSearchTable: UITableViewController{
     var mapView: MKMapView? = nil
 
     var handleMapSearchDelegate: HandleMapSearch? = nil
-    var holdAddress: String = ""
+
     func parseAddress(selectedItem:MKPlacemark) -> String {
         // put a space between "4" and "Melrose Place"
         let firstSpace = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil) ? " " : ""
@@ -36,7 +36,6 @@ class LocationSearchTable: UITableViewController{
             // state
             selectedItem.administrativeArea ?? ""
         )
-        holdAddress = addressLine
         return addressLine
     }
     
@@ -79,7 +78,8 @@ extension LocationSearchTable{
 extension LocationSearchTable {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedItem = matchingItems[indexPath.row].placemark
-        handleMapSearchDelegate?.dropPinZoomIn(selectedItem, addressString: holdAddress)
+        var eventAddress = parseAddress(selectedItem)
+        handleMapSearchDelegate?.dropPinZoomIn(selectedItem, addressString: eventAddress)
         dismissViewControllerAnimated(true, completion: nil)
     }
 }
