@@ -45,6 +45,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         bottomTextMessageBtn.imageView?.contentMode = .ScaleAspectFit
         bottomCalenarBtn.imageView?.contentMode = .ScaleAspectFit
         heartBtn.imageView?.contentMode = .ScaleAspectFit
+        heartBtn.adjustsImageWhenHighlighted = false
         
         eventImg.userInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.toLargeImg))
@@ -54,11 +55,27 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         scrollView.delaysContentTouches = false
         setBottomButtons()
         
+        if event.isLiked{
+            print("it is liked")
+            heartBtn.setImage(UIImage(named: "heartFilled"), forState: .Normal)
+            
+        } else{
+            print("it is not liked")
+            heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
+        }
 
     }
     
+    override func viewWillAppear(animated: Bool) {
+
+    }
+    
+    
     override func viewDidAppear(animated: Bool) {
+        
+
         scrollView.contentSize.height = stackView.frame.height + 95
+
     }
     
     func setUpUI(){
@@ -66,11 +83,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         eventDescription.text = event.description
         eventLocBtn.setTitle(event.location, forState: .Normal)
         
-        if event.isLiked{
-            heartBtn.imageView?.image = UIImage(named: "heartFilled")
-        } else{
-            heartBtn.imageView?.image = UIImage(named: "heartEmpty")
-        }
+
         
         if event.pinInfoLongitude == nil || event.pinInfoLatitude == nil{
             eventLocBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
@@ -140,15 +153,37 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
 
     @IBAction func heartBtnPressed(sender: AnyObject){
-        if event.isLiked{
-            heartBtn.imageView?.image = UIImage(named: "heartEmpty")
-            event.adjustLikes(false)
+        print("mm")
+        
+        if heartBtn.imageView?.image == UIImage(named: "heartEmpty"){
+            print("snickers")
+            heartBtn.setImage(UIImage(named: "heartFilled"), forState: .Normal)
         } else{
-            heartBtn.imageView?.image = UIImage(named: "heartFilled")
-            event.adjustLikes(true)
+            print("kit kat")
+            heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
         }
     }
     
+    override func viewWillDisappear(animated: Bool) {       // if the user is get here from FavoritesVC and on this page dislikes and then likes again, it will prevent anything from happening until they actually leave screen.  This isn't a good answer b/c a user could remove heart img, click on email (causes view to disappear), come back and decide to like.  
+        
+        //images.sort { $0.fileID < $1.fileID }
+
+        //Swift how to sort array of custom objects by property value
+        //consider sending back event to previous screen and ordering it into events array of liked events, order with time stamp
+        
+        print("I'm disappearing!")
+        
+        if heartBtn.imageView?.image == UIImage(named: "heartEmpty"){
+            print("Yum")
+            event.adjustLikes(false)
+            NSNotificationCenter.defaultCenter().postNotificationName("heartDeleted", object: self.event.key, userInfo: nil)
+        } else{
+            print("tum")
+            event.adjustLikes(true)
+            NSNotificationCenter.defaultCenter().postNotificationName("heartAdded", object: self.event.key, userInfo: nil)
+        }
+        
+    }
     
     
     //////////////////////////////////////////////////

@@ -45,6 +45,13 @@ class EventCell: UITableViewCell {
         }
     }
 
+    func setHeartImgFill(){
+        self.heartImg.image = UIImage(named: "heartFilled")
+    }
+    
+    func setHeartImgEmpty(){
+        self.heartImg.image = UIImage(named: "heartEmpty")
+    }
     
     func heartTapped(){
         if !event.isLiked{

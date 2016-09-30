@@ -1391,7 +1391,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KcN-vu-eTw">
                                 <rect key="frame" x="126" y="20" width="69" height="24"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1536,14 +1536,14 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="xrD-64-f7a">
                                                 <rect key="frame" x="0.0" y="272" width="280" height="50"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJK-es-Ypq">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jfa-Hy-Udz">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="50"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="50" id="UVF-J3-ttS"/>
+                                                            <constraint firstAttribute="height" constant="50" id="l0B-SM-6AN"/>
                                                         </constraints>
                                                         <state key="normal" image="heartEmpty"/>
                                                         <connections>
-                                                            <action selector="heartBtnPressed:" destination="2le-7M-Dh0" eventType="touchUpInside" id="9li-c6-MXl"/>
+                                                            <action selector="heartBtnPressed:" destination="2le-7M-Dh0" eventType="touchUpInside" id="8VY-v4-aqc"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T7x-49-AR8">
@@ -1631,7 +1631,7 @@
                         <outlet property="eventImg" destination="6Oe-3A-uf4" id="uYO-Ht-lIN"/>
                         <outlet property="eventLocBtn" destination="tP1-Dm-G42" id="NiX-zy-aQj"/>
                         <outlet property="eventTitle" destination="Ckf-7a-Rog" id="cmk-gT-Quh"/>
-                        <outlet property="heartBtn" destination="fJK-es-Ypq" id="7qW-GC-GRU"/>
+                        <outlet property="heartBtn" destination="Jfa-Hy-Udz" id="UIs-7w-nei"/>
                         <outlet property="scrollView" destination="o1a-JU-UUe" id="rsx-Yv-KLL"/>
                         <outlet property="stackView" destination="C2u-0E-TB9" id="0E6-aK-U6G"/>
                         <segue destination="Q2I-ck-ddt" kind="show" identifier="ImageLargeVC" id="aHf-3s-x1G"/>
@@ -1954,14 +1954,14 @@
                                             <rect key="frame" x="15" y="5" width="32" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vr1-zY-jWe">
                                             <rect key="frame" x="15" y="25" width="41" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>

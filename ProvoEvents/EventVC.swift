@@ -102,33 +102,45 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //        refreshControl.endRefreshing()
 //    }
     
-    
-    
     func addLike(notif: NSNotification){
         if let holdKey = notif.object as? String{
             likesArray.append(holdKey)
+            for event in events{
+                if event.key == holdKey{
+                    if let i = events.indexOf({$0.key == event.key}){
+                        let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
+                            cell.setHeartImgFill()
+                        }
+                    }
+                    
+                }
+            }
         }
     }
     
     func subtractLike(notif: NSNotification){
-        print("help")
         if let holdKey = notif.object as? String{
-            print("rhinosaurus")
             if let index = likesArray.indexOf(holdKey){
                 likesArray.removeAtIndex(index)
-                print("elephant")
                 for event in events{
-                    print("iguana")
                     if event.key == holdKey{
-                        print("hyenna")
                         event.adjustHeartImgIsLiked(false)
+                        if let i = events.indexOf({$0.key == event.key}){
+                            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
+                                cell.setHeartImgEmpty()
+                            }
+                        }
                     }
                 }
                 
-                tableView.reloadData()      //seems wasteful
+//                tableView.reloadData()      //seems wasteful
             }
         }
     }
+    
+    
     
     
     
