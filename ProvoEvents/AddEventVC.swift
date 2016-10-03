@@ -47,9 +47,24 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     
     func getEventLoc(address: String?, name: String?, longitude: Double?, latitude: Double?, placemark: MKPlacemark?) {
         
-        if name != nil && address != nil{
-            setPinBtnOutlet.setTitle("\(name!) - \(address!)", forState: .Normal)
+        if let address = address, let name = name{
+            print("tiger " + address)
+            print("monster " + name)
+            if address.containsString(name){
+                print("contained")
+                setPinBtnOutlet.setTitle(address, forState: .Normal)
+            } else{
+                print("not contained")
+                setPinBtnOutlet.setTitle("\(name) - \(address)", forState: .Normal)
+            }
+        } else if let coordLat = latitude, let coordLong = longitude{
+            setPinBtnOutlet.setTitle("\(coordLat), \(coordLong)", forState: .Normal)
+        } else{
+            setPinBtnOutlet.setTitle("SET PIN", forState: .Normal)
         }
+
+        
+        
     
         holdAddress = address
         holdPlacemark = placemark
@@ -57,6 +72,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         pinLocDict["name"] = name
         pinLocDict["longitude"] = longitude
         pinLocDict["latitude"] = latitude
+        
+        
+        
         print("the address of the event is \(address), name: \(name), longitude: \(longitude), latitude: \(latitude)")
     }
     
@@ -103,7 +121,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         let toFirebaseDict: Dictionary<String, AnyObject> = ["title": titleTextField.text!, "location": locationTextField.text!, "pinInfo": pinLocDict,"date": dateString!, "timeStampOfEvent": timeStampOfEvent,"email": emailTextField.text!, "timePosted": timePosted, "description": descriptionTextView.text!, "user": (FIRAuth.auth()?.currentUser?.uid)!]
         
         let key = DataService.instance.eventRef.childByAutoId().key
-
+        holdKeyInCaseError = key
+        
         let childValues: Dictionary<String, AnyObject> = ["/Events/\(key)": toFirebaseDict, "/User/\((FIRAuth.auth()?.currentUser?.uid)!)/posts/\(key)": "True"]
         DataService.instance.mainRef.updateChildValues(childValues) { (err, FIRDatabaseRef) in
             if err != nil{
@@ -116,7 +135,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                         let storageRef = DataService.instance.imgStorageRefData.child(imgName)
                         storageRef.putData(data, metadata: nil, completion: { (meta, err) in
                             if err != nil{
-                                self.alert("Error", message: "Error uploading image")
+                                self.alertProblemUploadingImg()
                             } else{
                                 print("I'm on top")
                                 let downloadURL = meta?.downloadURL()?.absoluteString
@@ -125,21 +144,34 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                         })
                     }
                 }
-                
                 print("i'm on bottom")
-                
             }
-            
         }
-        
-        //DataService.instance.eventRef.childByAutoId().setValue(toFirebaseDict)
-        
     }
+    
+    var holdKeyInCaseError: String!
     
     func alert(title: String, message: String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+    
+    func alertProblemUploadingImg(){
+        let alert = UIAlertController(title: "Error Uploading Image", message: "Would you like to post now without the image, or try later with the image", preferredStyle: .Alert)
+        let actionNow = UIAlertAction(title: "Now", style: .Default) {(action: UIAlertAction) in
+            print("info uploaded without image")
+        }
+        let actionLater = UIAlertAction(title: "Later", style: .Default) {(action: UIAlertAction) in
+            if let key = self.holdKeyInCaseError{
+                DataService.instance.eventRef.child(key).removeValue()      //removes firebase data at location, however other users would be able to view post for a second until user deletes it
+            }
+        }
+        alert.addAction(actionNow)
+        alert.addAction(actionLater)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     var currentDate: NSDate?

@@ -61,6 +61,8 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FavoritesVC.removeCell(_:)), name: "heartDeleted", object: nil)
 
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FavoritesVC.addCell(_:)), name: "heartAdded", object: nil)
+        
 //        DataService.instance.currentUser.child("likes").observeEventType(.ChildRemoved, withBlock: { snapshot in
 //            if snapshot.value == nil{
 //                print ("it's nil")
@@ -75,6 +77,19 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
 //                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
 //            }
 //        })
+    }
+    
+    func addCell(notif: NSNotification){
+        print("add cell called")
+        if let event = notif.object as? Event{
+            print("event count before: \(events.count)")
+            likesArray.append(event.key)
+            events.append(event)
+            print("event count after: \(events.count)")
+            events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
+            print(events)
+            tableView.reloadData()
+        }
     }
     
     func removeCell(notif: NSNotification){

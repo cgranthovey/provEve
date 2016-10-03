@@ -28,10 +28,42 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
+        loadData()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
+        
+        
+        
+        tableView.addSubview(refreshController)
+    }
+
+//    below and above is code to add a pull to refresh option
+    lazy var refreshController: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(EventVC.handleRefresh), forControlEvents: .ValueChanged)
+        
+        return refreshControl
+    }()
+    
+    func handleRefresh(refreshControl: UIRefreshControl){
+        
+        //upload new data
+        loadData()
+        
+    }
+    
+    
+    func loadData(){
+        print("time 1")
+        
+        
+        
         DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.value == nil{
                 print("this snapshot = nil for likes .value")
             } else{
+                self.events = []
                 self.likesArray = []
                 if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
                     for snap in snapshots{
@@ -43,7 +75,7 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 print("Likes Array \(self.likesArray.count) \(self.likesArray)")
                 
             }
-
+            
             DataService.instance.mainRef.child("Events").queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { snapshot in
                 print("snapshot \(snapshot)")
                 if snapshot.value == nil{
@@ -75,35 +107,18 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 print("i'm called")
                 self.tableView.reloadData()
-                
+                self.isCurrentlyLoading = false
+                if self.refreshController.refreshing{
+                    self.refreshController.endRefreshing()
+                }
             })
             
         })
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
-        
-        
-        
-//        tableView.addSubview(refreshController)
     }
-
-    //below and above is code to add a pull to refresh option
-//    lazy var refreshController: UIRefreshControl = {
-//        let refreshControl = UIRefreshControl()
-//        refreshControl.addTarget(self, action: #selector(EventVC.handleRefresh), forControlEvents: .ValueChanged)
-//        return refreshControl
-//    }()
-//    
-//    func handleRefresh(refreshControl: UIRefreshControl){
-//        //upload new data
-//        
-//        self.tableView.reloadData()
-//        refreshControl.endRefreshing()
-//    }
     
     func addLike(notif: NSNotification){
-        if let holdKey = notif.object as? String{
+        if let holdEvent = notif.object as? Event{
+            let holdKey = holdEvent.key
             likesArray.append(holdKey)
             for event in events{
                 if event.key == holdKey{
@@ -113,7 +128,6 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             cell.setHeartImgFill()
                         }
                     }
-                    
                 }
             }
         }

@@ -14,33 +14,6 @@ class LocationSearchTable: UITableViewController{
     var mapView: MKMapView? = nil
 
     var handleMapSearchDelegate: HandleMapSearch? = nil
-
-    func parseAddress(selectedItem:MKPlacemark) -> String {
-        // put a space between "4" and "Melrose Place"
-        let firstSpace = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil) ? " " : ""
-        // put a comma between street and city/state
-        let comma = (selectedItem.subThoroughfare != nil || selectedItem.thoroughfare != nil) && (selectedItem.subAdministrativeArea != nil || selectedItem.administrativeArea != nil) ? ", " : ""
-        // put a space between "Washington" and "DC"
-        let secondSpace = (selectedItem.subAdministrativeArea != nil && selectedItem.administrativeArea != nil) ? " " : ""
-        let addressLine = String(
-            format:"%@%@%@%@%@%@%@",
-            // street number
-            selectedItem.subThoroughfare ?? "",
-            firstSpace,
-            // street name
-            selectedItem.thoroughfare ?? "",
-            comma,
-            // city
-            selectedItem.locality ?? "",
-            secondSpace,
-            // state
-            selectedItem.administrativeArea ?? ""
-        )
-        return addressLine
-    }
-    
-    
-    
 }
 
 extension LocationSearchTable : UISearchResultsUpdating{
@@ -70,7 +43,7 @@ extension LocationSearchTable{
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")!
         let selectedItem = matchingItems[indexPath.row].placemark
         cell.textLabel?.text = selectedItem.name
-        cell.detailTextLabel?.text = parseAddress(selectedItem)
+        cell.detailTextLabel?.text = selectedItem.getAddressInfo()
         return cell
     }
 }
@@ -78,8 +51,8 @@ extension LocationSearchTable{
 extension LocationSearchTable {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedItem = matchingItems[indexPath.row].placemark
-        var eventAddress = parseAddress(selectedItem)
-        handleMapSearchDelegate?.dropPinZoomIn(selectedItem, addressString: eventAddress)
+        var eventAddress = selectedItem.getAddressInfo()
+        handleMapSearchDelegate?.dropPinZoomIn(selectedItem, addressString: eventAddress, fromTap: false)
         dismissViewControllerAnimated(true, completion: nil)
     }
 }

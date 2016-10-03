@@ -57,7 +57,7 @@ class EventCell: UITableViewCell {
         if !event.isLiked{
             print("eventCell heart tapped called - liking")
             self.heartImg.image = UIImage(named: "heartFilled")
-            NSNotificationCenter.defaultCenter().postNotificationName("heartAdded", object: self.event.key, userInfo: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("heartAdded", object: self.event, userInfo: nil)
             self.event.adjustLikes(true)
         } else{
             print("eventCell heart tapped called - disliking")

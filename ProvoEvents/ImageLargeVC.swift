@@ -38,7 +38,6 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
         self.scrollView.maximumZoomScale = 5.0
         
         bottomView.hidden = true
-        bottomView.alpha = 0
         
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(ImageLargeVC.handleDoubleTap))
         doubleTap.numberOfTapsRequired = 2
@@ -59,6 +58,7 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
         backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseOutside(_:)), forControlEvents: UIControlEvents.TouchUpOutside)
         backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseInside(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     }
+
     
     func holdDown(sender: UIButton){
         sender.backgroundColor = UIColor.blackColor()
@@ -112,16 +112,28 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
     
     func handleSingleTap(){
         if self.bottomView.hidden == true{
-            UIView.animateWithDuration(0.5) {
-                self.bottomView.hidden = false
-                self.bottomView.alpha = 1
-            }
+            self.bottomView.hidden = false
+            self.bottomView.center.y = self.bottomView.center.y + 52
+
+            UIView.animateWithDuration(0.2, animations: {
+                self.bottomView.center.y = self.bottomView.center.y - 52
+            })
+
         } else{
-            UIView.animateWithDuration(0.5, animations: { 
-                self.bottomView.alpha = 0
+            
+            UIView.animateWithDuration(0.2, animations: {
+                self.bottomView.center.y = self.bottomView.center.y + 52
                 }, completion: { (true) in
                     self.bottomView.hidden = true
+                    self.bottomView.center.y = self.bottomView.center.y - 52
+
             })
+            
+//            UIView.animateWithDuration(0.5, animations: { 
+//                self.bottomView.alpha = 0
+//                }, completion: { (true) in
+//                    self.bottomView.hidden = true
+//            })
         }
     }
     

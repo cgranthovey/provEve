@@ -155,36 +155,18 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     @IBAction func heartBtnPressed(sender: AnyObject){
         print("mm")
         
-        if heartBtn.imageView?.image == UIImage(named: "heartEmpty"){
-            print("snickers")
-            heartBtn.setImage(UIImage(named: "heartFilled"), forState: .Normal)
-        } else{
-            print("kit kat")
+        
+        if event.isLiked{
             heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
-        }
-    }
-    
-    override func viewWillDisappear(animated: Bool) {       // if the user is get here from FavoritesVC and on this page dislikes and then likes again, it will prevent anything from happening until they actually leave screen.  This isn't a good answer b/c a user could remove heart img, click on email (causes view to disappear), come back and decide to like.  
-        
-        //images.sort { $0.fileID < $1.fileID }
-
-        //Swift how to sort array of custom objects by property value
-        //consider sending back event to previous screen and ordering it into events array of liked events, order with time stamp
-        
-        print("I'm disappearing!")
-        
-        if heartBtn.imageView?.image == UIImage(named: "heartEmpty"){
-            print("Yum")
             event.adjustLikes(false)
             NSNotificationCenter.defaultCenter().postNotificationName("heartDeleted", object: self.event.key, userInfo: nil)
         } else{
-            print("tum")
+            heartBtn.setImage(UIImage(named: "heartFilled"), forState: .Normal)
             event.adjustLikes(true)
-            NSNotificationCenter.defaultCenter().postNotificationName("heartAdded", object: self.event.key, userInfo: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("heartAdded", object: self.event, userInfo: nil)
         }
-        
     }
-    
+
     
     //////////////////////////////////////////////////
     //Calendar access
@@ -282,10 +264,8 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         }
     }
     
-    
     //////////////////////////////////////////////////
     //to mail vc
-    
     @IBAction func eventLocBtnPressed(sender: AnyObject){
         
         
@@ -298,8 +278,10 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
             
             if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
                 UIApplication.sharedApplication().openURL(NSURL(string:
-                    "comgooglemaps://?saddr=&daddr=\(eventLat),\(eventLong)&directionsmode=driving")!)
+                    "comgooglemaps://?saddr=&daddr=\(eventLat),\(eventLong)")!)
+  //              "comgooglemaps://?saddr=&daddr=\(eventLat),\(eventLong)&directionsmode=driving")!)
 
+                
             } else {
                 print("Can't use comgooglemaps://, trying apple maps")
                 let cord = CLLocationCoordinate2D(latitude: eventLat, longitude: eventLong)
@@ -310,10 +292,17 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
                 mapItem.openInMapsWithLaunchOptions(launchOptions)
             }
         }
-
+        
         
         
     }
+    
+    
+    
+    //////////////////////////////////////////////////
+    //to mail vc
+    
+
     
     @IBAction func toMailVC(){
         var mailVC = MFMailComposeViewController()
