@@ -18,7 +18,10 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("loaded")
+        
+        print("fav vc viewDidLoad")
+
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -26,12 +29,8 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
         DataService.instance.currentUser.child("likes").queryOrderedByChild("timeStampOfEvent").observeSingleEventOfType(.Value, withBlock: {snapshot in
             if snapshot.value == nil{
             } else{
-                print("my snapshot print: \(snapshot)")
                 if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
-                    print("2nd \(snapshots)")
                     for snap in snapshots{
-                        print("key \(snap.key)")
-
                         var holdKey = snap.key
                         self.likesArray.append(holdKey)
                     }
@@ -40,13 +39,9 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
                                 if snapshot.value == nil{
                                     print("snapshot of liked posts = nil")
                                 } else{
-                                    print("tiger: \(snapshot)")
-                                    
                                     if let postDict = snapshot.value as? Dictionary<String, AnyObject>{
                                         let event = Event(key: snapshot.key, dict: postDict, isLiked: true)
-                                        print("moose: \(event.description)")
                                         self.events.append(event)
-                                        print("tableViewCalled")
                                         self.tableView.reloadData()
                                     }
 
@@ -65,46 +60,46 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
         
 //        DataService.instance.currentUser.child("likes").observeEventType(.ChildRemoved, withBlock: { snapshot in
 //            if snapshot.value == nil{
-//                print ("it's nil")
 //            } else{
 //                let keyToRemove = snapshot.key
 //                let indexToRemove = self.likesArray.indexOf(keyToRemove)
-//                print("index to Remove \(indexToRemove)")
 //                self.likesArray.removeAtIndex(indexToRemove!)
 //                self.events.removeAtIndex(indexToRemove!)
-//                print("likes Array: \(self.likesArray)")
 //                let indexPath = NSIndexPath(forRow: indexToRemove!, inSection: 0)
 //                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
 //            }
 //        })
     }
     
+    override func viewWillAppear(animated: Bool) {
+        print("fav vc viewWillAppear")
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        print("fav vc viewDidAppear")
+    }
+    
     func addCell(notif: NSNotification){
-        print("add cell called")
         if let event = notif.object as? Event{
-            print("event count before: \(events.count)")
             likesArray.append(event.key)
             events.append(event)
-            print("event count after: \(events.count)")
             events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
-            print(events)
             tableView.reloadData()
         }
     }
     
     func removeCell(notif: NSNotification){
         if let key = notif.object as? String{
-            if let indexValue = self.likesArray.indexOf(key){
+            if let indexValue = self.likesArray.indexOf(key), let favIndexValue = self.events.indexOf({$0.key == key}){
                 self.likesArray.removeAtIndex(indexValue)
-                self.events.removeAtIndex(indexValue)
-                let indexPath = NSIndexPath(forRow: indexValue, inSection: 0)
+                self.events.removeAtIndex(favIndexValue)
+                let indexPath = NSIndexPath(forRow: favIndexValue, inSection: 0)
                 self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("TV 1")
         let event = events[indexPath.row]
         if let cell = tableView.dequeueReusableCellWithIdentifier("favCell") as? EventCell{
 
@@ -112,7 +107,6 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
             cell.configureCell(event)
             return cell
         } else{
-            print("catilac")
             return UITableViewCell()
         }
     }
@@ -133,13 +127,10 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("TV 2")
-
         return events.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        print("TV 3")
         return 1
     }
 

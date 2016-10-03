@@ -153,9 +153,6 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
 
     @IBAction func heartBtnPressed(sender: AnyObject){
-        print("mm")
-        
-        
         if event.isLiked{
             heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
             event.adjustLikes(false)

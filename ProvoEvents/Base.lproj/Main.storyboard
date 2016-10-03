@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LM8-UK-JyK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UNQ-kG-rwE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -217,7 +217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1947" y="250"/>
+            <point key="canvasLocation" x="2759" y="250"/>
         </scene>
         <!--Create Email PassVC-->
         <scene sceneID="ajU-ng-CIy">
@@ -392,7 +392,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2hE-gk-3wg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2357" y="250"/>
+            <point key="canvasLocation" x="3169" y="250"/>
         </scene>
         <!--Create User InfoVC-->
         <scene sceneID="tr7-rR-mOT">
@@ -623,7 +623,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z7c-SU-JgV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2779" y="250"/>
+            <point key="canvasLocation" x="3591" y="250"/>
         </scene>
         <!--Add EventVC-->
         <scene sceneID="od6-Ge-dC4">
@@ -1133,7 +1133,7 @@
         <!--EventVC-->
         <scene sceneID="Lho-db-LZI">
             <objects>
-                <viewController id="kfV-Mj-zab" customClass="EventVC" customModule="ProvoEvents" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainTableVC" id="kfV-Mj-zab" customClass="EventVC" customModule="ProvoEvents" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LXL-Wl-cGZ"/>
                         <viewControllerLayoutGuide type="bottom" id="LD2-bE-Uxe"/>
@@ -1165,7 +1165,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="94" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="abt-kt-755">
-                                <rect key="frame" x="0.0" y="80" width="320" height="488"/>
+                                <rect key="frame" x="0.0" y="80" width="320" height="466"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" tag="1" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventCell" rowHeight="94" id="Ok5-rk-jDh" customClass="EventCell" customModule="ProvoEvents" customModuleProvider="target">
@@ -1268,7 +1268,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="LD2-bE-Uxe" firstAttribute="top" secondItem="abt-kt-755" secondAttribute="bottom" id="GiV-pe-3ud"/>
+                            <constraint firstItem="LD2-bE-Uxe" firstAttribute="top" secondItem="abt-kt-755" secondAttribute="bottom" constant="22" id="GiV-pe-3ud"/>
                             <constraint firstItem="q7P-1C-xxb" firstAttribute="top" secondItem="LXL-Wl-cGZ" secondAttribute="bottom" id="Kys-gP-LRo"/>
                             <constraint firstItem="7JZ-cp-FP6" firstAttribute="top" secondItem="Z2s-JM-vdH" secondAttribute="topMargin" constant="10" id="NLf-ye-IgY"/>
                             <constraint firstItem="7JZ-cp-FP6" firstAttribute="centerX" secondItem="Z2s-JM-vdH" secondAttribute="centerX" id="NPR-NP-Ulh"/>
@@ -1296,12 +1296,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U9b-UL-Tec" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1331" y="245"/>
+            <point key="canvasLocation" x="1717" y="245"/>
         </scene>
         <!--FavoritesVC-->
         <scene sceneID="dHV-Ti-aQa">
             <objects>
-                <viewController id="FZW-S0-9UH" customClass="FavoritesVC" customModule="ProvoEvents" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="favoritesTableVC" id="FZW-S0-9UH" customClass="FavoritesVC" customModule="ProvoEvents" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="O2D-5z-eMA"/>
                         <viewControllerLayoutGuide type="bottom" id="gcl-ep-eM7"/>
@@ -1311,7 +1311,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="94" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oEc-lE-lUg">
-                                <rect key="frame" x="0.0" y="80" width="320" height="488"/>
+                                <rect key="frame" x="0.0" y="80" width="320" height="466"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" tag="2" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="favCell" rowHeight="94" id="GYn-fn-kMF" customClass="EventCell" customModule="ProvoEvents" customModuleProvider="target">
@@ -1407,7 +1407,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="KcN-vu-eTw" firstAttribute="top" secondItem="O2D-5z-eMA" secondAttribute="bottom" id="JSP-fl-nN8"/>
-                            <constraint firstItem="gcl-ep-eM7" firstAttribute="top" secondItem="oEc-lE-lUg" secondAttribute="bottom" id="WJK-s8-HFm"/>
+                            <constraint firstItem="gcl-ep-eM7" firstAttribute="top" secondItem="oEc-lE-lUg" secondAttribute="bottom" constant="22" id="WJK-s8-HFm"/>
                             <constraint firstItem="oEc-lE-lUg" firstAttribute="leading" secondItem="vy5-Cx-ecQ" secondAttribute="leading" id="bGW-Y1-N3N"/>
                             <constraint firstItem="KcN-vu-eTw" firstAttribute="centerX" secondItem="vy5-Cx-ecQ" secondAttribute="centerX" id="cHb-MY-EgR"/>
                             <constraint firstItem="oEc-lE-lUg" firstAttribute="top" secondItem="O2D-5z-eMA" secondAttribute="bottom" constant="60" id="sx6-5a-ZMh"/>
@@ -2035,28 +2035,58 @@
             </objects>
             <point key="canvasLocation" x="2374" y="-439"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="PGL-AJ-vTu">
+        <!--Snap ScrollVC-->
+        <scene sceneID="ZKz-se-iHG">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="LM8-UK-JyK" sceneMemberID="viewController">
+                <viewController id="49k-eg-QhJ" customClass="snapScrollVC" customModule="ProvoEvents" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jq6-2b-uvv"/>
+                        <viewControllerLayoutGuide type="bottom" id="oxy-WE-Nc7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vi0-GV-Liw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xl0-a9-GOp">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oxy-WE-Nc7" firstAttribute="top" secondItem="xl0-a9-GOp" secondAttribute="bottom" id="1xu-pc-V87"/>
+                            <constraint firstAttribute="trailing" secondItem="xl0-a9-GOp" secondAttribute="trailing" id="IES-ws-quw"/>
+                            <constraint firstItem="xl0-a9-GOp" firstAttribute="top" secondItem="vi0-GV-Liw" secondAttribute="top" id="grn-yN-q3H"/>
+                            <constraint firstItem="xl0-a9-GOp" firstAttribute="leading" secondItem="vi0-GV-Liw" secondAttribute="leading" id="rU4-2m-iKx"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="dXy-Pw-aLQ"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="snapScroll" destination="xl0-a9-GOp" id="uEr-yj-HCR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jbg-Bc-Iuw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1309" y="245"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="TyX-nS-i2W">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="UNQ-kG-rwE" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="he1-EM-QhE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JyW-tK-lzs">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="idE-Cb-N7g">
-                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
                     <connections>
-                        <segue destination="kfV-Mj-zab" kind="relationship" relationship="rootViewController" id="XNz-P5-MTh"/>
+                        <segue destination="49k-eg-QhJ" kind="relationship" relationship="rootViewController" id="oyj-eF-T2N"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9cC-o2-gyz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p8Z-wK-RAl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="899" y="250"/>
+            <point key="canvasLocation" x="831" y="245"/>
         </scene>
     </scenes>
     <resources>

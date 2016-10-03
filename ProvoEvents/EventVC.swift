@@ -25,6 +25,8 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("event vc viewDidLoad")
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -55,10 +57,6 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     func loadData(){
-        print("time 1")
-        
-        
-        
         DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.value == nil{
                 print("this snapshot = nil for likes .value")
@@ -71,20 +69,13 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         self.likesArray.append(key)
                     }
                 }
-                print("munch")
-                print("Likes Array \(self.likesArray.count) \(self.likesArray)")
-                
             }
             
             DataService.instance.mainRef.child("Events").queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { snapshot in
-                print("snapshot \(snapshot)")
                 if snapshot.value == nil{
-                    print("nil snapshot")
                 } else{
-                    print("tiger 1")
                     if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
                         for snap in snapshots{
-                            print("tiger 2")
                             if let postDict = snap.value as? Dictionary<String, AnyObject>{
                                 let key = snap.key
                                 
@@ -100,12 +91,10 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 self.events.append(post)
                                 self.timeStampOfLast = post.timeStampOfEvent
                                 self.keyOfLast = post.key
-                                print("post email \(post.email)")
                             }
                         }
                     }
                 }
-                print("i'm called")
                 self.tableView.reloadData()
                 self.isCurrentlyLoading = false
                 if self.refreshController.refreshing{
@@ -157,15 +146,16 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     
-    
+    override func viewWillAppear(animated: Bool) {
+        print("event vc will will appear")
+    }
     
     override func viewDidAppear(animated: Bool) {
-        print("moonray \(likesArray.count) \(likesArray)")
+        print("event vc view did appear")
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let post = events[indexPath.row]
-        print("\(events.count) and post \(post)")
         if let cell = tableView.dequeueReusableCellWithIdentifier("EventCell") as? EventCell{
             // add cell.request?.cancel() to cancel the request so we don't load date when we don't want to
             
@@ -201,20 +191,15 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             isCurrentlyLoading = true
                 
             DataService.instance.eventRef.queryOrderedByChild("timeStampOfEvent").queryStartingAtValue(timeStampOfLast, childKey: keyOfLast).queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                print("tiger")
                 var x = 0
 
                 if snapshot.value == nil{
                     print("Snap of load more is nil")
                 } else{
-                    print("snapshot!: \(snapshot.value)")
                     if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
-                        print("tiger2 \(snapshots)")
                         for snap in snapshots{
-                            print("tiger3")
                             if x != 0 {
                                 if let postDict = snap.value as? Dictionary<String, AnyObject>{
-                                    print("tiger4")
                                     let key = snap.key
                                     
                                     var isEventLiked: Bool = false
@@ -228,7 +213,6 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                     self.timeStampOfLast = post.self.timeStampOfEvent
                                     self.keyOfLast = post.key
                                     self.events.append(post)
-                                    print("it's the email of the refresh \(post.email)")
                                 }
                             }
                             x = x + 1
@@ -262,8 +246,6 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func heartTapped(sender: AnyObject){
         performSegueWithIdentifier("FavoritesVC", sender: nil)
     }
-    
-
 }
 
 
