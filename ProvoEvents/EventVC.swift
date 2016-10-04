@@ -6,6 +6,8 @@
 //  Copyright © 2016 Chris Hovey. All rights reserved.
 //
 
+// the noun project - plus sign Icons Bazaar, settings Hysen Drogu
+
 import UIKit
 import FirebaseDatabase
 import Firebase
@@ -34,10 +36,9 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
-        
-        
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loggedInLoadData", object: nil)
         tableView.addSubview(refreshController)
+        
     }
 
 //    below and above is code to add a pull to refresh option
@@ -49,10 +50,8 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }()
     
     func handleRefresh(refreshControl: UIRefreshControl){
-        
         //upload new data
         loadData()
-        
     }
     
     
@@ -241,11 +240,13 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
+
     }
 
-    @IBAction func heartTapped(sender: AnyObject){
-        performSegueWithIdentifier("FavoritesVC", sender: nil)
-    }
+//  this was before napScrollVC was added
+//    @IBAction func heartTapped(sender: AnyObject){
+//        performSegueWithIdentifier("FavoritesVC", sender: nil)
+//    }
 }
 
 

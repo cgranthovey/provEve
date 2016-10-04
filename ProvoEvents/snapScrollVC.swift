@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class snapScrollVC: UIViewController {
 
@@ -14,6 +15,23 @@ class snapScrollVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+
+        
+        
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        if FIRAuth.auth()?.currentUser == nil{
+            print("nil")
+            performSegueWithIdentifier("LoginVC", sender: nil)
+            return
+        } else{
+            print("I'm logged in \(FIRAuth.auth()?.currentUser)")
+        }
         
         let mainTableVC = self.storyboard?.instantiateViewControllerWithIdentifier("mainTableVC")
         
@@ -33,7 +51,6 @@ class snapScrollVC: UIViewController {
         favoritesTableVC?.didMoveToParentViewController(self)
         
         self.snapScroll.contentSize = CGSizeMake(self.view.frame.width * 2, self.view.frame.height - 22)
-        
     }
 
 

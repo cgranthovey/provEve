@@ -34,12 +34,133 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         setUpTaps()
         setUpDelegates()
         
+        
         imgPickerController = UIImagePickerController()
         imgPickerController.delegate = self
         
-        scrollView.contentSize.height = 700
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardNotification(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        scrollView.contentSize.height = 730
+
         
+
     }
+    
+    func keyboardWillBeHidden(input: NSNotification){
+        scrollView.contentInset = UIEdgeInsetsZero
+    }
+    
+
+    var activeTextField: UITextField!
+    var activeTextView: UITextView!
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        print("set textField")
+        activeTextField = textField
+        return true
+    }
+    
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        activeTextField = nil
+        return false
+    }
+    
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        print("win")
+        activeTextView = textView
+        return true
+    }
+    
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+        activeTextView = nil
+        return false
+    }
+    
+    
+    var myKeyBoardHeight: CGFloat!
+    func makeLarger(input: NSNotification){
+        print("coyote")
+        if let userInfo = input.userInfo{
+            print("////////////////////////////////////////////////////////////////////////////")
+            let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey]
+            let keyboardRect = keyboardFrame?.CGRectValue()
+            if let keyboardHeight = keyboardRect?.height{
+                myKeyBoardHeight = keyboardHeight
+                print("height \(keyboardHeight)")
+                scrollView.contentInset.bottom = keyboardHeight
+                print("m")
+                var aRect = self.view.frame
+                print("mm")
+                aRect.size.height = aRect.size.height - keyboardHeight
+                print("mmm")
+                let point = activeTextView.frame.origin
+                    print("lion 4")
+                    print (point)
+                    print(aRect)
+
+                    if !CGRectContainsPoint(aRect, point){
+                        print("lion 5")
+                        performSelector(#selector(AddEventVC.moveTextFieldIntoView), withObject: nil, afterDelay: 0.2)
+//                        self.scrollView.scrollRectToVisible(activeTextField.frame, animated: true)
+                    }
+                }
+            
+        }
+    }
+    
+    func moveTextFieldIntoView(){
+        print("none")
+        if activeTextView != nil{
+            scrollView.setContentOffset(CGPointMake(0, descriptionTextView.frame.origin.y - myKeyBoardHeight), animated: true)
+        }
+    }
+    
+    
+//    func animateTextField(up: Bool)
+//    {
+//        let movementDistance:CGFloat = -95
+//        let movementDuration: Double = 0.3
+//        
+//        var movement:CGFloat = 0
+//        if up
+//        {
+//            movement = movementDistance
+//        }
+//        else
+//        {
+//            movement = -movementDistance
+//        }
+//        UIView.beginAnimations("animateTextField", context: nil)
+//        UIView.setAnimationBeginsFromCurrentState(true)
+//        UIView.setAnimationDuration(movementDuration)
+//        self.view.frame = CGRectOffset(self.view.frame, 0, movement)
+//        UIView.commitAnimations()
+//    }
+//    
+//    
+//    func textFieldDidBeginEditing(textField: UITextField)
+//    {
+//        self.animateTextField(true)
+//    }
+//    
+//    func textFieldDidEndEditing(textField: UITextField)
+//    {
+//        self.animateTextField(false)
+//    }
+//    
+//    
+//    func textViewDidBeginEditing(textView: UITextView) {
+//        self.animateTextField(true)
+//    }
+//    
+//    
+//    func textViewDidEndEditing(textView: UITextView) {
+//        self.animateTextField(false)
+//    }
+    
+    
+
     
     var pinLocDict: Dictionary<String, AnyObject>! = [:]
     var holdPlacemark: MKPlacemark!
@@ -231,6 +352,10 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     
     func dismissKeyboard(){
         view.endEditing(true)
+        print("called")
+//        let bottomOffset = CGPointMake(0, scrollView.contentSize.height - scrollView.bounds.size.height)
+//        scrollView.setContentOffset(bottomOffset, animated: true)
+        
     }
     
     func imageTapped(){
@@ -245,42 +370,27 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         imgPickerController.dismissViewControllerAnimated(true, completion: nil)
         eventImg.image = image
         eventImg.roundCornersForAspectFit(5)
-        let bottomOffset = CGPointMake(0, scrollView.contentSize.height - scrollView.bounds.size.height)
+ //       let bottomOffset = CGPointMake(0, scrollView.contentSize.height - scrollView.bounds.size.height)
         
-        scrollView.setContentOffset(bottomOffset, animated: true)
+ //       scrollView.setContentOffset(bottomOffset, animated: true)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         imgPickerController.dismissViewControllerAnimated(true, completion: nil)
-        let bottomOffset = CGPointMake(0, scrollView.contentSize.height - scrollView.bounds.size.height)
-        scrollView.setContentOffset(bottomOffset, animated: true)
+//        let bottomOffset = CGPointMake(0, scrollView.contentSize.height - scrollView.bounds.size.height)
+//        scrollView.setContentOffset(bottomOffset, animated: true)
         
-    }
-    
-    func textViewDidBeginEditing(textView: UITextView) {
-        
-        if textView == descriptionTextView{
-            scrollView.setContentOffset(CGPointMake(0, 330), animated: true)
-        }
-    }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        if textView == descriptionTextView{
-            
-            let bottomOffset = CGPointMake(0, scrollView.contentSize.height - scrollView.bounds.size.height)
-            scrollView.setContentOffset(bottomOffset, animated: true)
-        }
-    }
-    
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        view.endEditing(true)
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        view.endEditing(true)
     }
     
 
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+//        view.endEditing(true)
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        view.endEditing(true)
+    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()

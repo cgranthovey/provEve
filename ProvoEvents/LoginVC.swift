@@ -8,7 +8,7 @@
 
 import UIKit
 import FirebaseAuth
-class LoginVC: GeneralVC {
+class LoginVC: UIViewController {
 
     @IBOutlet weak var passwordField: LoginTextField!
     @IBOutlet weak var emailField: LoginTextField!
@@ -18,10 +18,14 @@ class LoginVC: GeneralVC {
     var imgView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-//        guard FIRAuth.auth()?.currentUser != nil else{
-//            print("there is no current user")
-//            return
-//        }
+        
+        print("diaper")
+        guard FIRAuth.auth()?.currentUser != nil else{
+            print("there is no current user")
+            return
+        }
+        
+        
         passwordField.clearsOnBeginEditing = false
         emailField.clearsOnBeginEditing = false
         
@@ -49,6 +53,8 @@ class LoginVC: GeneralVC {
                     self.alerts("Error Authenticating", message: errMsg)
                     return
                 }
+                NSNotificationCenter.defaultCenter().postNotificationName("loggedInLoadData", object: nil, userInfo: nil)
+                self.navigationController?.popViewControllerAnimated(true)
                 print("logged in!")
             })
             

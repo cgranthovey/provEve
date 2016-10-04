@@ -40,13 +40,9 @@ class CreateEmailPassVC: GeneralVC {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("Tiger 1")
         if segue.identifier == "CreateUserInfoVC"{
-            print("Tiger 2")
             if let newVC = segue.destinationViewController as? CreateUserInfoVC{
-                print("Tiger 3")
                 if let send = sender as? Dictionary<String, AnyObject>{
-                    print("Tiger 4")
                     newVC.userInfoDict = send
                 }
             }

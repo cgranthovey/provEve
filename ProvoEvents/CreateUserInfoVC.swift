@@ -92,6 +92,8 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
                     DataService.instance.currentUser.child("profile").setValue(fireBaseDict)
                     self.uploadProfileImg()
                     print("yoyoma")
+                    NSNotificationCenter.defaultCenter().postNotificationName("loggedInLoadData", object: nil)
+                    self.navigationController?.popToRootViewControllerAnimated(true)
                 })
             })
             
