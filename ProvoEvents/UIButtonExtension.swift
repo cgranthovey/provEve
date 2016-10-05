@@ -37,3 +37,75 @@ extension UIButton {
         }
     }
 }
+
+extension Array where Element: Event{
+    
+    
+    
+    func NewArrayWithTimeCategories() -> [[Event]]{
+        
+        var eventsToday = [Event]()
+        var eventsTomorrow = [Event]()
+        var eventsInTheNextWeek = [Event]()
+        var eventsFuture = [Event]()
+        
+        for event in self{
+            if event.timeStampOfEvent < getTodaysEndTime(){
+                eventsToday.append(event)
+            } else if event.timeStampOfEvent < getTodaysEndTime(){
+                eventsTomorrow.append(event)
+            } else if event.timeStampOfEvent < getEventsInNextWeekEndTime(){
+                eventsInTheNextWeek.append(event)
+            } else{
+                eventsFuture.append(event)
+            }
+        }
+        let totalArray = [eventsToday, eventsTomorrow, eventsInTheNextWeek, eventsFuture]
+        return totalArray
+    }
+    
+    func getTodaysEndTime() -> Int{
+        let currentDate = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let currentHour = calendar.component(.Hour, fromDate: currentDate)
+        let currentMinute = calendar.component(.Minute, fromDate: currentDate)
+        let secondsInToday = (currentHour * 60 * 60 + currentMinute * 60)
+        let nowInSeconds = Int(currentDate.timeIntervalSince1970)
+        let todayStartInSeconds = nowInSeconds - secondsInToday
+        return todayStartInSeconds + 86400 //86400 is seconds in a day
+    }
+
+    func getTomorrowsEndTime() -> Int{
+        return getTodaysEndTime() + 86400
+    }
+    
+    func getEventsInNextWeekEndTime() -> Int{
+        return getTodaysEndTime() + 86400 * 6
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

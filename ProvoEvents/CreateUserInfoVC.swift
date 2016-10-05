@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var firstName: LoginTextField!
     @IBOutlet weak var userName: LoginTextField!
@@ -28,6 +28,9 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     var password: String!
     var email: String!
     
+    var tap: UITapGestureRecognizer!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,20 +39,26 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         imgPicker = UIImagePickerController()
         imgPicker.delegate = self
         
+        firstName.delegate = self
+        userName.delegate = self
         
         hideCameraBtns()
         cameraTaker = UIImagePickerController()
         cameraTaker.delegate = self
-        ////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////
-        //change below code to .Camera when testing with iPhone
-        cameraTaker.sourceType = .PhotoLibrary
+        cameraTaker.sourceType = .Camera
+        
+        tap = UITapGestureRecognizer(target: self, action: #selector(CreateUserInfoVC.removeFirstResponder))
+        self.view.addGestureRecognizer(tap)
         
         myUserImg.userInteractionEnabled = true
         tapImg = UITapGestureRecognizer(target: self, action: #selector(CreateUserInfoVC.showImgOptions))
         self.myUserImg.addGestureRecognizer(tapImg)
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        removeFirstResponder()
+    }
+
     
     func unwrapPassAndEmailDict(){
         password = userInfoDict["password"] as? String
@@ -59,6 +68,11 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     override func viewDidAppear(animated: Bool) {
     }
     
+    func removeFirstResponder(){
+        firstName.resignFirstResponder()
+        userName.resignFirstResponder()
+    }
+    
     func hideCameraBtns(){
         photoLibBtnOutlet.hidden = true
         cameraBtnOutlet.hidden = true
@@ -66,6 +80,11 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         photoLibBtnOutlet.alpha = 0
         cameraBtnOutlet.alpha = 0
         screenViewForCameraOutlets.alpha = 0
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     @IBAction func finished(sender: AnyObject){
@@ -92,8 +111,8 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
                     DataService.instance.currentUser.child("profile").setValue(fireBaseDict)
                     self.uploadProfileImg()
                     print("yoyoma")
-                    NSNotificationCenter.defaultCenter().postNotificationName("loggedInLoadData", object: nil)
-                    self.navigationController?.popToRootViewControllerAnimated(true)
+                    
+                    self.performSegueWithIdentifier("snapScrollVC", sender: nil)
                 })
             })
             
@@ -112,20 +131,14 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     func uploadProfileImg(){
-        print("cat 1")
         if myUserImg.image != UIImage(named: "profile"){
-            print("cat 2")
             if let picData: NSData = UIImageJPEGRepresentation(myUserImg.image!, 0.3){
-                print("cat 3")
                 let imgName = "\(NSUUID().UUIDString).jpg"
                 let ref = DataService.instance.imgStorageRefData.child(imgName)
                 let task = ref.putData(picData, metadata: nil, completion: { (metaData, err) in
-                    print("cat 4")
                     if err != nil {
-                        print("cat error")
                         print("an error occured in the uploadProfileImg!")
                     } else{
-                        print("cat success")
                         let downloadURLsting = metaData?.downloadURL()?.absoluteString
                         DataService.instance.currentUserProfile.child("profileImg").setValue(downloadURLsting)
                         print("Download url: \(downloadURLsting)")
@@ -136,9 +149,11 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     func showImgOptions(){
+        removeFirstResponder()
         screenViewForCameraOutlets.hidden = false
+//        self.view.removeGestureRecognizer(tap)
         UIView.animateWithDuration(0.4, animations: {
-            self.screenViewForCameraOutlets.alpha = 0.5
+            self.screenViewForCameraOutlets.alpha = 0.65
             }) { (true) in
                 self.photoLibBtnOutlet.hidden = false
                 self.cameraBtnOutlet.hidden = false
@@ -154,6 +169,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     func removeCameraPhotoLibOptions(){
+//        self.view.addGestureRecognizer(tap)///////////////////////////////////////////////////////////////////
         UIView.animateWithDuration(0.6, animations: { 
             self.screenViewForCameraOutlets.alpha = 0
             self.photoLibBtnOutlet.alpha = 0

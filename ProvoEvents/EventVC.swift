@@ -12,7 +12,7 @@ import UIKit
 import FirebaseDatabase
 import Firebase
 
-class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     
     
     var events = [Event]()
@@ -28,15 +28,15 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         
         print("event vc viewDidLoad")
-        
+
         tableView.delegate = self
         tableView.dataSource = self
         
         loadData()
         
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loggedInLoadData", object: nil)
         tableView.addSubview(refreshController)
         
     }
@@ -70,7 +70,7 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
             }
             
-            DataService.instance.mainRef.child("Events").queryOrderedByChild("timeStampOfEvent").queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { snapshot in
+            DataService.instance.mainRef.child("Events").queryOrderedByChild("timeStampOfEvent").queryStartingAtValue(self.todaysStartTime).queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { snapshot in
                 if snapshot.value == nil{
                 } else{
                     if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{

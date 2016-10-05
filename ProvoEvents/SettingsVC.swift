@@ -24,6 +24,7 @@ class SettingsVC: GeneralVC {
         do {
             try FIRAuth.auth()?.signOut()
             self.navigationController?.popToRootViewControllerAnimated(true)
+            self.navigationController?.popToViewController((LoginVC.self as? UIViewController)!, animated: true)
         } catch {
             var alert = UIAlertController(title: "Error", message: "There was an error logging out, please try again soon", preferredStyle: .Alert)
             var alertAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)

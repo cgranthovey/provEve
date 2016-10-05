@@ -18,6 +18,7 @@
 		A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */; };
 		A1239C971D8B3DD800272F67 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1239C961D8B3DD800272F67 /* LoginTextField.swift */; };
 		A1239C991D8B427000272F67 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1239C981D8B427000272F67 /* LoginButton.swift */; };
+		A12B32E01DA556DA00301598 /* GeneralEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */; };
 		A12FF8F81D9EE309006AD044 /* MKPlacemarkExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */; };
 		A12FF8FA1D9EF92D006AD044 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FF8F91D9EF92D006AD044 /* UIButtonExtension.swift */; };
 		A149F6821D8C64EF009AE58C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149F6811D8C64EF009AE58C /* AuthService.swift */; };
@@ -73,6 +74,7 @@
 		A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserInfoVC.swift; sourceTree = "<group>"; };
 		A1239C961D8B3DD800272F67 /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
 		A1239C981D8B427000272F67 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralEventVC.swift; sourceTree = "<group>"; };
 		A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPlacemarkExtension.swift; sourceTree = "<group>"; };
 		A12FF8F91D9EF92D006AD044 /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		A149F6811D8C64EF009AE58C /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				A10D44911D9B799900966BC0 /* MapVC.swift */,
 				A10D44931D9C0E1E00966BC0 /* LocationSearchTable.swift */,
 				A1C466B71D91AB9E00A62A70 /* DateTimeVC.swift */,
+				A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */,
 				A10A93CF1D92F54200D07E8E /* EventVC.swift */,
 				A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */,
 				A1F12B821D99B347007A9447 /* ReminderVC.swift */,
@@ -471,6 +474,7 @@
 				A1F12B831D99B347007A9447 /* ReminderVC.swift in Sources */,
 				A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */,
 				A1239C991D8B427000272F67 /* LoginButton.swift in Sources */,
+				A12B32E01DA556DA00301598 /* GeneralEventVC.swift in Sources */,
 				A149F6821D8C64EF009AE58C /* AuthService.swift in Sources */,
 				A10D44901D9AE57200966BC0 /* FavoritesVC.swift in Sources */,
 				A10A93D41D93011700D07E8E /* EventCell.swift in Sources */,

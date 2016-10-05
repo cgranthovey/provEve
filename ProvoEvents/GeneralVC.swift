@@ -19,7 +19,10 @@ class GeneralVC: UIViewController {
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.view.addGestureRecognizer(swipeRight)
         
+
     }
+
+    
 
     func swipePopBack(){
         self.navigationController?.popViewControllerAnimated(true)

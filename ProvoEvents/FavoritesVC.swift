@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseDatabase
 
-class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
+class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -31,9 +31,7 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FavoritesVC.removeCell(_:)), name: "heartDeleted", object: nil)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FavoritesVC.addCell(_:)), name: "heartAdded", object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loggedInLoadData", object: nil)
-        
+
 //        DataService.instance.currentUser.child("likes").observeEventType(.ChildRemoved, withBlock: { snapshot in
 //            if snapshot.value == nil{
 //            } else{
@@ -48,7 +46,7 @@ class FavoritesVC: GeneralVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func loadData(){
-        DataService.instance.currentUser.child("likes").queryOrderedByChild("timeStampOfEvent").observeSingleEventOfType(.Value, withBlock: {snapshot in
+        DataService.instance.currentUser.child("likes").queryOrderedByChild("timeStampOfEvent").queryStartingAtValue(self.todaysStartTime).observeSingleEventOfType(.Value, withBlock: {snapshot in
             if snapshot.value == nil{
             } else{
                 if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{

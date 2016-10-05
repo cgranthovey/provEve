@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateEmailPassVC: GeneralVC {
+class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
 
     @IBOutlet weak var emailField: LoginTextField!
     @IBOutlet weak var passwordField: LoginTextField!
@@ -17,9 +17,20 @@ class CreateEmailPassVC: GeneralVC {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CreateEmailPassVC.removeFirstResponder))
+        self.view.addGestureRecognizer(tap)
+        
+        emailField.delegate = self
+        passwordField.delegate = self
+        verifyPasswordField.delegate = self
+        
     }
 
+    override func viewWillDisappear(animated: Bool) {
+        removeFirstResponder()
+    }
+
+    
     @IBAction func next(){
         if let email = emailField.text, let password = passwordField.text, let passwordV = verifyPasswordField.text where (password.characters.count > 0 && email.characters.count > 0 && passwordV.characters.count > 0){
             
@@ -37,6 +48,17 @@ class CreateEmailPassVC: GeneralVC {
         } else {
             alerts("Username and Password Required", message: "You must enter a username and password.")
         }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    func removeFirstResponder(){
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        verifyPasswordField.resignFirstResponder()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
