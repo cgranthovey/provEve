@@ -74,7 +74,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     override func viewDidAppear(animated: Bool) {
         
 
-        scrollView.contentSize.height = stackView.frame.height + 95
+        scrollView.contentSize.height = stackView.frame.height + 160
 
     }
     

@@ -42,26 +42,31 @@ extension Array where Element: Event{
     
     
     
-    func NewArrayWithTimeCategories() -> [[Event]]{
+    func NewDictWithTimeCategories() -> Dictionary<Int, [Event]>{
         
         var eventsToday = [Event]()
         var eventsTomorrow = [Event]()
         var eventsInTheNextWeek = [Event]()
         var eventsFuture = [Event]()
         
+        var totalDict = Dictionary<Int, [Event]>()
         for event in self{
             if event.timeStampOfEvent < getTodaysEndTime(){
                 eventsToday.append(event)
+//                totalDict[0] = eventsToday
             } else if event.timeStampOfEvent < getTodaysEndTime(){
                 eventsTomorrow.append(event)
+//                totalDict[1] = eventsTomorrow
             } else if event.timeStampOfEvent < getEventsInNextWeekEndTime(){
                 eventsInTheNextWeek.append(event)
+//                totalDict[2] = eventsInTheNextWeek
             } else{
                 eventsFuture.append(event)
+//                totalDict[3] = eventsFuture
             }
         }
-        let totalArray = [eventsToday, eventsTomorrow, eventsInTheNextWeek, eventsFuture]
-        return totalArray
+        totalDict = [0: eventsToday, 1: eventsTomorrow, 2: eventsInTheNextWeek, 3: eventsFuture]
+        return totalDict
     }
     
     func getTodaysEndTime() -> Int{

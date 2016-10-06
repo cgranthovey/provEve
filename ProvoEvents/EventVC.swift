@@ -24,6 +24,8 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     
     var likesArray = [String]()
     
+    var EventsCategorized = [Int: [Event]]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -94,6 +96,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                 }
+                self.EventsCategorized = self.events.NewDictWithTimeCategories()
                 self.tableView.reloadData()
                 self.isCurrentlyLoading = false
                 if self.refreshController.refreshing{
@@ -154,50 +157,203 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let post = events[indexPath.row]
+//        let post = events[indexPath.row]
+//        if let cell = tableView.dequeueReusableCellWithIdentifier("EventCell") as? EventCell{
+//            // add cell.request?.cancel() to cancel the request so we don't load date when we don't want to
+//            
+//            cell.configureCell(post)
+//            return cell
+//        } else {
+//            return UITableViewCell()
+//        }
+        print("tiger")
+        let EventForSpecificTimeArray = ArrayForSection(indexPath.section)
+        
+        print("tiger1.1")
+        let myEvent = EventForSpecificTimeArray[indexPath.row]
+        
+        print("Tiger 1.3")
         if let cell = tableView.dequeueReusableCellWithIdentifier("EventCell") as? EventCell{
-            // add cell.request?.cancel() to cancel the request so we don't load date when we don't want to
-            
-            cell.configureCell(post)
+            print("tiger 2")
+            print("myEvent \(myEvent.title)")
+            cell.configureCell(myEvent)
+            print("return from configure)")
             return cell
-        } else {
+        } else{
+            print("tiger 3")
             return UITableViewCell()
         }
     }
     
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
+        //return events.count
+        print("number of rowsinsection: \(numberOfRowsForSection(section))")
+        return numberOfRowsForSection(section)
+
+//        print("holdEventsCategorized.count \(holdEventsCategorized.count)")
+//        print("holdEventsCategorized.count \(holdEventsCategorized[section])")
+//        let eventArray = holdEventsCategorized[section]
+//        return (eventArray?.count)!
+    }
+    
+    
+    
+    func ArrayForSection(section: Int) -> [Event]{
+        print("henry")
+        switch section {
+        case 0:
+            print("tiger1.2")
+            if let a = EventsCategorized[0]{
+                return a
+            } else if let b = EventsCategorized[1]{
+                return b
+            } else if let c = EventsCategorized[2]{
+                return c
+            } else {
+                return EventsCategorized[3]!
+            }
+        case 1:
+            if let b = EventsCategorized[1]{
+                return b
+            } else if let c = EventsCategorized[2]{
+                return c
+            } else {
+                return EventsCategorized[3]!
+            }
+        case 2:
+            if let c = EventsCategorized[2]{
+                return c
+            } else{
+                return EventsCategorized[3]!
+            }
+        default:
+            return EventsCategorized[3]!
+        }
+        
+    }
+    
+    
+    
+    
+    
+    func numberOfRowsForSection(section: Int) -> Int{
+        print("Robert")
+        switch section {
+        case 0:
+            if let a = EventsCategorized[0]?.count{
+                return a
+            } else if let b = EventsCategorized[1]?.count{
+                return b
+            } else if let c = EventsCategorized[2]?.count{
+                return c
+            } else if let d = EventsCategorized[3]?.count{
+                return d
+            }
+            return 0
+        case 1:
+            if let a = EventsCategorized[1]?.count{
+                return a
+            } else if let b = EventsCategorized[2]?.count{
+                return b
+            } else if let c = EventsCategorized[3]?.count{
+                return c
+            }
+            return 0
+        case 2:
+            if let a = EventsCategorized[2]?.count{
+                return a
+            } else if let b = EventsCategorized[3]?.count{
+                return b
+            }
+            return 0
+        case 3:
+            if let a = EventsCategorized[3]?.count{
+                return a
+            }
+            return 0
+        default:
+            return 0
+        }
+        
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        print("George")
+        switch section {
+        case 0:
+            if EventsCategorized[0] != nil{
+                return "Today"
+            } else if EventsCategorized[1] != nil{
+                return "Tomorrow"
+            } else if EventsCategorized[2] != nil{
+                return "This Week"
+            } else{
+                return "Upcoming"
+            }
+        case 1:
+            if EventsCategorized[1] != nil{
+                return "Tomorrow"
+            } else if EventsCategorized[2] != nil{
+                return "This Week"
+            } else{
+                return "Upcoming"
+            }
+        case 2:
+            if EventsCategorized[2] != nil{
+                return "This Week"
+            } else{
+                return "Upcoming"
+            }
+        default:
+            return "Upcoming"
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("EventDetailsVC", sender: events[indexPath.row])
+        if let eventArray = EventsCategorized[indexPath.section]{
+            performSegueWithIdentifier("EventDetailsVC", sender: eventArray[indexPath.row])
+        }
+        
+        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        
+        print("numberOfSectionsInTableView: \(EventsCategorized.count)")
+        return EventsCategorized.count
+        //return 1
     }
     
     var isCurrentlyLoading = false
     
-    
-    
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
 
-        let lastElement = events.count - 1
+        let currentArray = EventsCategorized[indexPath.section]!
+        let lastElement = currentArray.count - 1
+        
+        //let lastElement = events.count - 1
+        
+        var mySection = indexPath
+        
+        print("myIndexPath.row \(indexPath.row)")
+        print("last element \(lastElement)")
         if indexPath.row == lastElement{
+            print("cookie")
             if isCurrentlyLoading == false{
             isCurrentlyLoading = true
                 
             DataService.instance.eventRef.queryOrderedByChild("timeStampOfEvent").queryStartingAtValue(timeStampOfLast, childKey: keyOfLast).queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 var x = 0
-
+                print("cookie2")
                 if snapshot.value == nil{
                     print("Snap of load more is nil")
                 } else{
                     if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
+                        print("cookie3")
                         for snap in snapshots{
                             if x != 0 {
+                                print("cookie4")
                                 if let postDict = snap.value as? Dictionary<String, AnyObject>{
                                     let key = snap.key
                                     
@@ -223,6 +379,9 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                 } else{
                     self.isCurrentlyLoading = false
                 }
+                print("yo \(self.EventsCategorized.count)")
+                self.EventsCategorized = self.events.NewDictWithTimeCategories()
+                print("yo2 \(self.EventsCategorized.count)")
                 tableView.reloadData()
 //                NSIndexPath(forRow: <#T##Int#>, inSection: <#T##Int#>)
 //                
