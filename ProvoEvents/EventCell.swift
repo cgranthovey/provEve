@@ -20,7 +20,6 @@ class EventCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         var tap = UITapGestureRecognizer(target: self, action: #selector(EventCell.heartTapped))
         heartImg.userInteractionEnabled = true
         heartImg.addGestureRecognizer(tap)

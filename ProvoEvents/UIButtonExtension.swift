@@ -53,19 +53,19 @@ extension Array where Element: Event{
         for event in self{
             if event.timeStampOfEvent < getTodaysEndTime(){
                 eventsToday.append(event)
-//                totalDict[0] = eventsToday
+                totalDict[0] = eventsToday
             } else if event.timeStampOfEvent < getTodaysEndTime(){
                 eventsTomorrow.append(event)
-//                totalDict[1] = eventsTomorrow
+                totalDict[1] = eventsTomorrow
             } else if event.timeStampOfEvent < getEventsInNextWeekEndTime(){
                 eventsInTheNextWeek.append(event)
-//                totalDict[2] = eventsInTheNextWeek
+                totalDict[2] = eventsInTheNextWeek
             } else{
                 eventsFuture.append(event)
-//                totalDict[3] = eventsFuture
+                totalDict[3] = eventsFuture
             }
         }
-        totalDict = [0: eventsToday, 1: eventsTomorrow, 2: eventsInTheNextWeek, 3: eventsFuture]
+        
         return totalDict
     }
     

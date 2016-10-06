@@ -14,7 +14,6 @@ import Firebase
 
 class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     
-    
     var events = [Event]()
     
     @IBOutlet weak var tableView: UITableView!
@@ -36,11 +35,9 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         
         loadData()
         
-
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
         tableView.addSubview(refreshController)
-        
     }
 
 //    below and above is code to add a pull to refresh option
@@ -52,7 +49,6 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     }()
     
     func handleRefresh(refreshControl: UIRefreshControl){
-        //upload new data
         loadData()
     }
     
@@ -139,14 +135,9 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                 }
-                
-//                tableView.reloadData()      //seems wasteful
             }
         }
     }
-    
-    
-    
     
     override func viewWillAppear(animated: Bool) {
         print("event vc will will appear")
@@ -157,15 +148,6 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let post = events[indexPath.row]
-//        if let cell = tableView.dequeueReusableCellWithIdentifier("EventCell") as? EventCell{
-//            // add cell.request?.cancel() to cancel the request so we don't load date when we don't want to
-//            
-//            cell.configureCell(post)
-//            return cell
-//        } else {
-//            return UITableViewCell()
-//        }
         print("tiger")
         let EventForSpecificTimeArray = ArrayForSection(indexPath.section)
         
@@ -185,159 +167,82 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return events.count
         print("number of rowsinsection: \(numberOfRowsForSection(section))")
         return numberOfRowsForSection(section)
-
-//        print("holdEventsCategorized.count \(holdEventsCategorized.count)")
-//        print("holdEventsCategorized.count \(holdEventsCategorized[section])")
-//        let eventArray = holdEventsCategorized[section]
-//        return (eventArray?.count)!
     }
-    
-    
     
     func ArrayForSection(section: Int) -> [Event]{
         print("henry")
-        switch section {
-        case 0:
-            print("tiger1.2")
-            if let a = EventsCategorized[0]{
-                return a
-            } else if let b = EventsCategorized[1]{
-                return b
-            } else if let c = EventsCategorized[2]{
-                return c
-            } else {
-                return EventsCategorized[3]!
-            }
-        case 1:
-            if let b = EventsCategorized[1]{
-                return b
-            } else if let c = EventsCategorized[2]{
-                return c
-            } else {
-                return EventsCategorized[3]!
-            }
-        case 2:
-            if let c = EventsCategorized[2]{
-                return c
-            } else{
-                return EventsCategorized[3]!
-            }
-        default:
-            return EventsCategorized[3]!
-        }
         
+        var findKeys = Array(EventsCategorized.keys)
+        findKeys.sortInPlace()
+        if findKeys[section] == 0{
+            return (EventsCategorized[0])!
+        } else if findKeys[section] == 1{
+            return (EventsCategorized[1])!
+        } else if findKeys[section] == 2{
+            return (EventsCategorized[2])!
+        } else{
+            return (EventsCategorized[3])!
+        }
     }
-    
-    
-    
-    
-    
+
     func numberOfRowsForSection(section: Int) -> Int{
         print("Robert")
-        switch section {
-        case 0:
-            if let a = EventsCategorized[0]?.count{
-                return a
-            } else if let b = EventsCategorized[1]?.count{
-                return b
-            } else if let c = EventsCategorized[2]?.count{
-                return c
-            } else if let d = EventsCategorized[3]?.count{
-                return d
-            }
-            return 0
-        case 1:
-            if let a = EventsCategorized[1]?.count{
-                return a
-            } else if let b = EventsCategorized[2]?.count{
-                return b
-            } else if let c = EventsCategorized[3]?.count{
-                return c
-            }
-            return 0
-        case 2:
-            if let a = EventsCategorized[2]?.count{
-                return a
-            } else if let b = EventsCategorized[3]?.count{
-                return b
-            }
-            return 0
-        case 3:
-            if let a = EventsCategorized[3]?.count{
-                return a
-            }
-            return 0
-        default:
-            return 0
-        }
         
+        var findKeys = Array(EventsCategorized.keys)
+        findKeys.sortInPlace()
+        
+        if findKeys[section] == 0{
+            return (EventsCategorized[0]?.count)!
+        } else if findKeys[section] == 1{
+            return (EventsCategorized[1]?.count)!
+        } else if findKeys[section] == 2{
+            return (EventsCategorized[2]?.count)!
+        } else{
+            return (EventsCategorized[3]?.count)!
+        }
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         print("George")
-        switch section {
-        case 0:
-            if EventsCategorized[0] != nil{
-                return "Today"
-            } else if EventsCategorized[1] != nil{
-                return "Tomorrow"
-            } else if EventsCategorized[2] != nil{
-                return "This Week"
-            } else{
-                return "Upcoming"
-            }
-        case 1:
-            if EventsCategorized[1] != nil{
-                return "Tomorrow"
-            } else if EventsCategorized[2] != nil{
-                return "This Week"
-            } else{
-                return "Upcoming"
-            }
-        case 2:
-            if EventsCategorized[2] != nil{
-                return "This Week"
-            } else{
-                return "Upcoming"
-            }
-        default:
+        
+        var findKeys = Array(EventsCategorized.keys)
+        findKeys.sortInPlace()
+        print("findKeys: \(findKeys)")
+        print("current Section \(section)")
+        if findKeys[section] == 0{
+            return "Today"
+        } else if findKeys[section] == 1{
+            return "Tomorrow"
+        } else if findKeys[section] == 2{
+            print("thisWeek")
+            return "This Week"
+        } else{
+            print("upcoming")
             return "Upcoming"
         }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let eventArray = EventsCategorized[indexPath.section]{
-            performSegueWithIdentifier("EventDetailsVC", sender: eventArray[indexPath.row])
-        }
-        
-        
+        let eventArray = ArrayForSection(indexPath.section)
+        performSegueWithIdentifier("EventDetailsVC", sender: eventArray[indexPath.row])
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
         print("numberOfSectionsInTableView: \(EventsCategorized.count)")
         return EventsCategorized.count
-        //return 1
     }
     
     var isCurrentlyLoading = false
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-
-        let currentArray = EventsCategorized[indexPath.section]!
+        let currentArray = ArrayForSection(indexPath.section)
         let lastElement = currentArray.count - 1
-        
-        //let lastElement = events.count - 1
         
         var mySection = indexPath
         
-        print("myIndexPath.row \(indexPath.row)")
-        print("last element \(lastElement)")
         if indexPath.row == lastElement{
             print("cookie")
             if isCurrentlyLoading == false{
@@ -383,9 +288,6 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                 self.EventsCategorized = self.events.NewDictWithTimeCategories()
                 print("yo2 \(self.EventsCategorized.count)")
                 tableView.reloadData()
-//                NSIndexPath(forRow: <#T##Int#>, inSection: <#T##Int#>)
-//                
-//                tableView.insertRowsAtIndexPaths(<#T##indexPaths: [NSIndexPath]##[NSIndexPath]#>, withRowAnimation: <#T##UITableViewRowAnimation#>)
             })
             }
         }
@@ -399,13 +301,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-
     }
-
-//  this was before napScrollVC was added
-//    @IBAction func heartTapped(sender: AnyObject){
-//        performSegueWithIdentifier("FavoritesVC", sender: nil)
-//    }
 }
 
 
