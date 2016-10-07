@@ -8,6 +8,7 @@
 
 import UIKit
 @IBDesignable
+
 class LoginButton: UIButton {
 
     @IBInspectable var cornerRadius: CGFloat = 0 {
@@ -16,6 +17,7 @@ class LoginButton: UIButton {
             layer.masksToBounds = cornerRadius > 0
         }
     }
+    
     
     @IBInspectable var borderWidth: CGFloat = 0{
         didSet{

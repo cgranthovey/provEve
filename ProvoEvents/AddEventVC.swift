@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 import MapKit
 
 protocol HandleGetEventLoc {
@@ -33,7 +34,6 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         eventImg.image = UIImage(named: "photoAlbum2")
         setUpTaps()
         setUpDelegates()
-        
         
         
         imgPickerController = UIImagePickerController()
@@ -134,8 +134,14 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     var pinLocDict: Dictionary<String, AnyObject>! = [:]
     var holdPlacemark: MKPlacemark!
     var holdAddress: String!
+    var coordinateOfEvent: CLLocationCoordinate2D!
     
     func getEventLoc(address: String?, name: String?, longitude: Double?, latitude: Double?, placemark: MKPlacemark?) {
+        
+        if let placemark = placemark?.coordinate{
+            print("placemark exists")
+            coordinateOfEvent = placemark
+        }
         
         if let address = address, let name = name{
             print("tiger " + address)
@@ -276,6 +282,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                                 self.alertProblemUploadingImg()
                                 return
                             } else{
+                                self.postGeoFire(self.coordinateOfEvent, eventRef: key)
                                 let downloadURL = meta?.downloadURL()?.absoluteString
                                 DataService.instance.eventRef.child(key).child("image").setValue(downloadURL)
                                 self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 1.5)
@@ -283,11 +290,33 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                         })
                     }
                 } else {
+                    print("about to call Geo Fire")
+                    self.postGeoFire(self.coordinateOfEvent, eventRef: key)
                     self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 1.5)
                 }
-                
-
                 print("i'm on bottom")
+            }
+        }
+    }
+    
+    func postGeoFire(location: CLLocationCoordinate2D?, eventRef: String?){
+        var geoFire: GeoFire!
+        var geoFireRef: FIRDatabaseReference!
+        print("in geo fire")
+        geoFireRef = DataService.instance.mainRef.child("GeoFire")
+        geoFire = GeoFire(firebaseRef: geoFireRef)
+        
+        //geoFire.removeKey("lfkadjs")
+        print("\(location) and key \(eventRef)")
+        if let loc = location, let key = eventRef{
+            print("inside")
+            geoFire.setLocation(CLLocation(latitude: loc.latitude, longitude: loc.longitude), forKey: key) { (error) in
+                if error != nil{
+                    print("error")
+                    print(error.debugDescription)
+                } else{
+                    print("upload successful!")
+                }
             }
         }
     }

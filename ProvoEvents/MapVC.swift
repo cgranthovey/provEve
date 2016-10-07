@@ -39,8 +39,6 @@ class MapVC: UIViewController {
     
     var handleGetEventLocDelegate: HandleGetEventLoc? = nil
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,8 +85,6 @@ class MapVC: UIViewController {
             dropPinZoomIn(mkPlacemarkPassed, addressString: addressPassed, fromTap: false)
             shouldMapCenter = false
         }
-        
-        
     }
     
     @IBAction func mapTypeBtnPress(sender: AnyObject){
@@ -146,13 +142,15 @@ class MapVC: UIViewController {
     }
     
     @IBAction func removePinBtn(sender: AnyObject){
+        handleGetEventLocDelegate?.getEventLoc(nil, name: nil, longitude: nil, latitude: nil, placemark: nil)
+
         mapView.removeAnnotations(mapView.annotations)
         searchBar.text = ""
         selectedPin = nil
     }
     
     @IBAction func cancelBtn(sender: AnyObject){
-        handleGetEventLocDelegate?.getEventLoc(nil, name: nil, longitude: nil, latitude: nil, placemark: nil)
+       // handleGetEventLocDelegate?.getEventLoc(nil, name: nil, longitude: nil, latitude: nil, placemark: nil)
         self.navigationController?.popViewControllerAnimated(true)
     }
     
