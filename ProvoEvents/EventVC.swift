@@ -8,9 +8,15 @@
 
 // the noun project - plus sign Icons Bazaar, settings Hysen Drogu
 
+
+// theNounProject - profile Julynn B., photo album Michal Kučera,  checkmark Adam Stevenson, textmessage Gregor Črešnar, alarmClock IconfactoryTeam, calendar David Ly, map AFY Studio, world map Tom Walsh
+// icons 8 - back,
+
 import UIKit
 import FirebaseDatabase
 import Firebase
+
+
 
 class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     
@@ -37,6 +43,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadDataAfterNewEvent", object: nil)
         tableView.addSubview(refreshController)
     }
 
@@ -51,6 +58,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     func handleRefresh(refreshControl: UIRefreshControl){
         loadData()
     }
+
     
     
     func loadData(){
@@ -204,6 +212,12 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
             return (EventsCategorized[3]?.count)!
         }
     }
+    
+//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//
+//        
+//        return headerView
+//    }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         print("George")

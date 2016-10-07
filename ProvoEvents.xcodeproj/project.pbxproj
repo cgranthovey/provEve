@@ -46,6 +46,7 @@
 		A1FBADA11D95C70E004EF835 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FBADA01D95C70E004EF835 /* MessageUI.framework */; };
 		A1FBBD3C1D8DE86700366761 /* LoginImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FBBD3B1D8DE86700366761 /* LoginImg.swift */; };
 		A1FBBD3E1D8DE9AC00366761 /* GeneralVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */; };
+		A1FFB6F71DA6EEE3008A23EA /* PasswordReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FFB6F61DA6EEE3008A23EA /* PasswordReset.swift */; };
 		F00DC745C3144A27B523A670 /* Pods_ProvoEventsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D888B180E351CC3B9136BA51 /* Pods_ProvoEventsTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -106,6 +107,7 @@
 		A1FBADA01D95C70E004EF835 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A1FBBD3B1D8DE86700366761 /* LoginImg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginImg.swift; sourceTree = "<group>"; };
 		A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralVC.swift; sourceTree = "<group>"; };
+		A1FFB6F61DA6EEE3008A23EA /* PasswordReset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordReset.swift; sourceTree = "<group>"; };
 		C3AC09ECD68FACB7EF481B7B /* Pods-ProvoEvents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEvents.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents.release.xcconfig"; sourceTree = "<group>"; };
 		D888B180E351CC3B9136BA51 /* Pods_ProvoEventsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProvoEventsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -161,13 +163,14 @@
 				A10D44931D9C0E1E00966BC0 /* LocationSearchTable.swift */,
 				A1C466B71D91AB9E00A62A70 /* DateTimeVC.swift */,
 				A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */,
+				A181FD011D943D6800007264 /* EventDetailsVC.swift */,
 				A10A93CF1D92F54200D07E8E /* EventVC.swift */,
 				A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */,
 				A1F12B821D99B347007A9447 /* ReminderVC.swift */,
 				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
-				A181FD011D943D6800007264 /* EventDetailsVC.swift */,
 				A15602641DA2F39A004ADCAD /* snapScrollVC.swift */,
 				A17A934E1DA4349C001987EE /* SettingsVC.swift */,
+				A1FFB6F61DA6EEE3008A23EA /* PasswordReset.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 				A10A93D41D93011700D07E8E /* EventCell.swift in Sources */,
 				A1C466B81D91AB9E00A62A70 /* DateTimeVC.swift in Sources */,
 				A1157C041D8C9A27000ADB0E /* CreateEmailPassVC.swift in Sources */,
+				A1FFB6F71DA6EEE3008A23EA /* PasswordReset.swift in Sources */,
 				A1D385481D908B3D00365348 /* AddEventVC.swift in Sources */,
 				A10D44941D9C0E1E00966BC0 /* LocationSearchTable.swift in Sources */,
 				A1EECA4B1D8C72FF0013406A /* DataService.swift in Sources */,

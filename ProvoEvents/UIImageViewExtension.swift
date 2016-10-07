@@ -36,7 +36,7 @@ extension UIImageView
     }
     
     
-    func showCheckmarkAnimatedTempImg(supView: UIView, delay: NSTimeInterval = 0.1){
+    func showCheckmarkAnimatedTempImg(supView: UIView, delay: NSTimeInterval = 0.1, remove: Bool = true){
         self.frame = CGRectMake(0, 0, 150, 150)
         self.contentMode = .ScaleAspectFit
         self.center = supView.center
@@ -44,16 +44,18 @@ extension UIImageView
         supView.addSubview(self)
         supView.bringSubviewToFront(self)
         self.alpha = 0
-        
+
         UIView.animateWithDuration(0.3, delay: delay, usingSpringWithDamping: 2.0, initialSpringVelocity: 3.0, options: .CurveEaseIn, animations: {
             self.alpha = 1
             self.center.y = self.center.y - 75
         }) { (true) in
-            UIView.animateWithDuration(0.3, delay: 0.3, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .CurveEaseIn, animations: {
-                self.alpha = 0
-                }, completion: { (true) in
-                    self.removeFromSuperview()
-            })
+            if remove{
+                UIView.animateWithDuration(0.3, delay: 0.3, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .CurveEaseIn, animations: {
+                    self.alpha = 0
+                    }, completion: { (true) in
+                        self.removeFromSuperview()
+                })
+            }
         }
     }
 }

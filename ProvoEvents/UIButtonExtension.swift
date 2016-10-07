@@ -54,7 +54,7 @@ extension Array where Element: Event{
             if event.timeStampOfEvent < getTodaysEndTime(){
                 eventsToday.append(event)
                 totalDict[0] = eventsToday
-            } else if event.timeStampOfEvent < getTodaysEndTime(){
+            } else if event.timeStampOfEvent < getTomorrowsEndTime(){
                 eventsTomorrow.append(event)
                 totalDict[1] = eventsTomorrow
             } else if event.timeStampOfEvent < getEventsInNextWeekEndTime(){

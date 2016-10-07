@@ -105,6 +105,10 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
         }
     }
     
+    @IBAction func forgotPassword(sender: AnyObject){
+        
+    }
+    
     func help(){
         print("help")
     }

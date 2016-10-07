@@ -34,7 +34,7 @@ class snapScrollVC: UIViewController {
         self.snapScroll.addSubview((favoritesTableVC?.view)!)
         favoritesTableVC?.didMoveToParentViewController(self)
         
-        self.snapScroll.contentSize = CGSizeMake(self.view.frame.width * 2, self.view.frame.height - 22)
+        self.snapScroll.contentSize = CGSizeMake(self.view.frame.width * 2, self.view.frame.height)
         
         
 

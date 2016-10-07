@@ -48,6 +48,26 @@ class AuthService{
         })
     }
     
+    func passwordReset(password: String, onComplete: Completion){
+        FIRAuth.auth()?.sendPasswordResetWithEmail(password, completion: { (error) in
+            if error != nil{
+                    self.handlePasswordResetErrors(error!, onComplete: onComplete)
+            } else{
+                onComplete(errMsg: nil, data: nil)
+            }
+        })
+    }
+    
+    func handlePasswordResetErrors(error: NSError, onComplete: Completion){
+        if let errorCode = FIRAuthErrorCode(rawValue: error.code){
+            switch errorCode {
+            case FIRAuthErrorCode.ErrorCodeInvalidEmail: onComplete(errMsg: "This email is not in our system", data: nil)
+            default:
+                onComplete(errMsg: "There was a problem sending a password reset", data: nil)
+            }
+        }
+    }
+    
     func handleErrors(error: NSError, onComplete: Completion){
         print(error.debugDescription)
         if let errorCode = FIRAuthErrorCode(rawValue: error.code){
@@ -66,5 +86,4 @@ class AuthService{
     }
     
     var imagesCar = DataService.instance.storageRef.child("images/car.jpg")
-    
 }
