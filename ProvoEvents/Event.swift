@@ -21,6 +21,7 @@ class Event{
     private var _user: String!
     private var _key: String!
     private var _likes: Int!
+    private var _eventTypeImgName: String!
     
     private var _pinInfoAddress: String?
     private var _pinInfoName: String?
@@ -97,6 +98,13 @@ class Event{
         return _isLiked
     }
     
+    var eventTypeImgName: String{
+        if _eventTypeImgName == nil{
+            _eventTypeImgName = ""
+        }
+        return _eventTypeImgName
+    }
+    
     
     
     init(key: String, dict: Dictionary<String, AnyObject>, isLiked: Bool){
@@ -109,6 +117,7 @@ class Event{
         _imgURL = dict["image"] as? String
         _description = dict["description"] as? String
         _user = dict["user"] as? String
+        _eventTypeImgName = dict["eventTypeImgName"] as? String
         _key = key
         _likes = dict["likes"] as? Int
         _isLiked = isLiked

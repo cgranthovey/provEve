@@ -9,7 +9,7 @@
 // the noun project - plus sign Icons Bazaar, settings Hysen Drogu
 
 
-// theNounProject - profile Julynn B., photo album Michal Kučera,  checkmark Adam Stevenson, textmessage Gregor Črešnar, alarmClock IconfactoryTeam, calendar David Ly, map AFY Studio, world map Tom Walsh
+// theNounProject - profile Julynn B., photo album Michal Kučera,  checkmark Adam Stevenson, textmessage Gregor Črešnar, alarmClock IconfactoryTeam, calendar David Ly, map AFY Studio, world map Tom Walsh, map pin icons - anbileru adaleru, thicker map pin icons -lastspark, RU,
 // icons 8 - back,
 
 import UIKit
@@ -258,21 +258,17 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         var mySection = indexPath
         
         if indexPath.row == lastElement{
-            print("cookie")
             if isCurrentlyLoading == false{
             isCurrentlyLoading = true
                 
             DataService.instance.eventRef.queryOrderedByChild("timeStampOfEvent").queryStartingAtValue(timeStampOfLast, childKey: keyOfLast).queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 var x = 0
-                print("cookie2")
                 if snapshot.value == nil{
                     print("Snap of load more is nil")
                 } else{
                     if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
-                        print("cookie3")
                         for snap in snapshots{
                             if x != 0 {
-                                print("cookie4")
                                 if let postDict = snap.value as? Dictionary<String, AnyObject>{
                                     let key = snap.key
                                     

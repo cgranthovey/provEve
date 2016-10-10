@@ -47,6 +47,10 @@ class DataService{
         userRef.child(uid).child("profile").setValue(profile)
     }
     
+    var geoFireRef: FIRDatabaseReference{
+        return mainRef.child("GeoFire")
+    }
+    
     
     
     ////////////////////////////////////////////////////////////////////////

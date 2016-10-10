@@ -87,12 +87,30 @@ extension Array where Element: Event{
     func getEventsInNextWeekEndTime() -> Int{
         return getTodaysEndTime() + 86400 * 6
     }
-    
-    
 }
 
 
 
+extension Event{
+    
+    func beforeToday() -> Bool{
+        let currentDate = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let currentHour = calendar.component(.Hour, fromDate: currentDate)
+        let currentMinute = calendar.component(.Minute, fromDate: currentDate)
+        let secondsInToday = (currentHour * 60 * 60 + currentMinute * 60)
+        let nowInSeconds = Int(currentDate.timeIntervalSince1970)
+        let todayStartInSeconds = nowInSeconds - secondsInToday
+        
+        if timeStampOfEvent < todayStartInSeconds{
+            return true
+        } else{
+            return false
+        }
+    }
+    
+
+}
 
 
 

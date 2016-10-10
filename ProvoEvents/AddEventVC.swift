@@ -29,6 +29,12 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     
     var imgPickerController: UIImagePickerController!
     
+    @IBOutlet weak var collection: UICollectionView!
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         eventImg.image = UIImage(named: "photoAlbum2")
@@ -36,13 +42,24 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         setUpDelegates()
         
         
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .Horizontal
+        collection.collectionViewLayout = layout
+        
+        
+        collection.delegate = self
+        collection.dataSource = self
+        collection.backgroundColor = UIColor.clearColor()
+        self.collection.allowsSelection = true
+
         imgPickerController = UIImagePickerController()
         imgPickerController.delegate = self
         
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardNotification(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        scrollView.contentSize.height = 730
+        scrollView.contentSize.height = 815
         scrollView.contentSize.width = view.frame.width
         
         
@@ -247,6 +264,14 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
             alert("Error", message: "Location Missing")
             return
         }
+        
+        let selectedCellImgName: String!
+        if selectedCellInt == nil{
+            alert("Error", message: "Choose event type icon")
+            return
+        } else{
+            selectedCellImgName = img[selectedCellInt]
+        }
 
         if dateString == nil{
             alert("Error", message: "Date Missing")
@@ -262,7 +287,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         
         var timePosted: Int = Int(NSDate().timeIntervalSince1970)
         
-        let toFirebaseDict: Dictionary<String, AnyObject> = ["title": titleTextField.text!, "location": locationTextField.text!, "pinInfo": pinLocDict,"date": dateString!, "timeStampOfEvent": timeStampOfEvent,"email": emailTextField.text!, "timePosted": timePosted, "description": descriptionTextView.text!, "user": (FIRAuth.auth()?.currentUser?.uid)!]
+        let toFirebaseDict: Dictionary<String, AnyObject> = ["title": titleTextField.text!, "location": locationTextField.text!, "pinInfo": pinLocDict,"date": dateString!, "timeStampOfEvent": timeStampOfEvent,"email": emailTextField.text!, "timePosted": timePosted, "description": descriptionTextView.text!, "user": (FIRAuth.auth()?.currentUser?.uid)!, "eventTypeImgName": selectedCellImgName]
         
         let key = DataService.instance.eventRef.childByAutoId().key
         holdKeyInCaseError = key
@@ -412,7 +437,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     
     func setUpTaps(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(AddEventVC.dismissKeyboard))
+        tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        
         let tapImg = UITapGestureRecognizer(target: self, action: #selector(AddEventVC.imageTapped))
         eventImg.userInteractionEnabled = true
         eventImg.addGestureRecognizer(tapImg)
@@ -445,5 +472,96 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    
+    var img = ["mapCinema", "mapMusic", "mapSoccer", "mapWorld", "mapStandard", "settings", "heartEmpty"]
+    var lbl = ["Cinema", "Music", "Sports", "Global", "Geo Catc", "set", "heart"]
 
+    var selectedCellInt: Int!
 }
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// extension for collection view
+////////////////////////////////////////////////////////////////////////////////
+
+extension AddEventVC: UICollectionViewDelegate, UICollectionViewDataSource{
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+            if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MapPinCell", forIndexPath: indexPath) as? MapPinCell{
+                cell.configureCell(img[indexPath.row], label: lbl[indexPath.row])
+                print("mymy")
+                if let pickedCell = selectedCellInt{
+                    
+                    print("tugo")
+                    if indexPath.row == pickedCell{
+                        cell.backgroundColor = UIColor.redColor()
+                    } else{
+                        cell.backgroundColor = UIColor.clearColor()
+                    }
+                }
+
+                
+                return cell
+            } else{
+                print("hugo")
+                return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return img.count
+    }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        return CGSizeMake(collection.frame.width / 3, 70.0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        print("yo")
+        if let pickedCellIndex = selectedCellInt{
+            print("yo1")
+            let indexPath = NSIndexPath(forItem: pickedCellIndex, inSection: 0)
+            print("yo2")
+            if let myCell = collection.cellForItemAtIndexPath(indexPath) as? MapPinCell{
+            print("yo3")
+                myCell.backgroundColor = UIColor.clearColor()
+            }
+        }
+        
+        print("hi")
+        
+        let cell = collection.cellForItemAtIndexPath(indexPath) as? MapPinCell
+        selectedCellInt = indexPath.row
+        //cell?.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.5)
+        cell?.backgroundColor = UIColor.redColor()
+        print("called")
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
