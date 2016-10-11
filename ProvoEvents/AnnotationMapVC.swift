@@ -26,9 +26,8 @@ class AnnotationMapVC: UIViewController {
         super.viewDidLoad()
 
         mapView.delegate = self
-        
         mapView.showsUserLocation = true
-        
+                
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
@@ -38,6 +37,7 @@ class AnnotationMapVC: UIViewController {
 
     
     @IBAction func popVC(){
+        //self.navigationController?.popViewControllerAnimated(true)
         self.navigationController?.popViewControllerAnimated(true)
     }
     
