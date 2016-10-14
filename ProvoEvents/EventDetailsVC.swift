@@ -11,8 +11,9 @@ import MessageUI
 import EventKit
 import MapKit
 import FirebaseDatabase
+import FirebaseAuth
 
-class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, getReminderInfo {
+class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, UITextViewDelegate,getReminderInfo, UITableViewDelegate, UITableViewDataSource{
 
     
     @IBOutlet weak var eventTitle: UILabel!
@@ -33,6 +34,9 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
     @IBOutlet weak var heartBtn: UIButton!
     
+    @IBOutlet weak var commentsTableView: UITableView!
+    @IBOutlet weak var commentByUser: UITextView!
+    
     
     var event: Event!
     var img: UIImage!
@@ -41,6 +45,15 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         super.viewDidLoad()
 
         setUpUI()
+
+        
+        commentsTableView.dataSource = self
+        commentsTableView.delegate = self
+        commentsTableView.rowHeight = UITableViewAutomaticDimension
+        commentsTableView.estimatedRowHeight = 40
+        
+        commentByUser.delegate = self
+        commentsTableView.reloadData()
         
         bottomTextMessageBtn.imageView?.contentMode = .ScaleAspectFit
         bottomCalenarBtn.imageView?.contentMode = .ScaleAspectFit
@@ -51,6 +64,8 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         let tap = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.toLargeImg))
         eventImg.addGestureRecognizer(tap)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         scrollView.delaysContentTouches = false
         setBottomButtons()
@@ -64,7 +79,24 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
             heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
         }
 
+        let tapDismiss = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.resignKeyboard))
+        view.addGestureRecognizer(tapDismiss)
+        
+        
+       // scrollView.contentSize.height = 800
+        
     }
+    
+    
+    var currentView: UIView!
+    func tapToDismissKeyboard(myView: UIView){
+
+    }
+    func resignKeyboard(){
+        view.endEditing(true)
+    }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
 
@@ -73,8 +105,13 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
     override func viewDidAppear(animated: Bool) {
         
-
-        scrollView.contentSize.height = stackView.frame.height + 160
+        if stackView.frame.height + 160 > self.view.frame.height{
+            scrollView.contentSize.height = stackView.frame.height + 160
+        } else{
+            scrollView.contentSize.height = self.view.frame.height - 22
+        }
+        scrollView.contentSize.width = self.view.frame.width
+        getComments()
 
     }
     
@@ -299,8 +336,6 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //////////////////////////////////////////////////
     //to mail vc
     
-
-    
     @IBAction func toMailVC(){
         var mailVC = MFMailComposeViewController()
         mailVC.mailComposeDelegate = self
@@ -316,4 +351,180 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBOutlet weak var viewForScrollRect: UIView!
+    var commentArray = [Comment]()
+    
+    
+    
+    
+    
+    
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    func keyboardWillBeHidden(input: NSNotification){
+        scrollView.contentInset = UIEdgeInsetsZero
+        scrollView.contentInset.top = 22
+    }
+    
+    func makeLarger(input: NSNotification){
+        
+        if let userInfo = input.userInfo{
+            let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey]
+            let keyboardRect = keyboardFrame?.CGRectValue()
+            if let keyboardHeight = keyboardRect?.height{
+                scrollView.contentInset.bottom = (keyboardHeight )
+                
+                performSelector(#selector(EventDetailsVC.moveTextFieldIntoView))
+            }
+        }
+    }
+    
+    func moveTextFieldIntoView(){
+        scrollView.scrollRectToVisible(viewForScrollRect.frame, animated: true)
+    }
+    
+    @IBAction func submitComment(sender: UITextView){
+        let date = NSDate()
+        let timeIntervalSince1970 = Int(date.timeIntervalSince1970)
+        
+        let key = DataService.instance.commentRef.child(event.key).childByAutoId().key
+        
+        if commentByUser.text == nil || commentByUser.text == ""{
+            generalAlert("Error", message: "The comment field is not filled out")
+        } else{
+            print(FIRAuth.auth()?.currentUser?.uid)
+            let setComment: Dictionary<String, AnyObject> = ["userId": (FIRAuth.auth()?.currentUser?.uid)!, "comment": commentByUser.text, "timeStamp": timeIntervalSince1970]
+            DataService.instance.commentRef.child(event.key).child(key).setValue(setComment)
+            DataService.instance.currentUser.child("comments").child(event.key).child(key).setValue("True")
+        }
+    }
+    
+    
+    
+    @IBOutlet var tableHeight: NSLayoutConstraint!
+    
+    func getComments(){
+        print("hope")
+        DataService.instance.commentRef.child(event.key).queryOrderedByChild("timeStamp").observeSingleEventOfType(.Value, withBlock: { snapshot in
+            
+            if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
+                for snapshot in snapshots{
+                    if let snap = snapshot.value as? Dictionary<String, AnyObject>{
+                        let comment = Comment(dict: snap)
+                        self.commentArray.append(comment)
+                        print("count of snaps")
+                    }
+                }
+            }
+            self.commentsTableView.reloadData()
+            self.updateViewConstraints()
+            print("yo")
+
+            self.scrollView.contentSize.height = self.scrollView.contentSize.height + self.tableHeight.constant
+            print(self.commentArray.count)
+        })
+        print("yodle")
+
+  //      commentsTableView.intrinsicContentSize()
+        
+     //   self.updateViewConstraints()
+        
+  //      self.tableHeight.constant = self.preferredContentSize.height
+//        scrollView.contentInset.bottom = tableHeight.constant
+        //self.commentsTableView.reloadData()
+    }
+    
+    override func updateViewConstraints() {
+        super.updateViewConstraints()
+        print("hello \(tableHeight.constant)")
+        tableHeight.constant = commentsTableView.contentSize.height + CGFloat(15 * commentArray.count)
+        print("hey ther \(tableHeight.constant)")
+    }
+    
+    
+    var totCellHeight = 0
+    func calcTotalCellHeight(){
+        
+        for i in 0..<commentArray.count{
+            let index = NSIndexPath(forRow: i, inSection: 0)
+            if let cell = commentsTableView.cellForRowAtIndexPath(index){
+                totCellHeight = totCellHeight + Int(cell.intrinsicContentSize().height)
+            }
+        }
+        print("totCellHeight \(totCellHeight)")
+    }
+    
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print("my count \(commentArray.count)")
+        if let cell = tableView.dequeueReusableCellWithIdentifier("commentsCell") as? CommentsCell{
+            cell.configureCell(commentArray[indexPath.row])
+            cell.backgroundColor = UIColor.yellowColor()
+            print("cHeight \(cell.frame.height)")
+            return cell
+        } else{
+            return UITableViewCell()
+        }
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        print("number of sections")
+        
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("number of rows \(commentArray.count)")
+        if commentArray.count > 0 {
+            commentsTableView.hidden = false
+        } else{
+            commentsTableView.hidden = true
+        }
+        return commentArray.count
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+extension EventDetailsVC{
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

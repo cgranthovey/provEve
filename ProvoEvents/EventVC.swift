@@ -45,6 +45,8 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadDataAfterNewEvent", object: nil)
         tableView.addSubview(refreshController)
+        
+        User().initCurrentUser()
     }
 
 //    below and above is code to add a pull to refresh option

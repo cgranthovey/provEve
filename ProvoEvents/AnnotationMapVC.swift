@@ -32,8 +32,30 @@ class AnnotationMapVC: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnotationMapVC.newParameters(_:)), name: "mapParameterChange", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnotationMapVC.newParameters(_:)), name: "mapParameterAll", object: nil)
     }
     
+    
+    
+    var choosenDate: NSDate?
+    func newParameters(notif: NSNotification){
+        mapView.removeAnnotations(annotationArray)
+        dictEnterKeyForEvent = [:]
+        dictEnterTagForEventKey = [:]
+        if let dict = notif.userInfo as? Dictionary<String, NSDate>{
+            if let date = dict["date"]{
+                choosenDate = date
+                geoFireQuery()
+            }
+        } else{
+            choosenDate = nil
+            geoFireQuery()
+            print("show all")
+            // all events
+        }
+    }
 
     
     @IBAction func popVC(){
@@ -45,6 +67,11 @@ class AnnotationMapVC: UIViewController {
         adjustMapCenter(currentLoc.coordinate)
     }
     
+    
+    let settingsLauncher = MapSettingsLauncher()
+    @IBAction func settings(){
+        settingsLauncher.showSettings()
+    }
     
     func adjustMapCenter(coord: CLLocationCoordinate2D){
         
@@ -135,10 +162,16 @@ class AnnotationMapVC: UIViewController {
                     DataService.instance.geoFireRef.child(key).setValue(nil)
                     return
                 }
-                
-                
-                
-                
+                if let dateUserChoose = self.choosenDate{
+                    if event.onThisDay(dateUserChoose){
+                        self.dictEnterKeyForEvent[key] = event
+                        self.makeAnotation(key, location: location)
+                        return
+                    } else{
+                        return
+                    }
+                }
+
                 print("my count \(self.dictEnterKeyForEvent.count)")
                 self.dictEnterKeyForEvent[key] = event
                 self.makeAnotation(key, location: location)
@@ -147,6 +180,8 @@ class AnnotationMapVC: UIViewController {
             }
         })
     }
+    
+    var annotationArray = [MKAnnotation]()
     
     func makeAnotation(key: String, location: CLLocation){
         print("how many events holder? \(dictEnterKeyForEvent.count)")
@@ -161,6 +196,8 @@ class AnnotationMapVC: UIViewController {
                 eventAnnotation.coordinate = location.coordinate
                 eventAnnotation.title = event.title
                 eventAnnotation.subtitle = event.location
+            let anno = eventAnnotation as? MKAnnotation
+            annotationArray.append(anno!)
             self.mapView.addAnnotation(eventAnnotation)
         }
     }

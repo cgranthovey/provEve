@@ -32,6 +32,10 @@ class DataService{
         return mainRef.child("User")
     }
     
+    var commentRef: FIRDatabaseReference{
+        return mainRef.child("Comments")
+    }
+    
     
     var currentUser: FIRDatabaseReference{
 //        print("current uid \(userRef.child((FIRAuth.auth()?.currentUser?.uid)!))")

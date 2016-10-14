@@ -92,8 +92,61 @@ extension Array where Element: Event{
 
 
 extension Event{
-    
     func beforeToday() -> Bool{
+        let currentDate = NSDate()
+        let todayStartInSeconds = todayStart(currentDate)
+        if timeStampOfEvent < todayStartInSeconds{
+            return true
+        } else{
+            return false
+        }
+    }
+    
+    func onThisDay(date: NSDate) -> Bool{
+
+        var start = date.timeIntervalSince1970
+        var end = date.timeIntervalSince1970 + 86400
+        
+        let timeOfEvent = Double(self.timeStampOfEvent!)
+
+        if timeOfEvent >= start && timeOfEvent < end{
+            return true
+        } else{
+            return false
+        }
+    }
+    
+    func todayStart(date: NSDate) ->Int{
+        
+        let calendar = NSCalendar.currentCalendar()
+        let currentHour = calendar.component(.Hour, fromDate: date)
+        let currentMinute = calendar.component(.Minute, fromDate: date)
+        let secondsInToday = (currentHour * 60 * 60 + currentMinute * 60)
+        let nowInSeconds = Int(date.timeIntervalSince1970)
+        let todayStartInSeconds = nowInSeconds - secondsInToday
+        return todayStartInSeconds
+    }
+    
+    
+    
+}
+
+
+extension UIView{
+    func addConstraintWithFormat(format: String, views: UIView...){
+        var viewsDictionary = [String: UIView]()
+        for (index, view) in views.enumerate(){
+            let key = "v\(index)"
+            view.translatesAutoresizingMaskIntoConstraints = false
+            viewsDictionary[key] = view
+        }
+        
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))       
+    }
+}
+
+extension NSObject{
+    func getCurrentDateInfo(){
         let currentDate = NSDate()
         let calendar = NSCalendar.currentCalendar()
         let currentHour = calendar.component(.Hour, fromDate: currentDate)
@@ -102,21 +155,37 @@ extension Event{
         let nowInSeconds = Int(currentDate.timeIntervalSince1970)
         let todayStartInSeconds = nowInSeconds - secondsInToday
         
-        if timeStampOfEvent < todayStartInSeconds{
-            return true
-        } else{
-            return false
-        }
+        let todayEnd = todayStartInSeconds + 86400
     }
-    
-
 }
 
 
+extension NSDate {
 
-
-
-
+    func weekInfo() -> String{
+        let format = NSDateFormatter()
+        format.dateStyle = .ShortStyle
+        var day = format.stringFromDate(self)
+        day.removeRange(day.endIndex.advancedBy(-3)..<day.endIndex)
+        return day
+    }
+    
+    func dayOfTheWeek() -> String? {
+        let weekdays = [
+            "Sun",
+            "Mon",
+            "Tues",
+            "Wed",
+            "Thur",
+            "Fri",
+            "Sat,"
+        ]
+        
+        let calendar: NSCalendar = NSCalendar.currentCalendar()
+        let components: NSDateComponents = calendar.components(.Weekday, fromDate: self)
+        return weekdays[components.weekday - 1]
+    }
+}
 
 
 

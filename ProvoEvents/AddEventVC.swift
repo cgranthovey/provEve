@@ -70,11 +70,11 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     
     func keyboardWillBeHidden(input: NSNotification){
         scrollView.contentInset = UIEdgeInsetsZero
+        scrollView.contentInset.top = 22
     }
 
     var activeTextField: UITextField!
     var activeTextView: UITextView!
-    var activeTextInput: UITextInput!
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         print("minE")
@@ -249,9 +249,17 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    
+    
+    
     @IBAction func submit(sender: AnyObject){
         print("1")
         resignAllFirstResponders()
+        performSelector(#selector(AddEventVC.toFireBase), withObject: nil, afterDelay: 0.8)
+        
+    }
+    
+    func toFireBase(){
         print("2")
         if titleTextField.text == nil || titleTextField.text == ""{
             print("3!")
@@ -272,7 +280,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         } else{
             selectedCellImgName = img[selectedCellInt]
         }
-
+        
         if dateString == nil{
             alert("Error", message: "Date Missing")
             return
@@ -322,6 +330,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                 print("i'm on bottom")
             }
         }
+
     }
     
     func postGeoFire(location: CLLocationCoordinate2D?, eventRef: String?){

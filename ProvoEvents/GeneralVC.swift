@@ -26,4 +26,14 @@ class GeneralVC: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
 
+    func generalAlert(title: String, message: String){
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+        alertController.addAction(action)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+
+    
 }
