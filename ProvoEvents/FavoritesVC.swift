@@ -46,6 +46,7 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func loadData(){
+        todaysStartTime = self.getTodaysStartTime()
         DataService.instance.currentUser.child("likes").queryOrderedByChild("timeStampOfEvent").queryStartingAtValue(self.todaysStartTime).observeSingleEventOfType(.Value, withBlock: {snapshot in
             if snapshot.value == nil{
             } else{

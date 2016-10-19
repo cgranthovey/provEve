@@ -300,6 +300,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         let key = DataService.instance.eventRef.childByAutoId().key
         holdKeyInCaseError = key
         
+
+        
         let childValues: Dictionary<String, AnyObject> = ["/Events/\(key)": toFirebaseDict, "/User/\((FIRAuth.auth()?.currentUser?.uid)!)/posts/\(key)": "True"]
         DataService.instance.mainRef.updateChildValues(childValues) { (err, FIRDatabaseRef) in
             if err != nil{

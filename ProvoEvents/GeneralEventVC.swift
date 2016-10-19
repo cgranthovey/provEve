@@ -17,7 +17,6 @@ class GeneralEventVC: UIViewController {
         super.viewDidLoad()
         
         todaysStartTime = self.getTodaysStartTime()
-
         // Do any additional setup after loading the view.
     }
 

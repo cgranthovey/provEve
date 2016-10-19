@@ -64,6 +64,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     
     
     func loadData(){
+        todaysStartTime = self.getTodaysStartTime()
         DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.value == nil{
                 print("this snapshot = nil for likes .value")
