@@ -205,13 +205,7 @@ func keyboardWillShow(sender: NSNotification) {
             DataService.instance.commentRef.child(event.key).child(key).setValue(setComment)
             DataService.instance.currentUser.child("comments").child(event.key).child(key).setValue("True")
             // can use .updateChildValues to look for error if desired
-            
-//            let successImg = UIImageView(image: UIImage(named: "checkmark"))
-//            if keyboardUp{
-//                successImg.showCheckmarkAnimatedTempImg(self.shadowView, delay: 0.7, remove: true)
-//            } else{
-//                successImg.showCheckmarkAnimatedTempImg(self.shadowView, delay: 0.3, remove: true)
-//            }
+
             commentTextView.text = ""
             self.view.endEditing(true)
         }

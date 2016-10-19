@@ -26,6 +26,9 @@ class CommentsCell: UITableViewCell {
         name.text = comment.userName
         self.comment.text = comment.commentText
         
+        deleteBtnOutlet.hidden = false
+        deleteImg.hidden = false
+        
         if comment.userId != FIRAuth.auth()?.currentUser?.uid{
             deleteBtnOutlet.hidden = true
             deleteImg.hidden = true

@@ -51,7 +51,6 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
 
         
         
-        
         imgView = UIImageView()
         imgView.frame = backImg.frame
         imgView.image = UIImage(named: "mtgood")
@@ -72,8 +71,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
     }
     
     func removeFirstResponder(){
-        passwordField.resignFirstResponder()
-        emailField.resignFirstResponder()
+        self.view.endEditing(true)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
