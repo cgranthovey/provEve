@@ -115,16 +115,23 @@ class EventDetailsCommVC: GeneralVC, UITableViewDelegate, UITableViewDataSource,
     }
     
     func animateCommentsOut(amount: CGFloat){
+        
+
+        
+        
         UIView.animateWithDuration(0.25, animations: {
+            self.view.endEditing(true)
             self.shadowView.frame.origin.x = self.view.frame.origin.x + amount
         }) { (true) in
             UIView.animateWithDuration(0.25, animations: {
                 self.alphaBackgroundView.alpha = 0
                 }, completion: { (true) in
+                    self.view.alpha = 0
                     self.dismissViewControllerAnimated(false, completion: nil)
                     
             })
         }
+
     }
     
     

@@ -31,6 +31,8 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     
     var EventsCategorized = [Int: [Event]]()
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,6 +41,8 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.tableFooterView = UIView()
+        
         loadData()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
@@ -46,7 +50,9 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadDataAfterNewEvent", object: nil)
         tableView.addSubview(refreshController)
         
-        User().initCurrentUser()
+        
+        Constants.instance.initCurrentUser()
+     //   initCurrentUser()
     }
 
 //    below and above is code to add a pull to refresh option
@@ -60,7 +66,24 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     func handleRefresh(refreshControl: UIRefreshControl){
         loadData()
     }
-
+    
+    
+    
+//    func initCurrentUser(){
+//        DataService.instance.currentUserProfile.observeSingleEventOfType(.Value, withBlock: { snapshot in
+//            if snapshot.value == nil{
+//                
+//            } else{
+//                if let snapDict = snapshot.value as? Dictionary<String, String>{
+//                    
+//                    let firstName = snapDict["firstName"]
+//                    let profileImg = snapDict["profileImg"]
+//                    let userName = snapDict["userName"]
+//                    currentUser = User(firstName: firstName, userName: userName, imgString: profileImg)
+//                }
+//            }
+//        })
+//    }
     
     
     func loadData(){
@@ -94,7 +117,6 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                                     }
                                 }
                                 
-                                
                                 let post = Event(key: key, dict: postDict, isLiked: isEventLiked)
                                 self.events.append(post)
                                 self.timeStampOfLast = post.timeStampOfEvent
@@ -104,26 +126,44 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                     }
                 }
                 self.EventsCategorized = self.events.NewDictWithTimeCategories()
+                self.shouldAddTableViewBackground()
                 self.tableView.reloadData()
                 self.isCurrentlyLoading = false
                 if self.refreshController.refreshing{
                     self.refreshController.endRefreshing()
                 }
             })
-            
         })
+    }
+    
+    func shouldAddTableViewBackground(){
+        if EventsCategorized.count > 0{
+            tableView.backgroundView = nil
+        } else{
+            let noDataLbl: UILabel = UILabel(frame: CGRectMake(20, 40, 200, 40))
+            
+            noDataLbl.numberOfLines = 10
+            noDataLbl.text = "Post the first event!"
+            noDataLbl.font = UIFont(name: "Avenir", size: 20)
+            noDataLbl.numberOfLines = 0
+            noDataLbl.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.87)
+            noDataLbl.textAlignment = .Center
+            tableView.backgroundView = noDataLbl
+        }
     }
     
     func addLike(notif: NSNotification){
         if let holdEvent = notif.object as? Event{
             let holdKey = holdEvent.key
             likesArray.append(holdKey)
-            for event in events{
-                if event.key == holdKey{
-                    if let i = events.indexOf({$0.key == event.key}){
-                        let indexPath = NSIndexPath(forRow: i, inSection: 0)
-                        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
-                            cell.setHeartImgFill()
+            for index in 0 ..< 4{
+                for eventC in EventsCategorized[index]!{
+                    if eventC.key == holdKey{
+                        if let i = EventsCategorized[index]?.indexOf({$0.key == eventC.key}){
+                            let indexPath = NSIndexPath(forRow: i, inSection: index)
+                            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
+                                cell.setHeartImgFill()
+                            }
                         }
                     }
                 }
@@ -135,13 +175,14 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         if let holdKey = notif.object as? String{
             if let index = likesArray.indexOf(holdKey){
                 likesArray.removeAtIndex(index)
-                for event in events{
-                    if event.key == holdKey{
-                        event.adjustHeartImgIsLiked(false)
-                        if let i = events.indexOf({$0.key == event.key}){
-                            let indexPath = NSIndexPath(forRow: i, inSection: 0)
-                            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
-                                cell.setHeartImgEmpty()
+                for index in 0 ..< 4{
+                    for eventC in EventsCategorized[index]!{
+                        if eventC.key == holdKey{
+                            if let i = EventsCategorized[index]?.indexOf({$0.key == eventC.key}){
+                                let indexPath = NSIndexPath(forRow: i, inSection: index)
+                                if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
+                                    cell.setHeartImgEmpty()
+                                }
                             }
                         }
                     }
@@ -297,9 +338,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                 } else{
                     self.isCurrentlyLoading = false
                 }
-                print("yo \(self.EventsCategorized.count)")
                 self.EventsCategorized = self.events.NewDictWithTimeCategories()
-                print("yo2 \(self.EventsCategorized.count)")
                 tableView.reloadData()
             })
             }

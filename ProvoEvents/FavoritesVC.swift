@@ -32,20 +32,14 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FavoritesVC.addCell(_:)), name: "heartAdded", object: nil)
 
-//        DataService.instance.currentUser.child("likes").observeEventType(.ChildRemoved, withBlock: { snapshot in
-//            if snapshot.value == nil{
-//            } else{
-//                let keyToRemove = snapshot.key
-//                let indexToRemove = self.likesArray.indexOf(keyToRemove)
-//                self.likesArray.removeAtIndex(indexToRemove!)
-//                self.events.removeAtIndex(indexToRemove!)
-//                let indexPath = NSIndexPath(forRow: indexToRemove!, inSection: 0)
-//                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-//            }
-//        })
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FavoritesVC.loadData), name: "eventDeleted", object: nil)
     }
     
     func loadData(){
+        
+        events = [Event]()
+        likesArray = [String]()
+        
         todaysStartTime = self.getTodaysStartTime()
         DataService.instance.currentUser.child("likes").queryOrderedByChild("timeStampOfEvent").queryStartingAtValue(self.todaysStartTime).observeSingleEventOfType(.Value, withBlock: {snapshot in
             if snapshot.value == nil{
@@ -65,12 +59,9 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                                     self.events.append(event)
                                     self.tableView.reloadData()
                                 }
-                                
                             }
                         })
-                        
                     }
-                    
                 }
             }
         })
@@ -153,7 +144,7 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
             let noDataLbl: UILabel = UILabel(frame: CGRectMake(20, 40, 200, 40))
             
             noDataLbl.numberOfLines = 10
-            noDataLbl.text = "No events have been liked"
+            noDataLbl.text = "Swipe right to like events"
             noDataLbl.font = UIFont(name: "Avenir", size: 20)
             noDataLbl.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.87)
             noDataLbl.textAlignment = .Center

@@ -17,7 +17,6 @@ class CreateEvent {
         return _instance
     }
     
-
     var savedEventId: String = ""
     func createEventFunc(eventStore: EKEventStore, title: String, startDate: NSDate, endDate: NSDate, alarm: EKAlarm?){
         let event = EKEvent(eventStore: eventStore)

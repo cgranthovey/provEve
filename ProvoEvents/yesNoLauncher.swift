@@ -85,10 +85,14 @@ class yesNoLauncher: NSObject {
     }
     
     func touchDownChgBtnColor(btn: UIButton){
+        print("touch down")
+
         btn.backgroundColor = UIColor(red: 210/255, green: 210/255, blue: 210/255, alpha: 1)
     }
     
     func deleteCommentYes(){
+        print("delete comment yes")
+
         yesBtn.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
         
         UIView.animateWithDuration(0.3, animations: {
@@ -100,10 +104,11 @@ class yesNoLauncher: NSObject {
         
             self.delegate?.yesPressed()
         }
-        print("delete comment yes")
     }
     
     func deleteCommentNo(){
+        print("delete comment no")
+
         noBtn.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
         UIView.animateWithDuration(0.3, animations: {
             self.darkView.alpha = 0

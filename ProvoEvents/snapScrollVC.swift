@@ -39,6 +39,11 @@ class snapScrollVC: UIViewController {
         
 
     }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        
+    }
 
 
 

@@ -30,6 +30,7 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
         removeFirstResponder()
     }
 
+    let loadingView = LoadingView()
     
     @IBAction func next(){
         if let email = emailField.text, let password = passwordField.text, let passwordV = verifyPasswordField.text where (password.characters.count > 0 && email.characters.count > 0 && passwordV.characters.count > 0){
@@ -42,8 +43,32 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
                 alerts("Password", message: "Passwords do not match")
                 return
             }
-            let userInfoDict = ["email": email, "password": password]
-            performSegueWithIdentifier("CreateUserInfoVC", sender: userInfoDict)
+            
+            loadingView.showSpinnerView(self.view)
+            
+            AuthService.instance.createUser(password, email: email, onComplete: { (errMsg, data) in
+                guard errMsg == nil else{
+                    self.alerts("Error Authenticating", message: errMsg)
+                    return
+                }
+                AuthService.instance.login(password, email: email, onComplete: { (errMsg, data) in
+                    guard errMsg == nil else{
+                        self.alerts("Error Authenticating", message: errMsg)
+                        return
+                    }
+                    DataService.instance.currentUser.setValue("TRUE", withCompletionBlock: { (error, FIRDatabaseReference) in
+                        if error != nil{
+                            self.alerts("Error", message: "There was an error uploading your info")
+                        } else{
+                            self.loadingView.successCancelSpin({
+                                self.performSegueWithIdentifier("CreateUserInfoVC", sender: nil)
+                            })
+                        }
+                    })
+                })
+            })
+            
+
             
         } else {
             alerts("Username and Password Required", message: "You must enter a username and password.")
@@ -61,17 +86,10 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
         verifyPasswordField.resignFirstResponder()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "CreateUserInfoVC"{
-            if let newVC = segue.destinationViewController as? CreateUserInfoVC{
-                if let send = sender as? Dictionary<String, AnyObject>{
-                    newVC.userInfoDict = send
-                }
-            }
-        }
-    }
+
     
     func alerts(title: String, message: String){
+        self.loadingView.cancelSpinnerAndDarkView()
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)

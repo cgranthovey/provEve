@@ -33,18 +33,11 @@ class User{
         return _userName
     }
     
-    func initCurrentUser(){
-        DataService.instance.currentUserProfile.observeSingleEventOfType(.Value, withBlock: { snapshot in
-            if snapshot.value == nil{
-                print("snap is nil")
-            } else{
-                
-                if let snapDict = snapshot.value as? Dictionary<String, String>{
-                    self._firstName = snapDict["firstName"]
-                    self._profileImg = snapDict["profileImg"]
-                    self._userName = snapDict["userName"]
-                }
-            }
-        })
+    init(firstName: String?, userName: String?, imgString: String?){
+        self._firstName = firstName
+        self._userName = userName
+        self._profileImg = imgString
     }
+    
+
 }

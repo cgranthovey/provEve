@@ -38,7 +38,6 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         eventImg.image = UIImage(named: "photoAlbum2")
-        setUpTaps()
         setUpDelegates()
         
         
@@ -62,11 +61,23 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         scrollView.contentSize.height = 815
         scrollView.contentSize.width = view.frame.width
         
-        
         print("scrollView contentSize \(scrollView.contentSize)")
         print("scrollView frame \(scrollView.frame)")
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        print("hi \(self.view.frame.width)")
+        print("yo \(scrollView.contentSize.height)")
+        viewScrollHeight.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: scrollView.contentSize.height)
+        viewScrollHeight.backgroundColor = UIColor.clearColor()
+        self.scrollView.addSubview(viewScrollHeight)
+        scrollView.sendSubviewToBack(viewScrollHeight)
+        setUpTaps()
+    }
+    
+    
 
+    var viewScrollHeight = UIView()
     
     func keyboardWillBeHidden(input: NSNotification){
         scrollView.contentInset = UIEdgeInsetsZero
@@ -135,12 +146,14 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         }
     }
     
+    @IBOutlet weak var submitOutlet: UIButton!
+    
     func moveTextFieldIntoView(){
         print("none")
         if activeTextField != nil{
             scrollView.scrollRectToVisible(activeTextField.frame, animated: true)       //for this to work you have to remember in addition to setting conent height to make sure content width is at least at wide as view.frame.width
         } else if activeTextView != nil{
-            scrollView.scrollRectToVisible(activeTextView.frame, animated: true)
+            scrollView.scrollRectToVisible(submitOutlet.frame, animated: true)
             
         }
     }
@@ -242,25 +255,20 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                 self.performSelector(#selector(AddEventVC.popOut), withObject: nil, afterDelay: 1)
         }
     }
-    
-    
-    
+
     func popOut(){
         self.navigationController?.popViewControllerAnimated(true)
     }
-    
-    
-    
-    
-    @IBAction func submit(sender: AnyObject){
-        print("1")
+
+    @IBAction func submit(sender: UIButton){
+        print("yeak")
         resignAllFirstResponders()
-        performSelector(#selector(AddEventVC.toFireBase), withObject: nil, afterDelay: 0.8)
-        
+
+        performSelector(#selector(AddEventVC.toFireBase), withObject: nil, afterDelay: 0)
     }
     
     func toFireBase(){
-        print("2")
+        print("yak")
         if titleTextField.text == nil || titleTextField.text == ""{
             print("3!")
             alert("Error", message: "Title Missing")
@@ -415,12 +423,26 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     func getTheDateTime(date: NSDate){
         timeStampOfEvent = Int(date.timeIntervalSince1970)
         currentDate = date
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .MediumStyle
-        dateFormatter.timeStyle = .ShortStyle
-        dateString = dateFormatter.stringFromDate(date)
-        print("date String: \(dateString)")
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateStyle = .MediumStyle
+//        dateFormatter.timeStyle = .ShortStyle
+//        
+//        dateString = dateFormatter.stringFromDate(date)
+//        print("date String: \(dateString)")
+//        
+//        
         
+        let dateForm = NSDateFormatter()
+        dateForm.dateStyle = .MediumStyle
+        var dateDayString = dateForm.stringFromDate(date)
+        
+        let dateForm2 = NSDateFormatter()
+        dateForm2.timeStyle = .ShortStyle
+        let timeString = dateForm2.stringFromDate(date)
+        
+        dateDayString.removeRange(dateDayString.endIndex.advancedBy(-6)..<dateDayString.endIndex)
+        dateString = dateDayString + ", " + timeString
+
         dateButtonTappedOutlet.setTitle(dateString, forState: .Normal)
     }
     
@@ -446,10 +468,15 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         
     }
     
+    
     func setUpTaps(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(AddEventVC.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+       // tap.cancelsTouchesInView = false
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(AddEventVC.dismissKeyboard))
+       // tap2.cancelsTouchesInView = false
+        viewScrollHeight.addGestureRecognizer(tap)
+        topView.addGestureRecognizer(tap2)
+
         
         let tapImg = UITapGestureRecognizer(target: self, action: #selector(AddEventVC.imageTapped))
         eventImg.userInteractionEnabled = true
@@ -457,7 +484,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     }
     
     func dismissKeyboard(){
-        self.view.endEditing(true)
+        resignAllFirstResponders()
+        //self.view.endEditing(true)
     }
     
     func imageTapped(){

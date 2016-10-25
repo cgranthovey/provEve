@@ -19,25 +19,30 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     @IBOutlet weak var cameraBtnOutlet: LoginButton!
     @IBOutlet weak var screenViewForCameraOutlets: UIView!
     
+    @IBOutlet weak var backBtn: UIButton!
+    
     var tapImg: UITapGestureRecognizer!
     
     var imgPicker: UIImagePickerController!
     var cameraTaker: UIImagePickerController!
     
-    var userInfoDict: Dictionary<String, AnyObject>!
     var password: String!
     var email: String!
     
     var tap: UITapGestureRecognizer!
     
+    var preventPopVC: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        unwrapPassAndEmailDict()
-        
         imgPicker = UIImagePickerController()
         imgPicker.delegate = self
+        
+        
+        if preventPopVC{
+            removePoppingVC()
+        }
         
         firstName.delegate = self
         userName.delegate = self
@@ -45,7 +50,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         hideCameraBtns()
         cameraTaker = UIImagePickerController()
         cameraTaker.delegate = self
-        cameraTaker.sourceType = .Camera
+        cameraTaker.sourceType = .PhotoLibrary
         
         tap = UITapGestureRecognizer(target: self, action: #selector(CreateUserInfoVC.removeFirstResponder))
         self.view.addGestureRecognizer(tap)
@@ -55,14 +60,13 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         self.myUserImg.addGestureRecognizer(tapImg)
     }
     
+    func removePoppingVC(){
+        self.view.removeGestureRecognizer(swipeRight)
+        backBtn.hidden = true
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         removeFirstResponder()
-    }
-
-    
-    func unwrapPassAndEmailDict(){
-        password = userInfoDict["password"] as? String
-        email = userInfoDict["email"] as? String
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -87,35 +91,52 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         return false
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if string == " "{
+            return false
+        }
+        return true
+    }
+    
+    let loadingView = LoadingView()
+    
     @IBAction func finished(sender: AnyObject){
-        if let user = userName.text, first = firstName.text where (user.characters.count > 5){
+        if let user = userName.text where (user.characters.count > 5){
             
-            guard first.characters.count > 0 else {
-                alerts("First Name", message: "The first name must be at least one character")
-                return 
+            loadingView.showSpinnerView(self.view)
+            
+            let fireBaseDict: Dictionary<String, String>!
+            
+            if let first = firstName.text{
+                fireBaseDict = ["firstName": first, "userName": user]
+            } else{
+                fireBaseDict = ["userName": user]
             }
             
-            AuthService.instance.createUser(password, email: email, onComplete: { (errMsg, data) in
-                guard errMsg == nil else{
-                    self.alerts("Error Authenticating", message: errMsg)
-                    return
-                }
-                AuthService.instance.login(self.password, email: self.email, onComplete: { (errMsg, data) in
-                    guard errMsg == nil else{
-                        self.alerts("Error Authenticating", message: errMsg)
-                        return
-                    }
-                    print("logged in woot woot!")
-                    let fireBaseDict: Dictionary<String, String> = ["firstName": first, "userName": user]
-                    print("yoyo")
-                    DataService.instance.currentUser.child("profile").setValue(fireBaseDict)
-                    self.uploadProfileImg()
-                    print("yoyoma")
+            
+            DataService.instance.usernamesRef.child(user).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let snap = snapshot.value as? String{
+                    self.alerts("Username", message: "This username has already been choosen")
+                } else{
                     
-                    self.performSegueWithIdentifier("snapScrollVC", sender: nil)
-                })
+                    let dict: Dictionary<String, AnyObject> = ["/User/\((FIRAuth.auth()?.currentUser?.uid)!)/profile": fireBaseDict, "/Usernames/\(user)": "TRUE"]
+                    DataService.instance.mainRef.updateChildValues(dict, withCompletionBlock: { (error, FIRDatabaseReference) in
+                        if error != nil{
+                            self.alerts("Error", message: "There was an error uploading your info")
+                        } else{
+                            self.uploadProfileImg()
+                            
+                            self.loadingView.successCancelSpin({
+                                self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+                            })
+                        }
+                    })
+                    
+                }
             })
             
+            
+
             
         } else{
             alerts("Username", message: "Username must be at least 6 characters")
@@ -204,6 +225,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     func alerts(title: String, message: String){
+        loadingView.cancelSpinnerAndDarkView()
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)

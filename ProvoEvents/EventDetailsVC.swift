@@ -35,7 +35,10 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
     @IBOutlet weak var heartBtn: UIButton!
     
-
+    @IBOutlet weak var weatherTemp: UILabel!
+    @IBOutlet weak var weatherIconImg: UIImageView!
+    
+    @IBOutlet weak var weatherStack: UIStackView!
     
     
     var event: Event!
@@ -49,6 +52,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         deleteView.delegate = self
 
         setUpUI()
+        
         
 
         bottomTextMessageBtn.imageView?.contentMode = .ScaleAspectFit
@@ -116,9 +120,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     }
     
     func yesPressed() {
-        
-        
-        
+    
         DataService.instance.eventRef.child(event.key).removeValue()
         DataService.instance.currentUser.child("posts").child(event.key).removeValue()
         DataService.instance.geoFireRef.child(event.key).removeValue()
@@ -127,6 +129,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         print("yes called!!!")
         
         NSNotificationCenter.defaultCenter().postNotificationName("loadDataAfterNewEvent", object: event, userInfo: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("eventDeleted", object: nil, userInfo: nil)
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -140,11 +143,22 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
             eventLocBtn.userInteractionEnabled = false
         }
         
-        eventDate.text = event.date
+        eventDate.text = dateString()//event.date
         eventEmail.setTitle(event.email, forState: .Normal)
+        eventEmail.titleLabel?.numberOfLines = 1
+        eventEmail.titleLabel?.adjustsFontSizeToFitWidth = true
+        eventEmail.titleLabel?.lineBreakMode = .ByTruncatingMiddle
+        eventEmail.titleLabel?.minimumScaleFactor = 0.7
+        
         
         self.activityIndicator.startAnimating()
         self.activityIndicator.hidesWhenStopped = true
+        
+        if event.timeStampOfEvent > Int(NSDate().timeIntervalSince1970) + 86400 * 4{
+            weatherStack.hidden = true
+        } else{
+            callWeather(event.timeStampOfEvent!)
+        }
         
         if event.email == nil || event.email == ""{
             emailStack.hidden = true
@@ -161,6 +175,18 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
             eventImg.hidden = true
             self.activityIndicator.stopAnimating()
         }
+    }
+    
+    
+    
+    
+    func dateString() -> String{
+        let timeStamp = event.timeStampOfEvent
+        let timeInterval = NSTimeInterval(timeStamp!)
+        let myDate = NSDate(timeIntervalSince1970: timeInterval)
+        
+        return myDate.dateEventDetailsString()
+        
     }
     
     
@@ -240,7 +266,6 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         
         let img = UIImageView(image: UIImage(named: "checkmark"))
         img.showCheckmarkAnimatedTempImg(view, delay: 0.5)
-        
     }
     
     func accessPreviouslyDenied(){
@@ -319,7 +344,6 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //////////////////////////////////////////////////
     //to mail vc
     @IBAction func eventLocBtnPressed(sender: AnyObject){
-        
         
         //google
         

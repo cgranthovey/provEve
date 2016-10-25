@@ -20,7 +20,13 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        do{
+//         try FIRAuth.auth()?.signOut()
+//            print("sign out")
+//        } catch {
+//            print("could not sign out")
+//        }
+
         preView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         preView.backgroundColor = UIColor(red: 245.0/255.0, green: 245.0/255.0, blue: 245.0/255.0, alpha: 1.0)
         self.view.addSubview(preView)
@@ -28,18 +34,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
         passwordField.delegate = self
         emailField.delegate = self
         
-        if FIRAuth.auth()?.currentUser != nil{
- //           UIView.setAnimationsEnabled(false)
-            self.performSegueWithIdentifier("snapScrollVC", sender: nil)
-            
-            return
-        } else{
-            UIView.animateWithDuration(0.5, animations: { 
-                self.preView.alpha = 0
-                }, completion: { (true) in
-                    self.preView.removeFromSuperview()
-            })
-        }
+        checkForUID()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.removeFirstResponder))
         self.view.addGestureRecognizer(tap)
@@ -59,11 +54,58 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
         imgView.alpha = 0
     }
     
+    
+    func checkForUID(){
+        print("1")
+        if FIRAuth.auth()?.currentUser != nil{
+            print("2")
+            print(FIRAuth.auth()?.currentUser?.uid)
+            //           UIView.setAnimationsEnabled(false)
+            checkForUserName()
+            return
+        } else{
+            print("3")
+            UIView.animateWithDuration(0.5, animations: {
+                self.preView.alpha = 0
+                }, completion: { (true) in
+                    self.preView.removeFromSuperview()
+            })
+        }
+    }
+    
+    
+    func checkForUserName(){
+        print("4")
+        
+     //   DataService.instance.mainRef.child("User").child(FIRAuth.auth()?.currentUser?.uid).obsersingle
+        
+        
+        DataService.instance.currentUser.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            print("5")
+            if let snap = snapshot.value as? String{
+                print("dog")
+                self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
+            } else{
+                print("kitten")
+                print(snapshot)
+                self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+            }
+        })
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "createUserInfoVC"{
+            if let vc = segue.destinationViewController as? CreateUserInfoVC{
+                vc.preventPopVC = true
+            }
+        }
+    }
+    
+    
     override func viewDidDisappear(animated: Bool) {
         self.preView.removeFromSuperview()
         passwordField.text = ""
         emailField.text = ""
-//        UIView.setAnimationsEnabled(true)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -79,13 +121,17 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
         return false
     }
     
+    let loadingView = LoadingView()
+    
     @IBAction func loginBtn(sender: AnyObject){
         if let email = emailField.text, let password = passwordField.text where (email.characters.count > 0 && password.characters.count > 0){
             guard password.characters.count >= 6 else{
                 alerts("Password", message: "Password must be at least 6 characters")
                 return
             }
-
+            
+            loadingView.showSpinnerView(self.view)
+            
             AuthService.instance.login(password, email: email, onComplete: { (errMsg, data) in
                 guard errMsg == nil else{
                     self.alerts("Error Authenticating", message: errMsg)
@@ -93,6 +139,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
                 }
                 self.resignFirstResponder()
                 self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+                self.loadingView.cancelSpinnerAndDarkView()
                 print("logged in!")
             })
             
@@ -112,6 +159,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
     }
 
     func alerts(title: String, message: String){
+        loadingView.cancelSpinnerAndDarkView()
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)

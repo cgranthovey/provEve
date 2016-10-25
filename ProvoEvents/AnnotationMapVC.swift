@@ -11,7 +11,7 @@ import MapKit
 import FirebaseDatabase
 
 
-class AnnotationMapVC: UIViewController {
+class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
 
     let locationManager = CLLocationManager()
     var currentLoc = CLLocation()
@@ -19,8 +19,13 @@ class AnnotationMapVC: UIViewController {
     
     var currentBtnTag = 0
 
+    var hasUserLocBeenFound = false
     
     @IBOutlet weak var mapView: MKMapView!
+    
+    @IBOutlet weak var backBtnOutlet: UIButton!
+    @IBOutlet weak var centerUserOutlet: UIButton!
+    @IBOutlet weak var settingsOutlet: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +38,36 @@ class AnnotationMapVC: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
+        backBtnOutlet.imageView?.contentMode = .ScaleAspectFit
+        centerUserOutlet.imageView?.contentMode = .ScaleAspectFit
+        settingsOutlet.imageView?.contentMode = .ScaleAspectFit
+        mapTypeBtnOutlet.imageView?.contentMode = .ScaleAspectFit
+        
+        
+        let edgeSwipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(AnnotationMapVC.showSettings))
+        edgeSwipe.edges = .Left
+        self.view.addGestureRecognizer(edgeSwipe)
+        edgeSwipe.delegate = self
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnotationMapVC.newParameters(_:)), name: "mapParameterChange", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnotationMapVC.newParameters(_:)), name: "mapParameterAll", object: nil)
     }
     
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
     
     
+    func showSettings(recoginizer: UIScreenEdgePanGestureRecognizer){
+        print("Seen")
+        if recoginizer.state == .Began{
+            mapView.scrollEnabled = false
+            settingsLauncher.showSettings()
+
+        } else if recoginizer.state == .Ended{
+            mapView.scrollEnabled = true
+        }
+    }
     var choosenDate: NSDate?
     func newParameters(notif: NSNotification){
         mapView.removeAnnotations(annotationArray)
@@ -59,18 +88,36 @@ class AnnotationMapVC: UIViewController {
 
     
     @IBAction func popVC(){
-        //self.navigationController?.popViewControllerAnimated(true)
         self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func centerUser(){
-        adjustMapCenter(currentLoc.coordinate)
+        if hasUserLocBeenFound{
+            adjustMapCenter(currentLoc.coordinate)
+        }
     }
     
     
     let settingsLauncher = MapSettingsLauncher()
+    
     @IBAction func settings(){
         settingsLauncher.showSettings()
+    }
+    
+    @IBOutlet weak var mapTypeBtnOutlet: UIButton!
+    
+    
+    
+    @IBAction func mapTypeBtnPressed(){
+        if mapView.mapType == .Standard{
+            mapTypeBtnOutlet.changeImageAnimated(UIImage(named: "mapStandard"))
+            mapView.mapType = .Hybrid
+        } else{
+            
+            mapTypeBtnOutlet.changeImageAnimated(UIImage(named: "mapWorld"))
+            //mapTypeBtn.setImage(UIImage(named: "mapStandard"), forState: .Normal)
+            mapView.mapType = .Standard
+        }
     }
     
     func adjustMapCenter(coord: CLLocationCoordinate2D){
@@ -129,24 +176,67 @@ class AnnotationMapVC: UIViewController {
             centerCoord = currentLoc.coordinate
         } else{
             span = mapView.region.span
+            print("SPANY: \(span)")
             centerCoord = mapView.centerCoordinate
         }
         
         print("my span \(span)  coord \(centerCoord)")
         
         let region = MKCoordinateRegionMake(centerCoord, span)
-        let regionQuery = geoFire.queryWithRegion(region)
         
-        var queryHandle = regionQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
-            print("key: \(key) and the location: \(location)")
+        
+        if isRegionValid(region){
+        
+            let regionQuery = geoFire.queryWithRegion(region)
             
-            if self.dictEnterKeyForEvent[key] == nil{
-                self.loadEventInfo(key, location: location)
-            } else {//if we already have key then we don't need to make another annotation
-               // self.makeAnotation(key, location: location)
-            }
-        })
+            var queryHandle = regionQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
+                
+                print("key: \(key) and the location: \(location)")
+                
+                if self.dictEnterKeyForEvent[key] == nil{
+                    self.loadEventInfo(key, location: location)
+                } else {//if we already have key then we don't need to make another annotation
+                   // self.makeAnotation(key, location: location)
+                }
+            })
+        }
     }
+    
+    
+    
+    func isRegionValid(region: MKCoordinateRegion) -> Bool{
+        
+        let centerLatDegrees = region.center.latitude
+        let topLatDegrees = centerLatDegrees + region.span.latitudeDelta / 2
+        let bottomLatDegrees = centerLatDegrees - region.span.latitudeDelta / 2
+        
+        let centerLongDegrees = region.center.longitude
+        
+        let centerTop = CLLocationCoordinate2D(latitude: topLatDegrees, longitude: centerLongDegrees)
+        let centerBottom = CLLocationCoordinate2D(latitude: bottomLatDegrees, longitude: centerLongDegrees)
+        
+        if CLLocationCoordinate2DIsValid(centerTop) && CLLocationCoordinate2DIsValid(centerBottom){
+            return true
+        } else{
+            return false
+        }
+    }
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     var dictEnterKeyForEvent = Dictionary<String, Event>()
     var dictEnterTagForEventKey = Dictionary<Int, String>()
@@ -236,76 +326,80 @@ extension AnnotationMapVC: MKMapViewDelegate{
         return pinView
         
         
-        
-        //this commented code is to implement a custom pin image
-        
-//        let reuseId = "pin"
-//        var annotationView: MKAnnotationView?
-//        if let dequeueAnnotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId){
-//            annotationView = dequeueAnnotationView
-//            annotationView?.annotation = annotation
-//            print("this")
-//            
-//        } else{
-//            print("is")
-//            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-//            av.leftCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-//            annotationView = av
-//        }
+//        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//        //this commented code is to implement a custom pin image
 //        
-//        if let annotationView = annotationView  {
-//            // Configure your annotation view here
-//            print("chris")
-//            let myEvent = (annotationView.annotation as? customMKPointAnnotation)?.event
-//            
-//            annotationView.canShowCallout = true
-//            print("before")
-//            
-//            let pinImg: UIImage!
-//            
-//            if myEvent?.eventTypeImgName == "" || myEvent?.eventTypeImgName == nil{
-//                pinImg = UIImage(named: "addEvent")
-//            } else{
-//                print("reached")
-//                pinImg = UIImage(named: (myEvent?.eventTypeImgName)!)
-//            }
-//            
-//            let size = CGSize(width: 50, height: 50)
-//            UIGraphicsBeginImageContext(size)
-//            pinImg!.drawInRect(CGRectMake(0, 0, size.width, size.height))
-//            
-//            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-//            UIGraphicsEndImageContext()
-//            
-//            annotationView.contentMode = .ScaleAspectFit
-//            annotationView.image = resizedImage
-//            
-//            
-//            
-//            print("done")
-//            let smallSquare = CGSize(width: 30, height: 30)
-//            let button = UIButton(frame: CGRect(origin: CGPointZero, size: smallSquare))
-//            button.setBackgroundImage(UIImage(named: "addEvent"), forState: .Normal)
-//            button.addTarget(self, action: #selector(AnnotationMapVC.annotationBtnTapped(_:)), forControlEvents: .TouchUpInside)
-//            button.tag = currentBtnTag
-//            self.dictEnterTagForEventKey[currentBtnTag] = myEvent!.key
-//            currentBtnTag = currentBtnTag + 1
-//            
-//            annotationView.leftCalloutAccessoryView = button
-//
-//            annotationView.tintColor = UIColor.yellowColor()
-//        }
-//        print("returning")
-//        return annotationView
-
+////        let reuseId = "pin"
+////        var annotationView: MKAnnotationView?
+////        if let dequeueAnnotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId){
+////            annotationView = dequeueAnnotationView
+////            annotationView?.annotation = annotation
+////            print("this")
+////            
+////        } else{
+////            print("is")
+////            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+////            av.leftCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+////            annotationView = av
+////        }
+////        
+////        if let annotationView = annotationView  {
+////            // Configure your annotation view here
+////            print("chris")
+////            let myEvent = (annotationView.annotation as? customMKPointAnnotation)?.event
+////            
+////            annotationView.canShowCallout = true
+////            print("before")
+////            
+////            let pinImg: UIImage!
+////            
+////            if myEvent?.eventTypeImgName == "" || myEvent?.eventTypeImgName == nil{
+////                pinImg = UIImage(named: "addEvent")
+////            } else{
+////                print("reached")
+////                pinImg = UIImage(named: (myEvent?.eventTypeImgName)!)
+////            }
+////            
+////            let size = CGSize(width: 50, height: 50)
+////            UIGraphicsBeginImageContext(size)
+////            pinImg!.drawInRect(CGRectMake(0, 0, size.width, size.height))
+////            
+////            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+////            UIGraphicsEndImageContext()
+////            
+////            annotationView.contentMode = .ScaleAspectFit
+////            annotationView.image = resizedImage
+////            
+////            
+////            
+////            print("done")
+////            let smallSquare = CGSize(width: 30, height: 30)
+////            let button = UIButton(frame: CGRect(origin: CGPointZero, size: smallSquare))
+////            button.setBackgroundImage(UIImage(named: "addEvent"), forState: .Normal)
+////            button.addTarget(self, action: #selector(AnnotationMapVC.annotationBtnTapped(_:)), forControlEvents: .TouchUpInside)
+////            button.tag = currentBtnTag
+////            self.dictEnterTagForEventKey[currentBtnTag] = myEvent!.key
+////            currentBtnTag = currentBtnTag + 1
+////            
+////            annotationView.leftCalloutAccessoryView = button
+////
+////            annotationView.tintColor = UIColor.yellowColor()
+////        }
+////        print("returning")
+////        return annotationView
+//        
+//        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
-    
+
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         print("region changed")
         geoFireQuery()
-
     }
-    
+
     func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
         print("add anno")
     }
@@ -321,7 +415,11 @@ extension AnnotationMapVC: MKMapViewDelegate{
 extension AnnotationMapVC: CLLocationManagerDelegate{
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("byebye")
+
         if status == .AuthorizedWhenInUse {
+            print("bye")
+
             locationManager.requestLocation()
         }
     }
@@ -329,7 +427,7 @@ extension AnnotationMapVC: CLLocationManagerDelegate{
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             currentLoc = location
-            
+            hasUserLocBeenFound = true
             print("in loc manager")
             if shouldMapCenter{
                 print("inside should map center")
@@ -340,7 +438,7 @@ extension AnnotationMapVC: CLLocationManagerDelegate{
             }
         }
     }
-    
+
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print("error:: (error)")
     }
@@ -351,6 +449,7 @@ class customMKPointAnnotation: MKPointAnnotation{
     var event: Event!
     
 }
+
 
 
 

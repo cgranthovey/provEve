@@ -271,6 +271,7 @@ extension MapVC: HandleMapSearch {
 }
 
 extension MapVC : CLLocationManagerDelegate {
+    
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedWhenInUse {
             locationManager.requestLocation()
