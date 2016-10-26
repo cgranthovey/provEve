@@ -43,8 +43,7 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
             } else{
                 if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
                     for snap in snapshots{
-                        var holdKey = snap.key
-                        self.likesArray.append(holdKey)
+                        self.likesArray.append(snap.key)
                     }
                     for eventKey in self.likesArray{
                         DataService.instance.eventRef.child(eventKey).observeSingleEventOfType(.Value, withBlock: { snapshot in
@@ -72,7 +71,9 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     }
 
     func addCell(notif: NSNotification){
+        
         if let event = notif.object as? Event{
+            print("add cell called")
             likesArray.append(event.key)
             events.append(event)
             events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
@@ -84,44 +85,46 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     func removeCell(notif: NSNotification){
         if let key = notif.object as? String{
             if let indexValue = self.likesArray.indexOf(key), let favIndexValue = self.events.indexOf({$0.key == key}){
-//                self.likesArray.removeAtIndex(indexValue)
-//                self.events.removeAtIndex(favIndexValue)
-//                self.EventsCategorized = self.events.NewDictWithTimeCategories()
-                
-       //         tableView.reloadData()
                 print("event cat \(EventsCategorized.count)")
-            for index in 0 ..< 4{
-                print("index \(index)")
-                
-                if let eventArrayTime = EventsCategorized[index]{
-                    var currentSection = 0
-                    for eventC in eventArrayTime{
-                        if eventC.key == key{
-                            if let i = eventArrayTime.indexOf({$0.key == eventC.key}){
-                                
-                                self.likesArray.removeAtIndex(indexValue)
-                                self.events.removeAtIndex(favIndexValue)
-                                self.EventsCategorized = self.events.NewDictWithTimeCategories()
-                                
-                                let indexPath = NSIndexPath(forRow: i, inSection: currentSection)
-                                print("yep6")
-                                
-                                if eventArrayTime.count == 1 {
-                                    let indexSet = NSIndexSet(index: currentSection)
-                                    self.tableView.deleteSections(indexSet, withRowAnimation: .Automatic)
-                                } else{
-                                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                var section = 0         //need this b/c index finds key in dictionary
+                for keyEventCategorized in 0 ..< 4{
+                    print("index \(keyEventCategorized)")
+                    
+                    if let eventArray = EventsCategorized[keyEventCategorized]{
+                                if let i = eventArray.indexOf({$0.key == key}){
+                                    
+                                    self.likesArray.removeAtIndex(indexValue)
+                                    self.events.removeAtIndex(favIndexValue)
+                                    print("mice \(EventsCategorized.count)")
+                                    if EventsCategorized[keyEventCategorized]?.count == 1{
+                                        EventsCategorized[keyEventCategorized] = nil
+                                    } else{
+                                        print("winter")
+                                        print(self.EventsCategorized[keyEventCategorized]?.count)
+                                        self.EventsCategorized[keyEventCategorized]?.removeAtIndex(i)
+                                        print(self.EventsCategorized[keyEventCategorized]?.count)
+                                    }
+                                    print("mice222 \(EventsCategorized.count)")
+                                    let indexPath = NSIndexPath(forRow: i, inSection: section)
+                                    print("yep6")
+                                    
+                                    if eventArray.count == 1 {
+                                        print("yep6.1")
+                                        let indexSet = NSIndexSet(index: section)
+                                        self.tableView.deleteSections(indexSet, withRowAnimation: .Automatic)
+                                    } else{
+                                        print("yep6.2")
+                                        print(section)
+                                        print(i)
+                                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                                    }
 
                                 }
-                                
-                                print("yep6.3")
-                            }
-                        }
+                        section = section + 1
+
                     }
-                    currentSection = currentSection + 1
                 }
-            }
-            print("tiger 6")
+                print("tiger 6")
             }
         }
     }

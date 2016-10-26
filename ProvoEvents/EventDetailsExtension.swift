@@ -61,9 +61,9 @@ extension EventDetailsVC{
                                             print(weatherDesc["description"])
                                             print(weatherDesc["id"])
                                             
+
                                             
                                             if let eventTemp = main["temp"] as? Double, dateText = eventWeatherDict["dt_txt"], eventWeatherDesc = weatherDesc["description"] as? String, weatherID = weatherDesc["id"] as? Int{
-                                                print("Why")
                                                 print("eventWeatherTemp \(eventTemp) eventWeatherDesc \(eventWeatherDesc)")
                                                 
                                                 let tempStringFahrenheit = self.kelvinToCelcius(eventTemp)
@@ -94,20 +94,41 @@ extension EventDetailsVC{
             }.resume()
     }
     
+    func isNight(hour: Int) -> Bool{
+        if hour < 6 || hour > 19{
+            return true
+        } else{
+            return false
+        }
+    }
+    
     func kelvinToCelcius(kelvin: Double) -> String{
-        return String(round(kelvin * 9/5 - 459.67))
+        return String(Int(round(kelvin * 9/5 - 459.67)))
     }
     
     func getImageName(id: Int) -> String{
+        
+        let interval = NSTimeInterval(self.event.timeStampOfEvent!)
+        let eventDate1 = NSDate(timeIntervalSince1970: interval)
+        var hour = eventDate1.hourOfDay()
+        
         switch id {
         case 200..<300:
             return "weatherThunder"
         case 500..<600:
             return "weatherRain"
-        case 800: return "weatherSun"
-        case 801...804: return "weatherCloud"
+        case 600..<700:
+            return "snow"
+        case 800:
+            if isNight(hour){
+                return "weatherNightClear"
+            } else{
+                return "weatherSun"
+            }
+        case 801...804:
+            return "weatherCloud"
         default:
-            return "profile"
+            return "weatherCloud"
         }
     }
     

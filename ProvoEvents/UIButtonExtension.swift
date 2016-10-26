@@ -186,6 +186,12 @@ extension NSDate {
         return weekdays[components.weekday - 1]
     }
     
+    func hourOfDay() -> Int {
+        let calendar = NSCalendar.currentCalendar()
+        let hour = calendar.component(.Hour, fromDate: self)
+        return hour
+    }
+    
     
     func isTodayOrTomorrow() -> String?{
         let currentDate = NSDate()

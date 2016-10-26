@@ -256,8 +256,61 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         }
     }
 
+    
+
+    
     func popOut(){
-        self.navigationController?.popViewControllerAnimated(true)
+        //self.navigationController?.popViewControllerAnimated(true)
+        NSNotificationCenter.defaultCenter().postNotificationName("addEventSubmitSlide", object: nil)
+        performSelector(#selector(AddEventVC.reset), withObject: nil, afterDelay: 1.0)
+    }
+    
+//    
+//    @IBOutlet weak var titleTextField: LoginTextField!
+//    @IBOutlet weak var locationTextField: LoginTextField!
+//    @IBOutlet weak var emailTextField: LoginTextField!
+//    @IBOutlet weak var descriptionTextView: TextView!
+//    @IBOutlet weak var eventImg: UIImageView!
+//    @IBOutlet weak var dateButtonTappedOutlet: UIButton!
+//    @IBOutlet weak var setPinBtnOutlet: UIButton!
+//    
+//    
+    
+    
+    func reset(){
+        if spinIndicator != nil{
+            spinIndicator.removeFromSuperview()
+        }
+        if imgSuccess != nil{
+            imgSuccess.removeFromSuperview()
+        }
+        if loadingView != nil{
+            loadingView.removeFromSuperview()
+        }
+        
+        titleTextField.text = ""
+        locationTextField.text = ""
+        emailTextField.text = ""
+        descriptionTextView.text = ""
+        
+        setPinBtnOutlet.setTitle("ADD PIN", forState: .Normal)
+        
+        dateButtonTappedOutlet.setTitle("DATE/TIME", forState: .Normal)
+        
+        eventImg.image = UIImage(named: "photoAlbum2")
+        eventImg.roundCornersForAspectFit(0)
+        
+        cellHold.backgroundColor = UIColor.clearColor()
+        selectedCellInt = nil
+        
+        pinLocDict = [:]
+        holdPlacemark = nil
+        holdAddress = nil
+        coordinateOfEvent = CLLocationCoordinate2D()
+        
+        currentDate = NSDate()
+        dateString = String()
+        timeStampOfEvent = Int()
     }
 
     @IBAction func submit(sender: UIButton){
@@ -507,15 +560,12 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         return false
     }
     
-    @IBAction func popVC(sender: AnyObject){
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    
     var img = ["mapCinema", "mapMusic", "mapSoccer", "mapWorld", "mapStandard", "settings", "heartEmpty"]
     var lbl = ["Cinema", "Music", "Sports", "Global", "Geo Catc", "set", "heart"]
 
     var selectedCellInt: Int!
+    var cellHold = MapPinCell()
+
 }
 
 
@@ -564,13 +614,9 @@ extension AddEventVC: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        print("yo")
         if let pickedCellIndex = selectedCellInt{
-            print("yo1")
             let indexPath = NSIndexPath(forItem: pickedCellIndex, inSection: 0)
-            print("yo2")
             if let myCell = collection.cellForItemAtIndexPath(indexPath) as? MapPinCell{
-            print("yo3")
                 myCell.backgroundColor = UIColor.clearColor()
             }
         }
@@ -581,12 +627,10 @@ extension AddEventVC: UICollectionViewDelegate, UICollectionViewDataSource{
         selectedCellInt = indexPath.row
         //cell?.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.5)
         cell?.backgroundColor = UIColor.redColor()
+        cellHold = cell!
         print("called")
     }
-    
-    
 }
-
 
 
 

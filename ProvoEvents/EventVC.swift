@@ -9,7 +9,7 @@
 // the noun project - plus sign Icons Bazaar, settings Hysen Drogu
 
 
-// theNounProject - profile Julynn B., photo album Michal Kučera,  checkmark Adam Stevenson, textmessage Gregor Črešnar, alarmClock IconfactoryTeam, calendar David Ly, map AFY Studio, world map Tom Walsh, map pin icons - anbileru adaleru, thicker map pin icons -lastspark, RU,
+// theNounProject - profile Julynn B., photo album Michal Kučera,  checkmark Adam Stevenson, textmessage Gregor Črešnar, alarmClock IconfactoryTeam, calendar David Ly, map AFY Studio, world map Tom Walsh, map pin icons - anbileru adaleru, thicker map pin icons -lastspark, RU,  weather icons  Sofya Ovchinnikova
 // icons 8 - back,
 
 import UIKit
@@ -137,40 +137,45 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         if let holdEvent = notif.object as? Event{
             let holdKey = holdEvent.key
             likesArray.append(holdKey)
-            for index in 0 ..< 4{
-                for eventC in EventsCategorized[index]!{
-                    if eventC.key == holdKey{
-                        if let i = EventsCategorized[index]?.indexOf({$0.key == eventC.key}){
-                            let indexPath = NSIndexPath(forRow: i, inSection: index)
-                            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
-                                cell.setHeartImgFill()
-                            }
+            var section = 0
+            for keyEventsCategorized in 0 ..< 4{
+                
+                if let eventArray = EventsCategorized[keyEventsCategorized]{
+                
+                    if let i = EventsCategorized[keyEventsCategorized]?.indexOf({$0.key == holdKey}){
+                        let indexPath = NSIndexPath(forRow: i, inSection: section)
+                        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
+                            cell.setHeartImgFill()
                         }
                     }
+                    section = section + 1
                 }
             }
         }
     }
     
     func subtractLike(notif: NSNotification){
-        print("cookie")
+        
         if let holdKey = notif.object as? String{
-            print("cookie1")
+            print("sign")
             if let index = likesArray.indexOf(holdKey){
+                print("Sing1")
                 likesArray.removeAtIndex(index)
-                for index in 0 ..< 4{
-                    print("cookie2")
-                    for eventC in EventsCategorized[index]!{
-                        if eventC.key == holdKey{
-                            if let i = EventsCategorized[index]?.indexOf({$0.key == eventC.key}){
-                                print("cookie3")
-                                let indexPath = NSIndexPath(forRow: i, inSection: index)
-                                if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
-                                    cell.setHeartImgEmpty()
-                                    return
-                                }
+                var section = 0
+                for keyEventsCategorized in 0 ..< 4{
+                    print("sign2")
+                    if let eventArray = EventsCategorized[keyEventsCategorized]{
+                        print("sign3")
+                        if let i = EventsCategorized[keyEventsCategorized]?.indexOf({$0.key == holdKey}){
+                            print("sign4")
+                            let indexPath = NSIndexPath(forRow: i, inSection: section)
+                            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
+                                print("sign5")
+                                cell.setHeartImgEmpty()
+                                return
                             }
                         }
+                        section = section + 1
                     }
                 }
             }

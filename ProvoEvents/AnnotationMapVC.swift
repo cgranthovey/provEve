@@ -85,11 +85,6 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
             // all events
         }
     }
-
-    
-    @IBAction func popVC(){
-        self.navigationController?.popViewControllerAnimated(true)
-    }
     
     @IBAction func centerUser(){
         if hasUserLocBeenFound{
@@ -106,6 +101,9 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var mapTypeBtnOutlet: UIButton!
     
+    @IBAction func backBtn(sender: AnyObject){
+        self.navigationController?.popViewControllerAnimated(true)
+    }
     
     
     @IBAction func mapTypeBtnPressed(){
