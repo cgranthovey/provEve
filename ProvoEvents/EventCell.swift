@@ -27,7 +27,7 @@ class EventCell: UITableViewCell {
 
     func configureCell(event: Event){
         self.event = event
-        
+        print("in configureeeeeeeeeee \(self.event.title)")
         var eventLiked = event.isLiked
         title.text = event.title     //so these are all guaranteed a value of at least "" but what about property that isn't guaranteed like email
         location.text = event.location
@@ -37,8 +37,10 @@ class EventCell: UITableViewCell {
             self.heartImg.image = UIImage(named: "heartFilled")
         } else {
             if eventLiked{
+                print("it's liked")
                 self.heartImg.image = UIImage(named: "heartFilled")
             } else{
+                print("it's not liked")
                 self.heartImg.image = UIImage(named: "heartEmpty")
             }
         }
@@ -65,8 +67,6 @@ class EventCell: UITableViewCell {
             NSNotificationCenter.defaultCenter().postNotificationName("heartDeleted", object: self.event.key, userInfo: nil)
             self.event.adjustLikes(false)
         }
-
-
     }
     
     

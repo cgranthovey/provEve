@@ -106,7 +106,6 @@ class Event{
     }
     
     
-    
     init(key: String, dict: Dictionary<String, AnyObject>, isLiked: Bool){
         _title = dict["title"] as? String
         _location = dict["location"] as? String
@@ -177,5 +176,4 @@ class Event{
         }
         DataService.instance.eventRef.child(_key).child("likes").setValue(_likes)
     }
-    
 }

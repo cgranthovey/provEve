@@ -23,15 +23,15 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     var events = [Event]()
     
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var geoMarkerBtn: UIButton!
     var timeStampOfLast: Int?
     var keyOfLast: String?
     
     var likesArray = [String]()
     
-    var EventsCategorized = [Int: [Event]]()
+//    var EventsCategorized = [Int: [Event]]()
     
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +43,8 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         
         tableView.tableFooterView = UIView()
         
+        geoMarkerBtn.imageView?.contentMode = .ScaleAspectFit
+        
         loadData()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
@@ -50,9 +52,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadDataAfterNewEvent", object: nil)
         tableView.addSubview(refreshController)
         
-        
         Constants.instance.initCurrentUser()
-     //   initCurrentUser()
     }
 
 //    below and above is code to add a pull to refresh option
@@ -66,25 +66,6 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     func handleRefresh(refreshControl: UIRefreshControl){
         loadData()
     }
-    
-    
-    
-//    func initCurrentUser(){
-//        DataService.instance.currentUserProfile.observeSingleEventOfType(.Value, withBlock: { snapshot in
-//            if snapshot.value == nil{
-//                
-//            } else{
-//                if let snapDict = snapshot.value as? Dictionary<String, String>{
-//                    
-//                    let firstName = snapDict["firstName"]
-//                    let profileImg = snapDict["profileImg"]
-//                    let userName = snapDict["userName"]
-//                    currentUser = User(firstName: firstName, userName: userName, imgString: profileImg)
-//                }
-//            }
-//        })
-//    }
-    
     
     func loadData(){
         todaysStartTime = self.getTodaysStartTime()
@@ -152,7 +133,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func addLike(notif: NSNotification){
+    func addLike(notif: NSNotification){        // these 2 chunks of code make sure that heart image appears immediately after tapping from event details page
         if let holdEvent = notif.object as? Event{
             let holdKey = holdEvent.key
             likesArray.append(holdKey)
@@ -172,16 +153,21 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func subtractLike(notif: NSNotification){
+        print("cookie")
         if let holdKey = notif.object as? String{
+            print("cookie1")
             if let index = likesArray.indexOf(holdKey){
                 likesArray.removeAtIndex(index)
                 for index in 0 ..< 4{
+                    print("cookie2")
                     for eventC in EventsCategorized[index]!{
                         if eventC.key == holdKey{
                             if let i = EventsCategorized[index]?.indexOf({$0.key == eventC.key}){
+                                print("cookie3")
                                 let indexPath = NSIndexPath(forRow: i, inSection: index)
                                 if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
                                     cell.setHeartImgEmpty()
+                                    return
                                 }
                             }
                         }
@@ -190,108 +176,10 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        print("event vc will will appear")
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        print("event vc view did appear")
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("tiger")
-        let EventForSpecificTimeArray = ArrayForSection(indexPath.section)
-        
-        print("tiger1.1")
-        let myEvent = EventForSpecificTimeArray[indexPath.row]
-        
-        print("Tiger 1.3")
-        if let cell = tableView.dequeueReusableCellWithIdentifier("EventCell") as? EventCell{
-            print("tiger 2")
-            print("myEvent \(myEvent.title)")
-            cell.configureCell(myEvent)
-            print("return from configure)")
-            return cell
-        } else{
-            print("tiger 3")
-            return UITableViewCell()
-        }
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("number of rowsinsection: \(numberOfRowsForSection(section))")
-        return numberOfRowsForSection(section)
-    }
-    
-    func ArrayForSection(section: Int) -> [Event]{
-        print("henry")
-        
-        var findKeys = Array(EventsCategorized.keys)
-        findKeys.sortInPlace()
-        if findKeys[section] == 0{
-            return (EventsCategorized[0])!
-        } else if findKeys[section] == 1{
-            return (EventsCategorized[1])!
-        } else if findKeys[section] == 2{
-            return (EventsCategorized[2])!
-        } else{
-            return (EventsCategorized[3])!
-        }
-    }
 
-    func numberOfRowsForSection(section: Int) -> Int{
-        print("Robert")
-        
-        var findKeys = Array(EventsCategorized.keys)
-        findKeys.sortInPlace()
-        
-        if findKeys[section] == 0{
-            return (EventsCategorized[0]?.count)!
-        } else if findKeys[section] == 1{
-            return (EventsCategorized[1]?.count)!
-        } else if findKeys[section] == 2{
-            return (EventsCategorized[2]?.count)!
-        } else{
-            return (EventsCategorized[3]?.count)!
-        }
-    }
     
-//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//
-//        
-//        return headerView
-//    }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        print("George")
-        
-        var findKeys = Array(EventsCategorized.keys)
-        findKeys.sortInPlace()
-        print("findKeys: \(findKeys)")
-        print("current Section \(section)")
-        if findKeys[section] == 0{
-            return "Today"
-        } else if findKeys[section] == 1{
-            return "Tomorrow"
-        } else if findKeys[section] == 2{
-            print("thisWeek")
-            return "This Week"
-        } else{
-            print("upcoming")
-            return "Upcoming"
-        }
-    }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let eventArray = ArrayForSection(indexPath.section)
-        performSegueWithIdentifier("EventDetailsVC", sender: eventArray[indexPath.row])
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        print("numberOfSectionsInTableView: \(EventsCategorized.count)")
-        return EventsCategorized.count
-    }
     
     var isCurrentlyLoading = false
     

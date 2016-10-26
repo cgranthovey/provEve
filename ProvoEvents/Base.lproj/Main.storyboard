@@ -1425,7 +1425,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YDs-wu-Pmp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2649" y="153"/>
+            <point key="canvasLocation" x="2511" y="165"/>
         </scene>
         <!--EventVC-->
         <scene sceneID="Lho-db-LZI">
@@ -1541,8 +1541,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eb4-6f-v0E" customClass="GeneralShadowView" customModule="ProvoEvents" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="22" width="320" height="70"/>
                                 <subviews>
-                                    <button opaque="NO" alpha="0.87" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L9L-Kc-iW8">
-                                        <rect key="frame" x="15" y="14" width="43" height="43"/>
+                                    <button opaque="NO" alpha="0.87" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L9L-Kc-iW8">
+                                        <rect key="frame" x="107" y="-7" width="43" height="43"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="43" id="DOP-2j-GAS"/>
                                             <constraint firstAttribute="width" constant="43" id="WNc-NT-qew"/>
@@ -1577,9 +1577,13 @@
                                             <segue destination="j3y-Jx-rIP" kind="show" id="scp-z8-RHH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfL-q6-8yz">
-                                        <rect key="frame" x="216" y="0.0" width="46" height="30"/>
-                                        <state key="normal" title="Button"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfL-q6-8yz">
+                                        <rect key="frame" x="15" y="14" width="43" height="43"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="43" id="Ici-WE-E4m"/>
+                                            <constraint firstAttribute="height" constant="43" id="UJa-Aq-vMf"/>
+                                        </constraints>
+                                        <state key="normal" image="geoMarker"/>
                                         <connections>
                                             <segue destination="zfz-Bj-WiG" kind="show" id="wo7-9A-dp0"/>
                                         </connections>
@@ -1588,13 +1592,22 @@
                                 <color key="backgroundColor" red="0.12941176470588234" green="0.58823529411764708" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="L9L-Kc-iW8" firstAttribute="centerY" secondItem="Eb4-6f-v0E" secondAttribute="centerY" id="Bs1-ZA-V7B"/>
+                                    <constraint firstItem="AfL-q6-8yz" firstAttribute="centerY" secondItem="Eb4-6f-v0E" secondAttribute="centerY" id="CJL-fv-19V"/>
                                     <constraint firstItem="wDS-rJ-xBA" firstAttribute="centerY" secondItem="L9L-Kc-iW8" secondAttribute="centerY" id="JNX-5S-DBE"/>
                                     <constraint firstAttribute="trailing" secondItem="q7P-1C-xxb" secondAttribute="trailing" constant="15" id="hiU-gd-gSU"/>
                                     <constraint firstItem="L9L-Kc-iW8" firstAttribute="leading" secondItem="Eb4-6f-v0E" secondAttribute="leading" constant="15" id="lZd-Q4-fbx"/>
                                     <constraint firstItem="wDS-rJ-xBA" firstAttribute="centerX" secondItem="Eb4-6f-v0E" secondAttribute="centerX" id="pe4-Qk-UE2"/>
+                                    <constraint firstItem="AfL-q6-8yz" firstAttribute="leading" secondItem="Eb4-6f-v0E" secondAttribute="leading" constant="15" id="rEU-Nf-PiI"/>
                                     <constraint firstAttribute="height" constant="70" id="sq0-fm-RMW"/>
+                                    <constraint firstItem="wDS-rJ-xBA" firstAttribute="centerY" secondItem="Eb4-6f-v0E" secondAttribute="centerY" id="zWw-Oc-adS"/>
                                     <constraint firstItem="q7P-1C-xxb" firstAttribute="centerY" secondItem="wDS-rJ-xBA" secondAttribute="centerY" id="zvs-nQ-aNg"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="JNX-5S-DBE"/>
+                                        <exclude reference="Bs1-ZA-V7B"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aI1-5S-Qfc">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="22"/>
@@ -1629,6 +1642,7 @@
                     <navigationItem key="navigationItem" id="tUU-u0-88L"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="geoMarkerBtn" destination="AfL-q6-8yz" id="9vU-j9-li3"/>
                         <outlet property="tableView" destination="abt-kt-755" id="rbo-ER-a8Q"/>
                         <segue destination="2le-7M-Dh0" kind="show" identifier="EventDetailsVC" id="IbF-5I-VzH"/>
                         <segue destination="FZW-S0-9UH" kind="show" identifier="FavoritesVC" id="8YQ-4h-j5o"/>
@@ -1668,7 +1682,7 @@
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.95686274510000002" green="0.26274509800000001" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" tag="2" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="favCell" rowHeight="94" id="GYn-fn-kMF" customClass="EventCell" customModule="ProvoEvents" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" tag="2" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventCell" rowHeight="94" id="GYn-fn-kMF" customClass="EventCell" customModule="ProvoEvents" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GYn-fn-kMF" id="uka-o1-ktn">
@@ -3361,6 +3375,7 @@
         <image name="centerUser" width="100" height="100"/>
         <image name="delete" width="100" height="100"/>
         <image name="garbage" width="100" height="100"/>
+        <image name="geoMarker" width="100" height="100"/>
         <image name="heartEmpty" width="100" height="100"/>
         <image name="mapWorld" width="629" height="598"/>
         <image name="mountainLake" width="1153" height="1473"/>

@@ -29,14 +29,11 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         loadData()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FavoritesVC.removeCell(_:)), name: "heartDeleted", object: nil)
-
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FavoritesVC.addCell(_:)), name: "heartAdded", object: nil)
-
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FavoritesVC.loadData), name: "eventDeleted", object: nil)
     }
     
     func loadData(){
-        
         events = [Event]()
         likesArray = [String]()
         
@@ -57,7 +54,9 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                                 if let postDict = snapshot.value as? Dictionary<String, AnyObject>{
                                     let event = Event(key: snapshot.key, dict: postDict, isLiked: true)
                                     self.events.append(event)
+                                    self.EventsCategorized = self.events.NewDictWithTimeCategories()
                                     self.tableView.reloadData()
+                                    print("here i'm called")
                                 }
                             }
                         })
@@ -67,57 +66,64 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         })
     }
     
-    override func viewWillAppear(animated: Bool) {
-        print("fav vc viewWillAppear")
+    func reloadCells(){
+        print("i'm called")
+        self.tableView.reloadData()
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        print("fav vc viewDidAppear")
-    }
-    
+
     func addCell(notif: NSNotification){
         if let event = notif.object as? Event{
             likesArray.append(event.key)
             events.append(event)
             events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
+            self.EventsCategorized = self.events.NewDictWithTimeCategories()
             tableView.reloadData()
         }
     }
     
     func removeCell(notif: NSNotification){
         if let key = notif.object as? String{
-            print("tiger 1")
             if let indexValue = self.likesArray.indexOf(key), let favIndexValue = self.events.indexOf({$0.key == key}){
-                print("tiger 2")
-                self.likesArray.removeAtIndex(indexValue)
-                print("tiger 3")
-                self.events.removeAtIndex(favIndexValue)
-                print("tiger 4")
-                let indexPath = NSIndexPath(forRow: favIndexValue, inSection: 0)
-                print("tiger 5")
-                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                print("tiger 6")
+//                self.likesArray.removeAtIndex(indexValue)
+//                self.events.removeAtIndex(favIndexValue)
+//                self.EventsCategorized = self.events.NewDictWithTimeCategories()
                 
+       //         tableView.reloadData()
+                print("event cat \(EventsCategorized.count)")
+            for index in 0 ..< 4{
+                print("index \(index)")
                 
+                if let eventArrayTime = EventsCategorized[index]{
+                    var currentSection = 0
+                    for eventC in eventArrayTime{
+                        if eventC.key == key{
+                            if let i = eventArrayTime.indexOf({$0.key == eventC.key}){
+                                
+                                self.likesArray.removeAtIndex(indexValue)
+                                self.events.removeAtIndex(favIndexValue)
+                                self.EventsCategorized = self.events.NewDictWithTimeCategories()
+                                
+                                let indexPath = NSIndexPath(forRow: i, inSection: currentSection)
+                                print("yep6")
+                                
+                                if eventArrayTime.count == 1 {
+                                    let indexSet = NSIndexSet(index: currentSection)
+                                    self.tableView.deleteSections(indexSet, withRowAnimation: .Automatic)
+                                } else{
+                                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+
+                                }
+                                
+                                print("yep6.3")
+                            }
+                        }
+                    }
+                    currentSection = currentSection + 1
+                }
+            }
+            print("tiger 6")
             }
         }
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let event = events[indexPath.row]
-        if let cell = tableView.dequeueReusableCellWithIdentifier("favCell") as? EventCell{
-
-            
-            cell.configureCell(event)
-            return cell
-        } else{
-            return UITableViewCell()
-        }
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let eventToSend = events[indexPath.row]
-        performSegueWithIdentifier("EventDetailsVC", sender: eventToSend)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -128,30 +134,6 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        var numberOfSection = 0
-        
-        if events.count > 0{
-            numberOfSection = 1
-            tableView.backgroundView = nil
-        } else{
-            let noDataLbl: UILabel = UILabel(frame: CGRectMake(20, 40, 200, 40))
-            
-            noDataLbl.numberOfLines = 10
-            noDataLbl.text = "Swipe right to like events"
-            noDataLbl.font = UIFont(name: "Avenir", size: 20)
-            noDataLbl.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.87)
-            noDataLbl.textAlignment = .Center
-            tableView.backgroundView = noDataLbl
-//            tableView.separatorStyle = .None
-        }
-        return 1
     }
 
 
