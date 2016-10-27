@@ -315,8 +315,11 @@ extension AnnotationMapVC: MKMapViewDelegate{
 
         let smallSquare = CGSize(width: 30, height: 30)
         let button = UIButton(frame: CGRect(origin: CGPointZero, size: smallSquare))
-        button.setBackgroundImage(UIImage(named: "addEvent"), forState: .Normal)
+        //button.setBackgroundImage(UIImage(named: (myEvent?.eventTypeImgName)!), forState: .Normal)
+        button.setImage(UIImage(named: (myEvent?.eventTypeImgName)!), forState: .Normal)
+        
         button.addTarget(self, action: #selector(AnnotationMapVC.annotationBtnTapped(_:)), forControlEvents: .TouchUpInside)
+        button.imageView?.contentMode = .ScaleAspectFit
         button.tag = currentBtnTag
         self.dictEnterTagForEventKey[currentBtnTag] = myEvent!.key
         currentBtnTag = currentBtnTag + 1

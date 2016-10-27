@@ -34,8 +34,8 @@ class DateTimeVC: UIViewController {
         
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
         
-        let tapOut = UITapGestureRecognizer(target: self, action: #selector(DateTimeVC.dismissVC))
-        view.addGestureRecognizer(tapOut)
+//        let tapOut = UITapGestureRecognizer(target: self, action: #selector(DateTimeVC.dismissVC))
+//        view.addGestureRecognizer(tapOut)
     }
     
     func dismissVC(){

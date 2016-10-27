@@ -46,6 +46,10 @@ class snapScrollVC: UIViewController {
         self.snapScroll.addSubview((addEventVC?.view)!)
         addEventVC?.didMoveToParentViewController(self)
         
+        
+
+        
+        
         self.snapScroll.contentSize = CGSizeMake(self.view.frame.width * 3, self.view.frame.height)
         self.snapScroll.contentOffset = CGPoint(x: view.frame.width, y: 0)
         

@@ -72,6 +72,7 @@ extension EventDetailsVC{
                                                     self.weatherTemp.text = tempStringFahrenheit + "°"
                                                     let imgName = self.getImageName(weatherID)
                                                     self.weatherIconImg.image = UIImage(named: imgName)
+                                                    self.weatherDescLbl.text = eventWeatherDesc
                                                 }
                                             }
                                             return
@@ -93,6 +94,11 @@ extension EventDetailsVC{
             }
             }.resume()
     }
+    
+    func weatherImageTapped(){
+        
+    }
+    
     
     func isNight(hour: Int) -> Bool{
         if hour < 6 || hour > 19{

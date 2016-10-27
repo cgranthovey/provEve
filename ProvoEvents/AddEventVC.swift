@@ -37,7 +37,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        eventImg.image = UIImage(named: "photoAlbum2")
+        eventImg.image = UIImage(named: "photoAlbumColor")
         setUpDelegates()
         
         
@@ -56,16 +56,20 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         imgPickerController.delegate = self
         
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardNotification(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        scrollView.contentSize.height = 815
+        scrollView.contentSize.height = 840
         scrollView.contentSize.width = view.frame.width
         
-        print("scrollView contentSize \(scrollView.contentSize)")
-        print("scrollView frame \(scrollView.frame)")
+
     }
     
+    var correctCollectionViewWidth = CGFloat(300)
     override func viewWillAppear(animated: Bool) {
+
+        print("mommy2")
+        print(collection.frame.width)
+        correctCollectionViewWidth = collection.frame.width
         print("hi \(self.view.frame.width)")
         print("yo \(scrollView.contentSize.height)")
         viewScrollHeight.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: scrollView.contentSize.height)
@@ -75,13 +79,16 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         setUpTaps()
     }
     
-    
+    override func viewDidAppear(animated: Bool) {
+        self.view.layoutIfNeeded()
+
+    }
 
     var viewScrollHeight = UIView()
     
     func keyboardWillBeHidden(input: NSNotification){
-        scrollView.contentInset = UIEdgeInsetsZero
-        scrollView.contentInset.top = 22
+        scrollView.contentInset.bottom = UIEdgeInsetsZero.bottom    //without this the views go up a bit
+      //  scrollView.contentInset.top = 22
     }
 
     var activeTextField: UITextField!
@@ -119,7 +126,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     
     var myKeyBoardHeight: CGFloat!
     func makeLarger(input: NSNotification){
-        
+        scrollView.contentInset.right = UIEdgeInsetsZero.right    //without this the views go up a bit
+
         if let userInfo = input.userInfo{
             let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey]
             let keyboardRect = keyboardFrame?.CGRectValue()
@@ -262,20 +270,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     func popOut(){
         //self.navigationController?.popViewControllerAnimated(true)
         NSNotificationCenter.defaultCenter().postNotificationName("addEventSubmitSlide", object: nil)
-        performSelector(#selector(AddEventVC.reset), withObject: nil, afterDelay: 1.0)
+        performSelector(#selector(AddEventVC.reset), withObject: nil, afterDelay: 0.5)
     }
-    
-//    
-//    @IBOutlet weak var titleTextField: LoginTextField!
-//    @IBOutlet weak var locationTextField: LoginTextField!
-//    @IBOutlet weak var emailTextField: LoginTextField!
-//    @IBOutlet weak var descriptionTextView: TextView!
-//    @IBOutlet weak var eventImg: UIImageView!
-//    @IBOutlet weak var dateButtonTappedOutlet: UIButton!
-//    @IBOutlet weak var setPinBtnOutlet: UIButton!
-//    
-//    
-    
+
     
     func reset(){
         if spinIndicator != nil{
@@ -297,7 +294,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         
         dateButtonTappedOutlet.setTitle("DATE/TIME", forState: .Normal)
         
-        eventImg.image = UIImage(named: "photoAlbum2")
+        eventImg.image = UIImage(named: "photoAlbumColor")
         eventImg.roundCornersForAspectFit(0)
         
         cellHold.backgroundColor = UIColor.clearColor()
@@ -369,7 +366,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                 print(err?.localizedDescription)
                 self.alert("Error", message: "Error uploading data, try again soon")
             } else{
-                if let img = self.eventImg.image where img != UIImage(named: "photoAlbum2"){
+                if let img = self.eventImg.image where img != UIImage(named: "photoAlbumColor"){
                     if let data: NSData = UIImageJPEGRepresentation(img, 0.8){
                         let imgName = "\(NSUUID().UUIDString)jpg"
                         let storageRef = DataService.instance.imgStorageRefData.child(imgName)
@@ -403,7 +400,6 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         geoFireRef = DataService.instance.mainRef.child("GeoFire")
         geoFire = GeoFire(firebaseRef: geoFireRef)
         
-        //geoFire.removeKey("lfkadjs")
         print("\(location) and key \(eventRef)")
         if let loc = location, let key = eventRef{
             print("inside")
@@ -476,15 +472,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     func getTheDateTime(date: NSDate){
         timeStampOfEvent = Int(date.timeIntervalSince1970)
         currentDate = date
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.dateStyle = .MediumStyle
-//        dateFormatter.timeStyle = .ShortStyle
-//        
-//        dateString = dateFormatter.stringFromDate(date)
-//        print("date String: \(dateString)")
-//        
-//        
-        
+
         let dateForm = NSDateFormatter()
         dateForm.dateStyle = .MediumStyle
         var dateDayString = dateForm.stringFromDate(date)
@@ -555,13 +543,15 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         imgPickerController.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    var rightCollectionTapped: CGFloat = 1
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    var img = ["mapCinema", "mapMusic", "mapSoccer", "mapWorld", "mapStandard", "settings", "heartEmpty"]
-    var lbl = ["Cinema", "Music", "Sports", "Global", "Geo Catc", "set", "heart"]
+    var img = ["football", "outdoors", "service", "theater", "art", "prayer", "music", "book", "sandwich"]
+    var lbl = ["Sports", "Outdoors", "Service", "Theater/Cinema", "Art", "Religous", "Music", "Education", "Culinary"]
 
     var selectedCellInt: Int!
     var cellHold = MapPinCell()
@@ -585,7 +575,7 @@ extension AddEventVC: UICollectionViewDelegate, UICollectionViewDataSource{
                     
                     print("tugo")
                     if indexPath.row == pickedCell{
-                        cell.backgroundColor = UIColor.redColor()
+                        cell.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1.0)
                     } else{
                         cell.backgroundColor = UIColor.clearColor()
                     }
@@ -608,8 +598,10 @@ extension AddEventVC: UICollectionViewDelegate, UICollectionViewDataSource{
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        return CGSizeMake(collection.frame.width / 3, 70.0)
+        print("mommy")
+        print(collection.frame.width)
+       // return CGSizeMake(correctCollectionViewWidth / 3, 70.0)       if I add three for width back remember to set paging in interface builder
+        return CGSizeMake(85, 70.0)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -626,7 +618,7 @@ extension AddEventVC: UICollectionViewDelegate, UICollectionViewDataSource{
         let cell = collection.cellForItemAtIndexPath(indexPath) as? MapPinCell
         selectedCellInt = indexPath.row
         //cell?.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 0.5)
-        cell?.backgroundColor = UIColor.redColor()
+        cell?.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1.0)
         cellHold = cell!
         print("called")
     }

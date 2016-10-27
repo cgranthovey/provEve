@@ -39,7 +39,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     @IBOutlet weak var weatherIconImg: UIImageView!
     
     @IBOutlet weak var weatherStack: UIStackView!
-    
+    @IBOutlet weak var weatherDescLbl: UILabel!
     
     var event: Event!
     var img: UIImage!

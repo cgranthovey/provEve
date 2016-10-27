@@ -11,11 +11,10 @@ import UIKit
 class GeneralShadowView: UIView {
 
     override func awakeFromNib() {
-        layer.shadowColor = UIColor.lightGrayColor().CGColor
-        layer.shadowOpacity = 0.8
-        layer.shadowRadius = 4.0
-        layer.shadowOffset = CGSizeMake(0, 4)
-        
+        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowOpacity = 0.5
+        layer.shadowRadius = 4
+        layer.shadowOffset = CGSizeMake(0, 0)
         clipsToBounds = false
     }
 

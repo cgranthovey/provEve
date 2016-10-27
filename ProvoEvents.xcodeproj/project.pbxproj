@@ -41,6 +41,7 @@
 		A18FA3B31DA7353600773614 /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = A18FA3AC1DA7353600773614 /* GFGeoHash.m */; };
 		A18FA3B41DA7353600773614 /* GFGeoHashQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = A18FA3AE1DA7353600773614 /* GFGeoHashQuery.m */; };
 		A18FA3B51DA7353600773614 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = A18FA3B01DA7353600773614 /* GFQuery.m */; };
+		A1AFA4F61DC1882900D182BF /* customCVFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AFA4F51DC1882900D182BF /* customCVFlowLayout.swift */; };
 		A1B117AD1D8A2AA40036A24E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */; };
 		A1B117AF1D8A2AA40036A24E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B117AE1D8A2AA40036A24E /* LoginVC.swift */; };
 		A1B117B21D8A2AA40036A24E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B117B01D8A2AA40036A24E /* Main.storyboard */; };
@@ -132,6 +133,7 @@
 		A18FA3AF1DA7353600773614 /* GFQuery+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GFQuery+Private.h"; sourceTree = "<group>"; };
 		A18FA3B01DA7353600773614 /* GFQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQuery.m; sourceTree = "<group>"; };
 		A18FA3BC1DA7370300773614 /* bridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bridgingHeader.h; path = ../bridgingHeader.h; sourceTree = "<group>"; };
+		A1AFA4F51DC1882900D182BF /* customCVFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customCVFlowLayout.swift; sourceTree = "<group>"; };
 		A1B117A91D8A2AA40036A24E /* ProvoEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProvoEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1B117AE1D8A2AA40036A24E /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				A1F56D981DB1933C009D7F65 /* CornerRadiusView.swift */,
 				A1F56D9A1DB1C2C2009D7F65 /* bottomShadowUILabel.swift */,
 				A1F56D9C1DB2B25A009D7F65 /* segueCommentsShow.swift */,
+				A1AFA4F51DC1882900D182BF /* customCVFlowLayout.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				A152437D1DABF10B00ECC34B /* MapPinCell.swift in Sources */,
 				A1D19BD11DA3262200F683AF /* GeneralShadowView.swift in Sources */,
 				A1FBBD3C1D8DE86700366761 /* LoginImg.swift in Sources */,
+				A1AFA4F61DC1882900D182BF /* customCVFlowLayout.swift in Sources */,
 				A12FC0BA1DAE9B9B000B4005 /* BaseCell.swift in Sources */,
 				A1EE77E81DA7590400781CDF /* AnnotationMapVC.swift in Sources */,
 				A1239C971D8B3DD800272F67 /* LoginTextField.swift in Sources */,

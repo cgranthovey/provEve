@@ -16,6 +16,7 @@ class GeneralEventVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.clipsToBounds = true
         todaysStartTime = self.getTodaysStartTime()
         // Do any additional setup after loading the view.
     }
