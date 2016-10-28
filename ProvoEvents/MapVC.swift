@@ -51,6 +51,8 @@ class MapVC: UIViewController {
     
     @IBOutlet weak var questionBtn: UIButton!
     
+    
+    @IBOutlet weak var questionView: UIView!
     var handleGetEventLocDelegate: HandleGetEventLoc? = nil
     
     override func viewDidLoad() {
@@ -74,6 +76,8 @@ class MapVC: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
+        questionView.alpha = 0
+        questionView.hidden = true
         
         let locationSearchTable = storyboard!.instantiateViewControllerWithIdentifier("LocationSearchTable") as! LocationSearchTable
         resultSearchController = UISearchController(searchResultsController: locationSearchTable)
@@ -138,8 +142,30 @@ class MapVC: UIViewController {
         approvePin()
     }
     
+    var darkView: UIView!
     @IBAction func questionPress(sender: AnyObject){
         
+        let rect = CGRectMake(0, -100, self.view.frame.width, self.view.frame.height + 100)
+        self.darkView = UIView(frame: rect)
+        darkView.backgroundColor = UIColor.blackColor()
+        darkView.alpha = 0
+        self.view.addSubview(darkView)
+        self.view.bringSubviewToFront(questionView)
+        questionView.hidden = false
+        UIView.animateWithDuration(0.3, animations: { 
+            self.darkView.alpha = 0.5
+            self.questionView.alpha = 1
+            }, completion: nil)
+    }
+    
+    @IBAction func gotItBtn(sender: AnyObject){
+        UIView.animateWithDuration(0.3, animations: { 
+            self.darkView.alpha = 0
+            self.questionView.alpha = 0
+            }) { (true) in
+                self.darkView.removeFromSuperview()
+                self.questionView.hidden = true
+        }
     }
     
     @IBAction func mapTypeBtnPress(sender: AnyObject){
@@ -259,8 +285,6 @@ class MapVC: UIViewController {
     
     func adjustMapCenter(centerCoord: CLLocationCoordinate2D, span: MKCoordinateSpan = MKCoordinateSpanMake(0.07, 0.07)){
         
-        
-        
         let curSpan = mapView.region.span
         let span = MKCoordinateSpan(latitudeDelta: span.latitudeDelta, longitudeDelta: span.longitudeDelta)
         
@@ -270,7 +294,6 @@ class MapVC: UIViewController {
         } else{
             let region = MKCoordinateRegion(center: centerCoord, span: span)
             mapView.setRegion(region, animated: true)
-            
         }
     }
     
@@ -285,7 +308,6 @@ class MapVC: UIViewController {
 
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
-
     }
 
 }
@@ -296,9 +318,12 @@ extension MapVC : MKMapViewDelegate {
 
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?{
         if annotation is MKUserLocation {
+            print("Nil")
             //return nil so map view draws "blue dot" for standard user location
             return nil
         }
+        
+        print("it's a pin")
         let reuseId = "pin"
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
         pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
@@ -308,7 +333,7 @@ extension MapVC : MKMapViewDelegate {
         let button = UIButton(frame: CGRect(origin: CGPointZero, size: smallSquare))
         button.setBackgroundImage(UIImage(named: "alarmClear"), forState: .Normal)
         button.addTarget(self, action: #selector(MapVC.getDirections), forControlEvents: .TouchUpInside)
-        //pinView?.leftCalloutAccessoryView = button  add btn later if desired
+        pinView?.leftCalloutAccessoryView = button  //add btn later if desired
         
         
         let newCoordinate = annotation.coordinate
@@ -326,7 +351,17 @@ extension MapVC: HandleMapSearch {
     func dropPinZoomIn(placemark:MKPlacemark, addressString: String, fromTap: Bool){
         self.addressString = addressString
         selectedPin = placemark
-        mapView.removeAnnotations(mapView.annotations)
+        
+        print("Number of annotations \(mapView.annotations.count)")
+        //mapView.removeAnnotations(mapView.annotations)
+        
+        self.mapView.annotations.forEach {
+            if !($0 is MKUserLocation) {
+                self.mapView.removeAnnotation($0)
+            }
+        }
+        print("Number of annotations \(mapView.annotations.count)")
+
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = placemark.coordinate
@@ -340,7 +375,7 @@ extension MapVC: HandleMapSearch {
             annotation.subtitle = "\(city) \(state)"
         }
         mapView.addAnnotation(annotation)
-        
+        print("anno added")
         if fromTap != true{
             let region = MKCoordinateRegionMake(placemark.coordinate, generalSpan)
             mapView.setRegion(region, animated: true)

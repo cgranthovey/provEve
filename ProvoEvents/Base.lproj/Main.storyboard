@@ -3228,19 +3228,93 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWk-cM-keg">
-                                <rect key="frame" x="253" y="75" width="52" height="52"/>
+                                <rect key="frame" x="260" y="75" width="45" height="45"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="52" id="hCi-2M-2HB"/>
-                                    <constraint firstAttribute="height" constant="52" id="pOb-3Z-b1q"/>
+                                    <constraint firstAttribute="width" constant="45" id="hCi-2M-2HB"/>
+                                    <constraint firstAttribute="height" constant="45" id="pOb-3Z-b1q"/>
                                 </constraints>
                                 <state key="normal" image="questionMap"/>
                                 <connections>
                                     <action selector="questionPress:" destination="t0w-dM-wqN" eventType="touchUpInside" id="jC3-EJ-iQY"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwZ-W2-l9M" customClass="GeneralShadowView" customModule="ProvoEvents" customModuleProvider="target">
+                                <rect key="frame" x="23" y="159" width="275" height="250"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mds-9e-SnS" customClass="CornerRadiusView" customModule="ProvoEvents" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="275" height="250"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gXk-Oh-Y6M">
+                                                <rect key="frame" x="0.0" y="205" width="275" height="45"/>
+                                                <color key="backgroundColor" red="0.95686274510000002" green="0.26274509800000001" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="45" id="Iai-ho-MDn"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="22"/>
+                                                <state key="normal" title="Got it">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="gotItBtn:" destination="t0w-dM-wqN" eventType="touchUpInside" id="JB8-mQ-WzL"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEc-BJ-okH">
+                                                <rect key="frame" x="15" y="15" width="245" height="117"/>
+                                                <string key="text">Add pin to map by using top search bar or pressing finger on map until pin appears.  Approve button will appear.  Tap to connect pin to your event.</string>
+                                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coordinates" translatesAutoresizingMaskIntoConstraints="NO" id="8RO-Iq-KLn">
+                                                <rect key="frame" x="15" y="142" width="45" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="45" id="TaI-bf-Ii9"/>
+                                                    <constraint firstAttribute="width" constant="45" id="jsQ-WG-IQW"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap icon to set exact latitude and longitude, default will search nearest preset location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XzD-RH-LBk">
+                                                <rect key="frame" x="68" y="136" width="192" height="58"/>
+                                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="8RO-Iq-KLn" firstAttribute="top" secondItem="NEc-BJ-okH" secondAttribute="bottom" constant="10" id="10M-7V-fee"/>
+                                            <constraint firstItem="gXk-Oh-Y6M" firstAttribute="leading" secondItem="mds-9e-SnS" secondAttribute="leading" id="5xz-om-cN4"/>
+                                            <constraint firstItem="8RO-Iq-KLn" firstAttribute="leading" secondItem="NEc-BJ-okH" secondAttribute="leading" id="6CR-sU-f29"/>
+                                            <constraint firstItem="XzD-RH-LBk" firstAttribute="trailing" secondItem="NEc-BJ-okH" secondAttribute="trailing" id="8mt-L8-Ant"/>
+                                            <constraint firstItem="NEc-BJ-okH" firstAttribute="top" secondItem="mds-9e-SnS" secondAttribute="top" constant="15" id="JuZ-wT-dZT"/>
+                                            <constraint firstItem="NEc-BJ-okH" firstAttribute="leading" secondItem="mds-9e-SnS" secondAttribute="leading" constant="15" id="UD2-SB-05g"/>
+                                            <constraint firstItem="XzD-RH-LBk" firstAttribute="leading" secondItem="8RO-Iq-KLn" secondAttribute="trailing" constant="8" id="VSI-3e-9hS"/>
+                                            <constraint firstAttribute="bottom" secondItem="gXk-Oh-Y6M" secondAttribute="bottom" id="bJh-8h-Xfb"/>
+                                            <constraint firstAttribute="trailing" secondItem="gXk-Oh-Y6M" secondAttribute="trailing" id="fhd-Zo-L1y"/>
+                                            <constraint firstItem="gXk-Oh-Y6M" firstAttribute="top" secondItem="NEc-BJ-okH" secondAttribute="bottom" constant="15" id="hnC-kY-IUF"/>
+                                            <constraint firstItem="XzD-RH-LBk" firstAttribute="centerY" secondItem="8RO-Iq-KLn" secondAttribute="centerY" id="kJo-lu-PhY"/>
+                                            <constraint firstAttribute="trailing" secondItem="NEc-BJ-okH" secondAttribute="trailing" constant="15" id="zzc-6Q-fot"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="hnC-kY-IUF"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="Gas-sk-J6C"/>
+                                    <constraint firstAttribute="width" constant="275" id="IcJ-RK-htr"/>
+                                    <constraint firstItem="mds-9e-SnS" firstAttribute="top" secondItem="jwZ-W2-l9M" secondAttribute="top" id="Ps7-6K-URW"/>
+                                    <constraint firstItem="mds-9e-SnS" firstAttribute="leading" secondItem="jwZ-W2-l9M" secondAttribute="leading" id="nWL-u6-WmH"/>
+                                    <constraint firstAttribute="trailing" secondItem="mds-9e-SnS" secondAttribute="trailing" id="oSA-ay-8KD"/>
+                                    <constraint firstAttribute="bottom" secondItem="mds-9e-SnS" secondAttribute="bottom" id="pz1-lh-Civ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="jwZ-W2-l9M" firstAttribute="centerX" secondItem="u4V-V5-Hes" secondAttribute="centerX" id="375-Wy-0bF"/>
                             <constraint firstAttribute="trailing" secondItem="mYv-Vb-Yq8" secondAttribute="trailing" id="KTF-qV-Xa4"/>
                             <constraint firstItem="mYv-Vb-Yq8" firstAttribute="leading" secondItem="u4V-V5-Hes" secondAttribute="leading" id="NkA-sD-1J1"/>
                             <constraint firstItem="4hn-No-qRd" firstAttribute="trailing" secondItem="u4V-V5-Hes" secondAttribute="trailingMargin" id="V0d-tC-KfY"/>
@@ -3251,6 +3325,7 @@
                             <constraint firstItem="CkL-Ed-UD1" firstAttribute="leading" secondItem="u4V-V5-Hes" secondAttribute="leading" id="ZoP-Q6-ghv"/>
                             <constraint firstAttribute="trailing" secondItem="CkL-Ed-UD1" secondAttribute="trailing" id="cfu-qN-foA"/>
                             <constraint firstItem="mYv-Vb-Yq8" firstAttribute="top" secondItem="u4V-V5-Hes" secondAttribute="top" id="cle-TJ-6ti"/>
+                            <constraint firstItem="jwZ-W2-l9M" firstAttribute="centerY" secondItem="u4V-V5-Hes" secondAttribute="centerY" id="gQ6-HX-qwW"/>
                             <constraint firstItem="13d-XM-Seu" firstAttribute="top" secondItem="4hn-No-qRd" secondAttribute="bottom" constant="12" id="lk6-Nh-5Li"/>
                             <constraint firstItem="CkL-Ed-UD1" firstAttribute="top" secondItem="u4V-V5-Hes" secondAttribute="top" id="oe9-6q-4V2"/>
                             <constraint firstAttribute="trailing" secondItem="13d-XM-Seu" secondAttribute="trailing" id="tSv-xN-KLR"/>
@@ -3269,6 +3344,7 @@
                         <outlet property="mapTypeBtn" destination="ORG-4M-qyl" id="qTm-Pm-KK6"/>
                         <outlet property="mapView" destination="mYv-Vb-Yq8" id="83Q-mZ-sRC"/>
                         <outlet property="questionBtn" destination="BWk-cM-keg" id="Gz3-KB-m3o"/>
+                        <outlet property="questionView" destination="jwZ-W2-l9M" id="YJj-8l-PZc"/>
                         <outlet property="removeBtn" destination="W6w-Jg-GlL" id="y6z-aS-wVs"/>
                         <outlet property="thumbsUpImage" destination="KMJ-gL-z8h" id="v7B-lT-Ogg"/>
                     </connections>

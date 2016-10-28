@@ -36,7 +36,7 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     func loadData(){
         events = [Event]()
         likesArray = [String]()
-        
+        self.shouldAddTableViewBackground()
         todaysStartTime = self.getTodaysStartTime()
         DataService.instance.currentUser.child("likes").queryOrderedByChild("timeStampOfEvent").queryStartingAtValue(self.todaysStartTime).observeSingleEventOfType(.Value, withBlock: {snapshot in
             if snapshot.value == nil{
@@ -48,16 +48,21 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                     for eventKey in self.likesArray{
                         DataService.instance.eventRef.child(eventKey).observeSingleEventOfType(.Value, withBlock: { snapshot in
                             if snapshot.value == nil{
-                                print("snapshot of liked posts = nil")
+
                             } else{
                                 if let postDict = snapshot.value as? Dictionary<String, AnyObject>{
                                     let event = Event(key: snapshot.key, dict: postDict, isLiked: true)
                                     self.events.append(event)
                                     self.EventsCategorized = self.events.NewDictWithTimeCategories()
                                     self.tableView.reloadData()
+                                    self.shouldAddTableViewBackground()
+
                                     print("here i'm called")
                                 }
+                                print("snapshot of liked posts = nil")
+
                             }
+
                         })
                     }
                 }
@@ -71,7 +76,8 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     }
 
     func addCell(notif: NSNotification){
-        
+        self.shouldAddTableViewBackground()
+
         if let event = notif.object as? Event{
             print("add cell called")
             likesArray.append(event.key)
@@ -126,6 +132,24 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                 }
                 print("tiger 6")
             }
+        }
+    }
+    
+    func shouldAddTableViewBackground(){
+        print("yep")
+        tableView.backgroundView = nil
+        if events.count > 0{
+            tableView.backgroundView = nil
+        } else{
+            let noDataLbl: UILabel = UILabel(frame: CGRectMake(20, 40, 200, 40))
+            
+            noDataLbl.numberOfLines = 10
+            noDataLbl.text = "Swipe right to like events."
+            noDataLbl.font = UIFont(name: "Avenir", size: 20)
+            noDataLbl.numberOfLines = 0
+            noDataLbl.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.87)
+            noDataLbl.textAlignment = .Center
+            tableView.backgroundView = noDataLbl
         }
     }
 
