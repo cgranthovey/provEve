@@ -58,9 +58,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardNotification(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        scrollView.contentSize.height = 840
+        scrollView.contentSize.height = 750
         scrollView.contentSize.width = view.frame.width
-        
+        scrollView.directionalLockEnabled = true
 
     }
     

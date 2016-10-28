@@ -33,9 +33,23 @@ class MapVC: UIViewController {
     
     var currentLoc = CLLocation()
     
+    var generalSpan: MKCoordinateSpan {
+        get{
+            return MKCoordinateSpanMake(0.07, 0.07)
+        }
+    }
+    
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeBtn: UIButton!
+    @IBOutlet weak var centerUserBtn: UIButton!
+    @IBOutlet weak var centerPinBtn: UIButton!
+    @IBOutlet weak var removeBtn: UIButton!
+    @IBOutlet weak var cancelBtn: UIButton!
     
+    @IBOutlet weak var approveView: UIView!
+    
+    @IBOutlet weak var questionBtn: UIButton!
     
     var handleGetEventLocDelegate: HandleGetEventLoc? = nil
     
@@ -43,6 +57,14 @@ class MapVC: UIViewController {
         super.viewDidLoad()
         
         mapView.delegate = self
+        
+        centerUserBtn.imageView?.contentMode = .ScaleAspectFit
+        centerPinBtn.imageView?.contentMode = .ScaleAspectFit
+        removeBtn.imageView?.contentMode = .ScaleAspectFit
+        cancelBtn.imageView?.contentMode = .ScaleAspectFit
+        mapTypeBtn.imageView?.contentMode = .ScaleAspectFit
+        coordinateBtn.imageView?.contentMode = .ScaleAspectFit
+        questionBtn.imageView?.contentMode = .ScaleAspectFit
         
         self.navigationController?.navigationBarHidden = false
         navigationItem.hidesBackButton = true
@@ -63,13 +85,13 @@ class MapVC: UIViewController {
         locationSearchTable.mapView = mapView
         locationSearchTable.handleMapSearchDelegate = self
         
-        
+        setUpApproveView()
         
         let longTap = UILongPressGestureRecognizer(target: self, action: #selector(MapVC.tapForPin(_:)))
         longTap.minimumPressDuration = 0.7
         mapView.addGestureRecognizer(longTap)
         
-        mapTypeBtn.setImage(UIImage(named:"mapWorld"), forState: .Normal)
+        mapTypeBtn.setImage(UIImage(named:"worldFull"), forState: .Normal)
         mapTypeBtn.contentMode = .ScaleAspectFit
         
         searchBar = resultSearchController!.searchBar
@@ -87,13 +109,46 @@ class MapVC: UIViewController {
         }
     }
     
+    
+    @IBOutlet weak var thumbsUpImage: UIImageView!
+    @IBOutlet weak var approveColorView: UIView!
+    @IBOutlet weak var approveBtn: UIButton!
+    
+    func setUpApproveView(){
+        approveView.alpha = 0
+        approveView.hidden = true
+        
+        approveBtn.addTarget(self, action: #selector(MapVC.approveTouchUpInside), forControlEvents: .TouchUpInside)
+        approveBtn.addTarget(self, action: #selector(MapVC.approveTouchUpOutside), forControlEvents: .TouchUpOutside)
+        approveBtn.addTarget(self, action: #selector(MapVC.approveTouchDown), forControlEvents: .TouchDown)
+    }
+    
+
+    func approveTouchDown(){
+        self.thumbsUpImage.alpha = 1
+        approveColorView.backgroundColor = UIColor(red: 211/255, green: 47/255, blue: 47/255, alpha: 1.0)
+
+    }
+    func approveTouchUpOutside(){
+        self.thumbsUpImage.alpha = 0.6
+        approveColorView.backgroundColor = UIColor(red: 244/255, green: 67/255, blue: 54/255, alpha: 1.0)
+    }
+    func approveTouchUpInside(){
+        print("ended")
+        approvePin()
+    }
+    
+    @IBAction func questionPress(sender: AnyObject){
+        
+    }
+    
     @IBAction func mapTypeBtnPress(sender: AnyObject){
         if mapView.mapType == .Standard{
-            mapTypeBtn.changeImageAnimated(UIImage(named: "mapStandard"))
+            mapTypeBtn.changeImageAnimated(UIImage(named: "worldGrid"))
             mapView.mapType = .Hybrid
         } else{
             
-            mapTypeBtn.changeImageAnimated(UIImage(named: "mapWorld"))
+            mapTypeBtn.changeImageAnimated(UIImage(named: "worldFull"))
             //mapTypeBtn.setImage(UIImage(named: "mapStandard"), forState: .Normal)
             mapView.mapType = .Standard
         }
@@ -110,6 +165,7 @@ class MapVC: UIViewController {
             
             if setWithCoord{        //use only lat and long to determine pin
                 placeSpecificCoord(newCoordinates)
+                self.showApproveView()
             } else{     //run lat and long through geocoder to get an assumed location
                 CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude), completionHandler: { (placemarks, error) -> Void in
                     if error != nil {
@@ -124,14 +180,21 @@ class MapVC: UIViewController {
                         if placemarks?.count > 1{
                             print("2. \(placemarks![1])")
                         }
-                        
                         let pmCL = placemarks![0]
                         let pm = MKPlacemark(placemark: pmCL)
                         let addressLine = pm.getAddressInfo()
                         self.dropPinZoomIn(pm, addressString: addressLine, fromTap: true)
+                        self.showApproveView()
                     }
                 })
             }
+        }
+    }
+    
+    func showApproveView(){
+        approveView.hidden = false
+        UIView.animateWithDuration(0.3) { 
+            self.approveView.alpha = 1
         }
     }
     
@@ -154,7 +217,14 @@ class MapVC: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func setPin(sender: AnyObject){
+//    @IBAction func setPin(sender: AnyObject){
+//        if selectedPin != nil{
+//            handleGetEventLocDelegate?.getEventLoc(addressString, name: selectedPin?.name, longitude: selectedPin?.coordinate.longitude, latitude: selectedPin?.coordinate.latitude, placemark: selectedPin)
+//        }
+//        self.navigationController?.popViewControllerAnimated(true)
+//    }
+
+    func approvePin(){
         if selectedPin != nil{
             handleGetEventLocDelegate?.getEventLoc(addressString, name: selectedPin?.name, longitude: selectedPin?.coordinate.longitude, latitude: selectedPin?.coordinate.latitude, placemark: selectedPin)
         }
@@ -176,21 +246,23 @@ class MapVC: UIViewController {
     }
     
     var setWithCoord: Bool = false
-    
+    @IBOutlet weak var coordinateBtn: UIButton!
     @IBAction func setWithCoordBtn(sender: AnyObject){
         if setWithCoord == false{
             setWithCoord = true
-            sender.setTitle("Set with coordinates - true", forState: .Normal)
+            coordinateBtn.alpha = 1.0
         } else{
             setWithCoord = false
-            sender.setTitle("Set with coordinates - false", forState: .Normal)
+            coordinateBtn.alpha = 0.4
         }
     }
     
-    func adjustMapCenter(centerCoord: CLLocationCoordinate2D){
+    func adjustMapCenter(centerCoord: CLLocationCoordinate2D, span: MKCoordinateSpan = MKCoordinateSpanMake(0.07, 0.07)){
+        
+        
         
         let curSpan = mapView.region.span
-        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let span = MKCoordinateSpan(latitudeDelta: span.latitudeDelta, longitudeDelta: span.longitudeDelta)
         
         if curSpan.latitudeDelta < span.latitudeDelta{
             let region = MKCoordinateRegion(center: centerCoord, span: curSpan)
@@ -218,7 +290,10 @@ class MapVC: UIViewController {
 
 }
 
+
+
 extension MapVC : MKMapViewDelegate {
+
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?{
         if annotation is MKUserLocation {
             //return nil so map view draws "blue dot" for standard user location
@@ -233,7 +308,13 @@ extension MapVC : MKMapViewDelegate {
         let button = UIButton(frame: CGRect(origin: CGPointZero, size: smallSquare))
         button.setBackgroundImage(UIImage(named: "alarmClear"), forState: .Normal)
         button.addTarget(self, action: #selector(MapVC.getDirections), forControlEvents: .TouchUpInside)
-        pinView?.leftCalloutAccessoryView = button
+        //pinView?.leftCalloutAccessoryView = button  add btn later if desired
+        
+        
+        let newCoordinate = annotation.coordinate
+        let span = mapView.region.span
+        adjustMapCenter(newCoordinate, span: span)
+        
         return pinView
     }
 }
@@ -261,8 +342,7 @@ extension MapVC: HandleMapSearch {
         mapView.addAnnotation(annotation)
         
         if fromTap != true{
-            let span = MKCoordinateSpanMake(0.05, 0.05)
-            let region = MKCoordinateRegionMake(placemark.coordinate, span)
+            let region = MKCoordinateRegionMake(placemark.coordinate, generalSpan)
             mapView.setRegion(region, animated: true)
         }
         searchBar.text = addressString
@@ -283,8 +363,7 @@ extension MapVC : CLLocationManagerDelegate {
             hasUserLocBeenFound = true
             currentLoc = location
             if shouldMapCenter{
-                let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-                let region = MKCoordinateRegion(center: location.coordinate, span: span)
+                let region = MKCoordinateRegion(center: location.coordinate, span: generalSpan)
                 mapView.setRegion(region, animated: true)
                 shouldMapCenter = false
             }
