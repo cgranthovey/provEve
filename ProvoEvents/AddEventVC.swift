@@ -27,6 +27,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     @IBOutlet weak var dateButtonTappedOutlet: UIButton!
     @IBOutlet weak var setPinBtnOutlet: UIButton!
     
+    @IBOutlet weak var eventImgBtn: UIButton!
+    
     var imgPickerController: UIImagePickerController!
     
     @IBOutlet weak var collection: UICollectionView!
@@ -46,6 +48,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         layout.scrollDirection = .Horizontal
         collection.collectionViewLayout = layout
         
+        setUpEventImgBtn()
         
         collection.delegate = self
         collection.dataSource = self
@@ -78,6 +81,52 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         scrollView.sendSubviewToBack(viewScrollHeight)
         setUpTaps()
     }
+    
+    
+    func setUpEventImgBtn(){
+        print("called")
+        eventImgBtn.addTarget(self, action: #selector(AddEventVC.eventImgBtnTouchDown), forControlEvents: .TouchDown)
+        eventImgBtn.addTarget(self, action: #selector(AddEventVC.eventImgBtnTouchUpInside), forControlEvents: .TouchUpInside)
+        eventImgBtn.addTarget(self, action: #selector(AddEventVC.touchUpOutside), forControlEvents: .TouchUpOutside)
+    }
+    
+    func eventImgBtnTouchDown(){
+        print("2ne")
+        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: {
+            self.eventImg.transform = CGAffineTransformMakeScale(1.05, 1.05)
+            }, completion: nil)
+    }
+    
+    func eventImgBtnTouchUpInside(){
+        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: {
+            self.eventImg.transform = CGAffineTransformMakeScale(1.15, 1.15)
+
+            }) { (true) in
+                UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: {
+                    self.eventImg.transform = CGAffineTransformMakeScale(0.85, 0.85)
+
+                }) { (true) in
+                    UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: { 
+                        self.eventImg.transform = CGAffineTransformMakeScale(1, 1)
+                        self.imageTapped()
+
+                        }, completion: { (true) in
+                    })
+                }
+        }
+    }
+    
+    func touchUpOutside(){
+        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: { 
+            self.eventImg.transform = CGAffineTransformMakeScale(1, 1)
+            }, completion: nil)
+    }
+    
+    
+    
+    
+    
+    
     
     override func viewDidAppear(animated: Bool) {
         self.view.layoutIfNeeded()
@@ -318,11 +367,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     }
     
     func toFireBase(){
-        print("yak")
         if titleTextField.text == nil || titleTextField.text == ""{
-            print("3!")
             alert("Error", message: "Title Missing")
-            print("4!")
             return
         }
         
@@ -330,6 +376,11 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
             alert("Error", message: "Location Missing")
             return
         }
+        if pinLocDict.isEmpty{
+            alert("Error", message: "Pin Missing")
+            return
+        }
+
         
         let selectedCellImgName: String!
         if selectedCellInt == nil{
@@ -503,6 +554,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                     print("holdTo \(ad)")
                     destinationVC.mkPlacemarkPassed = pm
                     destinationVC.addressPassed = ad
+                    destinationVC.wasAddressPassed = true
                 }
             }
         }
@@ -519,9 +571,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         topView.addGestureRecognizer(tap2)
 
         
-        let tapImg = UITapGestureRecognizer(target: self, action: #selector(AddEventVC.imageTapped))
-        eventImg.userInteractionEnabled = true
-        eventImg.addGestureRecognizer(tapImg)
+//        let tapImg = UITapGestureRecognizer(target: self, action: #selector(AddEventVC.imageTapped))
+//        eventImg.userInteractionEnabled = true
+//        eventImg.addGestureRecognizer(tapImg)
     }
     
     func dismissKeyboard(){

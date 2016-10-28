@@ -51,7 +51,7 @@ extension LocationSearchTable{
 extension LocationSearchTable {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedItem = matchingItems[indexPath.row].placemark
-        var eventAddress = selectedItem.getAddressInfo()
+        let eventAddress = selectedItem.getAddressInfo()
         handleMapSearchDelegate?.dropPinZoomIn(selectedItem, addressString: eventAddress, fromTap: false)
         dismissViewControllerAnimated(true, completion: nil)
     }

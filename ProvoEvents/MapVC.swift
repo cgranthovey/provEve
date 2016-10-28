@@ -25,6 +25,7 @@ class MapVC: UIViewController {
     var addressString = ""
     
     var addressPassed: String!
+    var wasAddressPassed = false
     var mkPlacemarkPassed: MKPlacemark!
     var shouldMapCenter = true
     var hasUserLocBeenFound = false
@@ -38,7 +39,6 @@ class MapVC: UIViewController {
             return MKCoordinateSpanMake(0.07, 0.07)
         }
     }
-    
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeBtn: UIButton!
@@ -59,6 +59,8 @@ class MapVC: UIViewController {
         super.viewDidLoad()
         
         mapView.delegate = self
+        
+        
         
         centerUserBtn.imageView?.contentMode = .ScaleAspectFit
         centerPinBtn.imageView?.contentMode = .ScaleAspectFit
@@ -191,7 +193,6 @@ class MapVC: UIViewController {
             
             if setWithCoord{        //use only lat and long to determine pin
                 placeSpecificCoord(newCoordinates)
-                self.showApproveView()
             } else{     //run lat and long through geocoder to get an assumed location
                 CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude), completionHandler: { (placemarks, error) -> Void in
                     if error != nil {
@@ -210,7 +211,6 @@ class MapVC: UIViewController {
                         let pm = MKPlacemark(placemark: pmCL)
                         let addressLine = pm.getAddressInfo()
                         self.dropPinZoomIn(pm, addressString: addressLine, fromTap: true)
-                        self.showApproveView()
                     }
                 })
             }
@@ -242,13 +242,6 @@ class MapVC: UIViewController {
        // handleGetEventLocDelegate?.getEventLoc(nil, name: nil, longitude: nil, latitude: nil, placemark: nil)
         self.navigationController?.popViewControllerAnimated(true)
     }
-    
-//    @IBAction func setPin(sender: AnyObject){
-//        if selectedPin != nil{
-//            handleGetEventLocDelegate?.getEventLoc(addressString, name: selectedPin?.name, longitude: selectedPin?.coordinate.longitude, latitude: selectedPin?.coordinate.latitude, placemark: selectedPin)
-//        }
-//        self.navigationController?.popViewControllerAnimated(true)
-//    }
 
     func approvePin(){
         if selectedPin != nil{
@@ -334,11 +327,14 @@ extension MapVC : MKMapViewDelegate {
         button.setBackgroundImage(UIImage(named: "alarmClear"), forState: .Normal)
         button.addTarget(self, action: #selector(MapVC.getDirections), forControlEvents: .TouchUpInside)
         pinView?.leftCalloutAccessoryView = button  //add btn later if desired
+
+        //prevents approve from showing up if user clicks pin button if pin was once already chosen
+        if wasAddressPassed{
+            wasAddressPassed = false
+        } else{
+            performSelector(#selector(MapVC.showApproveView), withObject: nil, afterDelay: 0.25)
+        }
         
-        
-        let newCoordinate = annotation.coordinate
-        let span = mapView.region.span
-        adjustMapCenter(newCoordinate, span: span)
         
         return pinView
     }

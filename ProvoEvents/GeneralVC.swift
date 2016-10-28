@@ -21,7 +21,7 @@ class GeneralVC: UIViewController {
         
 
     }
-
+    
     func swipePopBack(){
         self.navigationController?.popViewControllerAnimated(true)
     }

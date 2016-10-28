@@ -786,8 +786,8 @@
                                             <action selector="dateButtonTapped:" destination="yTI-6h-zsR" eventType="touchUpInside" id="M3G-Dg-w0g"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.87" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email for questions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqb-7c-Ssa">
-                                        <rect key="frame" x="15" y="361" width="119" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.87" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email for questions (optional)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqb-7c-Ssa">
+                                        <rect key="frame" x="15" y="361" width="182" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="104" id="9yn-0Z-ndC"/>
                                             <constraint firstAttribute="width" constant="35" id="Kbj-R0-HZI"/>
@@ -900,6 +900,9 @@
                                             <constraint firstAttribute="height" constant="105" id="n5Y-mD-dgL"/>
                                         </constraints>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBi-TK-AVZ">
+                                        <rect key="frame" x="80" y="431" width="160" height="105"/>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBX-Id-Uc4" customClass="LoginButton" customModule="ProvoEvents" customModuleProvider="target">
                                         <rect key="frame" x="23" y="142" width="276" height="30"/>
                                         <constraints>
@@ -998,6 +1001,7 @@
                                     <constraint firstItem="SOU-zm-w7s" firstAttribute="top" secondItem="U7P-ED-cNh" secondAttribute="bottom" constant="5" id="0kC-oW-drh"/>
                                     <constraint firstItem="Gkw-bP-xqX" firstAttribute="leading" secondItem="YaS-8B-gc8" secondAttribute="leading" id="1no-vU-yBB"/>
                                     <constraint firstItem="FMI-bt-m5u" firstAttribute="leading" secondItem="bBX-Id-Uc4" secondAttribute="leading" id="2Be-Jb-lwx"/>
+                                    <constraint firstItem="vBi-TK-AVZ" firstAttribute="centerY" secondItem="m9a-TL-mk8" secondAttribute="centerY" id="6OD-Im-Tme"/>
                                     <constraint firstAttribute="trailing" secondItem="B7h-nn-j8E" secondAttribute="trailing" constant="21" id="8MX-gi-n1g"/>
                                     <constraint firstItem="m9a-TL-mk8" firstAttribute="centerX" secondItem="nYU-GC-mXX" secondAttribute="centerX" id="90i-Fi-H0e"/>
                                     <constraint firstItem="h6T-Dp-jT2" firstAttribute="leading" secondItem="nqb-7c-Ssa" secondAttribute="leading" id="ACC-Rt-sOb"/>
@@ -1012,6 +1016,7 @@
                                     <constraint firstItem="h6T-Dp-jT2" firstAttribute="top" secondItem="YaS-8B-gc8" secondAttribute="bottom" constant="150" id="F2e-8f-dD1"/>
                                     <constraint firstItem="Gkw-bP-xqX" firstAttribute="top" secondItem="h6T-Dp-jT2" secondAttribute="bottom" constant="5" id="F34-h5-Mf4"/>
                                     <constraint firstItem="nqb-7c-Ssa" firstAttribute="top" secondItem="SOU-zm-w7s" secondAttribute="bottom" constant="150" id="H4W-ER-7x5"/>
+                                    <constraint firstItem="vBi-TK-AVZ" firstAttribute="centerX" secondItem="m9a-TL-mk8" secondAttribute="centerX" id="Kck-Eb-ePd"/>
                                     <constraint firstAttribute="trailing" secondItem="B7h-nn-j8E" secondAttribute="trailing" constant="23" id="Kwf-ae-0uI"/>
                                     <constraint firstItem="inf-OP-JjR" firstAttribute="leading" secondItem="bBX-Id-Uc4" secondAttribute="leading" id="M7v-99-dt7"/>
                                     <constraint firstItem="B7h-nn-j8E" firstAttribute="top" secondItem="PcA-zE-AMQ" secondAttribute="bottom" constant="8" id="MHe-nQ-b8D"/>
@@ -1032,9 +1037,11 @@
                                     <constraint firstItem="FMI-bt-m5u" firstAttribute="top" secondItem="mSm-Fh-PHd" secondAttribute="bottom" constant="5" id="agq-8w-B5E"/>
                                     <constraint firstItem="bBX-Id-Uc4" firstAttribute="leading" secondItem="RfP-BN-xvk" secondAttribute="leading" id="bTl-3U-6oi"/>
                                     <constraint firstItem="YaS-8B-gc8" firstAttribute="leading" secondItem="RfP-BN-xvk" secondAttribute="leading" id="bdE-nY-oaV"/>
+                                    <constraint firstItem="vBi-TK-AVZ" firstAttribute="width" secondItem="m9a-TL-mk8" secondAttribute="width" id="c2V-Et-DuA"/>
                                     <constraint firstAttribute="trailing" secondItem="B7h-nn-j8E" secondAttribute="trailing" constant="23" id="dtf-On-OBw"/>
                                     <constraint firstItem="m9a-TL-mk8" firstAttribute="top" secondItem="YaS-8B-gc8" secondAttribute="bottom" constant="15" id="ezY-uW-e5g"/>
                                     <constraint firstItem="U7P-ED-cNh" firstAttribute="top" secondItem="bBX-Id-Uc4" secondAttribute="bottom" constant="120" id="fOZ-x9-8uY"/>
+                                    <constraint firstItem="vBi-TK-AVZ" firstAttribute="height" secondItem="m9a-TL-mk8" secondAttribute="height" id="fwL-D1-fS8"/>
                                     <constraint firstItem="inf-OP-JjR" firstAttribute="top" secondItem="Gkw-bP-xqX" secondAttribute="bottom" constant="15" id="gk2-0b-oh2"/>
                                     <constraint firstItem="ffr-fV-itU" firstAttribute="leading" secondItem="PcA-zE-AMQ" secondAttribute="leading" id="hBI-ZR-eXe"/>
                                     <constraint firstItem="RfP-BN-xvk" firstAttribute="leading" secondItem="B7h-nn-j8E" secondAttribute="leading" id="ko8-Fi-ToR"/>
@@ -1182,6 +1189,7 @@
                         <outlet property="descriptionTextView" destination="Gkw-bP-xqX" id="TNq-B6-SLC"/>
                         <outlet property="emailTextField" destination="YaS-8B-gc8" id="Csr-vI-Bim"/>
                         <outlet property="eventImg" destination="m9a-TL-mk8" id="0YU-Wo-lVB"/>
+                        <outlet property="eventImgBtn" destination="vBi-TK-AVZ" id="jMM-hG-cgR"/>
                         <outlet property="locationTextField" destination="RfP-BN-xvk" id="YVz-Pz-PTv"/>
                         <outlet property="scrollView" destination="nYU-GC-mXX" id="Mad-HZ-fK2"/>
                         <outlet property="setPinBtnOutlet" destination="bBX-Id-Uc4" id="Bt8-L4-wfK"/>
@@ -3262,7 +3270,7 @@
                                                 <rect key="frame" x="15" y="15" width="245" height="117"/>
                                                 <string key="text">Add pin to map by using top search bar or pressing finger on map until pin appears.  Approve button will appear.  Tap to connect pin to your event.</string>
                                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coordinates" translatesAutoresizingMaskIntoConstraints="NO" id="8RO-Iq-KLn">
@@ -3275,7 +3283,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap icon to set exact latitude and longitude, default will search nearest preset location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XzD-RH-LBk">
                                                 <rect key="frame" x="68" y="136" width="192" height="58"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
