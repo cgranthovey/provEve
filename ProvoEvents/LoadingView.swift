@@ -15,6 +15,8 @@ class LoadingView: NSObject {
     
     typealias CompletionHandler = () -> Void
     
+    
+    
     func showSpinnerView(view: UIView){
         
         let rect = CGRectMake(0, 0, view.frame.width, view.frame.height)
@@ -36,6 +38,14 @@ class LoadingView: NSObject {
                 
         }
         
+    }
+    
+    func cancelImediately(){
+        
+        self.darkView.alpha = 0.0
+        self.spinner.alpha = 0.0
+        self.darkView.removeFromSuperview()
+        self.spinner.removeFromSuperview()
     }
     
     func cancelSpinnerAndDarkView(){

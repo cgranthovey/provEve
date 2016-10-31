@@ -13,10 +13,10 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
     @IBOutlet weak var passwordField: LoginTextField!
     @IBOutlet weak var emailField: LoginTextField!
     
-    @IBOutlet weak var backView: UIView!
-    @IBOutlet weak var backImg: UIImageView!
     var imgView: UIImageView!
     var preView: UIView!
+    
+    var backView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,17 +41,17 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
         
         passwordField.clearsOnBeginEditing = false
         emailField.clearsOnBeginEditing = false
-        
-        self.backView.userInteractionEnabled = true
 
         
         
-        imgView = UIImageView()
-        imgView.frame = backImg.frame
-        imgView.image = UIImage(named: "mtgood")
-        view.addSubview(imgView)
-        view.sendSubviewToBack(imgView)
-        imgView.alpha = 0
+      //  backView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+     //   self.view.addSubview(backView)
+        let topColor = UIColor(red: 255/255, green: 87/255, blue: 34/255, alpha: 1.0)
+        let bottomColor = UIColor(red: 230/255, green: 74/255, blue: 25/255, alpha: 1.0)
+        let gl = CAGradientLayer()
+        gl.colors = [topColor, bottomColor]
+        gl.locations = [0, 1]
+        self.view.layer.addSublayer(gl)
     }
     
     
@@ -148,10 +148,6 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
         } else{
             alerts("Username and Password Required", message: "You must enter a username and password.")
         }
-    }
-    
-    @IBAction func forgotPassword(sender: AnyObject){
-        
     }
     
     func help(){

@@ -108,11 +108,11 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     
     @IBAction func mapTypeBtnPressed(){
         if mapView.mapType == .Standard{
-            mapTypeBtnOutlet.changeImageAnimated(UIImage(named: "mapStandard"))
+            mapTypeBtnOutlet.changeImageAnimated(UIImage(named: "worldGrid"))
             mapView.mapType = .Hybrid
         } else{
             
-            mapTypeBtnOutlet.changeImageAnimated(UIImage(named: "mapWorld"))
+            mapTypeBtnOutlet.changeImageAnimated(UIImage(named: "worldFull"))
             //mapTypeBtn.setImage(UIImage(named: "mapStandard"), forState: .Normal)
             mapView.mapType = .Standard
         }

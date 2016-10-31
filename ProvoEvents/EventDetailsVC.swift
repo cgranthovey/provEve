@@ -53,7 +53,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
 
         setUpUI()
         
-        
+
 
         bottomTextMessageBtn.imageView?.contentMode = .ScaleAspectFit
         bottomCalenarBtn.imageView?.contentMode = .ScaleAspectFit
@@ -105,7 +105,8 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
     
     override func viewDidAppear(animated: Bool) {
-        
+        scrollView.delaysContentTouches = false
+        scrollView.canCancelContentTouches = true
         if stackView.frame.height + 160 > self.view.frame.height{
             scrollView.contentSize.height = stackView.frame.height + 160
         } else{
@@ -209,20 +210,23 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     }
     
     func holdDown(sender: UIButton){
+        sender.backgroundColor = UIColor.lightGrayColor()
         if sender == bottomTextMessageBtn{
-            sender.imageView?.image = UIImage(named: "textMessageColor")
+            //sender.imageView?.image = UIImage(named: "textMessageColor")
         } else if sender == bottomCalenarBtn{
-            sender.imageView?.image = UIImage(named: "calendarColor")
+            //sender.imageView?.image = UIImage(named: "calendarColor")
         }
     }
     
     func holdReleaseOutside(sender: UIButton){
         if sender == bottomTextMessageBtn{
-            sender.imageView?.image = UIImage(named: "textMessageClear")
+            //sender.imageView?.image = UIImage(named: "textMessageClear")
         } else if sender == bottomCalenarBtn{
-            sender.imageView?.image = UIImage(named: "calendarClear")
+            //sender.imageView?.image = UIImage(named: "calendarClear")
         }
     }
+    
+    
 
     //////////////////////////////////////////////////
     //Like Heart access
@@ -300,9 +304,10 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //message controller
     
     func textMessageReleaseInside(sender: UIButton){
+        sender.backgroundColor = UIColor.clearColor()
         var messageVC = MFMessageComposeViewController()
         messageVC.messageComposeDelegate = self
-        messageVC.body = "Hey would you want to go to \(event.title) on \(event.date) at \(event.location).\n \(event.description)"
+        messageVC.body = "Hi would you want to go to \(event.title) on \(event.date) at \(event.location).\n\(event.description)"
         
         if MFMessageComposeViewController.canSendText(){
             self.presentViewController(messageVC, animated: true, completion: nil)

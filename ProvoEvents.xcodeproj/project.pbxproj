@@ -18,6 +18,8 @@
 		A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */; };
 		A1239C971D8B3DD800272F67 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1239C961D8B3DD800272F67 /* LoginTextField.swift */; };
 		A1239C991D8B427000272F67 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1239C981D8B427000272F67 /* LoginButton.swift */; };
+		A1258BD01DC503C30062E330 /* btnAspectFit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1258BCF1DC503C30062E330 /* btnAspectFit.swift */; };
+		A1258BD21DC517670062E330 /* buttonSubAnimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1258BD11DC517670062E330 /* buttonSubAnimate.swift */; };
 		A127C6DE1DACB966004017FD /* CommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127C6DD1DACB966004017FD /* CommentsCell.swift */; };
 		A127C6E01DAD3CF1004017FD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127C6DF1DAD3CF1004017FD /* User.swift */; };
 		A127C6E21DAD5DA6004017FD /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127C6E11DAD5DA6004017FD /* Comment.swift */; };
@@ -99,6 +101,8 @@
 		A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserInfoVC.swift; sourceTree = "<group>"; };
 		A1239C961D8B3DD800272F67 /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
 		A1239C981D8B427000272F67 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		A1258BCF1DC503C30062E330 /* btnAspectFit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = btnAspectFit.swift; sourceTree = "<group>"; };
+		A1258BD11DC517670062E330 /* buttonSubAnimate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = buttonSubAnimate.swift; sourceTree = "<group>"; };
 		A127C6DD1DACB966004017FD /* CommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsCell.swift; sourceTree = "<group>"; };
 		A127C6DF1DAD3CF1004017FD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A127C6E11DAD5DA6004017FD /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -232,7 +236,6 @@
 				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
 				A15602641DA2F39A004ADCAD /* snapScrollVC.swift */,
 				A17A934E1DA4349C001987EE /* SettingsVC.swift */,
-				A1FFB6F61DA6EEE3008A23EA /* PasswordReset.swift */,
 				A1B4A1871DB8092600FC3D43 /* LoadingView.swift */,
 			);
 			name = Controller;
@@ -257,6 +260,7 @@
 				A1F56D9A1DB1C2C2009D7F65 /* bottomShadowUILabel.swift */,
 				A1F56D9C1DB2B25A009D7F65 /* segueCommentsShow.swift */,
 				A1AFA4F51DC1882900D182BF /* customCVFlowLayout.swift */,
+				A1258BCF1DC503C30062E330 /* btnAspectFit.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -367,6 +371,7 @@
 				A1F12B801D998F9A007A9447 /* UIViewExtensions.swift */,
 				A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */,
 				A12FF8F91D9EF92D006AD044 /* UIButtonExtension.swift */,
+				A1258BD11DC517670062E330 /* buttonSubAnimate.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -377,6 +382,7 @@
 				A1157C031D8C9A27000ADB0E /* CreateEmailPassVC.swift */,
 				A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */,
 				A1B117AE1D8A2AA40036A24E /* LoginVC.swift */,
+				A1FFB6F61DA6EEE3008A23EA /* PasswordReset.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -605,6 +611,7 @@
 			files = (
 				A12FC0B81DAE9AE6000B4005 /* SettingsCell.swift in Sources */,
 				A1F12B811D998F9A007A9447 /* UIViewExtensions.swift in Sources */,
+				A1258BD01DC503C30062E330 /* btnAspectFit.swift in Sources */,
 				A18FA3B11DA7353600773614 /* GeoFire.m in Sources */,
 				A152437D1DABF10B00ECC34B /* MapPinCell.swift in Sources */,
 				A1D19BD11DA3262200F683AF /* GeneralShadowView.swift in Sources */,
@@ -626,6 +633,7 @@
 				A127C6DE1DACB966004017FD /* CommentsCell.swift in Sources */,
 				A1F56D9D1DB2B25A009D7F65 /* segueCommentsShow.swift in Sources */,
 				A149F6821D8C64EF009AE58C /* AuthService.swift in Sources */,
+				A1258BD21DC517670062E330 /* buttonSubAnimate.swift in Sources */,
 				A1F56D971DB0A729009D7F65 /* EventDetailsCommVC.swift in Sources */,
 				A10D44901D9AE57200966BC0 /* FavoritesVC.swift in Sources */,
 				A10A93D41D93011700D07E8E /* EventCell.swift in Sources */,

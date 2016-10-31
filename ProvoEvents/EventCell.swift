@@ -14,9 +14,12 @@ class EventCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var location: UILabel!
     @IBOutlet weak var desc: UILabel!
-    
     @IBOutlet weak var heartImg: UIImageView!
     var event: Event!
+    
+    @IBOutlet weak var anotherImg: UIImageView!
+    
+ //   @IBOutlet weak var generalEventIconImg: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,10 +31,31 @@ class EventCell: UITableViewCell {
     func configureCell(event: Event){
         self.event = event
         print("in configureeeeeeeeeee \(self.event.title)")
+        
         var eventLiked = event.isLiked
         title.text = event.title     //so these are all guaranteed a value of at least "" but what about property that isn't guaranteed like email
         location.text = event.location
         desc.text = event.description
+        
+        anotherImg?.image = UIImage(named: event.eventTypeImgName)
+        
+//        print(event.eventTypeImgName)
+        
+//        if event.eventTypeImgName != ""{
+//            print("yep1")
+//        } else{
+//            print("yep111")
+//        }
+        
+//        if let picName = UIImage(named: event.eventTypeImgName){
+//            print("come")
+//            print(heartImg)
+//            print()
+//            print(generalEventIconImg.image)
+//            generalEventIconImg.image = picName
+//            print("on")
+//        }
+        
         
         if self.tag == 2{       //tag 2 is the favorites vc
             self.heartImg.image = UIImage(named: "heartFilled")

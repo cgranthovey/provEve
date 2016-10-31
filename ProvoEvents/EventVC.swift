@@ -13,6 +13,7 @@
 // icons 8 - back,
 
 import UIKit
+
 import FirebaseDatabase
 import Firebase
 
@@ -237,6 +238,23 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+    
+    
+    @IBAction func settingsBtnPress(sender: UIButton){
+        UIView.animateWithDuration(0.5) { 
+        }
+        UIView.animateWithDuration(0.5, animations: { 
+            sender.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/2))
+            }) { (true) in
+                sender.transform = CGAffineTransformMakeRotation(CGFloat(0))
+
+                self.performSegueWithIdentifier("SettingsVC", sender: nil)
+
+        }
+    }
+    
+    
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EventDetailsVC"{

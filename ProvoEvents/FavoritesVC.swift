@@ -76,7 +76,6 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     }
 
     func addCell(notif: NSNotification){
-        self.shouldAddTableViewBackground()
 
         if let event = notif.object as? Event{
             print("add cell called")
@@ -86,6 +85,8 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
             self.EventsCategorized = self.events.NewDictWithTimeCategories()
             tableView.reloadData()
         }
+        self.shouldAddTableViewBackground()
+
     }
     
     func removeCell(notif: NSNotification){

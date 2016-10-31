@@ -602,8 +602,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         return false
     }
     
-    var img = ["football", "outdoors", "service", "theater", "art", "prayer", "music", "book", "sandwich"]
-    var lbl = ["Sports", "Outdoors", "Service", "Theater/Cinema", "Art", "Religous", "Music", "Education", "Culinary"]
+    var img = ["football", "outdoors", "service", "theater", "dance", "art", "prayer", "music", "book", "sandwich"]
+    var lbl = ["Sports", "Outdoors", "Service", "Theater/Cinema", "Dance", "Art", "Religous", "Music", "Education", "Culinary"]
 
     var selectedCellInt: Int!
     var cellHold = MapPinCell()

@@ -9,15 +9,22 @@
 import UIKit
 import FirebaseAuth
 
-class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, imagePopDelegate {
 
     @IBOutlet weak var firstName: LoginTextField!
     @IBOutlet weak var userName: LoginTextField!
-    @IBOutlet weak var myUserImg: UIImageView!
+ //   @IBOutlet weak var myUserImg: UIImageView!
     
     @IBOutlet weak var photoLibBtnOutlet: LoginButton!
     @IBOutlet weak var cameraBtnOutlet: LoginButton!
     @IBOutlet weak var screenViewForCameraOutlets: UIView!
+    
+    
+    @IBOutlet weak var userImgBtn: buttonSubAnimate!
+    
+    
+    @IBOutlet weak var userImg: UIImageView!
+    
     
     @IBOutlet weak var backBtn: UIButton!
     
@@ -39,6 +46,8 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         imgPicker = UIImagePickerController()
         imgPicker.delegate = self
         
+        userImgBtn.setUpEventImgBtn(userImg)        //when I tried putting the image inside the btn there was an animation delay.  However with a seperate imgview there was no delay
+        userImgBtn.delegate = self
         
         if preventPopVC{
             removePoppingVC()
@@ -55,9 +64,9 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         tap = UITapGestureRecognizer(target: self, action: #selector(CreateUserInfoVC.removeFirstResponder))
         self.view.addGestureRecognizer(tap)
         
-        myUserImg.userInteractionEnabled = true
-        tapImg = UITapGestureRecognizer(target: self, action: #selector(CreateUserInfoVC.showImgOptions))
-        self.myUserImg.addGestureRecognizer(tapImg)
+    //    myUserImg.userInteractionEnabled = true
+      //  tapImg = UITapGestureRecognizer(target: self, action: #selector(CreateUserInfoVC.showImgOptions))
+       // self.myUserImg.addGestureRecognizer(tapImg)
     }
     
     func removePoppingVC(){
@@ -89,6 +98,10 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+    
+    func imageCompletedPop() {
+        showImgOptions()
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -152,8 +165,8 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     func uploadProfileImg(){
-        if myUserImg.image != UIImage(named: "profile"){
-            if let picData: NSData = UIImageJPEGRepresentation(myUserImg.image!, 0.3){
+        if userImg.image != UIImage(named: "profile"){
+            if let picData: NSData = UIImageJPEGRepresentation(userImg.image!, 0.3){
                 let imgName = "\(NSUUID().UUIDString).jpg"
                 let ref = DataService.instance.imgStorageRefData.child(imgName)
                 let task = ref.putData(picData, metadata: nil, completion: { (metaData, err) in
@@ -205,22 +218,22 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         if picker.sourceType == UIImagePickerControllerSourceType.Camera{
             cameraTaker.dismissViewControllerAnimated(true, completion: nil)
-            myUserImg.image = image
+            userImg.image = image
             hideCameraBtns()
             makeProfilePicRound()
         } else{
             imgPicker.dismissViewControllerAnimated(true, completion: nil)
-            myUserImg.image = image
+            userImg.image = image
             hideCameraBtns()
             makeProfilePicRound()
         }
     }
     
     func makeProfilePicRound(){
-        if myUserImg.image != UIImage(named: "profile"){
-            myUserImg.contentMode = UIViewContentMode.ScaleAspectFill
-            myUserImg.layer.cornerRadius = (myUserImg.frame.height) / 2
-            myUserImg.clipsToBounds = true
+        if userImg.image != UIImage(named: "profile"){
+            userImg.contentMode = UIViewContentMode.ScaleAspectFill
+            userImg.layer.cornerRadius = (userImg.frame.height) / 2
+            userImg.clipsToBounds = true
         }
     }
     

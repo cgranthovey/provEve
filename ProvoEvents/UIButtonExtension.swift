@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 
 
+
 extension UIButton {
-    
+
     func changeImageAnimated(image: UIImage?) {
         guard let imageView = self.imageView, currentImage = imageView.image, newImage = image else {
             return
@@ -36,6 +37,18 @@ extension UIButton {
                 }
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 extension Array where Element: Event{
