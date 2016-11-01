@@ -120,21 +120,21 @@ extension EventDetailsVC{
         
         switch id {
         case 200..<300:
-            return "weatherThunder"
+            return "thunder"
         case 500..<600:
-            return "weatherRain"
+            return "rain"
         case 600..<700:
             return "snow"
         case 800:
             if isNight(hour){
-                return "weatherNightClear"
+                return "moon"
             } else{
-                return "weatherSun"
+                return "sun"
             }
         case 801...804:
-            return "weatherCloud"
+            return "cloud"
         default:
-            return "weatherCloud"
+            return "cloud"
         }
     }
     

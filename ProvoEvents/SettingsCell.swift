@@ -41,7 +41,7 @@ class SettingsCell: BaseCell {
     
     let iconImgView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "checkmarkSettings")
+        imageView.image = UIImage(named: "checkMap")
         imageView.contentMode = .ScaleAspectFill
         return imageView
     }()

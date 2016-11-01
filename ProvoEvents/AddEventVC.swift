@@ -70,7 +70,6 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     var correctCollectionViewWidth = CGFloat(300)
     override func viewWillAppear(animated: Bool) {
 
-        print("mommy2")
         print(collection.frame.width)
         correctCollectionViewWidth = collection.frame.width
         print("hi \(self.view.frame.width)")
@@ -650,7 +649,6 @@ extension AddEventVC: UICollectionViewDelegate, UICollectionViewDataSource{
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        print("mommy")
         print(collection.frame.width)
        // return CGSizeMake(correctCollectionViewWidth / 3, 70.0)       if I add three for width back remember to set paging in interface builder
         return CGSizeMake(85, 70.0)

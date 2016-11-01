@@ -140,6 +140,9 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol {
         return false
     }
     
+    @IBAction func creditsVC(sender: AnyObject){
+        performSegueWithIdentifier("CreditsVC", sender: nil)
+    }
 
     @IBOutlet var logoutTopConstraint: NSLayoutConstraint!
     

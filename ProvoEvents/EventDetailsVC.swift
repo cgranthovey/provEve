@@ -199,33 +199,33 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         bottomTextMessageBtn.adjustsImageWhenHighlighted = false        //prevents image from becoming darker when touched
         bottomCalenarBtn.adjustsImageWhenHighlighted = false
         
-        bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.holdDown(_:)), forControlEvents: .TouchDown)
-        bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.holdDown(_:)), forControlEvents: .TouchDown)
-        
-        bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.holdReleaseOutside(_:)), forControlEvents: .TouchUpOutside)
-        bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.holdReleaseOutside(_:)), forControlEvents: .TouchUpOutside)
-        
+//        bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.holdDown(_:)), forControlEvents: .TouchDown)
+//        bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.holdDown(_:)), forControlEvents: .TouchDown)
+//        
+//        bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.holdReleaseOutside(_:)), forControlEvents: .TouchUpOutside)
+//        bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.holdReleaseOutside(_:)), forControlEvents: .TouchUpOutside)
+//        
         bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.textMessageReleaseInside(_:)), forControlEvents: .TouchUpInside)
         bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.showReminderVC), forControlEvents: .TouchUpInside)
     }
     
-    func holdDown(sender: UIButton){
-        sender.backgroundColor = UIColor.lightGrayColor()
-        if sender == bottomTextMessageBtn{
-            //sender.imageView?.image = UIImage(named: "textMessageColor")
-        } else if sender == bottomCalenarBtn{
-            //sender.imageView?.image = UIImage(named: "calendarColor")
-        }
-    }
-    
-    func holdReleaseOutside(sender: UIButton){
-        if sender == bottomTextMessageBtn{
-            //sender.imageView?.image = UIImage(named: "textMessageClear")
-        } else if sender == bottomCalenarBtn{
-            //sender.imageView?.image = UIImage(named: "calendarClear")
-        }
-    }
-    
+//    func holdDown(sender: UIButton){
+//        sender.backgroundColor = UIColor.lightGrayColor()
+//        if sender == bottomTextMessageBtn{
+//            //sender.imageView?.image = UIImage(named: "textMessageColor")
+//        } else if sender == bottomCalenarBtn{
+//            //sender.imageView?.image = UIImage(named: "calendarColor")
+//        }
+//    }
+//    
+//    func holdReleaseOutside(sender: UIButton){
+//        if sender == bottomTextMessageBtn{
+//            //sender.imageView?.image = UIImage(named: "textMessageClear")
+//        } else if sender == bottomCalenarBtn{
+//            //sender.imageView?.image = UIImage(named: "calendarClear")
+//        }
+//    }
+//    
     
 
     //////////////////////////////////////////////////

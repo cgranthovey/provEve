@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "whiteCheck.png",
+      "filename" : "whiteCheck@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "whiteCheck@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "whiteCheck@3x.png",
       "scale" : "3x"
     }
   ],

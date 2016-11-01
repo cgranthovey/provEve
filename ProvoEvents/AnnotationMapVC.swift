@@ -113,7 +113,6 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         } else{
             
             mapTypeBtnOutlet.changeImageAnimated(UIImage(named: "worldFull"))
-            //mapTypeBtn.setImage(UIImage(named: "mapStandard"), forState: .Normal)
             mapView.mapType = .Standard
         }
     }
@@ -156,9 +155,8 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    
     func geoFireQuery(){
-        print("yo")
+        print("volts")
         let geoFireRef: FIRDatabaseReference!
         let geoFire: GeoFire!
         
@@ -184,23 +182,25 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         
         
         if isRegionValid(region){
-        
             let regionQuery = geoFire.queryWithRegion(region)
             
             var queryHandle = regionQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
-                
                 print("key: \(key) and the location: \(location)")
-                
-                if self.dictEnterKeyForEvent[key] == nil{
-                    self.loadEventInfo(key, location: location)
-                } else {//if we already have key then we don't need to make another annotation
-                   // self.makeAnotation(key, location: location)
+
+                if self.holdKeysArray.indexOf(key) == nil{
+                    print("sammy")
+                    self.holdKeysArray.append(key)
+                    if self.dictEnterKeyForEvent[key] == nil{
+                        self.loadEventInfo(key, location: location)
+                    } else {//if we already have key then we don't need to make another annotation
+                       // self.makeAnotation(key, location: location)
+                    }
                 }
             })
         }
     }
     
-    
+    var holdKeysArray = [String]()
     
     func isRegionValid(region: MKCoordinateRegion) -> Bool{
         
@@ -306,7 +306,7 @@ extension AnnotationMapVC: MKMapViewDelegate{
         
         
         let myEvent = (annotation as? customMKPointAnnotation)?.event
-        
+        print("title \(myEvent?.title)")
         let reuseId = "pin"
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
         pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)

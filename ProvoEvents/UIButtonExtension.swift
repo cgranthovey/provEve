@@ -257,9 +257,22 @@ extension NSDate {
 
 
 
+extension NSMutableAttributedString{
+    func setLink(text: String, link: String){
+        let findString = self.mutableString.rangeOfString(text)
+        if findString.location != NSNotFound{
+            self.addAttribute(NSLinkAttributeName, value: link, range: findString)
+        }
+    }
+}
 
-
-
+extension String{
+    func indexOf(string: String) -> String.Index?{
+        return rangeOfString(string, options: .LiteralSearch, range: nil, locale: nil)?.startIndex
+        
+        
+    }
+}
 
 
 

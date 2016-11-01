@@ -16,6 +16,7 @@
 		A10D44941D9C0E1E00966BC0 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D44931D9C0E1E00966BC0 /* LocationSearchTable.swift */; };
 		A1157C041D8C9A27000ADB0E /* CreateEmailPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1157C031D8C9A27000ADB0E /* CreateEmailPassVC.swift */; };
 		A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */; };
+		A11B8FA51DC6E98100743E4C /* snapScroll2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11B8FA41DC6E98100743E4C /* snapScroll2.swift */; };
 		A1239C971D8B3DD800272F67 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1239C961D8B3DD800272F67 /* LoginTextField.swift */; };
 		A1239C991D8B427000272F67 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1239C981D8B427000272F67 /* LoginButton.swift */; };
 		A1258BD01DC503C30062E330 /* btnAspectFit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1258BCF1DC503C30062E330 /* btnAspectFit.swift */; };
@@ -29,6 +30,9 @@
 		A12FC0BA1DAE9B9B000B4005 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FC0B91DAE9B9B000B4005 /* BaseCell.swift */; };
 		A12FF8F81D9EE309006AD044 /* MKPlacemarkExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */; };
 		A12FF8FA1D9EF92D006AD044 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FF8F91D9EF92D006AD044 /* UIButtonExtension.swift */; };
+		A141E33D1DC7D33000B2747F /* CreditsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141E33C1DC7D33000B2747F /* CreditsVC.swift */; };
+		A141E33F1DC7DBCB00B2747F /* creditsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141E33E1DC7DBCB00B2747F /* creditsCell.swift */; };
+		A141E3411DC7F79A00B2747F /* Credit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141E3401DC7F79A00B2747F /* Credit.swift */; };
 		A149F6821D8C64EF009AE58C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149F6811D8C64EF009AE58C /* AuthService.swift */; };
 		A152437D1DABF10B00ECC34B /* MapPinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A152437C1DABF10B00ECC34B /* MapPinCell.swift */; };
 		A15602651DA2F39A004ADCAD /* snapScrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15602641DA2F39A004ADCAD /* snapScrollVC.swift */; };
@@ -99,6 +103,7 @@
 		A10D44931D9C0E1E00966BC0 /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
 		A1157C031D8C9A27000ADB0E /* CreateEmailPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEmailPassVC.swift; sourceTree = "<group>"; };
 		A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserInfoVC.swift; sourceTree = "<group>"; };
+		A11B8FA41DC6E98100743E4C /* snapScroll2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = snapScroll2.swift; sourceTree = "<group>"; };
 		A1239C961D8B3DD800272F67 /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
 		A1239C981D8B427000272F67 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		A1258BCF1DC503C30062E330 /* btnAspectFit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = btnAspectFit.swift; sourceTree = "<group>"; };
@@ -112,6 +117,9 @@
 		A12FC0B91DAE9B9B000B4005 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPlacemarkExtension.swift; sourceTree = "<group>"; };
 		A12FF8F91D9EF92D006AD044 /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		A141E33C1DC7D33000B2747F /* CreditsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsVC.swift; sourceTree = "<group>"; };
+		A141E33E1DC7DBCB00B2747F /* creditsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = creditsCell.swift; sourceTree = "<group>"; };
+		A141E3401DC7F79A00B2747F /* Credit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
 		A149F6811D8C64EF009AE58C /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		A152437C1DABF10B00ECC34B /* MapPinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinCell.swift; sourceTree = "<group>"; };
 		A15602641DA2F39A004ADCAD /* snapScrollVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = snapScrollVC.swift; sourceTree = "<group>"; };
@@ -212,6 +220,7 @@
 				A10A93D11D92F5D200D07E8E /* Event.swift */,
 				A127C6DF1DAD3CF1004017FD /* User.swift */,
 				A127C6E11DAD5DA6004017FD /* Comment.swift */,
+				A141E3401DC7F79A00B2747F /* Credit.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -235,8 +244,10 @@
 				A1F12B821D99B347007A9447 /* ReminderVC.swift */,
 				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
 				A15602641DA2F39A004ADCAD /* snapScrollVC.swift */,
+				A11B8FA41DC6E98100743E4C /* snapScroll2.swift */,
 				A17A934E1DA4349C001987EE /* SettingsVC.swift */,
 				A1B4A1871DB8092600FC3D43 /* LoadingView.swift */,
+				A141E33C1DC7D33000B2747F /* CreditsVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -261,6 +272,7 @@
 				A1F56D9C1DB2B25A009D7F65 /* segueCommentsShow.swift */,
 				A1AFA4F51DC1882900D182BF /* customCVFlowLayout.swift */,
 				A1258BCF1DC503C30062E330 /* btnAspectFit.swift */,
+				A141E33E1DC7DBCB00B2747F /* creditsCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -345,9 +357,9 @@
 				A1239C931D8B3D9100272F67 /* Model */,
 				A1239C951D8B3DAB00272F67 /* View */,
 				A1239C941D8B3D9E00272F67 /* Controller */,
+				A1B117B31D8A2AA40036A24E /* Assets.xcassets */,
 				A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */,
 				A1B117B01D8A2AA40036A24E /* Main.storyboard */,
-				A1B117B31D8A2AA40036A24E /* Assets.xcassets */,
 				A1B117B51D8A2AA50036A24E /* LaunchScreen.storyboard */,
 				A1B117B81D8A2AA50036A24E /* Info.plist */,
 				A1B117CC1D8A2B090036A24E /* GoogleService-Info.plist */,
@@ -623,9 +635,11 @@
 				A1F12B7F1D997A58007A9447 /* CreateEvent.swift in Sources */,
 				A1F12B831D99B347007A9447 /* ReminderVC.swift in Sources */,
 				A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */,
+				A141E33F1DC7DBCB00B2747F /* creditsCell.swift in Sources */,
 				A1F56D951DB0A3C0009D7F65 /* ShadowView.swift in Sources */,
 				A1239C991D8B427000272F67 /* LoginButton.swift in Sources */,
 				A12B32E01DA556DA00301598 /* GeneralEventVC.swift in Sources */,
+				A141E3411DC7F79A00B2747F /* Credit.swift in Sources */,
 				A18089451DBB082F0019D408 /* EventDetailsExtension.swift in Sources */,
 				A174D4811DB5B47400030E19 /* yesNoLauncher.swift in Sources */,
 				A1F56D991DB1933C009D7F65 /* CornerRadiusView.swift in Sources */,
@@ -640,6 +654,7 @@
 				A1C466B81D91AB9E00A62A70 /* DateTimeVC.swift in Sources */,
 				A1EE77EA1DA7623800781CDF /* AnnotationPin.swift in Sources */,
 				A1F56D9B1DB1C2C2009D7F65 /* bottomShadowUILabel.swift in Sources */,
+				A11B8FA51DC6E98100743E4C /* snapScroll2.swift in Sources */,
 				A1157C041D8C9A27000ADB0E /* CreateEmailPassVC.swift in Sources */,
 				A1FFB6F71DA6EEE3008A23EA /* PasswordReset.swift in Sources */,
 				A1D385481D908B3D00365348 /* AddEventVC.swift in Sources */,
@@ -651,6 +666,7 @@
 				A1B4A1881DB8092600FC3D43 /* LoadingView.swift in Sources */,
 				A18FA3B51DA7353600773614 /* GFQuery.m in Sources */,
 				A10D44921D9B799900966BC0 /* MapVC.swift in Sources */,
+				A141E33D1DC7D33000B2747F /* CreditsVC.swift in Sources */,
 				A181FD021D943D6800007264 /* EventDetailsVC.swift in Sources */,
 				A181FD081D946D4100007264 /* ImageLargeVC.swift in Sources */,
 				A127C6E21DAD5DA6004017FD /* Comment.swift in Sources */,

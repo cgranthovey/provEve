@@ -177,7 +177,6 @@ class MapVC: UIViewController {
         } else{
             
             mapTypeBtn.changeImageAnimated(UIImage(named: "worldFull"))
-            //mapTypeBtn.setImage(UIImage(named: "mapStandard"), forState: .Normal)
             mapView.mapType = .Standard
         }
     }
@@ -322,11 +321,6 @@ extension MapVC : MKMapViewDelegate {
         pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
         pinView?.pinTintColor = UIColor.orangeColor()
         pinView?.canShowCallout = true
-        let smallSquare = CGSize(width: 30, height: 30)
-        let button = UIButton(frame: CGRect(origin: CGPointZero, size: smallSquare))
-        button.setBackgroundImage(UIImage(named: "alarmClear"), forState: .Normal)
-        button.addTarget(self, action: #selector(MapVC.getDirections), forControlEvents: .TouchUpInside)
-        pinView?.leftCalloutAccessoryView = button  //add btn later if desired
 
         //prevents approve from showing up if user clicks pin button if pin was once already chosen
         if wasAddressPassed{
