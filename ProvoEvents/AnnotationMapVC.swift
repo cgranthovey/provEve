@@ -22,7 +22,6 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     var hasUserLocBeenFound = false
     
     @IBOutlet weak var mapView: MKMapView!
-    
     @IBOutlet weak var backBtnOutlet: UIButton!
     @IBOutlet weak var centerUserOutlet: UIButton!
     @IBOutlet weak var settingsOutlet: UIButton!
@@ -73,8 +72,10 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         mapView.removeAnnotations(annotationArray)
         dictEnterKeyForEvent = [:]
         dictEnterTagForEventKey = [:]
+        holdKeysArray = []
         if let dict = notif.userInfo as? Dictionary<String, NSDate>{
             if let date = dict["date"]{
+                print("show date \(date)")
                 choosenDate = date
                 geoFireQuery()
             }
@@ -91,7 +92,6 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
             adjustMapCenter(currentLoc.coordinate)
         }
     }
-    
     
     let settingsLauncher = MapSettingsLauncher()
     
@@ -175,6 +175,10 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
             print("SPANY: \(span)")
             centerCoord = mapView.centerCoordinate
         }
+        
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //here's probably a good place to see if the span is too big and if so not look for annotations
         
         print("my span \(span)  coord \(centerCoord)")
         

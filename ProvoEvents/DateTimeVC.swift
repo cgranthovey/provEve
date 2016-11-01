@@ -48,10 +48,24 @@ class DateTimeVC: UIViewController {
 
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+//    
+//    @IBAction func setTouchDown(sender: UIButton){
+//        sender.backgroundColor = UIColor().boilerPlateColor(230, green: 81, blue: 0)
+//    }
+//    @IBAction func setTouchUpOutside(sender: UIButton){
+//        sender.backgroundColor = UIColor().boilerPlateColor(239, green: 108, blue: 0)
+//    }
+//    
+    
     
     @IBAction func cancel(){
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+//    @IBAction func cancelTouchDown(sender: UIButton){
+//        sender.backgroundColor = UIColor().boilerPlateColor(136, green: 14, blue: 79)
+//    }
+//    @IBAction func cancelTouchUpOutside(sender: UIButton){
+//        sender.backgroundColor = UIColor().boilerPlateColor(194, green: 24, blue: 91)
+//    }
 
 }

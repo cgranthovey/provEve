@@ -167,8 +167,12 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                     print("sign2")
                     if let eventArray = EventsCategorized[keyEventsCategorized]{
                         print("sign3")
-                        if let i = EventsCategorized[keyEventsCategorized]?.indexOf({$0.key == holdKey}){
+                        if let i = eventArray.indexOf({$0.key == holdKey}){
+                            var event = eventArray[i]
+                            event.adjustHeartImgIsLiked(false)
                             print("sign4")
+                            print("i \(i)")
+                            print("section \(section)")
                             let indexPath = NSIndexPath(forRow: i, inSection: section)
                             if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
                                 print("sign5")
@@ -178,16 +182,15 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                         }
                         section = section + 1
                     }
+                    
                 }
             }
         }
     }
-
-    
-    
-    
     
     var isCurrentlyLoading = false
+    
+
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let currentArray = ArrayForSection(indexPath.section)

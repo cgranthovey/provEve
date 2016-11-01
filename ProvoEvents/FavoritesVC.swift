@@ -86,7 +86,6 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
             tableView.reloadData()
         }
         self.shouldAddTableViewBackground()
-
     }
     
     func removeCell(notif: NSNotification){
@@ -125,10 +124,8 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
                                         print(i)
                                         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                                     }
-
                                 }
                         section = section + 1
-
                     }
                 }
                 print("tiger 6")
@@ -163,7 +160,4 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-
-
-    
 }

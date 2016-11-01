@@ -42,7 +42,6 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         eventImg.image = UIImage(named: "photoAlbumColor")
         setUpDelegates()
         
-        
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .Horizontal
@@ -61,7 +60,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardNotification(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        scrollView.contentSize.height = 750
+        scrollView.contentSize.height = 760
         scrollView.contentSize.width = view.frame.width
         scrollView.directionalLockEnabled = true
 
@@ -98,20 +97,15 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     
     func eventImgBtnTouchUpInside(){
         UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: {
-            self.eventImg.transform = CGAffineTransformMakeScale(1.15, 1.15)
+            self.eventImg.transform = CGAffineTransformMakeScale(0.85, 0.85)
 
-            }) { (true) in
-                UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: {
-                    self.eventImg.transform = CGAffineTransformMakeScale(0.85, 0.85)
+        }) { (true) in
+            UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: { 
+                self.eventImg.transform = CGAffineTransformMakeScale(1, 1)
+                self.imageTapped()
 
-                }) { (true) in
-                    UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: { 
-                        self.eventImg.transform = CGAffineTransformMakeScale(1, 1)
-                        self.imageTapped()
-
-                        }, completion: { (true) in
-                    })
-                }
+                }, completion: { (true) in
+            })
         }
     }
     
@@ -298,19 +292,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         }
     }
     
-    var imgSuccess: UIImageView!
-    func makeSuccessView(){
-        imgSuccess = UIImageView(image: UIImage(named: "whiteCheck"))
 
-        NSNotificationCenter.defaultCenter().postNotificationName("loadDataAfterNewEvent", object: nil)
-
-        UIView.animateWithDuration(0.5, animations: {
-            self.spinIndicator.alpha = 0
-            }) { (true) in
-                self.imgSuccess.showCheckmarkAnimatedTempImg(self.view, delay: 0.1, remove: false)
-                self.performSelector(#selector(AddEventVC.popOut), withObject: nil, afterDelay: 1)
-        }
-    }
 
     
 
@@ -443,16 +425,27 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
 
     }
     
+    var imgSuccess: UIImageView!
+    func makeSuccessView(){
+        imgSuccess = UIImageView(image: UIImage(named: "whiteCheck"))
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("loadDataAfterNewEvent", object: nil)
+        
+        UIView.animateWithDuration(0.5, animations: {
+            self.spinIndicator.alpha = 0
+        }) { (true) in
+            self.imgSuccess.showCheckmarkAnimatedTempImg(self.view, delay: 0.1, remove: false)
+            self.performSelector(#selector(AddEventVC.popOut), withObject: nil, afterDelay: 1)
+        }
+    }
+    
     func postGeoFire(location: CLLocationCoordinate2D?, eventRef: String?){
         var geoFire: GeoFire!
         var geoFireRef: FIRDatabaseReference!
-        print("in geo fire")
         geoFireRef = DataService.instance.mainRef.child("GeoFire")
         geoFire = GeoFire(firebaseRef: geoFireRef)
         
-        print("\(location) and key \(eventRef)")
         if let loc = location, let key = eventRef{
-            print("inside")
             geoFire.setLocation(CLLocation(latitude: loc.latitude, longitude: loc.longitude), forKey: key) { (error) in
                 if error != nil{
                     print("error")

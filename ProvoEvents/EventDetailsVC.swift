@@ -48,28 +48,29 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("canz1")
         deleteView.delegate = self
-
+print("can2")
         setUpUI()
         
+print("canz3")
 
-
-        bottomTextMessageBtn.imageView?.contentMode = .ScaleAspectFit
-        bottomCalenarBtn.imageView?.contentMode = .ScaleAspectFit
-        heartBtn.imageView?.contentMode = .ScaleAspectFit
-        garbageOutlet.imageView?.contentMode = .ScaleAspectFit
+//        bottomTextMessageBtn.imageView?.contentMode = .ScaleAspectFit
+//        bottomCalenarBtn.imageView?.contentMode = .ScaleAspectFit
+//        heartBtn.imageView?.contentMode = .ScaleAspectFit
+//        garbageOutlet.imageView?.contentMode = .ScaleAspectFit
+        print("canz3.4")
         heartBtn.adjustsImageWhenHighlighted = false
-        
+        print("canz3.5")
         if event.user != FIRAuth.auth()?.currentUser?.uid{
             garbageOutlet.hidden = true
         }
         
-        
+        print("canz4")
         eventImg.userInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.toLargeImg))
         eventImg.addGestureRecognizer(tap)
-        
+        print("can5")
         scrollView.delaysContentTouches = false
         setBottomButtons()
         
@@ -166,16 +167,23 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         }
         
         if let holdEventImg = event.imgURL{
+            
             ImgCacheLoader.sharedLoader.imageForUrl(holdEventImg) { (image, url) in
-                self.img = image
-                self.eventImg.image = self.img!
-                self.eventImg.roundCornersForAspectFit(5)
+                print("return here")
+                if image != nil{            // without this if no internet connection we receive nil image causing crash.
+                    self.img = image
+                    self.eventImg.image = self.img!
+                    self.eventImg.roundCornersForAspectFit(5)
+                } else{
+                    self.eventImg.hidden = true
+                }
                 self.activityIndicator.stopAnimating()
             }
         }else{
             eventImg.hidden = true
             self.activityIndicator.stopAnimating()
         }
+        print("end of setUpUI")
     }
     
     

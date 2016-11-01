@@ -160,14 +160,24 @@ class MapVC: UIViewController {
             }, completion: nil)
     }
     
-    @IBAction func gotItBtn(sender: AnyObject){
+    @IBAction func gotItBtn(sender: UIButton){
         UIView.animateWithDuration(0.3, animations: { 
             self.darkView.alpha = 0
             self.questionView.alpha = 0
             }) { (true) in
                 self.darkView.removeFromSuperview()
+                sender.backgroundColor = UIColor(red: 244/255, green: 67/255, blue: 54/255, alpha: 1.0)
                 self.questionView.hidden = true
         }
+    }
+    
+    @IBAction func gotItBtnTouchDown(sender: UIButton){
+        
+        sender.backgroundColor = UIColor(red: 211/255, green: 47/255, blue: 47/255, alpha: 1.0)
+    }
+    
+    @IBAction func gotItBtnTouchUpOutside(sender: UIButton){
+        sender.backgroundColor = UIColor(red: 244/255, green: 67/255, blue: 54/255, alpha: 1.0)
     }
     
     @IBAction func mapTypeBtnPress(sender: AnyObject){
