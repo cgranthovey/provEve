@@ -47,14 +47,19 @@ class LoadingView: NSObject {
         self.darkView.removeFromSuperview()
         self.spinner.removeFromSuperview()
     }
+
+
     
-    func cancelSpinnerAndDarkView(){
-        UIView.animateWithDuration(0.25, animations: { 
+    func cancelSpinnerAndDarkView(completionHandler: CompletionHandler?){
+        UIView.animateWithDuration(0.25, animations: {
             self.darkView.alpha = 0.0
             self.spinner.alpha = 0.0
             }) { (true) in
                 self.darkView.removeFromSuperview()
                 self.spinner.removeFromSuperview()
+                if completionHandler != nil{
+                    completionHandler!()
+                }
         }
     }
     

@@ -30,6 +30,9 @@ class Constants {
     var currentUser: User!
     
     func initCurrentUser(){
+        
+        
+        
         DataService.instance.currentUserProfile.observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.value == nil{
                 
@@ -40,9 +43,18 @@ class Constants {
                     let profileImg = snapDict["profileImg"]
                     let userName = snapDict["userName"]
                     self.currentUser = User(firstName: firstName, userName: userName, imgString: profileImg)
+                    
+                    let prefs = NSUserDefaults.standardUserDefaults()
+                    let username = self.currentUser.userName
+                    
+                    if prefs.stringForKey("savedUsername") == nil{
+                        prefs.setValue(username, forKey: "savedUsername")
+                    }
                 }
             }
         })
+        
+
     }
     
     

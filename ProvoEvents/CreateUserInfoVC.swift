@@ -238,7 +238,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     func alerts(title: String, message: String){
-        loadingView.cancelSpinnerAndDarkView()
+        loadingView.cancelSpinnerAndDarkView(nil)
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)

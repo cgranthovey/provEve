@@ -37,6 +37,10 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if !Reachability.isConnectedToNetwork(){
+            notConnected()
+        }
+        
         print("event vc viewDidLoad")
 
         tableView.delegate = self
@@ -67,6 +71,45 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     func handleRefresh(refreshControl: UIRefreshControl){
         loadData()
     }
+    
+    
+    var noConnectionView: NoInternetView!
+    var darkView: UIView!
+    func notConnected(){
+        let frame = CGRectMake(0, 0, 275, 155)
+        noConnectionView = NoInternetView(frame: frame)
+        noConnectionView.center = self.view.center
+        noConnectionView.layer.cornerRadius = 5.0
+        noConnectionView.layer.masksToBounds = true
+        noConnectionView.gotItBtn.addTarget(self, action: #selector(EventVC.dismissNoConnectionView), forControlEvents: .TouchUpInside)
+        noConnectionView.alpha = 0
+        
+        darkView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
+        darkView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        darkView.alpha = 0
+        
+        self.view.addSubview(darkView)
+        self.view.addSubview(noConnectionView)
+        self.view.bringSubviewToFront(noConnectionView)
+        
+        UIView.animateWithDuration(0.3, delay: 0.75, options: .CurveEaseIn, animations: { 
+            self.darkView.alpha = 0.75
+            self.noConnectionView.alpha = 1.0
+            }) { (true) in
+        }
+    }
+    
+    func dismissNoConnectionView(){
+        UIView.animateWithDuration(0.3, animations: {
+            self.darkView.alpha = 0
+            self.noConnectionView.alpha = 0
+        }) { (true) in
+            self.darkView.hidden = true
+            self.noConnectionView.hidden = true
+        }
+    }
+    
+    
     
     func loadData(){
         todaysStartTime = self.getTodaysStartTime()

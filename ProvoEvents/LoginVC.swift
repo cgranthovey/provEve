@@ -6,6 +6,7 @@
 //  Copyright © 2016 Chris Hovey. All rights reserved.
 //
 
+
 import UIKit
 import FirebaseAuth
 class LoginVC: GeneralVC, UITextFieldDelegate {
@@ -27,36 +28,54 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
 //            print("could not sign out")
 //        }
 
+        
+
+        
+        print("yo")
         preView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         preView.backgroundColor = UIColor(red: 245.0/255.0, green: 245.0/255.0, blue: 245.0/255.0, alpha: 1.0)
         self.view.addSubview(preView)
         
-        passwordField.delegate = self
-        emailField.delegate = self
         
-        checkForUID()
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.removeFirstResponder))
-        self.view.addGestureRecognizer(tap)
-        
-        passwordField.clearsOnBeginEditing = false
-        emailField.clearsOnBeginEditing = false
+
+            print("connected to internet")
+            
+            
+            passwordField.delegate = self
+            emailField.delegate = self
+            
+            checkForUID()
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.removeFirstResponder))
+            self.view.addGestureRecognizer(tap)
+            
+            passwordField.clearsOnBeginEditing = false
+            emailField.clearsOnBeginEditing = false
+            
+            
+            
+            //  backView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+            //   self.view.addSubview(backView)
+            let topColor = UIColor(red: 255/255, green: 87/255, blue: 34/255, alpha: 1.0)
+            let bottomColor = UIColor(red: 230/255, green: 74/255, blue: 25/255, alpha: 1.0)
+            let gl = CAGradientLayer()
+            gl.colors = [topColor, bottomColor]
+            gl.locations = [0, 1]
+            self.view.layer.addSublayer(gl)
+            
+            
 
         
-        
-      //  backView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-     //   self.view.addSubview(backView)
-        let topColor = UIColor(red: 255/255, green: 87/255, blue: 34/255, alpha: 1.0)
-        let bottomColor = UIColor(red: 230/255, green: 74/255, blue: 25/255, alpha: 1.0)
-        let gl = CAGradientLayer()
-        gl.colors = [topColor, bottomColor]
-        gl.locations = [0, 1]
-        self.view.layer.addSublayer(gl)
+
     }
     
     
+    
+    
+
+    
     func checkForUID(){
-        print("1")
+        print("tigger1")
         if FIRAuth.auth()?.currentUser != nil{
             print("2")
             print(FIRAuth.auth()?.currentUser?.uid)
@@ -79,18 +98,27 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
         
      //   DataService.instance.mainRef.child("User").child(FIRAuth.auth()?.currentUser?.uid).obsersingle
         
+        let prefs = NSUserDefaults.standardUserDefaults()
+        if prefs.stringForKey("savedUsername") != nil{
+            print("saved username \(prefs.stringForKey("savedUsername"))")
+            self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+
+        } else{
+            print("not saved")
+            self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
+        }
         
-        DataService.instance.currentUser.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            print("5")
-            if let snap = snapshot.value as? String{
-                print("dog")
-                self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
-            } else{
-                print("kitten")
-                print(snapshot)
-                self.performSegueWithIdentifier("snapScrollVC", sender: nil)
-            }
-        })
+//        DataService.instance.currentUser.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+//            print("5")
+//            if let snap = snapshot.value as? String{
+//                print("dog")
+//                self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
+//            } else{
+//                print("kitten")
+//                print(snapshot)
+//                self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+//            }
+//        })
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -100,7 +128,6 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
             }
         }
     }
-    
     
     override func viewDidDisappear(animated: Bool) {
         self.preView.removeFromSuperview()
@@ -139,7 +166,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
                 }
                 self.resignFirstResponder()
                 self.performSegueWithIdentifier("snapScrollVC", sender: nil)
-                self.loadingView.cancelSpinnerAndDarkView()
+                self.loadingView.cancelSpinnerAndDarkView(nil)
                 print("logged in!")
             })
             
@@ -155,7 +182,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
     }
 
     func alerts(title: String, message: String){
-        loadingView.cancelSpinnerAndDarkView()
+        loadingView.cancelSpinnerAndDarkView(nil)
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)

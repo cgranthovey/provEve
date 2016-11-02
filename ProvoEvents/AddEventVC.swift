@@ -417,7 +417,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                 } else {
                     print("about to call Geo Fire")
                     self.postGeoFire(self.coordinateOfEvent, eventRef: key)
-                    self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 1.5)
+                    self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 0.75)
                 }
                 print("i'm on bottom")
             }

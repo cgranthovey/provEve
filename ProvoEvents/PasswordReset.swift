@@ -40,29 +40,30 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
                 if errMsg != nil{
                     self.alerts("Error", message: errMsg)
                 } else{
-                    dispatch_async(dispatch_get_main_queue(), { 
-                        self.passwordResetLoading.successCancelSpin({
-                            let myImg = UIImageView(image: UIImage(named: "checkmark"))
-                            myImg.showCheckmarkAnimatedTempImg(self.view)
-                            self.performSelector(#selector(PasswordReset.pop), withObject: self, afterDelay: 1.0)
-                        })
+                    print("woot")
+                    dispatch_async(dispatch_get_main_queue(), {
+                        print("woot2")
+                        self.passwordResetLoading.cancelSpinnerAndDarkView(nil)
+                        self.performSelector(#selector(PasswordReset.animateMail), withObject: nil, afterDelay: 0.5)
+                            print("3")
+
+
                     })
                 }
             })
         }
     }
     
+    var mailOriginalOrigin: CGPoint!
     func animateMail(){
         
-        var mailOriginX = self.mailImg.frame.origin.x
-        var mailOriginY = self.mailImg.frame.origin.y
-        
-        var screenHeigh = self.view.frame.height
-        var animationHeight = self.mailImg.frame.height
+        let screenHeigh = self.view.frame.height
+        let animationHeight = self.mailImg.frame.height
         let newMailOriginY = screenHeigh - animationHeight - 60
+        mailOriginalOrigin = mailImg.frame.origin
         
-        var mailBoxOriginX = self.mailBox.frame.origin.x
-        var mailBoxOriginY = self.mailBox.frame.origin.y
+        let mailBoxOriginX = self.mailBox.frame.origin.x
+        let mailBoxOriginY = self.mailBox.frame.origin.y
         
         UIView.animateWithDuration(1.0, delay: 0, options: .CurveEaseInOut, animations: {
             
@@ -73,7 +74,9 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
                     self.mailImg.transform = CGAffineTransformMakeScale(0.5, 0.5)
                     self.mailImg.frame.origin = CGPoint(x: mailBoxOriginX + 30, y: mailBoxOriginY + 30)
                     }, completion: { (true) in
-                        
+                        self.mailImg.hidden = true
+                        let myImg = UIImageView(image: UIImage(named: "checkmark"))
+                        myImg.showCheckmarkAnimatedTempImg(self.view, delay: 0.7, remove: true)
                 })
         }
     }
@@ -95,7 +98,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
         alert.addAction(alertAction)
         
         NSOperationQueue.mainQueue().addOperationWithBlock {
-            self.passwordResetLoading.cancelSpinnerAndDarkView()
+            self.passwordResetLoading.cancelSpinnerAndDarkView(nil)
             self.presentViewController(alert, animated: true, completion: nil)
         }
         

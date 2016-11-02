@@ -89,7 +89,7 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
 
     
     func alerts(title: String, message: String){
-        self.loadingView.cancelSpinnerAndDarkView()
+        self.loadingView.cancelSpinnerAndDarkView(nil)
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
