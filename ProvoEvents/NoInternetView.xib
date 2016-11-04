@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoInternetView" customModule="ProvoEvents" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoInternetView" customModule="Ibento" customModuleProvider="target">
             <connections>
                 <outlet property="gotItBtn" destination="6h2-Q7-qUs" id="QIh-lQ-4uK"/>
                 <outlet property="img" destination="M20-UC-buf" id="JSc-gV-WQT"/>

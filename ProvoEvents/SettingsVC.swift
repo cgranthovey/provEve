@@ -37,7 +37,8 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol {
         topStack.hidden = true
         // Do any additional setup after loading the view.
         
-        
+        ConnectedToInternet.instance1.areWeConnected(self.view, showNoInternetView: true, onComplete: nil)
+
         
     }
     

@@ -26,7 +26,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     @IBOutlet weak var userImg: UIImageView!
     
     
-    
+    var isConnected: Bool!
     var tapImg: UITapGestureRecognizer!
     
     var imgPicker: UIImagePickerController!
@@ -67,14 +67,14 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     func checkForInternet(){
-        if !Reachability.isConnectedToNetwork(){
-            let notConnectedView = NoConnectionView()
-            notConnectedView.showNoConnectionView(self.view)
+        if isConnected == false{
+            let x = NoConnectionView()
+            x.showNoConnectionView(self.view)
         }
     }
     
     func removePoppingVC(){
-        self.view.removeGestureRecognizer(swipeRight)
+        //self.view.removeGestureRecognizer(swipeRight)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -141,6 +141,12 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
                             self.alerts("Error", message: "There was an error uploading your info")
                         } else{
                             self.uploadProfileImg()
+                            
+                            // setting username in nsdefualts
+                            let prefs = NSUserDefaults.standardUserDefaults()
+                            let uid = FIRAuth.auth()?.currentUser?.uid
+                            prefs.setValue(user, forKey: "\(uid)Username")
+                            
                             
                             self.loadingView.successCancelSpin({
                                 self.performSegueWithIdentifier("snapScrollVC", sender: nil)

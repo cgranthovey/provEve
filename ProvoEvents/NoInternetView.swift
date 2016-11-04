@@ -35,11 +35,13 @@ class NoInternetView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        print("mice30")
         setUp()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        print("mice40")
         setUp()
     }
     
@@ -50,15 +52,16 @@ class NoInternetView: UIView {
         view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
         
-        
+        print("mice20")
         addSubview(view)
     }
     
     func loadViewFromNib() -> UIView{
         let bundle = NSBundle(forClass: self.dynamicType)
         let nib = UINib(nibName: "NoInternetView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as? UIView
         
+        let view = nib.instantiateWithOwner(self, options: nil)[0] as? UIView
+        print("mice10")
         return view!
     }
 

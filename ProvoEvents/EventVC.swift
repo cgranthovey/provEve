@@ -18,8 +18,7 @@ import FirebaseDatabase
 import Firebase
 
 
-
-class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
+class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     var events = [Event]()
     
@@ -29,36 +28,34 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     var keyOfLast: String?
     
     var likesArray = [String]()
-    
-//    var EventsCategorized = [Int: [Event]]()
-    
-    
+
+    var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        notConnected()
-
 
         
-        print("event vc viewDidLoad")
-
+        if CLLocationManager.authorizationStatus() == .NotDetermined {
+            self.locationManager.requestWhenInUseAuthorization()
+        }
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.tableFooterView = UIView()
-        
-        geoMarkerBtn.imageView?.contentMode = .ScaleAspectFit
-        
+        tableView.addSubview(refreshController)
+        Constants.instance.initCurrentUser()
+
         loadData()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadDataAfterNewEvent", object: nil)
-        tableView.addSubview(refreshController)
         
-        Constants.instance.initCurrentUser()
     }
 
 //    below and above is code to add a pull to refresh option
@@ -72,31 +69,17 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     func handleRefresh(refreshControl: UIRefreshControl){
         loadData()
     }
-    
-    
-    var noConnectionView: NoInternetView!
-    var darkView: UIView!
-    func notConnected(){
-        if !Reachability.isConnectedToNetwork(){            
-            let connectView = NoConnectionView()
-            connectView.showNoConnectionView(self.view)
-        }
-    }
-    
-    func dismissNoConnectionView(){
-        print("yoddle")
-        UIView.animateWithDuration(0.3, animations: {
-            self.darkView.alpha = 0
-            self.noConnectionView.alpha = 0
-        }) { (true) in
-            self.darkView.hidden = true
-            self.noConnectionView.hidden = true
-        }
-    }
-    
-    
+
     
     func loadData(){
+        
+        
+        
+        
+        let region = MKCoordinateRegion(center: <#T##CLLocationCoordinate2D#>, span: <#T##MKCoordinateSpan#>)
+        let geoQuery = GeoFire.queryWithRegion(<#T##GeoFire#>)
+        
+        
         todaysStartTime = self.getTodaysStartTime()
         DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
             print("I'm in there suckers")

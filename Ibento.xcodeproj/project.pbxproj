@@ -68,6 +68,7 @@
 		A1D19BD11DA3262200F683AF /* GeneralShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D19BD01DA3262200F683AF /* GeneralShadowView.swift */; };
 		A1D385481D908B3D00365348 /* AddEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385471D908B3C00365348 /* AddEventVC.swift */; };
 		A1D3854A1D909A1F00365348 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385491D909A1F00365348 /* TextView.swift */; };
+		A1D714F81DCC2C7000286E72 /* ConnectedToInternet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D714F71DCC2C7000286E72 /* ConnectedToInternet.swift */; };
 		A1E9F2961DCAEF8A00C25D45 /* mapSetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1E9F2951DCAEF8A00C25D45 /* mapSetCell.xib */; };
 		A1E9F2981DCAF06100C25D45 /* mapSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E9F2971DCAF06100C25D45 /* mapSetCell.swift */; };
 		A1EE77E81DA7590400781CDF /* AnnotationMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */; };
@@ -178,6 +179,7 @@
 		A1D19BD01DA3262200F683AF /* GeneralShadowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralShadowView.swift; sourceTree = "<group>"; };
 		A1D385471D908B3C00365348 /* AddEventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventVC.swift; sourceTree = "<group>"; };
 		A1D385491D909A1F00365348 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		A1D714F71DCC2C7000286E72 /* ConnectedToInternet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedToInternet.swift; sourceTree = "<group>"; };
 		A1E9F2951DCAEF8A00C25D45 /* mapSetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mapSetCell.xib; sourceTree = "<group>"; };
 		A1E9F2971DCAF06100C25D45 /* mapSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapSetCell.swift; sourceTree = "<group>"; };
 		A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationMapVC.swift; sourceTree = "<group>"; };
@@ -247,13 +249,13 @@
 				A1EBEF611DB019A700650EDF /* Login */,
 				A1EBEF621DB019CA00650EDF /* AddEvent */,
 				A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */,
+				A10A93CF1D92F54200D07E8E /* EventVC.swift */,
 				A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */,
 				A127C6E51DAD8CF7004017FD /* MapSettingsLauncher.swift */,
 				A181FD011D943D6800007264 /* EventDetailsVC.swift */,
 				A18089441DBB082F0019D408 /* EventDetailsExtension.swift */,
 				A174D4801DB5B47400030E19 /* yesNoLauncher.swift */,
 				A1F56D961DB0A729009D7F65 /* EventDetailsCommVC.swift */,
-				A10A93CF1D92F54200D07E8E /* EventVC.swift */,
 				A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */,
 				A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */,
 				A1F12B821D99B347007A9447 /* ReminderVC.swift */,
@@ -303,6 +305,7 @@
 				A1F12B7E1D997A58007A9447 /* CreateEvent.swift */,
 				A1B4A1891DB80D9600FC3D43 /* Constants.swift */,
 				A161F7091DC9391B004057BE /* Reachability.swift */,
+				A1D714F71DCC2C7000286E72 /* ConnectedToInternet.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				A1D385481D908B3D00365348 /* AddEventVC.swift in Sources */,
 				A10D44941D9C0E1E00966BC0 /* LocationSearchTable.swift in Sources */,
 				A161F70A1DC9391B004057BE /* Reachability.swift in Sources */,
+				A1D714F81DCC2C7000286E72 /* ConnectedToInternet.swift in Sources */,
 				A1EECA4B1D8C72FF0013406A /* DataService.swift in Sources */,
 				A181FD041D94677F00007264 /* ImgCacheLoader.swift in Sources */,
 				A15602651DA2F39A004ADCAD /* snapScrollVC.swift in Sources */,
