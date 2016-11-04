@@ -37,9 +37,10 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if !Reachability.isConnectedToNetwork(){
-            notConnected()
-        }
+        
+        notConnected()
+
+
         
         print("event vc viewDidLoad")
 
@@ -76,30 +77,14 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     var noConnectionView: NoInternetView!
     var darkView: UIView!
     func notConnected(){
-        let frame = CGRectMake(0, 0, 275, 155)
-        noConnectionView = NoInternetView(frame: frame)
-        noConnectionView.center = self.view.center
-        noConnectionView.layer.cornerRadius = 5.0
-        noConnectionView.layer.masksToBounds = true
-        noConnectionView.gotItBtn.addTarget(self, action: #selector(EventVC.dismissNoConnectionView), forControlEvents: .TouchUpInside)
-        noConnectionView.alpha = 0
-        
-        darkView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
-        darkView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        darkView.alpha = 0
-        
-        self.view.addSubview(darkView)
-        self.view.addSubview(noConnectionView)
-        self.view.bringSubviewToFront(noConnectionView)
-        
-        UIView.animateWithDuration(0.3, delay: 0.75, options: .CurveEaseIn, animations: { 
-            self.darkView.alpha = 0.75
-            self.noConnectionView.alpha = 1.0
-            }) { (true) in
+        if !Reachability.isConnectedToNetwork(){            
+            let connectView = NoConnectionView()
+            connectView.showNoConnectionView(self.view)
         }
     }
     
     func dismissNoConnectionView(){
+        print("yoddle")
         UIView.animateWithDuration(0.3, animations: {
             self.darkView.alpha = 0
             self.noConnectionView.alpha = 0
@@ -114,6 +99,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
     func loadData(){
         todaysStartTime = self.getTodaysStartTime()
         DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
+            print("I'm in there suckers")
             if snapshot.value == nil{
                 print("this snapshot = nil for likes .value")
             } else{

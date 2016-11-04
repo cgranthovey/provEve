@@ -21,7 +21,6 @@ class creditsCell: UITableViewCell {
     }
     
     func configureCell(credit: Credit){
- //       label.text = lbl
         img.image = UIImage(named: credit.imageString)
         label1.attributedText = credit.labelText
     }

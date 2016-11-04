@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="275" height="155"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6h2-Q7-qUs">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6h2-Q7-qUs">
                     <rect key="frame" x="0.0" y="115" width="275" height="40"/>
                     <color key="backgroundColor" red="0.95686274509803915" green="0.2627450980392157" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -26,6 +26,11 @@
                     <state key="normal" title="Got it">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="gotItBtnPressed:" destination="-1" eventType="touchUpInside" id="Z3D-0e-d35"/>
+                        <action selector="gotItBtnTouchDown:" destination="-1" eventType="touchDown" id="6fA-bi-MPn"/>
+                        <action selector="gotItBtnTouchUpOutside:" destination="-1" eventType="touchUpOutside" id="JkN-I6-6TI"/>
+                    </connections>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wifi" translatesAutoresizingMaskIntoConstraints="NO" id="M20-UC-buf">
                     <rect key="frame" x="113" y="12" width="50" height="50"/>
@@ -37,7 +42,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect to internet to use app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67Y-Jg-fcs">
                     <rect key="frame" x="20" y="77" width="235" height="24"/>
                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

@@ -26,6 +26,8 @@
 		A127C6E21DAD5DA6004017FD /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127C6E11DAD5DA6004017FD /* Comment.swift */; };
 		A127C6E61DAD8CF7004017FD /* MapSettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127C6E51DAD8CF7004017FD /* MapSettingsLauncher.swift */; };
 		A12B32E01DA556DA00301598 /* GeneralEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */; };
+		A12E301E1DCA4A5F00A1CA3B /* NoConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12E301D1DCA4A5F00A1CA3B /* NoConnectionView.swift */; };
+		A12E30241DCABA4100A1CA3B /* mapSettingsCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12E30231DCABA4100A1CA3B /* mapSettingsCVC.swift */; };
 		A12FC0B81DAE9AE6000B4005 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FC0B71DAE9AE6000B4005 /* SettingsCell.swift */; };
 		A12FC0BA1DAE9B9B000B4005 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FC0B91DAE9B9B000B4005 /* BaseCell.swift */; };
 		A12FF8F81D9EE309006AD044 /* MKPlacemarkExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */; };
@@ -66,6 +68,8 @@
 		A1D19BD11DA3262200F683AF /* GeneralShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D19BD01DA3262200F683AF /* GeneralShadowView.swift */; };
 		A1D385481D908B3D00365348 /* AddEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385471D908B3C00365348 /* AddEventVC.swift */; };
 		A1D3854A1D909A1F00365348 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385491D909A1F00365348 /* TextView.swift */; };
+		A1E9F2961DCAEF8A00C25D45 /* mapSetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1E9F2951DCAEF8A00C25D45 /* mapSetCell.xib */; };
+		A1E9F2981DCAF06100C25D45 /* mapSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E9F2971DCAF06100C25D45 /* mapSetCell.swift */; };
 		A1EE77E81DA7590400781CDF /* AnnotationMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */; };
 		A1EE77EA1DA7623800781CDF /* AnnotationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EE77E91DA7623800781CDF /* AnnotationPin.swift */; };
 		A1EECA4B1D8C72FF0013406A /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EECA4A1D8C72FF0013406A /* DataService.swift */; };
@@ -117,6 +121,8 @@
 		A127C6E11DAD5DA6004017FD /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		A127C6E51DAD8CF7004017FD /* MapSettingsLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSettingsLauncher.swift; sourceTree = "<group>"; };
 		A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralEventVC.swift; sourceTree = "<group>"; };
+		A12E301D1DCA4A5F00A1CA3B /* NoConnectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoConnectionView.swift; sourceTree = "<group>"; };
+		A12E30231DCABA4100A1CA3B /* mapSettingsCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapSettingsCVC.swift; sourceTree = "<group>"; };
 		A12FC0B71DAE9AE6000B4005 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		A12FC0B91DAE9B9B000B4005 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPlacemarkExtension.swift; sourceTree = "<group>"; };
@@ -154,14 +160,14 @@
 		A18FA3B01DA7353600773614 /* GFQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQuery.m; sourceTree = "<group>"; };
 		A18FA3BC1DA7370300773614 /* bridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bridgingHeader.h; path = ../bridgingHeader.h; sourceTree = "<group>"; };
 		A1AFA4F51DC1882900D182BF /* customCVFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customCVFlowLayout.swift; sourceTree = "<group>"; };
-		A1B117A91D8A2AA40036A24E /* ProvoEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProvoEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B117A91D8A2AA40036A24E /* Ibento.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ibento.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1B117AE1D8A2AA40036A24E /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		A1B117B11D8A2AA40036A24E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A1B117B31D8A2AA40036A24E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1B117B61D8A2AA50036A24E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1B117B81D8A2AA50036A24E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A1B117BD1D8A2AA50036A24E /* ProvoEventsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProvoEventsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B117BD1D8A2AA50036A24E /* Ibento.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Ibento.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B117C11D8A2AA50036A24E /* ProvoEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvoEventsTests.swift; sourceTree = "<group>"; };
 		A1B117C31D8A2AA50036A24E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1B117CC1D8A2B090036A24E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -172,6 +178,8 @@
 		A1D19BD01DA3262200F683AF /* GeneralShadowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralShadowView.swift; sourceTree = "<group>"; };
 		A1D385471D908B3C00365348 /* AddEventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventVC.swift; sourceTree = "<group>"; };
 		A1D385491D909A1F00365348 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		A1E9F2951DCAEF8A00C25D45 /* mapSetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mapSetCell.xib; sourceTree = "<group>"; };
+		A1E9F2971DCAF06100C25D45 /* mapSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapSetCell.swift; sourceTree = "<group>"; };
 		A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationMapVC.swift; sourceTree = "<group>"; };
 		A1EE77E91DA7623800781CDF /* AnnotationPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationPin.swift; sourceTree = "<group>"; };
 		A1EECA4A1D8C72FF0013406A /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
@@ -254,6 +262,7 @@
 				A11B8FA41DC6E98100743E4C /* snapScroll2.swift */,
 				A17A934E1DA4349C001987EE /* SettingsVC.swift */,
 				A1B4A1871DB8092600FC3D43 /* LoadingView.swift */,
+				A12E301D1DCA4A5F00A1CA3B /* NoConnectionView.swift */,
 				A141E33C1DC7D33000B2747F /* CreditsVC.swift */,
 			);
 			name = Controller;
@@ -303,6 +312,9 @@
 			children = (
 				A161F70C1DC974B2004057BE /* NoInternetView.xib */,
 				A161F70E1DC97502004057BE /* NoInternetView.swift */,
+				A12E30231DCABA4100A1CA3B /* mapSettingsCVC.swift */,
+				A1E9F2951DCAEF8A00C25D45 /* mapSetCell.xib */,
+				A1E9F2971DCAF06100C25D45 /* mapSetCell.swift */,
 			);
 			name = NibView;
 			sourceTree = "<group>";
@@ -360,8 +372,8 @@
 		A1B117AA1D8A2AA40036A24E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A1B117A91D8A2AA40036A24E /* ProvoEvents.app */,
-				A1B117BD1D8A2AA50036A24E /* ProvoEventsTests.xctest */,
+				A1B117A91D8A2AA40036A24E /* Ibento.app */,
+				A1B117BD1D8A2AA50036A24E /* Ibento.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -443,9 +455,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A1B117A81D8A2AA40036A24E /* ProvoEvents */ = {
+		A1B117A81D8A2AA40036A24E /* Ibento */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A1B117C61D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "ProvoEvents" */;
+			buildConfigurationList = A1B117C61D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "Ibento" */;
 			buildPhases = (
 				9834DDD0F3E6227005DC5153 /* [CP] Check Pods Manifest.lock */,
 				A1B117A51D8A2AA40036A24E /* Sources */,
@@ -458,14 +470,14 @@
 			);
 			dependencies = (
 			);
-			name = ProvoEvents;
+			name = Ibento;
 			productName = ProvoEvents;
-			productReference = A1B117A91D8A2AA40036A24E /* ProvoEvents.app */;
+			productReference = A1B117A91D8A2AA40036A24E /* Ibento.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A1B117BC1D8A2AA50036A24E /* ProvoEventsTests */ = {
+		A1B117BC1D8A2AA50036A24E /* IbentoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A1B117C91D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "ProvoEventsTests" */;
+			buildConfigurationList = A1B117C91D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "IbentoTests" */;
 			buildPhases = (
 				7C00F45C525BD2C3C524D4C9 /* [CP] Check Pods Manifest.lock */,
 				A1B117B91D8A2AA50036A24E /* Sources */,
@@ -479,9 +491,9 @@
 			dependencies = (
 				A1B117BF1D8A2AA50036A24E /* PBXTargetDependency */,
 			);
-			name = ProvoEventsTests;
+			name = IbentoTests;
 			productName = ProvoEventsTests;
-			productReference = A1B117BD1D8A2AA50036A24E /* ProvoEventsTests.xctest */;
+			productReference = A1B117BD1D8A2AA50036A24E /* Ibento.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -503,7 +515,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A1B117A41D8A2AA40036A24E /* Build configuration list for PBXProject "ProvoEvents" */;
+			buildConfigurationList = A1B117A41D8A2AA40036A24E /* Build configuration list for PBXProject "Ibento" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -516,8 +528,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A1B117A81D8A2AA40036A24E /* ProvoEvents */,
-				A1B117BC1D8A2AA50036A24E /* ProvoEventsTests */,
+				A1B117A81D8A2AA40036A24E /* Ibento */,
+				A1B117BC1D8A2AA50036A24E /* IbentoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -528,6 +540,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1B117B71D8A2AA50036A24E /* LaunchScreen.storyboard in Resources */,
+				A1E9F2961DCAEF8A00C25D45 /* mapSetCell.xib in Resources */,
 				A1B117CD1D8A2B090036A24E /* GoogleService-Info.plist in Resources */,
 				A1B117B41D8A2AA40036A24E /* Assets.xcassets in Resources */,
 				A161F70D1DC974B2004057BE /* NoInternetView.xib in Resources */,
@@ -658,6 +671,7 @@
 				A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */,
 				A161F70F1DC97502004057BE /* NoInternetView.swift in Sources */,
 				A141E33F1DC7DBCB00B2747F /* creditsCell.swift in Sources */,
+				A12E301E1DCA4A5F00A1CA3B /* NoConnectionView.swift in Sources */,
 				A1F56D951DB0A3C0009D7F65 /* ShadowView.swift in Sources */,
 				A1239C991D8B427000272F67 /* LoginButton.swift in Sources */,
 				A12B32E01DA556DA00301598 /* GeneralEventVC.swift in Sources */,
@@ -685,6 +699,7 @@
 				A1EECA4B1D8C72FF0013406A /* DataService.swift in Sources */,
 				A181FD041D94677F00007264 /* ImgCacheLoader.swift in Sources */,
 				A15602651DA2F39A004ADCAD /* snapScrollVC.swift in Sources */,
+				A12E30241DCABA4100A1CA3B /* mapSettingsCVC.swift in Sources */,
 				A17A934F1DA4349C001987EE /* SettingsVC.swift in Sources */,
 				A1B4A1881DB8092600FC3D43 /* LoadingView.swift in Sources */,
 				A18FA3B51DA7353600773614 /* GFQuery.m in Sources */,
@@ -693,6 +708,7 @@
 				A161F7081DC918F7004057BE /* setCancelColorController.swift in Sources */,
 				A181FD021D943D6800007264 /* EventDetailsVC.swift in Sources */,
 				A181FD081D946D4100007264 /* ImageLargeVC.swift in Sources */,
+				A1E9F2981DCAF06100C25D45 /* mapSetCell.swift in Sources */,
 				A127C6E21DAD5DA6004017FD /* Comment.swift in Sources */,
 				A1FBBD3E1D8DE9AC00366761 /* GeneralVC.swift in Sources */,
 				A18FA3B21DA7353600773614 /* GFBase32Utils.m in Sources */,
@@ -724,7 +740,7 @@
 /* Begin PBXTargetDependency section */
 		A1B117BF1D8A2AA50036A24E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A1B117A81D8A2AA40036A24E /* ProvoEvents */;
+			target = A1B117A81D8A2AA40036A24E /* Ibento */;
 			targetProxy = A1B117BE1D8A2AA50036A24E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -843,7 +859,7 @@
 				INFOPLIST_FILE = ProvoEvents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishovey.ProvoEvents;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Ibento;
 				SWIFT_OBJC_BRIDGING_HEADER = ProvoEvents/bridgingHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -858,7 +874,7 @@
 				INFOPLIST_FILE = ProvoEvents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishovey.ProvoEvents;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Ibento;
 				SWIFT_OBJC_BRIDGING_HEADER = ProvoEvents/bridgingHeader.h;
 			};
 			name = Release;
@@ -871,8 +887,8 @@
 				INFOPLIST_FILE = ProvoEventsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishovey.ProvoEventsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProvoEvents.app/ProvoEvents";
+				PRODUCT_NAME = Ibento;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ibento.app/Ibento";
 			};
 			name = Debug;
 		};
@@ -884,15 +900,15 @@
 				INFOPLIST_FILE = ProvoEventsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishovey.ProvoEventsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProvoEvents.app/ProvoEvents";
+				PRODUCT_NAME = Ibento;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ibento.app/Ibento";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A1B117A41D8A2AA40036A24E /* Build configuration list for PBXProject "ProvoEvents" */ = {
+		A1B117A41D8A2AA40036A24E /* Build configuration list for PBXProject "Ibento" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A1B117C41D8A2AA50036A24E /* Debug */,
@@ -901,7 +917,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A1B117C61D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "ProvoEvents" */ = {
+		A1B117C61D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "Ibento" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A1B117C71D8A2AA50036A24E /* Debug */,
@@ -910,7 +926,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A1B117C91D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "ProvoEventsTests" */ = {
+		A1B117C91D8A2AA50036A24E /* Build configuration list for PBXNativeTarget "IbentoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A1B117CA1D8A2AA50036A24E /* Debug */,

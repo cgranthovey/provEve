@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A1B117A81D8A2AA40036A24E"
-               BuildableName = "ProvoEvents.app"
-               BlueprintName = "ProvoEvents"
-               ReferencedContainer = "container:ProvoEvents.xcodeproj">
+               BuildableName = "Ibento.app"
+               BlueprintName = "Ibento"
+               ReferencedContainer = "container:Ibento.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A1B117BC1D8A2AA50036A24E"
-               BuildableName = "ProvoEventsTests.xctest"
-               BlueprintName = "ProvoEventsTests"
-               ReferencedContainer = "container:ProvoEvents.xcodeproj">
+               BuildableName = "Ibento.xctest"
+               BlueprintName = "IbentoTests"
+               ReferencedContainer = "container:Ibento.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A1B117A81D8A2AA40036A24E"
-            BuildableName = "ProvoEvents.app"
-            BlueprintName = "ProvoEvents"
-            ReferencedContainer = "container:ProvoEvents.xcodeproj">
+            BuildableName = "Ibento.app"
+            BlueprintName = "Ibento"
+            ReferencedContainer = "container:Ibento.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,9 +66,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A1B117A81D8A2AA40036A24E"
-            BuildableName = "ProvoEvents.app"
-            BlueprintName = "ProvoEvents"
-            ReferencedContainer = "container:ProvoEvents.xcodeproj">
+            BuildableName = "Ibento.app"
+            BlueprintName = "Ibento"
+            ReferencedContainer = "container:Ibento.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -85,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A1B117A81D8A2AA40036A24E"
-            BuildableName = "ProvoEvents.app"
-            BlueprintName = "ProvoEvents"
-            ReferencedContainer = "container:ProvoEvents.xcodeproj">
+            BuildableName = "Ibento.app"
+            BlueprintName = "Ibento"
+            ReferencedContainer = "container:Ibento.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

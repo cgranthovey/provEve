@@ -26,7 +26,6 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     @IBOutlet weak var userImg: UIImageView!
     
     
-    @IBOutlet weak var backBtn: UIButton!
     
     var tapImg: UITapGestureRecognizer!
     
@@ -43,15 +42,17 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        checkForInternet()
+        
         imgPicker = UIImagePickerController()
         imgPicker.delegate = self
         
         userImgBtn.setUpEventImgBtn(userImg)        //when I tried putting the image inside the btn there was an animation delay.  However with a seperate imgview there was no delay
         userImgBtn.delegate = self
         
-        if preventPopVC{
-            removePoppingVC()
-        }
+        
+        removePoppingVC()
+
         
         firstName.delegate = self
         userName.delegate = self
@@ -63,15 +64,17 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         
         tap = UITapGestureRecognizer(target: self, action: #selector(CreateUserInfoVC.removeFirstResponder))
         self.view.addGestureRecognizer(tap)
-        
-    //    myUserImg.userInteractionEnabled = true
-      //  tapImg = UITapGestureRecognizer(target: self, action: #selector(CreateUserInfoVC.showImgOptions))
-       // self.myUserImg.addGestureRecognizer(tapImg)
+    }
+    
+    func checkForInternet(){
+        if !Reachability.isConnectedToNetwork(){
+            let notConnectedView = NoConnectionView()
+            notConnectedView.showNoConnectionView(self.view)
+        }
     }
     
     func removePoppingVC(){
         self.view.removeGestureRecognizer(swipeRight)
-        backBtn.hidden = true
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -114,7 +117,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     let loadingView = LoadingView()
     
     @IBAction func finished(sender: AnyObject){
-        if let user = userName.text where (user.characters.count > 5){
+        if let user = userName.text where (user.characters.count > 2){
             
             loadingView.showSpinnerView(self.view)
             
@@ -152,7 +155,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
 
             
         } else{
-            alerts("Username", message: "Username must be at least 6 characters")
+            alerts("Username", message: "Username must be at least 3 characters")
         }
     }
     
@@ -185,7 +188,6 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     func showImgOptions(){
         removeFirstResponder()
         screenViewForCameraOutlets.hidden = false
-//        self.view.removeGestureRecognizer(tap)
         UIView.animateWithDuration(0.4, animations: {
             self.screenViewForCameraOutlets.alpha = 0.65
             }) { (true) in
@@ -203,8 +205,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     func removeCameraPhotoLibOptions(){
-//        self.view.addGestureRecognizer(tap)///////////////////////////////////////////////////////////////////
-        UIView.animateWithDuration(0.6, animations: { 
+        UIView.animateWithDuration(0.6, animations: {
             self.screenViewForCameraOutlets.alpha = 0
             self.photoLibBtnOutlet.alpha = 0
             self.cameraBtnOutlet.alpha = 0
@@ -244,9 +245,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    @IBAction func popBack(){
-        self.navigationController?.popViewControllerAnimated(true)
-    }
+
 
 }
 

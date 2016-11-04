@@ -98,6 +98,10 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     @IBAction func settings(){
         settingsLauncher.showSettings()
     }
+
+    
+    
+    
     
     @IBOutlet weak var mapTypeBtnOutlet: UIButton!
     

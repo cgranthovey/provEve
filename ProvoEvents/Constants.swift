@@ -43,13 +43,7 @@ class Constants {
                     let profileImg = snapDict["profileImg"]
                     let userName = snapDict["userName"]
                     self.currentUser = User(firstName: firstName, userName: userName, imgString: profileImg)
-                    
-                    let prefs = NSUserDefaults.standardUserDefaults()
-                    let username = self.currentUser.userName
-                    
-                    if prefs.stringForKey("savedUsername") == nil{
-                        prefs.setValue(username, forKey: "savedUsername")
-                    }
+
                 }
             }
         })

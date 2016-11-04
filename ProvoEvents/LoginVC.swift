@@ -33,7 +33,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
         
         print("yo")
         preView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        preView.backgroundColor = UIColor(red: 245.0/255.0, green: 245.0/255.0, blue: 245.0/255.0, alpha: 1.0)
+        preView.backgroundColor = UIColor(red: 3/255.0, green: 169/255.0, blue: 244.0/255.0, alpha: 1.0)
         self.view.addSubview(preView)
         
         
@@ -62,11 +62,6 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
             gl.colors = [topColor, bottomColor]
             gl.locations = [0, 1]
             self.view.layer.addSublayer(gl)
-            
-            
-
-        
-
     }
     
     
@@ -88,37 +83,44 @@ class LoginVC: GeneralVC, UITextFieldDelegate {
                 self.preView.alpha = 0
                 }, completion: { (true) in
                     self.preView.removeFromSuperview()
+                    self.checkForInternet()
+                    
             })
         }
+        
+        
+
+        
     }
     
     
+    
     func checkForUserName(){
-        print("4")
         
-     //   DataService.instance.mainRef.child("User").child(FIRAuth.auth()?.currentUser?.uid).obsersingle
-        
-        let prefs = NSUserDefaults.standardUserDefaults()
-        if prefs.stringForKey("savedUsername") != nil{
-            print("saved username \(prefs.stringForKey("savedUsername"))")
-            self.performSegueWithIdentifier("snapScrollVC", sender: nil)
-
-        } else{
-            print("not saved")
-            self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
+//        DataService.instance.currentUser.observeSingleEventOfType(.Value, withBlock: { (snashot) in
+//            <#code#>
+//            }) { (error) in
+//                if
+//        }
+//        
+        DataService.instance.currentUser.observeSingleEventOfType(.Value, withBlock: { (snapshot, error) in
+            print("5")
+            if let snap = snapshot.value as? String{
+                print("dog")
+                self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
+            } else{
+                print("kitten")
+                print(snapshot)
+                self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+            }
+        })
+    }
+    
+    func checkForInternet(){
+        if !Reachability.isConnectedToNetwork(){
+            let notConnectedView = NoConnectionView()
+            notConnectedView.showNoConnectionView(self.view)
         }
-        
-//        DataService.instance.currentUser.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-//            print("5")
-//            if let snap = snapshot.value as? String{
-//                print("dog")
-//                self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
-//            } else{
-//                print("kitten")
-//                print(snapshot)
-//                self.performSegueWithIdentifier("snapScrollVC", sender: nil)
-//            }
-//        })
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

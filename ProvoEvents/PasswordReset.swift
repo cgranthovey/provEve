@@ -25,8 +25,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
     }
 
     @IBAction func popBack(sender: AnyObject){
-        animateMail()
-        //self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func resetPasswordBtn(sender: AnyObject){

@@ -39,9 +39,6 @@ class MapSettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionVie
         //collectionView.setContentOffset(CGPointMake(0, -30), animated: false)
         if let window = UIApplication.sharedApplication().keyWindow{
             
-            
-            
-            
             getCurrentDateInfo1()
             blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
             
@@ -49,8 +46,6 @@ class MapSettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionVie
             window.addSubview(blackView)
             blackView.frame = window.frame
             blackView.alpha = 0
-            
-            
             
             let frame = CGRectMake(-self.collectionWidth, 0, self.collectionWidth, window.frame.height)
             holdingView = UIView(frame: frame)
@@ -131,6 +126,7 @@ class MapSettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
         if let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath) as? SettingsCell{
             print("yot")
             var currentlySelected = false

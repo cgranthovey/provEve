@@ -80,6 +80,10 @@ class CreditsVC: GeneralVC, UITableViewDelegate, UITableViewDataSource, UITextVi
         madeByFreePik("thunder")
         madeByOliver("worldGrid")
         madeByOliver("lockColor")
+        makeFlatIconCredit("Pixel Buddha from www.flaticon.com", imgString: "wifi", url: "http://www.flaticon.com/authors/pixel-buddha")
+        madeByFreePik("grass")
+        madeByOliver("mailColor")
+        madeByOliver("mailbox")
     }
     
     func madeByFreePik (image: String){

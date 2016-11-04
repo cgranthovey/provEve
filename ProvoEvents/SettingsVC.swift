@@ -37,6 +37,8 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol {
         topStack.hidden = true
         // Do any additional setup after loading the view.
         
+        
+        
     }
     
     func tapRemoveKeyboard(){

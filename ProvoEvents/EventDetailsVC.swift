@@ -409,6 +409,10 @@ print("canz3")
         performSegueWithIdentifier("CommentsSegue", sender: nil)
     }
     
+    
+    @IBAction func popBackBtn(sender: AnyObject){
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 
 
 }
