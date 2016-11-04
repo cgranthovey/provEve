@@ -50,13 +50,58 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         tableView.addSubview(refreshController)
         Constants.instance.initCurrentUser()
 
-        loadData()
+//        loadData()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadDataAfterNewEvent", object: nil)
-        
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("byebye")
+        
+        if status == .AuthorizedWhenInUse {
+            print("bye")
+            
+            locationManager.requestLocation()
+        }
+    }
+    var currentLoc: CLLocation!
+    var hasUserLocBeenFound = false
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if !hasUserLocBeenFound{
+            if let location = locations.first {
+                currentLoc = location
+                hasUserLocBeenFound = true
+                print("in loc manager")
+                loadData()
+
+            }
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("error:: \(error)")
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 //    below and above is code to add a pull to refresh option
     lazy var refreshController: UIRefreshControl = {
@@ -71,13 +116,26 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     }
 
     
+    var keysArray = [String]()
     func loadData(){
         
         
+       print("users cuurent loc \(currentLoc)")
+
+        let geoFireRef = DataService.instance.geoFireRef
+        let geoFire = GeoFire(firebaseRef: geoFireRef)
+        let locCoord2d = CLLocationCoordinate2DMake(currentLoc.coordinate.latitude, currentLoc.coordinate.longitude)
+        let region = MKCoordinateRegionMakeWithDistance(locCoord2d, 20000, 20000)
+            //maybe should check if region is valid later
+        let geoQuery = geoFire.queryWithRegion(region)
+        var queryHande = geoQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
+            self.keysArray.append(key)
+            print("all keys in query \(key)")
+        })
         
         
-        let region = MKCoordinateRegion(center: <#T##CLLocationCoordinate2D#>, span: <#T##MKCoordinateSpan#>)
-        let geoQuery = GeoFire.queryWithRegion(<#T##GeoFire#>)
+        
+        
         
         
         todaysStartTime = self.getTodaysStartTime()
