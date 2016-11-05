@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 class Constants {
     
@@ -24,6 +25,10 @@ class Constants {
         return "firstName"
     }
     
+    var nsUserDefaultsKeySettingsMiles: String{
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        return ("\(uid)Setting-Miles")
+    }
     
     
     

@@ -42,15 +42,32 @@ class EventDetailsCommVC: GeneralVC, UITableViewDelegate, UITableViewDataSource,
         commentTextView.delegate = self
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventDetailsCommVC.deleteComment(_:)), name: "commentDelete", object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventDetailsCommVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventDetailsCommVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
+        
         initiateAlphaBgView()
         
         getComments()
         setUpGestureRecs()
-
     }
+
+    
+    override func viewWillDisappear(animated: Bool) {
+        print("disappear")
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "commentDelete", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        
+        self.view.endEditing(true)
+        if let height = keyboardHeight{
+            print("swim1")
+            self.bottomShadowView.constant = self.bottomShadowView.constant - height
+            
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    
     
     func deleteComment(notif: NSNotification){
         
@@ -115,10 +132,6 @@ class EventDetailsCommVC: GeneralVC, UITableViewDelegate, UITableViewDataSource,
     }
     
     func animateCommentsOut(amount: CGFloat){
-        
-
-        
-        
         UIView.animateWithDuration(0.25, animations: {
             self.view.endEditing(true)
             self.shadowView.frame.origin.x = self.view.frame.origin.x + amount
@@ -128,25 +141,11 @@ class EventDetailsCommVC: GeneralVC, UITableViewDelegate, UITableViewDataSource,
                 }, completion: { (true) in
                     self.view.alpha = 0
                     self.dismissViewControllerAnimated(false, completion: nil)
-                    
             })
         }
+    }
+    
 
-    }
-    
-    
-    
-    override func viewWillDisappear(animated: Bool) {
-        print("swim")
-        self.view.endEditing(true)
-        if let height = keyboardHeight{
-            print("swim1")
-            self.bottomShadowView.constant = self.bottomShadowView.constant - height
-            
-            self.view.layoutIfNeeded()
-        }
-    }
-    
     
     
 var keyboardUp = false
@@ -154,6 +153,7 @@ var keyboardUp = false
 var keyboardHeight: CGFloat!
     
 func keyboardWillHide(sender: NSNotification) {
+    print("Hide will I")
     keyboardUp = false
     let userInfo: [NSObject : AnyObject] = sender.userInfo!
     let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
@@ -164,12 +164,17 @@ func keyboardWillHide(sender: NSNotification) {
     
     
 func keyboardWillShow(sender: NSNotification) {
+    print("show will I")
     if !keyboardUp{
         keyboardUp = true
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
         let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        print("height \(keyboardSize.height)")
         let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
+        print("offset \(offset.height)")
+
         keyboardHeight = keyboardSize.height
+    
         if keyboardSize.height == offset.height {
             self.bottomShadowView.constant = self.bottomShadowView.constant + keyboardSize.height
             self.view.layoutIfNeeded()
@@ -224,18 +229,6 @@ func keyboardWillShow(sender: NSNotification) {
     
     func getComments(){
         print("event key: \(event.key)")
-//        DataService.instance.commentRef.child(event.key).queryOrderedByChild("timeStamp").observeSingleEventOfType(.Value, withBlock: { snapshot in
-//            if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
-//                for snapshot in snapshots{
-//                    if let snap = snapshot.value as? Dictionary<String, AnyObject>{
-//                        let comment = Comment(dict: snap)
-//                        self.commentArray.append(comment)
-//                    }
-//                }
-//            }
-//            print(self.commentArray.count)
-//            self.commentsTableView.reloadData()
-//        })
         
         DataService.instance.commentRef.child(event.key).observeSingleEventOfType(.Value, withBlock: { snapshot in
             print("are none")
@@ -263,7 +256,6 @@ func keyboardWillShow(sender: NSNotification) {
                 })
             }
         })
-        
         
         DataService.instance.commentRef.child(event.key).observeEventType(.ChildRemoved, withBlock: { snapshot in
             if let index = self.indexOfSnap(snapshot){

@@ -365,13 +365,13 @@ print("canz3")
             
             print("cats \(event.pinInfoLatitude!) \(event.pinInfoLongitude!)")
             
-            if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
-                UIApplication.sharedApplication().openURL(NSURL(string:
-                    "comgooglemaps://?saddr=&daddr=\(eventLat),\(eventLong)")!)
-  //              "comgooglemaps://?saddr=&daddr=\(eventLat),\(eventLong)&directionsmode=driving")!)
-
-                
-            } else {
+//            if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
+//                UIApplication.sharedApplication().openURL(NSURL(string:
+//  //                  "comgooglemaps://?saddr=&daddr=\(eventLat),\(eventLong)")!)
+//                "comgooglemaps://?saddr=&daddr=\(eventLat),\(eventLong)&directionsmode=driving")!)
+//
+//                
+//            } else {
                 print("Can't use comgooglemaps://, trying apple maps")
                 let cord = CLLocationCoordinate2D(latitude: eventLat, longitude: eventLong)
                 let placemark = MKPlacemark(coordinate: cord, addressDictionary: nil)
@@ -379,7 +379,7 @@ print("canz3")
                 mapItem.name = "Christopher's Neighborhood"
                 let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
                 mapItem.openInMapsWithLaunchOptions(launchOptions)
-            }
+//            }
         }
     }
     

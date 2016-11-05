@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import FirebaseAuth
 
-class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol {
+class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChosen {
 
     @IBOutlet weak var userNameTF: UITextField!
     @IBOutlet weak var firstNameTF: UITextField!
@@ -39,7 +39,27 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol {
         
         ConnectedToInternet.instance1.areWeConnected(self.view, showNoInternetView: true, onComplete: nil)
 
+        let prefs = NSUserDefaults.standardUserDefaults()
+        let uid = FIRAuth.auth()?.currentUser?.uid
         
+        
+        if let miles = prefs.objectForKey(Constants.instance.nsUserDefaultsKeySettingsMiles){
+            milesBtnOutlet.setTitle("\(miles) MILE RADIUS", forState: .Normal)
+        }  else {
+
+            milesBtnOutlet.setTitle("25 MILE RADIUS", forState: .Normal)
+        }
+    }
+    
+    
+    @IBOutlet weak var milesBtnOutlet: UIButton!
+    func numberOfMiles(miles: Int) {
+        print("own it")
+        milesBtnOutlet.setTitle("\(miles) MILE RADIUS", forState: .Normal)
+        
+        let prefs = NSUserDefaults.standardUserDefaults()
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        prefs.setObject(miles, forKey: Constants.instance.nsUserDefaultsKeySettingsMiles)
     }
     
     func tapRemoveKeyboard(){
@@ -86,7 +106,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol {
             self.topStack.alpha = 0
         }) { (true) in
             self.topStack.hidden = true
-            self.logoutTopConstraint.constant = self.logoutTopConstraint.constant - 40
+            self.milesTopConstraint.constant = self.milesTopConstraint.constant - 40
             
             UIView.animateWithDuration(0.25, delay: 0, options: .CurveEaseOut, animations: {
                 self.view.layoutIfNeeded()
@@ -133,10 +153,10 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol {
     }
     
     @IBAction func backBtn(sender: AnyObject){
-        print("back")
         self.navigationController?.popViewControllerAnimated(true)
     }
 
+    @IBOutlet weak var milesTopConstraint: NSLayoutConstraint!
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
@@ -147,15 +167,25 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol {
         performSegueWithIdentifier("CreditsVC", sender: nil)
     }
 
-    @IBOutlet var logoutTopConstraint: NSLayoutConstraint!
+
+    @IBAction func milesVC(sender: AnyObject){
+        performSegueWithIdentifier("MilesVC", sender: nil)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "MilesVC"{
+            if let VC = segue.destinationViewController as? MilesVC{
+                VC.delegate = self
+            }
+        }
+    }
     
     var animationShouldBeCalled = true
     
     func animateTopStackView(){
-        print("here")
         if animationShouldBeCalled{
             animationShouldBeCalled = false
-            self.logoutTopConstraint.constant = self.logoutTopConstraint.constant + 40
+            self.milesTopConstraint.constant = self.milesTopConstraint.constant + 40
             self.topStack.hidden = false
             
             UIView.animateWithDuration(3.15, delay: 0.2, options: .CurveEaseInOut, animations: {

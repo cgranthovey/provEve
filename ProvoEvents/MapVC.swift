@@ -398,6 +398,7 @@ extension MapVC : CLLocationManagerDelegate {
             hasUserLocBeenFound = true
             currentLoc = location
             if shouldMapCenter{
+                
                 let region = MKCoordinateRegion(center: location.coordinate, span: generalSpan)
                 mapView.setRegion(region, animated: true)
                 shouldMapCenter = false

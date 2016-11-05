@@ -13,6 +13,7 @@ protocol getReminderInfo {
     func calendarReleaseInside(timeInterval: EKAlarm)
 }
 
+
 class ReminderVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     var delegate: getReminderInfo?

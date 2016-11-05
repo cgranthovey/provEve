@@ -39,7 +39,6 @@
 		A152437D1DABF10B00ECC34B /* MapPinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A152437C1DABF10B00ECC34B /* MapPinCell.swift */; };
 		A15602651DA2F39A004ADCAD /* snapScrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15602641DA2F39A004ADCAD /* snapScrollVC.swift */; };
 		A161F7081DC918F7004057BE /* setCancelColorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A161F7071DC918F7004057BE /* setCancelColorController.swift */; };
-		A161F70A1DC9391B004057BE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = A161F7091DC9391B004057BE /* Reachability.swift */; };
 		A161F70D1DC974B2004057BE /* NoInternetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A161F70C1DC974B2004057BE /* NoInternetView.xib */; };
 		A161F70F1DC97502004057BE /* NoInternetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A161F70E1DC97502004057BE /* NoInternetView.swift */; };
 		A174D4811DB5B47400030E19 /* yesNoLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A174D4801DB5B47400030E19 /* yesNoLauncher.swift */; };
@@ -69,6 +68,7 @@
 		A1D385481D908B3D00365348 /* AddEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385471D908B3C00365348 /* AddEventVC.swift */; };
 		A1D3854A1D909A1F00365348 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385491D909A1F00365348 /* TextView.swift */; };
 		A1D714F81DCC2C7000286E72 /* ConnectedToInternet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D714F71DCC2C7000286E72 /* ConnectedToInternet.swift */; };
+		A1DEBE771DCD2FFD00C5F231 /* MilesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DEBE761DCD2FFD00C5F231 /* MilesVC.swift */; };
 		A1E9F2961DCAEF8A00C25D45 /* mapSetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1E9F2951DCAEF8A00C25D45 /* mapSetCell.xib */; };
 		A1E9F2981DCAF06100C25D45 /* mapSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E9F2971DCAF06100C25D45 /* mapSetCell.swift */; };
 		A1EE77E81DA7590400781CDF /* AnnotationMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */; };
@@ -135,7 +135,6 @@
 		A152437C1DABF10B00ECC34B /* MapPinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinCell.swift; sourceTree = "<group>"; };
 		A15602641DA2F39A004ADCAD /* snapScrollVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = snapScrollVC.swift; sourceTree = "<group>"; };
 		A161F7071DC918F7004057BE /* setCancelColorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = setCancelColorController.swift; sourceTree = "<group>"; };
-		A161F7091DC9391B004057BE /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		A161F70C1DC974B2004057BE /* NoInternetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoInternetView.xib; sourceTree = "<group>"; };
 		A161F70E1DC97502004057BE /* NoInternetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoInternetView.swift; sourceTree = "<group>"; };
 		A174D4801DB5B47400030E19 /* yesNoLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = yesNoLauncher.swift; sourceTree = "<group>"; };
@@ -180,6 +179,7 @@
 		A1D385471D908B3C00365348 /* AddEventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventVC.swift; sourceTree = "<group>"; };
 		A1D385491D909A1F00365348 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		A1D714F71DCC2C7000286E72 /* ConnectedToInternet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedToInternet.swift; sourceTree = "<group>"; };
+		A1DEBE761DCD2FFD00C5F231 /* MilesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilesVC.swift; sourceTree = "<group>"; };
 		A1E9F2951DCAEF8A00C25D45 /* mapSetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mapSetCell.xib; sourceTree = "<group>"; };
 		A1E9F2971DCAF06100C25D45 /* mapSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapSetCell.swift; sourceTree = "<group>"; };
 		A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationMapVC.swift; sourceTree = "<group>"; };
@@ -263,6 +263,7 @@
 				A15602641DA2F39A004ADCAD /* snapScrollVC.swift */,
 				A11B8FA41DC6E98100743E4C /* snapScroll2.swift */,
 				A17A934E1DA4349C001987EE /* SettingsVC.swift */,
+				A1DEBE761DCD2FFD00C5F231 /* MilesVC.swift */,
 				A1B4A1871DB8092600FC3D43 /* LoadingView.swift */,
 				A12E301D1DCA4A5F00A1CA3B /* NoConnectionView.swift */,
 				A141E33C1DC7D33000B2747F /* CreditsVC.swift */,
@@ -304,7 +305,6 @@
 				A181FD031D94677F00007264 /* ImgCacheLoader.swift */,
 				A1F12B7E1D997A58007A9447 /* CreateEvent.swift */,
 				A1B4A1891DB80D9600FC3D43 /* Constants.swift */,
-				A161F7091DC9391B004057BE /* Reachability.swift */,
 				A1D714F71DCC2C7000286E72 /* ConnectedToInternet.swift */,
 			);
 			name = Services;
@@ -696,9 +696,9 @@
 				A11B8FA51DC6E98100743E4C /* snapScroll2.swift in Sources */,
 				A1157C041D8C9A27000ADB0E /* CreateEmailPassVC.swift in Sources */,
 				A1FFB6F71DA6EEE3008A23EA /* PasswordReset.swift in Sources */,
+				A1DEBE771DCD2FFD00C5F231 /* MilesVC.swift in Sources */,
 				A1D385481D908B3D00365348 /* AddEventVC.swift in Sources */,
 				A10D44941D9C0E1E00966BC0 /* LocationSearchTable.swift in Sources */,
-				A161F70A1DC9391B004057BE /* Reachability.swift in Sources */,
 				A1D714F81DCC2C7000286E72 /* ConnectedToInternet.swift in Sources */,
 				A1EECA4B1D8C72FF0013406A /* DataService.swift in Sources */,
 				A181FD041D94677F00007264 /* ImgCacheLoader.swift in Sources */,
