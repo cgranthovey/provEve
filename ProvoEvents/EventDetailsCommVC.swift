@@ -162,27 +162,41 @@ func keyboardWillHide(sender: NSNotification) {
 }
     
     
-    
+
 func keyboardWillShow(sender: NSNotification) {
     print("show will I")
-    if !keyboardUp{
-        keyboardUp = true
+    
+
+    
+
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
         let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         print("height \(keyboardSize.height)")
         let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
         print("offset \(offset.height)")
 
+
         keyboardHeight = keyboardSize.height
     
-        if keyboardSize.height == offset.height {
-            self.bottomShadowView.constant = self.bottomShadowView.constant + keyboardSize.height
-            self.view.layoutIfNeeded()
 
-        } else {
-            self.bottomShadowView.constant += keyboardSize.height - offset.height
-            self.view.layoutIfNeeded()
-        }
+        if !keyboardUp{
+            keyboardUp = true
+
+            if keyboardSize.height == offset.height {
+                self.bottomShadowView.constant = self.bottomShadowView.constant + keyboardSize.height
+                self.view.layoutIfNeeded()
+
+            } else {
+                self.bottomShadowView.constant += keyboardSize.height - offset.height
+                self.view.layoutIfNeeded()
+            }
+        } else{
+            print("sizeA \(keyboardHeight)")
+            print("sizeB \(offset.height)")
+
+            if keyboardHeight != offset.height{
+                self.bottomShadowView.constant = self.bottomShadowView.constant + offset.height - self.keyboardHeight
+            }
     }
 }
     
@@ -196,12 +210,25 @@ func keyboardWillShow(sender: NSNotification) {
 //        scrollView.scrollRectToVisible(viewForScrollRect.frame, animated: true)
     }
     
+    @IBOutlet weak var postBtn: UIButton!
+    @IBAction func postTouchDown(sender: AnyObject) {
+        postBtn.backgroundColor = UIColor().boilerPlateColor(173, green: 20, blue: 87)
+    }
+    
+    @IBAction func postTouchUpOutside(sender: AnyObject) {
+        postBtn.backgroundColor = UIColor().boilerPlateColor(233, green: 30, blue: 99)
+    }
+    
+    
+    
+    
     @IBAction func submitComment(sender: UITextView){
         let date = NSDate()
         let timeIntervalSince1970 = Int(date.timeIntervalSince1970)
         
         let key = DataService.instance.commentRef.child(event.key).childByAutoId().key
-        
+        postBtn.backgroundColor = UIColor().boilerPlateColor(233, green: 30, blue: 99)
+
         var numberOfRows: CGFloat = 0
         if let rows: CGFloat = round( (commentTextView.contentSize.height - commentTextView.textContainerInset.top - commentTextView.textContainerInset.bottom) / commentTextView.font!.lineHeight){
             numberOfRows = rows

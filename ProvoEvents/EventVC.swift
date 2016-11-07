@@ -108,6 +108,10 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
 
 //    below and above is code to add a pull to refresh option
     lazy var refreshController: UIRefreshControl = {
+        
+
+            
+            
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(EventVC.handleRefresh), forControlEvents: .ValueChanged)
         
@@ -116,19 +120,36 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     
     func handleRefresh(refreshControl: UIRefreshControl){
         loadData()
+        
     }
 
     
     var keysArray = [String]()
     
     
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        var translation: CGPoint = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
+        if translation.y > 0{
+            print("dragging finger down")
+            
+        } else{
+            refreshController.endRefreshing()
+            print("dragging finger up")
+        }
+    }
+    
+    var geoQuery: GFRegionQuery!    //this variable allows
     func loadData(){
         
+        if geoQuery != nil{
+            geoQuery.removeAllObservers()       // prevents multiple
+        }
         
        print("users cuurent loc \(currentLoc)")
 
         let geoFireRef = DataService.instance.geoFireRef
         let geoFire = GeoFire(firebaseRef: geoFireRef)
+        
         let locCoord2d = CLLocationCoordinate2DMake(currentLoc.coordinate.latitude, currentLoc.coordinate.longitude)
         
         let prefs = NSUserDefaults.standardUserDefaults()
@@ -143,10 +164,13 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         let region = MKCoordinateRegionMakeWithDistance(locCoord2d, CLLocationDistance(meters) * 2, CLLocationDistance(meters) * 2) // need to double to get expected distance
         print("region \(region)")
             //maybe should check if region is valid later
-        let geoQuery = geoFire.queryWithRegion(region)
+        geoQuery = geoFire.queryWithRegion(region)
         keysArray = []
         todaysStartTime = self.getTodaysStartTime()
 
+        
+        
+        
         var firebaseCalledOnce = false
         var queryHande = geoQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
             self.keysArray.append(key)
@@ -459,12 +483,14 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                 sender.transform = CGAffineTransformMakeRotation(CGFloat(0))
 
                 self.performSegueWithIdentifier("SettingsVC", sender: nil)
-
+                
         }
     }
     
     
-    
+    @IBAction func geoMarkerTapped(sender: AnyObject){
+        performSegueWithIdentifier("AnnotationMapVC", sender: nil)
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EventDetailsVC"{
@@ -472,6 +498,12 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                 if let event = sender as? Event{
                     destVC.event = event
                 }
+            }
+        }
+        if segue.identifier == "AnnotationMapVC" {
+            if let destVC = segue.destinationViewController as? AnnotationMapVC{
+                    destVC.likesArray = self.likesArray
+
             }
         }
     }

@@ -25,22 +25,31 @@ class CreditsVC: GeneralVC, UITableViewDelegate, UITableViewDataSource, UITextVi
     }
     
     func setUpArray(){
-        let attString = NSMutableAttributedString(string: "Gregor Črešnar from The Noun Project")
-        attString.addAttribute(NSLinkAttributeName, value: "https://thenounproject.com/", range: NSRange(location: 20, length: 16))
-        
-        let credit = Credit(lbl: attString, imageStr: "textMessage")
-        
-        let attString2 = NSMutableAttributedString(string: "Tom Walsh from The Noun Project")
-        attString2.addAttribute(NSLinkAttributeName, value: "https://thenounproject.com/", range: NSRange(location: 15, length: 16))
-        
-        let credit2 = Credit(lbl: attString2, imageStr: "worldFull")
+//        let attString = NSMutableAttributedString(string: "Gregor Črešnar from The Noun Project")
+//        attString.addAttribute(NSLinkAttributeName, value: "https://thenounproject.com/", range: NSRange(location: 20, length: 16))
+//        
+//        let credit = Credit(lbl: attString, imageStr: "textMessage")
+//        
+//        let attString2 = NSMutableAttributedString(string: "Tom Walsh from The Noun Project")
+//        attString2.addAttribute(NSLinkAttributeName, value: "https://thenounproject.com/", range: NSRange(location: 15, length: 16))
+//        
+//        let credit2 = Credit(lbl: attString2, imageStr: "worldFull")
+//
+//        let attString4 = NSMutableAttributedString(string: "Martin Chapman Fromm from The Noun Project")
+//        attString4.addAttribute(NSLinkAttributeName, value: "https://thenounproject.com/", range: NSRange(location: 26, length: 16))
+//        
+//        let credit4 = Credit(lbl: attString4, imageStr: "pinIcon")
+//        
+//        creditsArray = [credit, credit2, credit4]
+//        
+//        
+//        
+        makeFlatIconCredit("Gregor Črešnar from The Noun Project", imgString: "textMessage", url: "https://thenounproject.com/grega.cresnar/", urlWebsite: "https://thenounproject.com/")
+        makeFlatIconCredit("Tom Walsh from The Noun Project", imgString: "worldFull", url: "https://thenounproject.com/tomwalshdesign/", urlWebsite: "https://thenounproject.com/")
+        makeFlatIconCredit("Martin Chapman Fromm from The Noun Project", imgString: "pinIcon", url: "https://thenounproject.com/martincf/", urlWebsite: "https://thenounproject.com/")
 
-        let attString4 = NSMutableAttributedString(string: "Martin Chapman Fromm from The Noun Project")
-        attString4.addAttribute(NSLinkAttributeName, value: "https://thenounproject.com/", range: NSRange(location: 26, length: 16))
+
         
-        let credit4 = Credit(lbl: attString4, imageStr: "pinIcon")
-        
-        creditsArray = [credit, credit2, credit4]
         
         madeByOliver("addEvent")
         makeFlatIconCredit("Darius Dan from www.flaticon.com", imgString: "backBlack", url: "http://swifticons.com/")
@@ -84,6 +93,7 @@ class CreditsVC: GeneralVC, UITableViewDelegate, UITableViewDataSource, UITextVi
         madeByFreePik("grass")
         madeByOliver("mailColor")
         madeByOliver("mailbox")
+        makeFlatIconCredit("Y from The Noun Project", imgString: "foxIcon", url: "https://thenounproject.com/y3816627/", urlWebsite: "https://thenounproject.com/")
     }
     
     func madeByFreePik (image: String){

@@ -9,10 +9,8 @@
 import Foundation
 import UIKit
 
-extension UIImageView
-{
-    func roundCornersForAspectFit(radius: CGFloat)
-    {
+extension UIImageView{
+    func roundCornersForAspectFit(radius: CGFloat){
         if let image = self.image {
             
             //calculate drawingRect
@@ -34,7 +32,6 @@ extension UIImageView
             self.layer.mask = mask
         }
     }
-    
     
     func showCheckmarkAnimatedTempImg(supView: UIView, delay: NSTimeInterval = 0.1, remove: Bool = true){
         self.frame = CGRectMake(0, 0, 150, 150)

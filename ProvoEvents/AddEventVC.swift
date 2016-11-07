@@ -304,6 +304,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     }
 
     
+    @IBOutlet weak var topViewScroll: UIView!
+    
     func reset(){
         if spinIndicator != nil{
             spinIndicator.removeFromSuperview()
@@ -315,7 +317,10 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
             loadingView.removeFromSuperview()
         }
         
+        scrollView.scrollRectToVisible(topViewScroll.frame, animated: false)
+        
         titleTextField.text = ""
+        dateString = nil
         locationTextField.text = ""
         emailTextField.text = ""
         descriptionTextView.text = ""
@@ -336,7 +341,6 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         coordinateOfEvent = CLLocationCoordinate2D()
         
         currentDate = NSDate()
-        dateString = String()
         timeStampOfEvent = Int()
     }
 

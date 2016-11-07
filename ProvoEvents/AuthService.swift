@@ -84,6 +84,4 @@ class AuthService{
             }
         }
     }
-    
-    var imagesCar = DataService.instance.storageRef.child("images/car.jpg")
 }

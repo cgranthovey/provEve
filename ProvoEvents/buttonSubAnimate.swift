@@ -12,7 +12,6 @@ protocol imagePopDelegate {
     func imageCompletedPop()
 }
 
-
 class buttonSubAnimate: UIButton {
 
     var delegate: imagePopDelegate?

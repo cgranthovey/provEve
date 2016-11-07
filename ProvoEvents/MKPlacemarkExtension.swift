@@ -32,6 +32,4 @@ extension MKPlacemark{
         )
         return addressLine
     }
-    
-    
 }

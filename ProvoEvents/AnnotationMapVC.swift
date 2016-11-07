@@ -20,6 +20,8 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     var currentBtnTag = 0
 
     var hasUserLocBeenFound = false
+    var likesArray = [String]()
+    
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var backBtnOutlet: UIButton!
@@ -188,9 +190,6 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
                 var queryHandle = regionQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
                     print("key: \(key) and the location: \(location)")
                     
-
-                    
-                    
                     if self.holdKeysArray.indexOf(key) == nil{
                         print("sammy")
                         self.holdKeysArray.append(key)
@@ -230,7 +229,15 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         DataService.instance.eventRef.child(key).observeSingleEventOfType(.Value, withBlock: { snapshot in
             print(snapshot)
             if let tempDict = snapshot.value as? Dictionary<String, AnyObject>{
-                let event = Event(key: key, dict: tempDict, isLiked: false)
+                
+                let event: Event!
+                if self.likesArray.indexOf(key) != nil{
+                    event = Event(key: key, dict: tempDict, isLiked: true)
+                } else{
+                    event = Event(key: key, dict: tempDict, isLiked: false)
+                }
+                
+                
                 
                 if event.beforeToday(){
                     DataService.instance.geoFireRef.child(key).setValue(nil)

@@ -31,13 +31,16 @@
 		A12FC0B81DAE9AE6000B4005 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FC0B71DAE9AE6000B4005 /* SettingsCell.swift */; };
 		A12FC0BA1DAE9B9B000B4005 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FC0B91DAE9B9B000B4005 /* BaseCell.swift */; };
 		A12FF8F81D9EE309006AD044 /* MKPlacemarkExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */; };
-		A12FF8FA1D9EF92D006AD044 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FF8F91D9EF92D006AD044 /* UIButtonExtension.swift */; };
+		A12FF8FA1D9EF92D006AD044 /* MiscExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FF8F91D9EF92D006AD044 /* MiscExtensions.swift */; };
 		A141E33D1DC7D33000B2747F /* CreditsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141E33C1DC7D33000B2747F /* CreditsVC.swift */; };
 		A141E33F1DC7DBCB00B2747F /* creditsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141E33E1DC7DBCB00B2747F /* creditsCell.swift */; };
 		A141E3411DC7F79A00B2747F /* Credit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141E3401DC7F79A00B2747F /* Credit.swift */; };
 		A149F6821D8C64EF009AE58C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149F6811D8C64EF009AE58C /* AuthService.swift */; };
 		A152437D1DABF10B00ECC34B /* MapPinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A152437C1DABF10B00ECC34B /* MapPinCell.swift */; };
 		A15602651DA2F39A004ADCAD /* snapScrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15602641DA2F39A004ADCAD /* snapScrollVC.swift */; };
+		A15A2F781DCEB84F002C77DC /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A2F771DCEB84F002C77DC /* NSDateExtension.swift */; };
+		A15A2F7A1DCEB877002C77DC /* EventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A2F791DCEB877002C77DC /* EventExtension.swift */; };
+		A15A2F7C1DCEB8B0002C77DC /* EventArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A2F7B1DCEB8B0002C77DC /* EventArrayExtension.swift */; };
 		A161F7081DC918F7004057BE /* setCancelColorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A161F7071DC918F7004057BE /* setCancelColorController.swift */; };
 		A161F70D1DC974B2004057BE /* NoInternetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A161F70C1DC974B2004057BE /* NoInternetView.xib */; };
 		A161F70F1DC97502004057BE /* NoInternetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A161F70E1DC97502004057BE /* NoInternetView.swift */; };
@@ -127,13 +130,16 @@
 		A12FC0B71DAE9AE6000B4005 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		A12FC0B91DAE9B9B000B4005 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPlacemarkExtension.swift; sourceTree = "<group>"; };
-		A12FF8F91D9EF92D006AD044 /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		A12FF8F91D9EF92D006AD044 /* MiscExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscExtensions.swift; sourceTree = "<group>"; };
 		A141E33C1DC7D33000B2747F /* CreditsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsVC.swift; sourceTree = "<group>"; };
 		A141E33E1DC7DBCB00B2747F /* creditsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = creditsCell.swift; sourceTree = "<group>"; };
 		A141E3401DC7F79A00B2747F /* Credit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
 		A149F6811D8C64EF009AE58C /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		A152437C1DABF10B00ECC34B /* MapPinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinCell.swift; sourceTree = "<group>"; };
 		A15602641DA2F39A004ADCAD /* snapScrollVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = snapScrollVC.swift; sourceTree = "<group>"; };
+		A15A2F771DCEB84F002C77DC /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
+		A15A2F791DCEB877002C77DC /* EventExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventExtension.swift; sourceTree = "<group>"; };
+		A15A2F7B1DCEB8B0002C77DC /* EventArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventArrayExtension.swift; sourceTree = "<group>"; };
 		A161F7071DC918F7004057BE /* setCancelColorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = setCancelColorController.swift; sourceTree = "<group>"; };
 		A161F70C1DC974B2004057BE /* NoInternetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoInternetView.xib; sourceTree = "<group>"; };
 		A161F70E1DC97502004057BE /* NoInternetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoInternetView.swift; sourceTree = "<group>"; };
@@ -232,6 +238,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A111A1621DD02D6C00FAE14E /* EventDetails */ = {
+			isa = PBXGroup;
+			children = (
+				A181FD011D943D6800007264 /* EventDetailsVC.swift */,
+				A18089441DBB082F0019D408 /* EventDetailsExtension.swift */,
+				A1F56D961DB0A729009D7F65 /* EventDetailsCommVC.swift */,
+			);
+			name = EventDetails;
+			sourceTree = "<group>";
+		};
+		A111A1631DD0306F00FAE14E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A17A934E1DA4349C001987EE /* SettingsVC.swift */,
+				A1DEBE761DCD2FFD00C5F231 /* MilesVC.swift */,
+				A141E33C1DC7D33000B2747F /* CreditsVC.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		A111A1641DD0309F00FAE14E /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */,
+				A10A93CF1D92F54200D07E8E /* EventVC.swift */,
+				A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */,
+			);
+			name = Event;
+			sourceTree = "<group>";
+		};
 		A1239C931D8B3D9100272F67 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,25 +284,19 @@
 			children = (
 				A1EBEF611DB019A700650EDF /* Login */,
 				A1EBEF621DB019CA00650EDF /* AddEvent */,
+				A111A1621DD02D6C00FAE14E /* EventDetails */,
+				A111A1631DD0306F00FAE14E /* Settings */,
+				A111A1641DD0309F00FAE14E /* Event */,
 				A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */,
-				A10A93CF1D92F54200D07E8E /* EventVC.swift */,
 				A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */,
 				A127C6E51DAD8CF7004017FD /* MapSettingsLauncher.swift */,
-				A181FD011D943D6800007264 /* EventDetailsVC.swift */,
-				A18089441DBB082F0019D408 /* EventDetailsExtension.swift */,
 				A174D4801DB5B47400030E19 /* yesNoLauncher.swift */,
-				A1F56D961DB0A729009D7F65 /* EventDetailsCommVC.swift */,
-				A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */,
-				A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */,
 				A1F12B821D99B347007A9447 /* ReminderVC.swift */,
 				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
 				A15602641DA2F39A004ADCAD /* snapScrollVC.swift */,
 				A11B8FA41DC6E98100743E4C /* snapScroll2.swift */,
-				A17A934E1DA4349C001987EE /* SettingsVC.swift */,
-				A1DEBE761DCD2FFD00C5F231 /* MilesVC.swift */,
 				A1B4A1871DB8092600FC3D43 /* LoadingView.swift */,
 				A12E301D1DCA4A5F00A1CA3B /* NoConnectionView.swift */,
-				A141E33C1DC7D33000B2747F /* CreditsVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -416,8 +446,11 @@
 				A1C466B51D91988800A62A70 /* UIImageViewExtension.swift */,
 				A1F12B801D998F9A007A9447 /* UIViewExtensions.swift */,
 				A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */,
-				A12FF8F91D9EF92D006AD044 /* UIButtonExtension.swift */,
+				A12FF8F91D9EF92D006AD044 /* MiscExtensions.swift */,
 				A1258BD11DC517670062E330 /* buttonSubAnimate.swift */,
+				A15A2F771DCEB84F002C77DC /* NSDateExtension.swift */,
+				A15A2F791DCEB877002C77DC /* EventExtension.swift */,
+				A15A2F7B1DCEB8B0002C77DC /* EventArrayExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -672,12 +705,15 @@
 				A1F12B7F1D997A58007A9447 /* CreateEvent.swift in Sources */,
 				A1F12B831D99B347007A9447 /* ReminderVC.swift in Sources */,
 				A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */,
+				A15A2F7A1DCEB877002C77DC /* EventExtension.swift in Sources */,
 				A161F70F1DC97502004057BE /* NoInternetView.swift in Sources */,
 				A141E33F1DC7DBCB00B2747F /* creditsCell.swift in Sources */,
 				A12E301E1DCA4A5F00A1CA3B /* NoConnectionView.swift in Sources */,
 				A1F56D951DB0A3C0009D7F65 /* ShadowView.swift in Sources */,
 				A1239C991D8B427000272F67 /* LoginButton.swift in Sources */,
 				A12B32E01DA556DA00301598 /* GeneralEventVC.swift in Sources */,
+				A15A2F7C1DCEB8B0002C77DC /* EventArrayExtension.swift in Sources */,
+				A15A2F781DCEB84F002C77DC /* NSDateExtension.swift in Sources */,
 				A141E3411DC7F79A00B2747F /* Credit.swift in Sources */,
 				A18089451DBB082F0019D408 /* EventDetailsExtension.swift in Sources */,
 				A174D4811DB5B47400030E19 /* yesNoLauncher.swift in Sources */,
@@ -723,7 +759,7 @@
 				A18FA3B41DA7353600773614 /* GFGeoHashQuery.m in Sources */,
 				A10A93D01D92F54200D07E8E /* EventVC.swift in Sources */,
 				A12FF8F81D9EE309006AD044 /* MKPlacemarkExtension.swift in Sources */,
-				A12FF8FA1D9EF92D006AD044 /* UIButtonExtension.swift in Sources */,
+				A12FF8FA1D9EF92D006AD044 /* MiscExtensions.swift in Sources */,
 				A1C466B61D91988800A62A70 /* UIImageViewExtension.swift in Sources */,
 				A1B117AD1D8A2AA40036A24E /* AppDelegate.swift in Sources */,
 				A127C6E61DAD8CF7004017FD /* MapSettingsLauncher.swift in Sources */,
