@@ -15,6 +15,11 @@ protocol yesSelectedProtocol {
 class yesNoLauncher: NSObject {
 
     var delegate: yesSelectedProtocol?
+    var deleteCommentKey: String!
+    var darkView: UIView!
+    var verifyDeleteView: UIView!
+    var yesBtn: UIButton!
+    var noBtn: UIButton!
     
     func showDeleteView(view: UIView!, lblText: String!){
 
@@ -29,7 +34,6 @@ class yesNoLauncher: NSObject {
             noBtn = UIButton(frame: noBtnRect)
             
             verifyDeleteView.alpha = 0
-            
             verifyDeleteView.center = view.center
             verifyDeleteView.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
             verifyDeleteView.layer.cornerRadius = 5.0
@@ -39,7 +43,7 @@ class yesNoLauncher: NSObject {
             verifyLbl.textAlignment = .Center
             verifyLbl.font = UIFont(name: "Avenir", size: 18)
             
-            var rect1 = CGRectMake(0, 0, view.frame.width, view.frame.height)
+            let rect1 = CGRectMake(0, 0, view.frame.width, view.frame.height)
             darkView = UIView(frame: rect1)
             darkView.backgroundColor = UIColor.blackColor()
             darkView.alpha = 0
@@ -74,25 +78,15 @@ class yesNoLauncher: NSObject {
                 }, completion: nil)
     }
     
-    var deleteCommentKey: String!
-    var darkView: UIView!
-    var verifyDeleteView: UIView!
-    var yesBtn: UIButton!
-    var noBtn: UIButton!
-    
     func touchUpOutside(btn: UIButton){
         btn.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
     }
     
     func touchDownChgBtnColor(btn: UIButton){
-        print("touch down")
-
         btn.backgroundColor = UIColor(red: 210/255, green: 210/255, blue: 210/255, alpha: 1)
     }
     
     func deleteCommentYes(){
-        print("delete comment yes")
-
         yesBtn.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
         
         UIView.animateWithDuration(0.3, animations: {
@@ -107,8 +101,6 @@ class yesNoLauncher: NSObject {
     }
     
     func deleteCommentNo(){
-        print("delete comment no")
-
         noBtn.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
         UIView.animateWithDuration(0.3, animations: {
             self.darkView.alpha = 0

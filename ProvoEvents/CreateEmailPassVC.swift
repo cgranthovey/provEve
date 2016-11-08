@@ -14,6 +14,9 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
     @IBOutlet weak var passwordField: LoginTextField!
     @IBOutlet weak var verifyPasswordField: LoginTextField!
     
+    let loadingView = LoadingView()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,15 +26,12 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
         emailField.delegate = self
         passwordField.delegate = self
         verifyPasswordField.delegate = self
-        
     }
 
     override func viewWillDisappear(animated: Bool) {
         removeFirstResponder()
     }
 
-    let loadingView = LoadingView()
-    
     @IBAction func next(){
         if let email = emailField.text, let password = passwordField.text, let passwordV = verifyPasswordField.text where (password.characters.count > 0 && email.characters.count > 0 && passwordV.characters.count > 0){
             
@@ -67,9 +67,6 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
                     })
                 })
             })
-            
-
-            
         } else {
             alerts("Username and Password Required", message: "You must enter a username and password.")
         }
@@ -86,8 +83,6 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
         verifyPasswordField.resignFirstResponder()
     }
     
-
-    
     func alerts(title: String, message: String){
         self.loadingView.cancelSpinnerAndDarkView(nil)
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
@@ -98,5 +93,4 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
     @IBAction func popBack(){
         self.navigationController?.popViewControllerAnimated(true)
     }
-    
 }

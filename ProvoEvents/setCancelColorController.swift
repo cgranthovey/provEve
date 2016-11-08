@@ -22,24 +22,18 @@ class setCancelColorController: LoginButton {
     }
     
     func onTouchDown(){
-        print("touchDown")
-        
         if self.currentTitle == "SET"{
             backgroundColor = UIColor().boilerPlateColor(230, green: 81, blue: 0)
-
         } else if self.currentTitle == "CANCEL"{
             backgroundColor = UIColor().boilerPlateColor(136, green: 14, blue: 79)
         }
     }
     
     func onTouchUpOutside(){
-        print("touch up outside")
         if self.currentTitle == "SET"{
             backgroundColor = UIColor().boilerPlateColor(239, green: 108, blue: 0)
-
         } else if self.currentTitle == "CANCEL"{
             backgroundColor = UIColor().boilerPlateColor(194, green: 24, blue: 91)
         }
     }
-
 }

@@ -15,5 +15,4 @@ class CornerRadiusView: UIView {
         clipsToBounds = true
         
     }
-
 }

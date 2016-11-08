@@ -10,19 +10,15 @@ import UIKit
 
 class creditsCell: UITableViewCell {
 
-  //  @IBOutlet weak var label: UILabel!
     @IBOutlet weak var img: UIImageView!
-    
     @IBOutlet weak var label1: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
     }
     
     func configureCell(credit: Credit){
         img.image = UIImage(named: credit.imageString)
         label1.attributedText = credit.labelText
     }
-
 }

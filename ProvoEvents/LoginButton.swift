@@ -18,7 +18,6 @@ class LoginButton: UIButton {
         }
     }
     
-    
     @IBInspectable var borderWidth: CGFloat = 0{
         didSet{
             layer.borderWidth = borderWidth

@@ -14,5 +14,4 @@ class AnnotationPin: MKPinAnnotationView {
         tintColor = UIColor.redColor()
         canShowCallout = true
     }
-    
 }

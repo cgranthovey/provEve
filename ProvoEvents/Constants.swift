@@ -30,13 +30,8 @@ class Constants {
         return ("\(uid)Setting-Miles")
     }
     
-    
-    
     var currentUser: User!
-    
     func initCurrentUser(){
-        
-        
         
         DataService.instance.currentUserProfile.observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.value == nil{
@@ -48,13 +43,8 @@ class Constants {
                     let profileImg = snapDict["profileImg"]
                     let userName = snapDict["userName"]
                     self.currentUser = User(firstName: firstName, userName: userName, imgString: profileImg)
-
                 }
             }
         })
-        
-
     }
-    
-    
 }

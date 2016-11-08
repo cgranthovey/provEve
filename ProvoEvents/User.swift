@@ -38,6 +38,4 @@ class User{
         self._userName = userName
         self._profileImg = imgString
     }
-    
-
 }

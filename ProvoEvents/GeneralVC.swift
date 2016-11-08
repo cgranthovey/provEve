@@ -14,12 +14,9 @@ class GeneralVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(GeneralVC.swipePopBack))
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.view.addGestureRecognizer(swipeRight)
-        
-
     }
     
     func swipePopBack(){
@@ -27,13 +24,9 @@ class GeneralVC: UIViewController {
     }
 
     func generalAlert(title: String, message: String){
-        
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let action = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
         alertController.addAction(action)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
-    
-
-    
 }

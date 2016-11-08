@@ -10,101 +10,64 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
-class EventDetailsCommVC: GeneralVC, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, yesSelectedProtocol{
+class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
 
     @IBOutlet weak var commentsTableView: UITableView!
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var shadowView: ShadowView!
     @IBOutlet weak var eventTitle: UILabel!
-    
+    @IBOutlet var bottomShadowView: NSLayoutConstraint!
+    @IBOutlet weak var alphaBackgroundView: UIView!
+    @IBOutlet weak var postBtn: UIButton!
+
     var event: Event!
     var commentArray = [Comment]()
-
-    @IBOutlet var bottomShadowView: NSLayoutConstraint!
-
-    @IBOutlet weak var alphaBackgroundView: UIView!
-    
     var deleteLauncher = yesNoLauncher()
+    var keyboardUp = false
+    var keyboardHeight: CGFloat!
+    var deleteCommentKey: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         deleteLauncher.delegate = self
-        
         eventTitle.text = event.title
-        commentsTableView.dataSource = self
-        commentsTableView.delegate = self
-        commentsTableView.rowHeight = UITableViewAutomaticDimension
-        commentsTableView.estimatedRowHeight = 40
-        
-        commentsTableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
-        
-        commentTextView.delegate = self
+        setUpCommentTB()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventDetailsCommVC.deleteComment(_:)), name: "commentDelete", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventDetailsCommVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventDetailsCommVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
         
         initiateAlphaBgView()
-        
         getComments()
         setUpGestureRecs()
     }
-
     
     override func viewWillDisappear(animated: Bool) {
-        print("disappear")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "commentDelete", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         
         self.view.endEditing(true)
         if let height = keyboardHeight{
-            print("swim1")
             self.bottomShadowView.constant = self.bottomShadowView.constant - height
-            
             self.view.layoutIfNeeded()
         }
     }
     
     
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //SetUp UI
     
-    func deleteComment(notif: NSNotification){
-        
-        if let commentKey = notif.object as? String{
-            print("first to bat")
-            deleteCommentKey = commentKey
-            deleteLauncher.showDeleteView(self.view, lblText: "Delete Comment?")
-
-        }
+    func setUpCommentTB(){
+        commentsTableView.dataSource = self
+        commentsTableView.delegate = self
+        commentsTableView.rowHeight = UITableViewAutomaticDimension
+        commentsTableView.estimatedRowHeight = 40
+        commentsTableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
+        commentTextView.delegate = self
     }
-
-    var deleteCommentKey: String!
-    
-    func yesPressed() {
-        print("yes pressed in event comments vc")
-        if let i = self.commentArray.indexOf({$0.key == self.deleteCommentKey}){
-            print("next in yes event comments")
-            DataService.instance.commentRef.child(self.event.key).child(self.deleteCommentKey).removeValue()
-            DataService.instance.currentUser.child("comments").child(self.event.key).child(self.deleteCommentKey).removeValue()
-            let indexPath = NSIndexPath(forRow: i, inSection: 0)
-            self.commentArray.removeAtIndex(i)
-            self.commentsTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        }
-    }
-    
-    
-    
-    
-    
-    func initiateAlphaBgView(){
-        alphaBackgroundView.alpha = 0
-        alphaBackgroundView.backgroundColor = UIColor.blackColor()
-        
-        UIView.animateWithDuration(0.25, delay: 0.25, options: .CurveEaseOut, animations: { 
-            self.alphaBackgroundView.alpha = 0.7
-            }, completion: nil)
-        }
     
     func setUpGestureRecs(){
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(EventDetailsCommVC.swipeRight1))
@@ -119,9 +82,79 @@ class EventDetailsCommVC: GeneralVC, UITableViewDelegate, UITableViewDataSource,
         view.addGestureRecognizer(tap)
     }
     
+    func initiateAlphaBgView(){
+        alphaBackgroundView.alpha = 0
+        alphaBackgroundView.backgroundColor = UIColor.blackColor()
+        UIView.animateWithDuration(0.25, delay: 0.25, options: .CurveEaseOut, animations: { 
+            self.alphaBackgroundView.alpha = 0.7
+            }, completion: nil)
+    }
+    
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //Delete Comments
+    
+    func deleteComment(notif: NSNotification){
+        if let commentKey = notif.object as? String{
+            deleteCommentKey = commentKey
+            deleteLauncher.showDeleteView(self.view, lblText: "Delete Comment?")
+
+        }
+    }
+
+    func yesPressed() {
+        if let i = self.commentArray.indexOf({$0.key == self.deleteCommentKey}){
+            DataService.instance.commentRef.child(self.event.key).child(self.deleteCommentKey).removeValue()
+            DataService.instance.currentUser.child("comments").child(self.event.key).child(self.deleteCommentKey).removeValue()
+            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+            self.commentArray.removeAtIndex(i)
+            self.commentsTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+    }
+
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //Keyboard
+
     func tapToDismiss(){
         self.view.endEditing(true)
     }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        keyboardUp = false
+        let userInfo: [NSObject : AnyObject] = sender.userInfo!
+        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        self.bottomShadowView.constant = self.bottomShadowView.constant - keyboardSize.height
+        self.view.layoutIfNeeded()
+    }
+
+    func keyboardWillShow(sender: NSNotification) {
+
+            let userInfo: [NSObject : AnyObject] = sender.userInfo!
+            let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+            let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
+            keyboardHeight = keyboardSize.height
+
+            if !keyboardUp{
+                keyboardUp = true
+                if keyboardSize.height == offset.height {
+                    self.bottomShadowView.constant = self.bottomShadowView.constant + keyboardSize.height
+                    self.view.layoutIfNeeded()
+
+                } else {
+                    self.bottomShadowView.constant += keyboardSize.height - offset.height
+                    self.view.layoutIfNeeded()
+                }
+            } else{
+                if keyboardHeight != offset.height{
+                    self.bottomShadowView.constant = self.bottomShadowView.constant + offset.height - self.keyboardHeight
+                }
+        }
+    }
+    
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //Dismiss VC
     
     func swipeLeft1(){
         animateCommentsOut(-self.view.frame.width)
@@ -144,73 +177,11 @@ class EventDetailsCommVC: GeneralVC, UITableViewDelegate, UITableViewDataSource,
             })
         }
     }
-    
 
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //Submit Comments
     
-    
-var keyboardUp = false
-    
-var keyboardHeight: CGFloat!
-    
-func keyboardWillHide(sender: NSNotification) {
-    print("Hide will I")
-    keyboardUp = false
-    let userInfo: [NSObject : AnyObject] = sender.userInfo!
-    let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
-    self.bottomShadowView.constant = self.bottomShadowView.constant - keyboardSize.height
-    self.view.layoutIfNeeded()
-}
-    
-    
-
-func keyboardWillShow(sender: NSNotification) {
-    print("show will I")
-    
-
-    
-
-        let userInfo: [NSObject : AnyObject] = sender.userInfo!
-        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
-        print("height \(keyboardSize.height)")
-        let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
-        print("offset \(offset.height)")
-
-
-        keyboardHeight = keyboardSize.height
-    
-
-        if !keyboardUp{
-            keyboardUp = true
-
-            if keyboardSize.height == offset.height {
-                self.bottomShadowView.constant = self.bottomShadowView.constant + keyboardSize.height
-                self.view.layoutIfNeeded()
-
-            } else {
-                self.bottomShadowView.constant += keyboardSize.height - offset.height
-                self.view.layoutIfNeeded()
-            }
-        } else{
-            print("sizeA \(keyboardHeight)")
-            print("sizeB \(offset.height)")
-
-            if keyboardHeight != offset.height{
-                self.bottomShadowView.constant = self.bottomShadowView.constant + offset.height - self.keyboardHeight
-            }
-    }
-}
-    
-    
-    
-    
-
-    
-    func moveTextFieldIntoView(){
-        print("cat3")
-//        scrollView.scrollRectToVisible(viewForScrollRect.frame, animated: true)
-    }
-    
-    @IBOutlet weak var postBtn: UIButton!
     @IBAction func postTouchDown(sender: AnyObject) {
         postBtn.backgroundColor = UIColor().boilerPlateColor(173, green: 20, blue: 87)
     }
@@ -218,9 +189,6 @@ func keyboardWillShow(sender: NSNotification) {
     @IBAction func postTouchUpOutside(sender: AnyObject) {
         postBtn.backgroundColor = UIColor().boilerPlateColor(233, green: 30, blue: 99)
     }
-    
-    
-    
     
     @IBAction func submitComment(sender: UITextView){
         let date = NSDate()
@@ -250,13 +218,11 @@ func keyboardWillShow(sender: NSNotification) {
         }
     }
     
-    
-    func updateSize(){
-    }
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //Receive Comments, Add/Remove
     
     func getComments(){
-        print("event key: \(event.key)")
-        
         DataService.instance.commentRef.child(event.key).observeSingleEventOfType(.Value, withBlock: { snapshot in
             print("are none")
             if snapshot.value is NSNull{
@@ -295,7 +261,6 @@ func keyboardWillShow(sender: NSNotification) {
     
     func showNoCommentsLbl(){
         let noDataLbl: UILabel = UILabel(frame: CGRectMake(20, 40, 200, 40))
-        
         noDataLbl.numberOfLines = 10
         noDataLbl.text = "Post the first comment"
         noDataLbl.font = UIFont(name: "Avenir", size: 20)
@@ -317,9 +282,14 @@ func keyboardWillShow(sender: NSNotification) {
         }
         return nil
     }
-    
+}
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//Table View Extension
+
+extension EventDetailsCommVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("my count \(commentArray.count)")
         if let cell = tableView.dequeueReusableCellWithIdentifier("commentsCell") as? CommentsCell{
             cell.configureCell(commentArray[indexPath.row])
             return cell
@@ -330,20 +300,23 @@ func keyboardWillShow(sender: NSNotification) {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         var numberOfSection = 0
-        
         if commentArray.count > 0{
             numberOfSection = 1
             tableView.backgroundView = nil
         } else{
-
+            
         }
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         return commentArray.count
     }
-
-
 }
+
+
+
+
+
+
+

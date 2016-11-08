@@ -23,87 +23,33 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     @IBOutlet weak var eventImg: UIImageView!
     @IBOutlet weak var emailStack: UIStackView!
     @IBOutlet weak var eventEmail: UIButton!
-    
     @IBOutlet weak var bottomTextMessageBtn: UIButton!
     @IBOutlet weak var bottomCalenarBtn: UIButton!
     @IBOutlet weak var garbageOutlet: UIButton!
-    
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
     @IBOutlet weak var heartBtn: UIButton!
-    
     @IBOutlet weak var weatherTemp: UILabel!
     @IBOutlet weak var weatherIconImg: UIImageView!
-    
     @IBOutlet weak var weatherStack: UIStackView!
     @IBOutlet weak var weatherDescLbl: UILabel!
     
     var event: Event!
     var img: UIImage!
-    
     let deleteView = yesNoLauncher()
-    
+    var currentView: UIView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("canz1")
         deleteView.delegate = self
-print("can2")
         setUpUI()
-        
-print("canz3")
-
-//        bottomTextMessageBtn.imageView?.contentMode = .ScaleAspectFit
-//        bottomCalenarBtn.imageView?.contentMode = .ScaleAspectFit
-//        heartBtn.imageView?.contentMode = .ScaleAspectFit
-//        garbageOutlet.imageView?.contentMode = .ScaleAspectFit
-        print("canz3.4")
-        heartBtn.adjustsImageWhenHighlighted = false
-        print("canz3.5")
-        if event.user != FIRAuth.auth()?.currentUser?.uid{
-            garbageOutlet.hidden = true
-        }
-        
-        print("canz4")
-        eventImg.userInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.toLargeImg))
-        eventImg.addGestureRecognizer(tap)
-        print("can5")
-        scrollView.delaysContentTouches = false
         setBottomButtons()
-        
-        if event.isLiked{
-            print("it is liked")
-            heartBtn.setImage(UIImage(named: "heartFilled"), forState: .Normal)
-            
-        } else{
-            print("it is not liked")
-            heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
-        }
-
+        setUpImgs()
+        scrollView.delaysContentTouches = false
         let tapDismiss = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.resignKeyboard))
         view.addGestureRecognizer(tapDismiss)
-        
-       // scrollView.contentSize.height = 800
     }
-    
-    
-    var currentView: UIView!
-    func tapToDismissKeyboard(myView: UIView){
-
-    }
-    func resignKeyboard(){
-        view.endEditing(true)
-    }
-    
-    
-    
-    override func viewWillAppear(animated: Bool) {
-
-    }
-    
     
     override func viewDidAppear(animated: Bool) {
         scrollView.delaysContentTouches = false
@@ -116,25 +62,33 @@ print("canz3")
         scrollView.contentSize.width = self.view.frame.width
     }
     
-    
-    @IBAction func garbageAction(sender: AnyObject){
-        deleteView.showDeleteView(self.view, lblText: "Delete Event?")
+    override func viewDidDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loadDataAfterNewEvent", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "eventDeleted", object: nil)
     }
     
-    func yesPressed() {
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //Set Up UI
     
-        DataService.instance.eventRef.child(event.key).removeValue()
-        DataService.instance.currentUser.child("posts").child(event.key).removeValue()
-        DataService.instance.geoFireRef.child(event.key).removeValue()
-        DataService.instance.commentRef.child(event.key).removeValue()
+    func setUpImgs(){
+        heartBtn.adjustsImageWhenHighlighted = false
+        if event.user != FIRAuth.auth()?.currentUser?.uid{
+            garbageOutlet.hidden = true
+        }
         
-        print("yes called!!!")
+        eventImg.userInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.toLargeImg))
+        eventImg.addGestureRecognizer(tap)
         
-        NSNotificationCenter.defaultCenter().postNotificationName("loadDataAfterNewEvent", object: event, userInfo: nil)
-        NSNotificationCenter.defaultCenter().postNotificationName("eventDeleted", object: nil, userInfo: nil)
-        self.navigationController?.popViewControllerAnimated(true)
+        if event.isLiked{
+            heartBtn.setImage(UIImage(named: "heartFilled"), forState: .Normal)
+            
+        } else{
+            heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
+        }
     }
-    
+
     func setUpUI(){
         eventTitle.text = event.title
         eventDescription.text = event.description
@@ -152,7 +106,6 @@ print("canz3")
         eventEmail.titleLabel?.lineBreakMode = .ByTruncatingMiddle
         eventEmail.titleLabel?.minimumScaleFactor = 0.7
         
-        
         self.activityIndicator.startAnimating()
         self.activityIndicator.hidesWhenStopped = true
         
@@ -167,9 +120,7 @@ print("canz3")
         }
         
         if let holdEventImg = event.imgURL{
-            
             ImgCacheLoader.sharedLoader.imageForUrl(holdEventImg) { (image, url) in
-                print("return here")
                 if image != nil{            // without this if no internet connection we receive nil image causing crash.
                     self.img = image
                     self.eventImg.image = self.img!
@@ -183,79 +134,40 @@ print("canz3")
             eventImg.hidden = true
             self.activityIndicator.stopAnimating()
         }
-        print("end of setUpUI")
     }
-    
-    
-    
+
+    func setBottomButtons(){
+        bottomTextMessageBtn.adjustsImageWhenHighlighted = false        //prevents image from becoming darker when touched
+        bottomCalenarBtn.adjustsImageWhenHighlighted = false
+        bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.textMessageReleaseInside(_:)), forControlEvents: .TouchUpInside)
+        bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.showReminderVC), forControlEvents: .TouchUpInside)
+    }
     
     func dateString() -> String{
         let timeStamp = event.timeStampOfEvent
         let timeInterval = NSTimeInterval(timeStamp!)
         let myDate = NSDate(timeIntervalSince1970: timeInterval)
-        
         return myDate.dateEventDetailsString()
-        
     }
     
-    
-    //////////////////////////////////////////////////
-    //set up bottom buttons
-    
-    func setBottomButtons(){
-        
-        bottomTextMessageBtn.adjustsImageWhenHighlighted = false        //prevents image from becoming darker when touched
-        bottomCalenarBtn.adjustsImageWhenHighlighted = false
-        
-//        bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.holdDown(_:)), forControlEvents: .TouchDown)
-//        bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.holdDown(_:)), forControlEvents: .TouchDown)
-//        
-//        bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.holdReleaseOutside(_:)), forControlEvents: .TouchUpOutside)
-//        bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.holdReleaseOutside(_:)), forControlEvents: .TouchUpOutside)
-//        
-        bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.textMessageReleaseInside(_:)), forControlEvents: .TouchUpInside)
-        bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.showReminderVC), forControlEvents: .TouchUpInside)
+    func resignKeyboard(){
+        view.endEditing(true)
     }
     
-//    func holdDown(sender: UIButton){
-//        sender.backgroundColor = UIColor.lightGrayColor()
-//        if sender == bottomTextMessageBtn{
-//            //sender.imageView?.image = UIImage(named: "textMessageColor")
-//        } else if sender == bottomCalenarBtn{
-//            //sender.imageView?.image = UIImage(named: "calendarColor")
-//        }
-//    }
-//    
-//    func holdReleaseOutside(sender: UIButton){
-//        if sender == bottomTextMessageBtn{
-//            //sender.imageView?.image = UIImage(named: "textMessageClear")
-//        } else if sender == bottomCalenarBtn{
-//            //sender.imageView?.image = UIImage(named: "calendarClear")
-//        }
-//    }
-//    
-    
-
-    //////////////////////////////////////////////////
-    //Like Heart access
-    
-
-    @IBAction func heartBtnPressed(sender: AnyObject){
-        if event.isLiked{
-            heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
-            event.adjustLikes(false)
-            NSNotificationCenter.defaultCenter().postNotificationName("heartDeleted", object: self.event.key, userInfo: nil)
-        } else{
-            heartBtn.setImage(UIImage(named: "heartFilled"), forState: .Normal)
-            event.adjustLikes(true)
-            NSNotificationCenter.defaultCenter().postNotificationName("heartAdded", object: self.event, userInfo: nil)
-        }
+    func yesPressed() {
+        DataService.instance.eventRef.child(event.key).removeValue()
+        DataService.instance.currentUser.child("posts").child(event.key).removeValue()
+        DataService.instance.geoFireRef.child(event.key).removeValue()
+        DataService.instance.commentRef.child(event.key).removeValue()
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("loadDataAfterNewEvent", object: event, userInfo: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("eventDeleted", object: nil, userInfo: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
-
     
-    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
     //Calendar access
-    
     
     func showReminderVC(){
         let status = EKEventStore.authorizationStatusForEntityType(EKEntityType.Event)
@@ -307,9 +219,9 @@ print("canz3")
         }
     }
     
-    
-    //////////////////////////////////////////////////
-    //message controller
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //text message, garbage, heart pressed
     
     func textMessageReleaseInside(sender: UIButton){
         sender.backgroundColor = UIColor.clearColor()
@@ -326,14 +238,65 @@ print("canz3")
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func garbageAction(sender: AnyObject){
+        deleteView.showDeleteView(self.view, lblText: "Delete Event?")
+    }
+    @IBAction func heartBtnPressed(sender: AnyObject){
+        if event.isLiked{
+            heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
+            event.adjustLikes(false)
+            NSNotificationCenter.defaultCenter().postNotificationName("heartDeleted", object: self.event.key, userInfo: nil)
+        } else{
+            heartBtn.setImage(UIImage(named: "heartFilled"), forState: .Normal)
+            event.adjustLikes(true)
+            NSNotificationCenter.defaultCenter().postNotificationName("heartAdded", object: self.event, userInfo: nil)
+        }
+    }
+
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //to MailVC, Location, CommentsVC, largeImg
     
-    //////////////////////////////////////////////////
-    //to large img
+    @IBAction func eventLocBtnPressed(sender: AnyObject){
+        if let eventLong = event.pinInfoLongitude, let eventLat = event.pinInfoLatitude{
+            let cord = CLLocationCoordinate2D(latitude: eventLat, longitude: eventLong)
+            let placemark = MKPlacemark(coordinate: cord, addressDictionary: nil)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = "\(event.title)"
+            let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+            mapItem.openInMapsWithLaunchOptions(launchOptions)
+        }
+    }
+
+    @IBAction func toMailVC(){
+        let mailVC = MFMailComposeViewController()
+        mailVC.mailComposeDelegate = self
+        mailVC.setSubject("Question regarding Provo Events Post - \(event.title)")
+        mailVC.setToRecipients([event.email!])
+        mailVC.setMessageBody("Hello I have a question regarding \(event.title)\n", isHTML: true)
+
+        if MFMailComposeViewController.canSendMail(){
+            self.presentViewController(mailVC, animated: true, completion: nil)
+        }
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func toCommentsVC(sender: AnyObject){
+        performSegueWithIdentifier("CommentsSegue", sender: nil)
+    }
+    
     func toLargeImg(){
         if img != nil{
             performSegueWithIdentifier("ImageLargeVC", sender: nil)
         }
     }
+    
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //segue and popBack
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ImageLargeVC"{
@@ -354,103 +317,7 @@ print("canz3")
         }
     }
     
-    //////////////////////////////////////////////////
-    //to mail vc
-    @IBAction func eventLocBtnPressed(sender: AnyObject){
-        
-        //google
-        
-        if let eventLong = event.pinInfoLongitude, let eventLat = event.pinInfoLatitude{
-            
-            
-            print("cats \(event.pinInfoLatitude!) \(event.pinInfoLongitude!)")
-            
-//            if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
-//                UIApplication.sharedApplication().openURL(NSURL(string:
-//  //                  "comgooglemaps://?saddr=&daddr=\(eventLat),\(eventLong)")!)
-//                "comgooglemaps://?saddr=&daddr=\(eventLat),\(eventLong)&directionsmode=driving")!)
-//
-//                
-//            } else {
-                print("Can't use comgooglemaps://, trying apple maps")
-                let cord = CLLocationCoordinate2D(latitude: eventLat, longitude: eventLong)
-                let placemark = MKPlacemark(coordinate: cord, addressDictionary: nil)
-                let mapItem = MKMapItem(placemark: placemark)
-                mapItem.name = "Christopher's Neighborhood"
-                let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-                mapItem.openInMapsWithLaunchOptions(launchOptions)
-//            }
-        }
-    }
-    
-    
-    
-    //////////////////////////////////////////////////
-    //to mail vc
-    
-    @IBAction func toMailVC(){
-        var mailVC = MFMailComposeViewController()
-        mailVC.mailComposeDelegate = self
-        mailVC.setSubject("Question regarding Provo Events Post - \(event.title)")
-        mailVC.setToRecipients([event.email!])
-        mailVC.setMessageBody("Hello I have a question regarding \(event.title)\n", isHTML: true)
-
-        if MFMailComposeViewController.canSendMail(){
-            self.presentViewController(mailVC, animated: true, completion: nil)
-        }
-    }
-    
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    
-    @IBAction func toCommentsVC(sender: AnyObject){
-        performSegueWithIdentifier("CommentsSegue", sender: nil)
-    }
-    
-    
     @IBAction func popBackBtn(sender: AnyObject){
         self.navigationController?.popViewControllerAnimated(true)
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-extension EventDetailsVC{
-    
-    
-    
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

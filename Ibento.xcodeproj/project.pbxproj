@@ -14,6 +14,8 @@
 		A10D44901D9AE57200966BC0 /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */; };
 		A10D44921D9B799900966BC0 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D44911D9B799900966BC0 /* MapVC.swift */; };
 		A10D44941D9C0E1E00966BC0 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10D44931D9C0E1E00966BC0 /* LocationSearchTable.swift */; };
+		A111A1661DD0E5A200FAE14E /* AddEventExt-Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = A111A1651DD0E5A200FAE14E /* AddEventExt-Post.swift */; };
+		A111A1681DD0E6D300FAE14E /* AddEventExt-CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = A111A1671DD0E6D300FAE14E /* AddEventExt-CV.swift */; };
 		A1157C041D8C9A27000ADB0E /* CreateEmailPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1157C031D8C9A27000ADB0E /* CreateEmailPassVC.swift */; };
 		A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */; };
 		A11B8FA51DC6E98100743E4C /* snapScroll2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11B8FA41DC6E98100743E4C /* snapScroll2.swift */; };
@@ -27,7 +29,6 @@
 		A127C6E61DAD8CF7004017FD /* MapSettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127C6E51DAD8CF7004017FD /* MapSettingsLauncher.swift */; };
 		A12B32E01DA556DA00301598 /* GeneralEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */; };
 		A12E301E1DCA4A5F00A1CA3B /* NoConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12E301D1DCA4A5F00A1CA3B /* NoConnectionView.swift */; };
-		A12E30241DCABA4100A1CA3B /* mapSettingsCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12E30231DCABA4100A1CA3B /* mapSettingsCVC.swift */; };
 		A12FC0B81DAE9AE6000B4005 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FC0B71DAE9AE6000B4005 /* SettingsCell.swift */; };
 		A12FC0BA1DAE9B9B000B4005 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FC0B91DAE9B9B000B4005 /* BaseCell.swift */; };
 		A12FF8F81D9EE309006AD044 /* MKPlacemarkExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */; };
@@ -55,7 +56,6 @@
 		A18FA3B31DA7353600773614 /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = A18FA3AC1DA7353600773614 /* GFGeoHash.m */; };
 		A18FA3B41DA7353600773614 /* GFGeoHashQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = A18FA3AE1DA7353600773614 /* GFGeoHashQuery.m */; };
 		A18FA3B51DA7353600773614 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = A18FA3B01DA7353600773614 /* GFQuery.m */; };
-		A1AFA4F61DC1882900D182BF /* customCVFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AFA4F51DC1882900D182BF /* customCVFlowLayout.swift */; };
 		A1B117AD1D8A2AA40036A24E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */; };
 		A1B117AF1D8A2AA40036A24E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B117AE1D8A2AA40036A24E /* LoginVC.swift */; };
 		A1B117B21D8A2AA40036A24E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B117B01D8A2AA40036A24E /* Main.storyboard */; };
@@ -72,8 +72,6 @@
 		A1D3854A1D909A1F00365348 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D385491D909A1F00365348 /* TextView.swift */; };
 		A1D714F81DCC2C7000286E72 /* ConnectedToInternet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D714F71DCC2C7000286E72 /* ConnectedToInternet.swift */; };
 		A1DEBE771DCD2FFD00C5F231 /* MilesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DEBE761DCD2FFD00C5F231 /* MilesVC.swift */; };
-		A1E9F2961DCAEF8A00C25D45 /* mapSetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1E9F2951DCAEF8A00C25D45 /* mapSetCell.xib */; };
-		A1E9F2981DCAF06100C25D45 /* mapSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E9F2971DCAF06100C25D45 /* mapSetCell.swift */; };
 		A1EE77E81DA7590400781CDF /* AnnotationMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */; };
 		A1EE77EA1DA7623800781CDF /* AnnotationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EE77E91DA7623800781CDF /* AnnotationPin.swift */; };
 		A1EECA4B1D8C72FF0013406A /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EECA4A1D8C72FF0013406A /* DataService.swift */; };
@@ -113,6 +111,8 @@
 		A10D448F1D9AE57200966BC0 /* FavoritesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
 		A10D44911D9B799900966BC0 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		A10D44931D9C0E1E00966BC0 /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
+		A111A1651DD0E5A200FAE14E /* AddEventExt-Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AddEventExt-Post.swift"; sourceTree = "<group>"; };
+		A111A1671DD0E6D300FAE14E /* AddEventExt-CV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AddEventExt-CV.swift"; sourceTree = "<group>"; };
 		A1157C031D8C9A27000ADB0E /* CreateEmailPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEmailPassVC.swift; sourceTree = "<group>"; };
 		A1157C051D8C9A5B000ADB0E /* CreateUserInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserInfoVC.swift; sourceTree = "<group>"; };
 		A11B8FA41DC6E98100743E4C /* snapScroll2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = snapScroll2.swift; sourceTree = "<group>"; };
@@ -126,7 +126,6 @@
 		A127C6E51DAD8CF7004017FD /* MapSettingsLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSettingsLauncher.swift; sourceTree = "<group>"; };
 		A12B32DF1DA556DA00301598 /* GeneralEventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralEventVC.swift; sourceTree = "<group>"; };
 		A12E301D1DCA4A5F00A1CA3B /* NoConnectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoConnectionView.swift; sourceTree = "<group>"; };
-		A12E30231DCABA4100A1CA3B /* mapSettingsCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapSettingsCVC.swift; sourceTree = "<group>"; };
 		A12FC0B71DAE9AE6000B4005 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		A12FC0B91DAE9B9B000B4005 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPlacemarkExtension.swift; sourceTree = "<group>"; };
@@ -165,7 +164,6 @@
 		A18FA3AF1DA7353600773614 /* GFQuery+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GFQuery+Private.h"; sourceTree = "<group>"; };
 		A18FA3B01DA7353600773614 /* GFQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQuery.m; sourceTree = "<group>"; };
 		A18FA3BC1DA7370300773614 /* bridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bridgingHeader.h; path = ../bridgingHeader.h; sourceTree = "<group>"; };
-		A1AFA4F51DC1882900D182BF /* customCVFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customCVFlowLayout.swift; sourceTree = "<group>"; };
 		A1B117A91D8A2AA40036A24E /* Ibento.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ibento.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1B117AE1D8A2AA40036A24E /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -186,8 +184,6 @@
 		A1D385491D909A1F00365348 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		A1D714F71DCC2C7000286E72 /* ConnectedToInternet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedToInternet.swift; sourceTree = "<group>"; };
 		A1DEBE761DCD2FFD00C5F231 /* MilesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilesVC.swift; sourceTree = "<group>"; };
-		A1E9F2951DCAEF8A00C25D45 /* mapSetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mapSetCell.xib; sourceTree = "<group>"; };
-		A1E9F2971DCAF06100C25D45 /* mapSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapSetCell.swift; sourceTree = "<group>"; };
 		A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationMapVC.swift; sourceTree = "<group>"; };
 		A1EE77E91DA7623800781CDF /* AnnotationPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationPin.swift; sourceTree = "<group>"; };
 		A1EECA4A1D8C72FF0013406A /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
@@ -289,14 +285,11 @@
 				A111A1641DD0309F00FAE14E /* Event */,
 				A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */,
 				A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */,
-				A127C6E51DAD8CF7004017FD /* MapSettingsLauncher.swift */,
-				A174D4801DB5B47400030E19 /* yesNoLauncher.swift */,
 				A1F12B821D99B347007A9447 /* ReminderVC.swift */,
 				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
 				A15602641DA2F39A004ADCAD /* snapScrollVC.swift */,
 				A11B8FA41DC6E98100743E4C /* snapScroll2.swift */,
 				A1B4A1871DB8092600FC3D43 /* LoadingView.swift */,
-				A12E301D1DCA4A5F00A1CA3B /* NoConnectionView.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -319,7 +312,6 @@
 				A1F56D981DB1933C009D7F65 /* CornerRadiusView.swift */,
 				A1F56D9A1DB1C2C2009D7F65 /* bottomShadowUILabel.swift */,
 				A1F56D9C1DB2B25A009D7F65 /* segueCommentsShow.swift */,
-				A1AFA4F51DC1882900D182BF /* customCVFlowLayout.swift */,
 				A1258BCF1DC503C30062E330 /* btnAspectFit.swift */,
 				A141E33E1DC7DBCB00B2747F /* creditsCell.swift */,
 				A161F7071DC918F7004057BE /* setCancelColorController.swift */,
@@ -345,9 +337,6 @@
 			children = (
 				A161F70C1DC974B2004057BE /* NoInternetView.xib */,
 				A161F70E1DC97502004057BE /* NoInternetView.swift */,
-				A12E30231DCABA4100A1CA3B /* mapSettingsCVC.swift */,
-				A1E9F2951DCAEF8A00C25D45 /* mapSetCell.xib */,
-				A1E9F2971DCAF06100C25D45 /* mapSetCell.swift */,
 			);
 			name = NibView;
 			sourceTree = "<group>";
@@ -414,6 +403,7 @@
 		A1B117AB1D8A2AA40036A24E /* ProvoEvents */ = {
 			isa = PBXGroup;
 			children = (
+				A1F7BC311DD13F97003A296A /* Subclass */,
 				A18FA39F1DA7353600773614 /* GeoFire */,
 				A1C466B41D91986B00A62A70 /* Extensions */,
 				A149F6801D8C64AE009AE58C /* Services */,
@@ -421,6 +411,7 @@
 				A161F70B1DC97472004057BE /* NibView */,
 				A1239C951D8B3DAB00272F67 /* View */,
 				A1239C941D8B3D9E00272F67 /* Controller */,
+				A1F7BC321DD156B0003A296A /* NSObject */,
 				A1B117B31D8A2AA40036A24E /* Assets.xcassets */,
 				A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */,
 				A1B117B01D8A2AA40036A24E /* Main.storyboard */,
@@ -447,7 +438,6 @@
 				A1F12B801D998F9A007A9447 /* UIViewExtensions.swift */,
 				A12FF8F71D9EE309006AD044 /* MKPlacemarkExtension.swift */,
 				A12FF8F91D9EF92D006AD044 /* MiscExtensions.swift */,
-				A1258BD11DC517670062E330 /* buttonSubAnimate.swift */,
 				A15A2F771DCEB84F002C77DC /* NSDateExtension.swift */,
 				A15A2F791DCEB877002C77DC /* EventExtension.swift */,
 				A15A2F7B1DCEB8B0002C77DC /* EventArrayExtension.swift */,
@@ -470,11 +460,31 @@
 			isa = PBXGroup;
 			children = (
 				A1D385471D908B3C00365348 /* AddEventVC.swift */,
+				A111A1651DD0E5A200FAE14E /* AddEventExt-Post.swift */,
+				A111A1671DD0E6D300FAE14E /* AddEventExt-CV.swift */,
 				A10D44931D9C0E1E00966BC0 /* LocationSearchTable.swift */,
 				A10D44911D9B799900966BC0 /* MapVC.swift */,
 				A1C466B71D91AB9E00A62A70 /* DateTimeVC.swift */,
 			);
 			name = AddEvent;
+			sourceTree = "<group>";
+		};
+		A1F7BC311DD13F97003A296A /* Subclass */ = {
+			isa = PBXGroup;
+			children = (
+				A1258BD11DC517670062E330 /* buttonSubAnimate.swift */,
+			);
+			name = Subclass;
+			sourceTree = "<group>";
+		};
+		A1F7BC321DD156B0003A296A /* NSObject */ = {
+			isa = PBXGroup;
+			children = (
+				A127C6E51DAD8CF7004017FD /* MapSettingsLauncher.swift */,
+				A174D4801DB5B47400030E19 /* yesNoLauncher.swift */,
+				A12E301D1DCA4A5F00A1CA3B /* NoConnectionView.swift */,
+			);
+			name = NSObject;
 			sourceTree = "<group>";
 		};
 		F119E2AC70AE1F08B6FBF1D5 /* Pods */ = {
@@ -576,7 +586,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1B117B71D8A2AA50036A24E /* LaunchScreen.storyboard in Resources */,
-				A1E9F2961DCAEF8A00C25D45 /* mapSetCell.xib in Resources */,
 				A1B117CD1D8A2B090036A24E /* GoogleService-Info.plist in Resources */,
 				A1B117B41D8A2AA40036A24E /* Assets.xcassets in Resources */,
 				A161F70D1DC974B2004057BE /* NoInternetView.xib in Resources */,
@@ -698,10 +707,10 @@
 				A152437D1DABF10B00ECC34B /* MapPinCell.swift in Sources */,
 				A1D19BD11DA3262200F683AF /* GeneralShadowView.swift in Sources */,
 				A1FBBD3C1D8DE86700366761 /* LoginImg.swift in Sources */,
-				A1AFA4F61DC1882900D182BF /* customCVFlowLayout.swift in Sources */,
 				A12FC0BA1DAE9B9B000B4005 /* BaseCell.swift in Sources */,
 				A1EE77E81DA7590400781CDF /* AnnotationMapVC.swift in Sources */,
 				A1239C971D8B3DD800272F67 /* LoginTextField.swift in Sources */,
+				A111A1661DD0E5A200FAE14E /* AddEventExt-Post.swift in Sources */,
 				A1F12B7F1D997A58007A9447 /* CreateEvent.swift in Sources */,
 				A1F12B831D99B347007A9447 /* ReminderVC.swift in Sources */,
 				A1157C061D8C9A5B000ADB0E /* CreateUserInfoVC.swift in Sources */,
@@ -739,7 +748,6 @@
 				A1EECA4B1D8C72FF0013406A /* DataService.swift in Sources */,
 				A181FD041D94677F00007264 /* ImgCacheLoader.swift in Sources */,
 				A15602651DA2F39A004ADCAD /* snapScrollVC.swift in Sources */,
-				A12E30241DCABA4100A1CA3B /* mapSettingsCVC.swift in Sources */,
 				A17A934F1DA4349C001987EE /* SettingsVC.swift in Sources */,
 				A1B4A1881DB8092600FC3D43 /* LoadingView.swift in Sources */,
 				A18FA3B51DA7353600773614 /* GFQuery.m in Sources */,
@@ -748,7 +756,6 @@
 				A161F7081DC918F7004057BE /* setCancelColorController.swift in Sources */,
 				A181FD021D943D6800007264 /* EventDetailsVC.swift in Sources */,
 				A181FD081D946D4100007264 /* ImageLargeVC.swift in Sources */,
-				A1E9F2981DCAF06100C25D45 /* mapSetCell.swift in Sources */,
 				A127C6E21DAD5DA6004017FD /* Comment.swift in Sources */,
 				A1FBBD3E1D8DE9AC00366761 /* GeneralVC.swift in Sources */,
 				A18FA3B21DA7353600773614 /* GFBase32Utils.m in Sources */,
@@ -758,6 +765,7 @@
 				A1B117AF1D8A2AA40036A24E /* LoginVC.swift in Sources */,
 				A18FA3B41DA7353600773614 /* GFGeoHashQuery.m in Sources */,
 				A10A93D01D92F54200D07E8E /* EventVC.swift in Sources */,
+				A111A1681DD0E6D300FAE14E /* AddEventExt-CV.swift in Sources */,
 				A12FF8F81D9EE309006AD044 /* MKPlacemarkExtension.swift in Sources */,
 				A12FF8FA1D9EF92D006AD044 /* MiscExtensions.swift in Sources */,
 				A1C466B61D91988800A62A70 /* UIImageViewExtension.swift in Sources */,

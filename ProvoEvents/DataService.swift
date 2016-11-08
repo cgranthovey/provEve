@@ -6,14 +6,13 @@
 //  Copyright © 2016 Chris Hovey. All rights reserved.
 //
 
-
 import Foundation
 import FirebaseDatabase
 import FirebaseAuth
 import FirebaseStorage
 
-
 class DataService{
+    
     private static let _instance = DataService()
     
     static var instance: DataService{
@@ -41,7 +40,6 @@ class DataService{
     }
     
     var currentUser: FIRDatabaseReference{
-//        print("current uid \(userRef.child((FIRAuth.auth()?.currentUser?.uid)!))")
         return userRef.child((FIRAuth.auth()?.currentUser?.uid)!)
     }
     
@@ -58,8 +56,6 @@ class DataService{
         return mainRef.child("GeoFire")
     }
     
-    
-    
     ////////////////////////////////////////////////////////////////////////
     //Storage
     ////////////////////////////////////////////////////////////////////////
@@ -75,20 +71,4 @@ class DataService{
     var imgStorageRefData: FIRStorageReference{
         return storageRef.child("images")
     }
-    
-    
-    
-    // can do references
-    //var myImages = storageRef.child("images").child("space.jpg")
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

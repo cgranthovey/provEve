@@ -10,6 +10,7 @@ import UIKit
 @IBDesignable
 
 class TextView: UITextView{
+    
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet{
             layer.cornerRadius = cornerRadius

@@ -17,5 +17,4 @@ class GeneralShadowView: UIView {
         layer.shadowOffset = CGSizeMake(0, 0)
         clipsToBounds = false
     }
-
 }

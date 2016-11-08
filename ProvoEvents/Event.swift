@@ -81,7 +81,6 @@ class Event{
         }
         return _likes
     }
-    
     var pinInfoAddress: String?{
         return _pinInfoAddress
     }
@@ -97,14 +96,12 @@ class Event{
     var isLiked: Bool{
         return _isLiked
     }
-    
     var eventTypeImgName: String{
         if _eventTypeImgName == nil{
             _eventTypeImgName = ""
         }
         return _eventTypeImgName
     }
-    
     
     init(key: String, dict: Dictionary<String, AnyObject>, isLiked: Bool){
         _title = dict["title"] as? String
@@ -158,10 +155,8 @@ class Event{
         DataService.instance.eventRef.child(_key).child("likes").observeSingleEventOfType(.Value, withBlock: {snapshot in
             if let doesNotExist = snapshot.value as? NSNull{
                 self._likes = 0
-
                 self.finalAdjust(addLike)
             } else{
-
                 self._likes = snapshot.value as! Int
                 self.finalAdjust(addLike)
             }

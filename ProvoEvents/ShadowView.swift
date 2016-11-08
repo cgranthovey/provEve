@@ -17,5 +17,4 @@ class ShadowView: UIView {
         
         layer.masksToBounds = false
     }
-    
 }

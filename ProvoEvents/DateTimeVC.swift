@@ -14,11 +14,11 @@ protocol GetDateTime {
 
 class DateTimeVC: UIViewController {
 
-    @IBOutlet weak var timeDatePicker: UIDatePicker!
-    
     var delegate: GetDateTime?
     var currentDate: NSDate?
     
+    @IBOutlet weak var timeDatePicker: UIDatePicker!
+
     override func viewDidLoad() {
         super.viewDidLoad()        
         
@@ -31,11 +31,7 @@ class DateTimeVC: UIViewController {
         if let curDate = currentDate{
             timeDatePicker.date = curDate
         }
-        
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
-        
-//        let tapOut = UITapGestureRecognizer(target: self, action: #selector(DateTimeVC.dismissVC))
-//        view.addGestureRecognizer(tapOut)
     }
     
     func dismissVC(){
@@ -45,27 +41,10 @@ class DateTimeVC: UIViewController {
     @IBAction func set(){
         let nsDate = timeDatePicker.date
         delegate?.getTheDateTime(nsDate)
-
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-//    
-//    @IBAction func setTouchDown(sender: UIButton){
-//        sender.backgroundColor = UIColor().boilerPlateColor(230, green: 81, blue: 0)
-//    }
-//    @IBAction func setTouchUpOutside(sender: UIButton){
-//        sender.backgroundColor = UIColor().boilerPlateColor(239, green: 108, blue: 0)
-//    }
-//    
-    
-    
+
     @IBAction func cancel(){
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-//    @IBAction func cancelTouchDown(sender: UIButton){
-//        sender.backgroundColor = UIColor().boilerPlateColor(136, green: 14, blue: 79)
-//    }
-//    @IBAction func cancelTouchUpOutside(sender: UIButton){
-//        sender.backgroundColor = UIColor().boilerPlateColor(194, green: 24, blue: 91)
-//    }
-
 }

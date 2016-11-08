@@ -35,8 +35,4 @@ class CreateEvent {
             print("there was an error creating event")
         }
     }
-    
-    
-    
-
 }

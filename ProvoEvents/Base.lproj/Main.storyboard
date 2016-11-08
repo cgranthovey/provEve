@@ -3638,26 +3638,6 @@
                                     <constraint firstAttribute="height" constant="50" id="wfv-h4-M6t"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6w-Jg-GlL">
-                                <rect key="frame" x="13" y="28" width="140" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="1NK-yv-Ogb"/>
-                                    <constraint firstAttribute="width" constant="90" id="aix-ih-ATL"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <state key="normal" title="REMOVE">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="1NK-yv-Ogb"/>
-                                        <exclude reference="aix-ih-ATL"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="removePinBtn:" destination="t0w-dM-wqN" eventType="touchUpInside" id="svT-Sq-Bip"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4hn-No-qRd" customClass="GeneralShadowView" customModule="Ibento" customModuleProvider="target">
                                 <rect key="frame" x="134" y="456" width="170" height="50"/>
                                 <subviews>
@@ -3707,7 +3687,7 @@
                                     <constraint firstItem="SKD-6U-wXi" firstAttribute="leading" secondItem="4hn-No-qRd" secondAttribute="leading" id="sGE-Zg-o5K"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWk-cM-keg">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWk-cM-keg" customClass="btnAspectFit" customModule="Ibento" customModuleProvider="target">
                                 <rect key="frame" x="260" y="75" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="hCi-2M-2HB"/>
@@ -3827,7 +3807,6 @@
                         <outlet property="mapView" destination="mYv-Vb-Yq8" id="83Q-mZ-sRC"/>
                         <outlet property="questionBtn" destination="BWk-cM-keg" id="Gz3-KB-m3o"/>
                         <outlet property="questionView" destination="jwZ-W2-l9M" id="YJj-8l-PZc"/>
-                        <outlet property="removeBtn" destination="W6w-Jg-GlL" id="y6z-aS-wVs"/>
                         <outlet property="thumbsUpImage" destination="KMJ-gL-z8h" id="v7B-lT-Ogg"/>
                     </connections>
                 </viewController>

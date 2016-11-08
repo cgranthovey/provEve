@@ -18,61 +18,43 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     
     var imgView: UIImageView!
     var preView: UIView!
-    
     var backView: UIView!
-    
     var connectionBool: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        do{
-//         try FIRAuth.auth()?.signOut()
-//            print("sign out")
-//        } catch {
-//            print("could not sign out")
-//        }
-
+        
+        setUpPreview()
+        passwordField.delegate = self
+        emailField.delegate = self
+        checkForConnection()
+        passwordField.clearsOnBeginEditing = false
+        emailField.clearsOnBeginEditing = false
+        let tap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.removeFirstResponder))
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    func setUpPreview(){
         preView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         preView.backgroundColor = UIColor(red: 3/255.0, green: 169/255.0, blue: 244.0/255.0, alpha: 1.0)
         self.view.addSubview(preView)
-        
-        passwordField.delegate = self
-        emailField.delegate = self
-        
-        
+    }
+    
+    func checkForConnection(){
         ConnectedToInternet.instance1.areWeConnected(self.view, showNoInternetView: false) { (connected) in
             if let connect = connected{
                 if  connect{
                     self.connectionBool = true
                 } else {
                     self.connectionBool = false
-
                 }
                 self.checkForUID()
-
             }
         }
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.removeFirstResponder))
-        self.view.addGestureRecognizer(tap)
-        
-        passwordField.clearsOnBeginEditing = false
-        emailField.clearsOnBeginEditing = false
-
-        let topColor = UIColor(red: 255/255, green: 87/255, blue: 234/255, alpha: 1.0)
-        let bottomColor = UIColor(red: 230/255, green: 74/255, blue: 25/255, alpha: 1.0)
-        let gl = CAGradientLayer()
-        gl.colors = [topColor, bottomColor]
-        gl.locations = [0, 1]
-        self.view.layer.addSublayer(gl)
     }
-    
-    
     
     func checkForUID(){
         if FIRAuth.auth()?.currentUser != nil{
-            print("uid \(FIRAuth.auth()?.currentUser?.uid)")
-
             checkForUserName()
             return
         } else{
@@ -91,11 +73,8 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     
     
     func checkForUserName(){
-        
         //checking nsuser defaults for username
-        
         let prefs = NSUserDefaults.standardUserDefaults()
-        
         let uid = FIRAuth.auth()?.currentUser?.uid
         if let username = prefs.stringForKey("\(uid)Username"){
             print("has username")
@@ -104,19 +83,6 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
             print("has no username")
             self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
         }
-        
-//        DataService.instance.currentUser.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-//            print("fiveHigh")
-//            if let snap = snapshot.value as? String{
-//                print("dog")
-//                self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
-//            } else{
-//                print("kitten")
-//                print(snapshot)
-//                self.performSegueWithIdentifier("snapScrollVC", sender: nil)
-//            }
-//        })
-        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -166,18 +132,10 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
                 self.resignFirstResponder()
                 self.checkForUserName()
                 self.loadingView.cancelSpinnerAndDarkView(nil)
-                print("logged in!")
             })
-            
-
-            
         } else{
             alerts("Username and Password Required", message: "You must enter a username and password.")
         }
-    }
-    
-    func help(){
-        print("help")
     }
 
     func alerts(title: String, message: String){
@@ -186,6 +144,4 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
 }
-

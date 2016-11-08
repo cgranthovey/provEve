@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 typealias isConnected = ((connected: Bool!) -> Void)?
 
 class ConnectedToInternet{

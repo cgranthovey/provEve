@@ -13,10 +13,8 @@
 // icons 8 - back,
 
 import UIKit
-
 import FirebaseDatabase
 import Firebase
-
 
 class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, MilesChosen {
     
@@ -24,20 +22,27 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var geoMarkerBtn: UIButton!
-    var keyOfLast: String?
     
+    var keyOfLast: String?
     var likesArray = [String]()
-
     var locationManager = CLLocationManager()
+    var keysArray = [String]()
+    var isCurrentlyLoading = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpLocationManagerAndTV()
+        Constants.instance.initCurrentUser()
 
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadDataAfterNewEvent", object: nil)
+    }
+    
+    func setUpLocationManagerAndTV(){
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             self.locationManager.requestWhenInUseAuthorization()
         }
-        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
         locationManager.requestWhenInUseAuthorization()
@@ -47,32 +52,18 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         tableView.addSubview(refreshController)
-        Constants.instance.initCurrentUser()
-
-//
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadData", object: nil)
-//        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadDataAfterNewEvent", object: nil)
     }
     
-    
-    
-    
-    
-    func numberOfMiles(miles: Int) {
-        print("I'm called suckers")
+    func numberOfMiles(miles: Int) {    //called when miles radius changes in settings
+        loadData()
     }
     
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //locationManager
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        print("byebye")
-        
         if status == .AuthorizedWhenInUse {
-            print("bye")
-            
             locationManager.requestLocation()
         }
     }
@@ -83,9 +74,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             if let location = locations.first {
                 currentLoc = location
                 hasUserLocBeenFound = true
-                print("in loc manager")
                 loadData()
-
             }
         }
     }
@@ -93,96 +82,68 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print("error:: \(error)")
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
-//    below and above is code to add a pull to refresh option
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //refreshController
+    
     lazy var refreshController: UIRefreshControl = {
-        
-
-            
-            
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(EventVC.handleRefresh), forControlEvents: .ValueChanged)
-        
         return refreshControl
     }()
     
     func handleRefresh(refreshControl: UIRefreshControl){
         loadData()
-        
     }
 
-    
-    var keysArray = [String]()
-    
-    
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         var translation: CGPoint = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
         if translation.y > 0{
-            print("dragging finger down")
-            
+            //dragging finger down
         } else{
-            refreshController.endRefreshing()
-            print("dragging finger up")
+            refreshController.endRefreshing()   //prevents spinner from going forever when no internet connection
         }
     }
     
-    var geoQuery: GFRegionQuery!    //this variable allows
+    
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //loadData
+    
+    var geoQuery: GFRegionQuery!
     func loadData(){
         
         if geoQuery != nil{
-            geoQuery.removeAllObservers()       // prevents multiple
+            geoQuery.removeAllObservers()       // prevents multiple geoQuery requests if internet connection is poor and users tries making multiple requests by pulling down charger
         }
         
-       print("users cuurent loc \(currentLoc)")
-
-        let geoFireRef = DataService.instance.geoFireRef
-        let geoFire = GeoFire(firebaseRef: geoFireRef)
-        
-        let locCoord2d = CLLocationCoordinate2DMake(currentLoc.coordinate.latitude, currentLoc.coordinate.longitude)
-        
+        //checking for preset radius to use in query
         let prefs = NSUserDefaults.standardUserDefaults()
         let meters: Int!
         if let miles = prefs.objectForKey(Constants.instance.nsUserDefaultsKeySettingsMiles){
             meters = Int(Double(miles as! NSNumber) * 1609.34)
-            print("meters \(meters)")
         } else{
             meters = Int(25 * 1609.34)
         }
         
+        let geoFireRef = DataService.instance.geoFireRef
+        let geoFire = GeoFire(firebaseRef: geoFireRef)
+        let locCoord2d = CLLocationCoordinate2DMake(currentLoc.coordinate.latitude, currentLoc.coordinate.longitude)
         let region = MKCoordinateRegionMakeWithDistance(locCoord2d, CLLocationDistance(meters) * 2, CLLocationDistance(meters) * 2) // need to double to get expected distance
-        print("region \(region)")
-            //maybe should check if region is valid later
+        if !region.isRegionValid(){
+            return
+        }
         geoQuery = geoFire.queryWithRegion(region)
         keysArray = []
         todaysStartTime = self.getTodaysStartTime()
 
-        
-        
-        
         var firebaseCalledOnce = false
         var queryHande = geoQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
             self.keysArray.append(key)
-            print("all keys in query \(key)")
-            
-            
-            
             if !firebaseCalledOnce{
                 DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
-                    print("in here")
                     if snapshot.value == nil{
-                        print("this snapshot = nil for likes .value")
                     } else{
                         self.events = []
                         self.likesArray = []
@@ -193,38 +154,26 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                             }
                         }
                     }
-                    print("self keys array count \(self.keysArray.count)")
                     var timesIterated = 0
                     for key in self.keysArray{
-                        
-                        print("can")
-                        
                         DataService.instance.mainRef.child("Events").child(key).observeSingleEventOfType(.Value, withBlock: { snapshot in
                             if snapshot.value == nil{
                             } else{
-                                print("snapshot: \(snapshot)")
-                                
                                 if let postDict = snapshot.value as? Dictionary<String, AnyObject>{
-                                    print("hear")
                                     let key = snapshot.key
-                                    
                                     var isEventLiked = false
                                     for like in self.likesArray{
                                         if like == key{
                                             isEventLiked = true
                                         }
                                     }
-                                    
                                     let post = Event(key: key, dict: postDict, isLiked: isEventLiked)
                                     self.events.append(post)
-                                    print("thran")
                                     self.keyOfLast = post.key
                                 }
                             }
-                            print("love")
                             timesIterated = timesIterated + 1
                             if timesIterated == self.keysArray.count{
-                                print("tonight")
                                 self.EventsCategorized = self.events.NewDictWithTimeCategories()
                                 self.shouldAddTableViewBackground()
                                 self.tableView.reloadData()
@@ -232,120 +181,12 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                                     self.refreshController.endRefreshing()
                                 }
                             }
-                            
-                            
                         })
                     }
-                    
                 })
             }
-            
             firebaseCalledOnce = true
-
-            
-            
-            
-            
-            
         })
-        
-        
-            
-            
-
-            
-        
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        todaysStartTime = self.getTodaysStartTime()
-//        DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
-//            print("I'm in there suckers")
-//            if snapshot.value == nil{
-//                print("this snapshot = nil for likes .value")
-//            } else{
-//                self.events = []
-//                self.likesArray = []
-//                if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
-//                    for snap in snapshots{
-//                        let key = snap.key
-//                        self.likesArray.append(key)
-//                    }
-//                }
-//            }
-//            
-//            DataService.instance.mainRef.child("Events").queryOrderedByChild("timeStampOfEvent").queryStartingAtValue(self.todaysStartTime).queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { snapshot in
-//                if snapshot.value == nil{
-//                } else{
-//                    if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
-//                        for snap in snapshots{
-//                            if let postDict = snap.value as? Dictionary<String, AnyObject>{
-//                                let key = snap.key
-//                                
-//                                var isEventLiked = false
-//                                for like in self.likesArray{
-//                                    if like == key{
-//                                        isEventLiked = true
-//                                    }
-//                                }
-//                                
-//                                let post = Event(key: key, dict: postDict, isLiked: isEventLiked)
-//                                self.events.append(post)
-//                                self.timeStampOfLast = post.timeStampOfEvent
-//                                self.keyOfLast = post.key
-//                            }
-//                        }
-//                    }
-//                }
-//                self.EventsCategorized = self.events.NewDictWithTimeCategories()
-//                self.shouldAddTableViewBackground()
-//                self.tableView.reloadData()
-//                self.isCurrentlyLoading = false
-//                if self.refreshController.refreshing{
-//                    self.refreshController.endRefreshing()
-//                }
-//            })
-//        })
     }
     
     func shouldAddTableViewBackground(){
@@ -363,6 +204,10 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             tableView.backgroundView = noDataLbl
         }
     }
+    
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //Likes
     
     func addLike(notif: NSNotification){        // these 2 chunks of code make sure that heart image appears immediately after tapping from event details page
         if let holdEvent = notif.object as? Event{
@@ -386,93 +231,31 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     }
     
     func subtractLike(notif: NSNotification){
-        
         if let holdKey = notif.object as? String{
-            print("sign")
             if let index = likesArray.indexOf(holdKey){
-                print("Sing1")
                 likesArray.removeAtIndex(index)
                 var section = 0
                 for keyEventsCategorized in 0 ..< 4{
-                    print("sign2")
                     if let eventArray = EventsCategorized[keyEventsCategorized]{
-                        print("sign3")
                         if let i = eventArray.indexOf({$0.key == holdKey}){
                             var event = eventArray[i]
                             event.adjustHeartImgIsLiked(false)
-                            print("sign4")
-                            print("i \(i)")
-                            print("section \(section)")
                             let indexPath = NSIndexPath(forRow: i, inSection: section)
                             if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
-                                print("sign5")
                                 cell.setHeartImgEmpty()
                                 return
                             }
                         }
                         section = section + 1
                     }
-                    
                 }
             }
         }
     }
     
-    var isCurrentlyLoading = false
-    
-
-    // this currently breaks the loading above, before I added the geo find for events it was fine.
-    
-//    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-//        let currentArray = ArrayForSection(indexPath.section)
-//        let lastElement = currentArray.count - 1
-//        
-//        var mySection = indexPath
-//        
-//        if indexPath.row == lastElement{
-//            if isCurrentlyLoading == false{
-//            isCurrentlyLoading = true
-//                
-//            DataService.instance.eventRef.queryOrderedByChild("timeStampOfEvent").queryStartingAtValue(timeStampOfLast, childKey: keyOfLast).queryLimitedToFirst(10).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-//                var x = 0
-//                if snapshot.value == nil{
-//                    print("Snap of load more is nil")
-//                } else{
-//                    if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]{
-//                        for snap in snapshots{
-//                            if x != 0 {
-//                                if let postDict = snap.value as? Dictionary<String, AnyObject>{
-//                                    let key = snap.key
-//                                    
-//                                    var isEventLiked: Bool = false
-//                                    for likes in self.likesArray{
-//                                        if likes == key{
-//                                            isEventLiked = true
-//                                        }
-//                                    }
-//                                    
-//                                    let post = Event(key: key, dict: postDict, isLiked: isEventLiked)
-//                                    self.timeStampOfLast = post.self.timeStampOfEvent
-//                                    self.keyOfLast = post.key
-//                                    self.events.append(post)
-//                                }
-//                            }
-//                            x = x + 1
-//                        }
-//                    }
-//                }
-//                if x < 10 {      //if the number of posts uploaded is less than 10 then we will prevent new posts from being loaded in the future
-//                    self.isCurrentlyLoading = true
-//                } else{
-//                    self.isCurrentlyLoading = false
-//                }
-//                self.EventsCategorized = self.events.NewDictWithTimeCategories()
-//                tableView.reloadData()
-//            })
-//            }
-//        }
-//    }
-    
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //SettingBtn, GeoBtn, Segue
     
     @IBAction func settingsBtnPress(sender: UIButton){
         UIView.animateWithDuration(0.5) { 
@@ -481,12 +264,9 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             sender.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/2))
             }) { (true) in
                 sender.transform = CGAffineTransformMakeRotation(CGFloat(0))
-
                 self.performSegueWithIdentifier("SettingsVC", sender: nil)
-                
         }
     }
-    
     
     @IBAction func geoMarkerTapped(sender: AnyObject){
         performSegueWithIdentifier("AnnotationMapVC", sender: nil)
@@ -503,18 +283,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         if segue.identifier == "AnnotationMapVC" {
             if let destVC = segue.destinationViewController as? AnnotationMapVC{
                     destVC.likesArray = self.likesArray
-
             }
         }
     }
 }
-
-
-
-
-
-
-
-
-
-

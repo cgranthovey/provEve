@@ -15,8 +15,5 @@ class bottomShadowUILabel: UILabel {
         layer.shadowRadius = 2.0
         layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSizeMake(0, 3)
-        
-        
     }
-
 }

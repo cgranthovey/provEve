@@ -13,5 +13,4 @@ class LoginImg: UIImageView {
     override func awakeFromNib() {
         clipsToBounds = true
     }
-
 }

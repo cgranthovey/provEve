@@ -30,6 +30,27 @@ extension UIButton {
     }
 }
 
+extension MKCoordinateRegion{
+
+    func isRegionValid() -> Bool{
+        
+        let centerLatDegrees = self.center.latitude
+        let topLatDegrees = centerLatDegrees + self.span.latitudeDelta / 2
+        let bottomLatDegrees = centerLatDegrees - self.span.latitudeDelta / 2
+        let centerLongDegrees = self.center.longitude
+        let centerTop = CLLocationCoordinate2D(latitude: topLatDegrees, longitude: centerLongDegrees)
+        let centerBottom = CLLocationCoordinate2D(latitude: bottomLatDegrees, longitude: centerLongDegrees)
+        
+        if CLLocationCoordinate2DIsValid(centerTop) && CLLocationCoordinate2DIsValid(centerBottom){
+            print("trueeee")
+            return true
+        } else{
+            print("falseeeee")
+            return false
+        }
+    }
+}
+
 extension UIView{
     
     func addConstraintWithFormat(format: String, views: UIView...){

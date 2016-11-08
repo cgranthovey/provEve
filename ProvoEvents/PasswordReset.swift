@@ -11,7 +11,6 @@ import UIKit
 class PasswordReset: GeneralVC, UITextFieldDelegate {
 
     @IBOutlet weak var email: UITextField!
-    
     @IBOutlet weak var mailImg: UIImageView!
     @IBOutlet weak var mailBox: UIImageView!
     var passwordResetLoading: LoadingView!
@@ -20,7 +19,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
         super.viewDidLoad()
         passwordResetLoading = LoadingView()
         email.delegate = self
-        var tap = UITapGestureRecognizer(target: self, action: #selector(PasswordReset.removeFirstResponder))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(PasswordReset.removeFirstResponder))
         self.view.addGestureRecognizer(tap)
     }
 
@@ -39,14 +38,9 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
                 if errMsg != nil{
                     self.alerts("Error", message: errMsg)
                 } else{
-                    print("woot")
                     dispatch_async(dispatch_get_main_queue(), {
-                        print("woot2")
                         self.passwordResetLoading.cancelSpinnerAndDarkView(nil)
                         self.performSelector(#selector(PasswordReset.animateMail), withObject: nil, afterDelay: 0.5)
-                            print("3")
-
-
                     })
                 }
             })
@@ -60,12 +54,10 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
         let animationHeight = self.mailImg.frame.height
         let newMailOriginY = screenHeigh - animationHeight - 60
         mailOriginalOrigin = mailImg.frame.origin
-        
         let mailBoxOriginX = self.mailBox.frame.origin.x
         let mailBoxOriginY = self.mailBox.frame.origin.y
         
         UIView.animateWithDuration(1.0, delay: 0, options: .CurveEaseInOut, animations: {
-            
             self.mailImg.frame.origin = CGPoint(x: 20, y: newMailOriginY)
             self.mailImg.transform = CGAffineTransformMakeScale(0.9, 0.9)
             }) { (true) in
@@ -91,20 +83,17 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
     func alerts(title: String, message: String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let alertAction = UIAlertAction(title: "Ok", style: .Cancel) { (action) in
-            print("woot")
         }
         
         alert.addAction(alertAction)
-        
         NSOperationQueue.mainQueue().addOperationWithBlock {
             self.passwordResetLoading.cancelSpinnerAndDarkView(nil)
             self.presentViewController(alert, animated: true, completion: nil)
         }
-        
     }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-
 }

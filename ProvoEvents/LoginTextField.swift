@@ -32,7 +32,6 @@ class LoginTextField: UITextField {
 
     @IBInspectable var bgColor: UIColor?{
         didSet{
-         //   backgroundColor = UIColor(red: 250, green: 20, blue: 10, alpha: 0.2)
             backgroundColor = bgColor
         }
     }
@@ -50,16 +49,7 @@ class LoginTextField: UITextField {
             attributedPlaceholder = str
         }
     }
-
 }
-
-
-
-
-
-
-
-
 
 @IBDesignable
 class LoginTextView: UITextView {
@@ -86,7 +76,6 @@ class LoginTextView: UITextView {
     
     @IBInspectable var bgColor: UIColor?{
         didSet{
-            //   backgroundColor = UIColor(red: 250, green: 20, blue: 10, alpha: 0.2)
             backgroundColor = bgColor
         }
     }
@@ -96,19 +85,4 @@ class LoginTextView: UITextView {
             
         }
     }
-    
-//    @IBInspectable var placeHolderColor: UIColor?{
-//        didSet{
-//            let rawString = attributedPlaceholder?.string != nil ? attributedPlaceholder!.string : ""
-//            let str = NSAttributedString(string: rawString, attributes: [NSForegroundColorAttributeName: placeHolderColor!])
-//            attributedPlaceholder = str
-//        }
-//    }
-    
 }
-
-
-
-
-
-

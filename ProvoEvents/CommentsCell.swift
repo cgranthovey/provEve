@@ -33,11 +33,9 @@ class CommentsCell: UITableViewCell {
             deleteBtnOutlet.hidden = true
             deleteImg.hidden = true
         }
-        
     }
     
     @IBAction func deleteTapped(){
         NSNotificationCenter.defaultCenter().postNotificationName("commentDelete", object: commentKey, userInfo: nil)
     }
-    
 }

@@ -13,26 +13,21 @@ protocol getReminderInfo {
     func calendarReleaseInside(timeInterval: EKAlarm)
 }
 
-
 class ReminderVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     var delegate: getReminderInfo?
-
     var rowSelected = 0
+    var arrayOfTimesForPickerView = ["5 minutes before", "15 minutes before", "30 minutes before", "1 hour before", "2 hours before", "4 hours before", "12 hours before", "24 hours before"]
     
     @IBOutlet weak var pickerView: UIPickerView!
     
-    var arrayOfTimesForPickerView = ["5 minutes before", "15 minutes before", "30 minutes before", "1 hour before", "2 hours before", "4 hours before", "12 hours before", "24 hours before"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.backgroundColor = UIColor(red: 245.0/255.0, green: 245.0/255.0, blue: 245.0/255.0, alpha: 1.0)
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
     }
-
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return arrayOfTimesForPickerView[row]
@@ -51,7 +46,7 @@ class ReminderVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
     }
     
     @IBAction func set(sender: AnyObject){
-        var alarm = EKAlarm()
+        let alarm = EKAlarm()
         switch rowSelected {
         case 0:
             alarm.relativeOffset = -60 * 5
@@ -74,12 +69,10 @@ class ReminderVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
         }
         
         delegate?.calendarReleaseInside(alarm)
-        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func cancel(sender: AnyObject){
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
 }

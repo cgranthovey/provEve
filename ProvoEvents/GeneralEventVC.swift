@@ -12,14 +12,13 @@ import Foundation
 class GeneralEventVC: UIViewController {
 
     var todaysStartTime: Int!
-
+    var name = String()
+    var EventsCategorized = [Int: [Event]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.clipsToBounds = true
         todaysStartTime = self.getTodaysStartTime()
-        // Do any additional setup after loading the view.
     }
 
     func getTodaysStartTime() -> Int{
@@ -32,14 +31,6 @@ class GeneralEventVC: UIViewController {
         let todayStartInSeconds = nowInSeconds - secondsInToday
         return todayStartInSeconds
     }
-
-    
-    
-    var name = String()
-    
-    var EventsCategorized = [Int: [Event]]()
-
-    
     
     func ArrayForSection(section: Int) -> [Event]{
         var findKeys = Array(EventsCategorized.keys)
@@ -56,7 +47,6 @@ class GeneralEventVC: UIViewController {
     }
     
     func numberOfRowsForSection(section: Int) -> Int{
-        
         var findKeys = Array(EventsCategorized.keys)
         findKeys.sortInPlace()
         
@@ -71,6 +61,10 @@ class GeneralEventVC: UIViewController {
         }
     }
     
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //tableView
+    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         var findKeys = Array(EventsCategorized.keys)
@@ -80,10 +74,8 @@ class GeneralEventVC: UIViewController {
         } else if findKeys[section] == 1{
             return "Tomorrow"
         } else if findKeys[section] == 2{
-            print("thisWeek")
             return "This Week"
         } else{
-            print("upcoming")
             return "Upcoming"
         }
     }
@@ -92,7 +84,6 @@ class GeneralEventVC: UIViewController {
         let EventForSpecificTimeArray = ArrayForSection(indexPath.section)
         let myEvent = EventForSpecificTimeArray[indexPath.row]
         if let cell = tableView.dequeueReusableCellWithIdentifier("EventCell") as? EventCell{
-            print("dequeu success")
             cell.configureCell(myEvent)
             return cell
         } else{
@@ -102,7 +93,6 @@ class GeneralEventVC: UIViewController {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("number of rowsinsection: \(numberOfRowsForSection(section))")
         return numberOfRowsForSection(section)
     }
     
@@ -112,10 +102,6 @@ class GeneralEventVC: UIViewController {
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        print("numberOfSectionsInTableView: \(EventsCategorized.count)")
         return EventsCategorized.count
     }
-    
-    
-    
 }

@@ -48,7 +48,6 @@ class SettingsCell: BaseCell {
     
     override func setUpViews() {
         super.setUpViews()
-        
         addSubview(nameLabel)
         addSubview(iconImgView)
         addConstraintWithFormat("H:|-10-[v0(20)]-8-[v1]|", views: iconImgView, nameLabel)
@@ -57,5 +56,4 @@ class SettingsCell: BaseCell {
         
         addConstraint(NSLayoutConstraint(item: iconImgView, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
     }
-
 }

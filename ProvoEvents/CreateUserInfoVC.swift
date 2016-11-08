@@ -13,55 +13,32 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
 
     @IBOutlet weak var firstName: LoginTextField!
     @IBOutlet weak var userName: LoginTextField!
- //   @IBOutlet weak var myUserImg: UIImageView!
-    
     @IBOutlet weak var photoLibBtnOutlet: LoginButton!
     @IBOutlet weak var cameraBtnOutlet: LoginButton!
     @IBOutlet weak var screenViewForCameraOutlets: UIView!
-    
-    
     @IBOutlet weak var userImgBtn: buttonSubAnimate!
-    
-    
     @IBOutlet weak var userImg: UIImageView!
     
-    
-    var isConnected: Bool!
+    var isConnected = true
     var tapImg: UITapGestureRecognizer!
-    
     var imgPicker: UIImagePickerController!
     var cameraTaker: UIImagePickerController!
-    
     var password: String!
     var email: String!
-    
     var tap: UITapGestureRecognizer!
-    
     var preventPopVC: Bool = false
+    let loadingView = LoadingView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         checkForInternet()
-        
-        imgPicker = UIImagePickerController()
-        imgPicker.delegate = self
-        
+        setUpImagePickers()
         userImgBtn.setUpEventImgBtn(userImg)        //when I tried putting the image inside the btn there was an animation delay.  However with a seperate imgview there was no delay
         userImgBtn.delegate = self
-        
-        
-        removePoppingVC()
-
-        
         firstName.delegate = self
         userName.delegate = self
-        
         hideCameraBtns()
-        cameraTaker = UIImagePickerController()
-        cameraTaker.delegate = self
-        cameraTaker.sourceType = .PhotoLibrary
-        
         tap = UITapGestureRecognizer(target: self, action: #selector(CreateUserInfoVC.removeFirstResponder))
         self.view.addGestureRecognizer(tap)
     }
@@ -73,20 +50,22 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         }
     }
     
-    func removePoppingVC(){
-        //self.view.removeGestureRecognizer(swipeRight)
-    }
-    
     override func viewWillDisappear(animated: Bool) {
         removeFirstResponder()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
     }
     
     func removeFirstResponder(){
         firstName.resignFirstResponder()
         userName.resignFirstResponder()
+    }
+    
+    func setUpImagePickers(){
+        imgPicker = UIImagePickerController()
+        imgPicker.delegate = self
+
+        cameraTaker = UIImagePickerController()
+        cameraTaker.delegate = self
+        cameraTaker.sourceType = .PhotoLibrary  //change to camera later
     }
     
     func hideCameraBtns(){
@@ -114,21 +93,16 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         return true
     }
     
-    let loadingView = LoadingView()
-    
     @IBAction func finished(sender: AnyObject){
         if let user = userName.text where (user.characters.count > 2){
-            
             loadingView.showSpinnerView(self.view)
-            
             let fireBaseDict: Dictionary<String, String>!
-            
+
             if let first = firstName.text{
                 fireBaseDict = ["firstName": first, "userName": user]
             } else{
                 fireBaseDict = ["userName": user]
             }
-            
             
             DataService.instance.usernamesRef.child(user).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let snap = snapshot.value as? String{
@@ -147,19 +121,13 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
                             let uid = FIRAuth.auth()?.currentUser?.uid
                             prefs.setValue(user, forKey: "\(uid)Username")
                             
-                            
                             self.loadingView.successCancelSpin({
                                 self.performSegueWithIdentifier("snapScrollVC", sender: nil)
                             })
                         }
                     })
-                    
                 }
             })
-            
-            
-
-            
         } else{
             alerts("Username", message: "Username must be at least 3 characters")
         }
@@ -250,13 +218,4 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-
-
 }
-
-
-
-
-
-

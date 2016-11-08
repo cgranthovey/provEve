@@ -16,59 +16,59 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     let locationManager = CLLocationManager()
     var currentLoc = CLLocation()
     var shouldMapCenter = true
-    
     var currentBtnTag = 0
-
     var hasUserLocBeenFound = false
     var likesArray = [String]()
-    
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var backBtnOutlet: UIButton!
     @IBOutlet weak var centerUserOutlet: UIButton!
     @IBOutlet weak var settingsOutlet: UIButton!
-    
+    @IBOutlet weak var mapTypeBtnOutlet: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         mapView.delegate = self
         mapView.showsUserLocation = true
-                
+        setUpLocationAndEdgeSwipe()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnotationMapVC.newParameters(_:)), name: "mapParameterChange", object: nil)
+    }
+    
+    func setUpLocationAndEdgeSwipe(){
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
-        backBtnOutlet.imageView?.contentMode = .ScaleAspectFit
-        centerUserOutlet.imageView?.contentMode = .ScaleAspectFit
-        settingsOutlet.imageView?.contentMode = .ScaleAspectFit
-        mapTypeBtnOutlet.imageView?.contentMode = .ScaleAspectFit
-        
-        
         let edgeSwipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(AnnotationMapVC.showSettings))
         edgeSwipe.edges = .Left
         self.view.addGestureRecognizer(edgeSwipe)
         edgeSwipe.delegate = self
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnotationMapVC.newParameters(_:)), name: "mapParameterChange", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnotationMapVC.newParameters(_:)), name: "mapParameterAll", object: nil)
     }
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool { // can't edgeswipe on map without this function
         return true
     }
     
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //settingsLauncher
     
+    let settingsLauncher = MapSettingsLauncher()
+    @IBAction func settings(){
+        settingsLauncher.showSettings()
+    }
     func showSettings(recoginizer: UIScreenEdgePanGestureRecognizer){
-        print("Seen")
         if recoginizer.state == .Began{
             mapView.scrollEnabled = false
             settingsLauncher.showSettings()
-
+            
         } else if recoginizer.state == .Ended{
             mapView.scrollEnabled = true
         }
     }
+
     var choosenDate: NSDate?
     func newParameters(notif: NSNotification){
         mapView.removeAnnotations(annotationArray)
@@ -77,17 +77,18 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         holdKeysArray = []
         if let dict = notif.userInfo as? Dictionary<String, NSDate>{
             if let date = dict["date"]{
-                print("show date \(date)")
                 choosenDate = date
                 geoFireQuery()
             }
         } else{
             choosenDate = nil
             geoFireQuery()
-            print("show all")
-            // all events
         }
     }
+    
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //bottom buttons
     
     @IBAction func centerUser(){
         if hasUserLocBeenFound{
@@ -95,19 +96,24 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    let settingsLauncher = MapSettingsLauncher()
-    
-    @IBAction func settings(){
-        settingsLauncher.showSettings()
+    func adjustMapCenter(coord: CLLocationCoordinate2D){
+        
+        let curSpan = mapView.region.span
+        let span = MKCoordinateSpan(latitudeDelta: 0.09, longitudeDelta: 0.09)
+        
+        if curSpan.latitudeDelta < span.latitudeDelta{
+            let region = MKCoordinateRegion(center: coord, span: curSpan)
+            mapView.setRegion(region, animated: true)
+        } else{
+            let region = MKCoordinateRegion(center: coord, span: span)
+            mapView.setRegion(region, animated: true)
+        }
     }
-
-    @IBOutlet weak var mapTypeBtnOutlet: UIButton!
     
     @IBAction func backBtn(sender: AnyObject){
         self.navigationController?.popViewControllerAnimated(true)
     }
-    
-    
+
     @IBAction func mapTypeBtnPressed(){
         if mapView.mapType == .Standard{
             mapTypeBtnOutlet.changeImageAnimated(UIImage(named: "worldGrid"))
@@ -119,24 +125,8 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func adjustMapCenter(coord: CLLocationCoordinate2D){
-        
-        let curSpan = mapView.region.span
-        let span = MKCoordinateSpan(latitudeDelta: 0.09, longitudeDelta: 0.09)
-
-        if curSpan.latitudeDelta < span.latitudeDelta{
-            let region = MKCoordinateRegion(center: coord, span: curSpan)
-            mapView.setRegion(region, animated: true)
-        } else{
-            let region = MKCoordinateRegion(center: coord, span: span)
-            mapView.setRegion(region, animated: true)
-        }
-    }
-    
     func annotationBtnTapped(button: UIButton){
         let buttonTag = button.tag
-        print("button tag \(buttonTag)")
-        print("dictTagForKey \(dictEnterTagForEventKey)")
         if let key = dictEnterTagForEventKey[buttonTag]{
             let event = dictEnterKeyForEvent[key]
             performSegueWithIdentifier("EventDetailsVC", sender: event)
@@ -144,7 +134,6 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("in prepare for segue")
         if segue.identifier == "EventDetailsVC"{
             if let destVC = segue.destinationViewController as? EventDetailsVC{
                 if let event = sender as? Event{
@@ -154,11 +143,13 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //geoFireQuery
+    
     func geoFireQuery(){
-        print("volts")
         let geoFireRef: FIRDatabaseReference!
         let geoFire: GeoFire!
-        
         geoFireRef = DataService.instance.geoFireRef
         geoFire = GeoFire(firebaseRef: geoFireRef)
         
@@ -166,32 +157,20 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         var centerCoord = CLLocationCoordinate2D()
         
         if shouldMapCenter{
-            print("my span")
             span = MKCoordinateSpanMake(0.09, 0.09)
             centerCoord = currentLoc.coordinate
         } else{
             span = mapView.region.span
-            print("SPANY: \(span)")
             centerCoord = mapView.centerCoordinate
         }
         
-        
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //here's probably a good place to see if the span is too big and if so not look for annotations
-        
-        print("my span \(span)  coord \(centerCoord)")
-        
-        
         let region = MKCoordinateRegionMake(centerCoord, span)
         
-        if span.latitudeDelta < 2.5 {
-            if isRegionValid(region){
+        if span.latitudeDelta < 3.5 {
+            if region.isRegionValid(){
                 let regionQuery = geoFire.queryWithRegion(region)
                 var queryHandle = regionQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
-                    print("key: \(key) and the location: \(location)")
-                    
                     if self.holdKeysArray.indexOf(key) == nil{
-                        print("sammy")
                         self.holdKeysArray.append(key)
                         self.loadEventInfo(key, location: location)
                     }
@@ -201,49 +180,24 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     var holdKeysArray = [String]()
-    
-    func isRegionValid(region: MKCoordinateRegion) -> Bool{
-        
-        let centerLatDegrees = region.center.latitude
-        let topLatDegrees = centerLatDegrees + region.span.latitudeDelta / 2
-        let bottomLatDegrees = centerLatDegrees - region.span.latitudeDelta / 2
-        
-        let centerLongDegrees = region.center.longitude
-        
-        let centerTop = CLLocationCoordinate2D(latitude: topLatDegrees, longitude: centerLongDegrees)
-        let centerBottom = CLLocationCoordinate2D(latitude: bottomLatDegrees, longitude: centerLongDegrees)
-        
-        if CLLocationCoordinate2DIsValid(centerTop) && CLLocationCoordinate2DIsValid(centerBottom){
-            return true
-        } else{
-            return false
-        }
-    }
-
-    
     var dictEnterKeyForEvent = Dictionary<String, Event>()
     var dictEnterTagForEventKey = Dictionary<Int, String>()
     
     func loadEventInfo(key: String, location: CLLocation){
-        print("yooooooooooooooooo")
         DataService.instance.eventRef.child(key).observeSingleEventOfType(.Value, withBlock: { snapshot in
             print(snapshot)
             if let tempDict = snapshot.value as? Dictionary<String, AnyObject>{
-                
                 let event: Event!
                 if self.likesArray.indexOf(key) != nil{
                     event = Event(key: key, dict: tempDict, isLiked: true)
                 } else{
                     event = Event(key: key, dict: tempDict, isLiked: false)
                 }
-                
-                
-                
                 if event.beforeToday(){
                     DataService.instance.geoFireRef.child(key).setValue(nil)
                     return
                 }
-                if let dateUserChoose = self.choosenDate{
+                if let dateUserChoose = self.choosenDate{   //if user choose specific date
                     if event.onThisDay(dateUserChoose){
                         self.dictEnterKeyForEvent[key] = event
                         self.makeAnotation(key, location: location)
@@ -259,10 +213,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     var annotationArray = [MKAnnotation]()
-    
     func makeAnotation(key: String, location: CLLocation){
-        print("how many events holder? \(dictEnterKeyForEvent.count)")
-        
         if let event = dictEnterKeyForEvent[key]{
             let eventAnnotation = customMKPointAnnotation()
             eventAnnotation.event = event
@@ -275,6 +226,8 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
 }
+
+
 
 extension AnnotationMapVC: MKMapViewDelegate{
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -301,19 +254,8 @@ extension AnnotationMapVC: MKMapViewDelegate{
         return pinView
     }
 
-    
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        print("region changed")
         geoFireQuery()
-    }
-
-    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
-        print("add anno")
-    }
-    
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        print("selecto anno")
-        
     }
 }
 
@@ -331,9 +273,7 @@ extension AnnotationMapVC: CLLocationManagerDelegate{
         if let location = locations.first {
             currentLoc = location
             hasUserLocBeenFound = true
-            print("in loc manager")
             if shouldMapCenter{
-                print("inside should map center")
                 let span = MKCoordinateSpan(latitudeDelta: 0.09, longitudeDelta: 0.09)
                 let region = MKCoordinateRegion(center: location.coordinate, span: span)
                 mapView.setRegion(region, animated: true)
@@ -350,17 +290,3 @@ extension AnnotationMapVC: CLLocationManagerDelegate{
 class customMKPointAnnotation: MKPointAnnotation{
     var event: Event!
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
