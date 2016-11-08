@@ -15,8 +15,6 @@ class LoadingView: NSObject {
     
     typealias CompletionHandler = () -> Void
     
-    
-    
     func showSpinnerView(view: UIView){
         
         let rect = CGRectMake(0, 0, view.frame.width, view.frame.height)
@@ -30,25 +28,19 @@ class LoadingView: NSObject {
         spinner.alpha = 0
         darkView.addSubview(spinner)
 
-        
         UIView.animateWithDuration(0.25, animations: {
             self.darkView.alpha = 0.5
             self.spinner.alpha = 1
             }) { (true) in
-                
         }
-        
     }
     
     func cancelImediately(){
-        
         self.darkView.alpha = 0.0
         self.spinner.alpha = 0.0
         self.darkView.removeFromSuperview()
         self.spinner.removeFromSuperview()
     }
-
-
     
     func cancelSpinnerAndDarkView(completionHandler: CompletionHandler?){
         UIView.animateWithDuration(0.25, animations: {
@@ -65,14 +57,10 @@ class LoadingView: NSObject {
     
     func successCancelSpin(completionHandler: CompletionHandler){
         UIView.animateWithDuration(0.25, animations: {
-            print("wine1")
             self.spinner.alpha = 0.0
         }) { (true) in
-            print("wine2")
             self.spinner.stopAnimating()
             self.spinner.removeFromSuperview()
-//            let imgView = UIImageView(image: Constants.instance.successImg)
-//            imgView.showCheckmarkAnimatedTempImg(self.darkView)
             completionHandler()
         }
     }
@@ -81,9 +69,6 @@ class LoadingView: NSObject {
         UIView.animateWithDuration(0.25, animations: { 
             self.spinner.alpha = 0.0
             }) { (true) in
-                
         }
     }
-    
-    
 }

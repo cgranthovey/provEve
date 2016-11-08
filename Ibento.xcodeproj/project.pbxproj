@@ -289,7 +289,6 @@
 				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
 				A15602641DA2F39A004ADCAD /* snapScrollVC.swift */,
 				A11B8FA41DC6E98100743E4C /* snapScroll2.swift */,
-				A1B4A1871DB8092600FC3D43 /* LoadingView.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -483,6 +482,7 @@
 				A127C6E51DAD8CF7004017FD /* MapSettingsLauncher.swift */,
 				A174D4801DB5B47400030E19 /* yesNoLauncher.swift */,
 				A12E301D1DCA4A5F00A1CA3B /* NoConnectionView.swift */,
+				A1B4A1871DB8092600FC3D43 /* LoadingView.swift */,
 			);
 			name = NSObject;
 			sourceTree = "<group>";

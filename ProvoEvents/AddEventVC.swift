@@ -60,7 +60,6 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     
     override func viewDidAppear(animated: Bool) {
         self.view.layoutIfNeeded()
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -71,6 +70,10 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         self.scrollView.addSubview(viewScrollHeight)
         scrollView.sendSubviewToBack(viewScrollHeight)
         setUpTaps()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "addEventSubmitSlide", object: nil)
     }
     
     func setUpScrollAndCollection(){
