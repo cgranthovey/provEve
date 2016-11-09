@@ -43,9 +43,9 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         let prefs = NSUserDefaults.standardUserDefaults()
         
         if let miles = prefs.objectForKey(Constants.instance.nsUserDefaultsKeySettingsMiles){
-            milesBtnOutlet.setTitle("\(miles) MILE RADIUS", forState: .Normal)
+            milesBtnOutlet.setTitle("EVENTS WITHIN \(miles) MILES", forState: .Normal)
         }  else {
-            milesBtnOutlet.setTitle("25 MILE RADIUS", forState: .Normal)
+            milesBtnOutlet.setTitle("EVENTS WITHIN 50 MILES", forState: .Normal)
         }
     }
 

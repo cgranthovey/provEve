@@ -61,12 +61,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         }
         scrollView.contentSize.width = self.view.frame.width
     }
-    
-    override func viewDidDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loadDataAfterNewEvent", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "eventDeleted", object: nil)
-    }
-    
+
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //Set Up UI
@@ -225,7 +220,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     
     func textMessageReleaseInside(sender: UIButton){
         sender.backgroundColor = UIColor.clearColor()
-        var messageVC = MFMessageComposeViewController()
+        let messageVC = MFMessageComposeViewController()
         messageVC.messageComposeDelegate = self
         messageVC.body = "Hi would you want to go to \(event.title) on \(event.date) at \(event.location).\n\(event.description)"
         

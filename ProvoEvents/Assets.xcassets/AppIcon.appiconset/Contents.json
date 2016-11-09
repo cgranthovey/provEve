@@ -37,9 +37,8 @@
       "scale" : "1x"
     },
     {
-      "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "Icon-App-57x57@1x-1.png",
+      "size" : "57x57",
       "scale" : "2x"
     },
     {
@@ -155,22 +154,6 @@
       "scale" : "2x",
       "role" : "quickLook",
       "subtype" : "42mm"
-    },
-    {
-      "filename" : "Icon-App-20x20@2x.png",
-      "unassigned" : true
-    },
-    {
-      "filename" : "Icon-App-20x20@3x.png",
-      "unassigned" : true
-    },
-    {
-      "filename" : "Icon-App-60x60@1x.png",
-      "unassigned" : true
-    },
-    {
-      "filename" : "Icon-App-76x76@3x.png",
-      "unassigned" : true
     }
   ],
   "info" : {

@@ -23,7 +23,6 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpPreview()
         passwordField.delegate = self
         emailField.delegate = self
@@ -58,7 +57,6 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
             checkForUserName()
             return
         } else{
-            print("3")
             UIView.animateWithDuration(0.5, animations: {
                 self.preView.alpha = 0
                 }, completion: { (true) in
@@ -71,18 +69,17 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
         }
     }
     
-    
     func checkForUserName(){
-        //checking nsuser defaults for username
-        let prefs = NSUserDefaults.standardUserDefaults()
-        let uid = FIRAuth.auth()?.currentUser?.uid
-        if let username = prefs.stringForKey("\(uid)Username"){
-            print("has username")
-            self.performSegueWithIdentifier("snapScrollVC", sender: nil)
-        } else{
-            print("has no username")
-            self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
-        }
+        DataService.instance.currentUser.child("profile").child("userName").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            print("snapshot \(snapshot)")
+            if (snapshot.value as? String) != nil{
+                print("has username")
+                self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+            } else{
+                print("no username")
+                self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
+            }
+        })
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -121,7 +118,6 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
                 alerts("Password", message: "Password must be at least 6 characters")
                 return
             }
-            
             loadingView.showSpinnerView(self.view)
             
             AuthService.instance.login(password, email: email, onComplete: { (errMsg, data) in

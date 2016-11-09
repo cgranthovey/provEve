@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, imagePopDelegate {
 
@@ -41,6 +42,10 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         hideCameraBtns()
         tap = UITapGestureRecognizer(target: self, action: #selector(CreateUserInfoVC.removeFirstResponder))
         self.view.addGestureRecognizer(tap)
+    }
+    
+    override func swipePopBack() {
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func checkForInternet(){
@@ -104,12 +109,15 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
                 fireBaseDict = ["userName": user]
             }
             
-            DataService.instance.usernamesRef.child(user).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                if let snap = snapshot.value as? String{
+            print("user \(user)")
+            
+            
+            DataService.instance.usernamesRef.queryOrderedByChild("UserID").queryEqualToValue(user).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let snap = snapshot.value as? Dictionary<String, AnyObject>{
                     self.alerts("Username", message: "This username has already been choosen")
                 } else{
                     
-                    let dict: Dictionary<String, AnyObject> = ["/User/\((FIRAuth.auth()?.currentUser?.uid)!)/profile": fireBaseDict, "/Usernames/\(user)": "TRUE"]
+                    let dict: Dictionary<String, AnyObject> = ["/User/\((FIRAuth.auth()?.currentUser?.uid)!)/profile": fireBaseDict, "/Usernames/\(DataService.instance.usernamesRef.childByAutoId().key)/UserID" : "\(user)"]
                     DataService.instance.mainRef.updateChildValues(dict, withCompletionBlock: { (error, FIRDatabaseReference) in
                         if error != nil{
                             self.alerts("Error", message: "There was an error uploading your info")
@@ -218,4 +226,6 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
+    
+    
 }

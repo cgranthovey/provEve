@@ -11,9 +11,9 @@ import FirebaseAuth
 import FirebaseDatabase
 
 //extension includes all parts dealing with posting from AddEventVC
-extension AddEventVC{
+extension AddEventVC: yesSelectedProtocol{
     
-    func toFireBase(){
+    func areYouSureLauncher(){
         if titleTextField.text == nil || titleTextField.text == ""{
             alert("Error", message: "Title Missing")
             return
@@ -26,12 +26,10 @@ extension AddEventVC{
             alert("Error", message: "Pin Missing")
             return
         }
-        let selectedCellImgName: String!
+        
         if selectedCellInt == nil{
             alert("Error", message: "Choose event type icon")
             return
-        } else{
-            selectedCellImgName = img[selectedCellInt]
         }
         
         if dateString == nil{
@@ -44,10 +42,18 @@ extension AddEventVC{
             return
         }
         
+        yesNoView.showDeleteView(self.view, lblText: "Post Event?")
+    }
+    
+    func yesPressed() {
+        toFireBase()
+    }
+    
+    func toFireBase(){
+
+        let selectedCellImgName = img[selectedCellInt]
         makeLoadingView()
-        
-        var timePosted: Int = Int(NSDate().timeIntervalSince1970)
-        
+        let timePosted: Int = Int(NSDate().timeIntervalSince1970)
         let toFirebaseDict: Dictionary<String, AnyObject> = ["title": titleTextField.text!, "location": locationTextField.text!, "pinInfo": pinLocDict,"date": dateString!, "timeStampOfEvent": timeStampOfEvent,"email": emailTextField.text!, "timePosted": timePosted, "description": descriptionTextView.text!, "user": (FIRAuth.auth()?.currentUser?.uid)!, "eventTypeImgName": selectedCellImgName]
         
         let key = DataService.instance.eventRef.childByAutoId().key
@@ -76,11 +82,9 @@ extension AddEventVC{
                         })
                     }
                 } else {
-                    print("about to call Geo Fire")
                     self.postGeoFire(self.coordinateOfEvent, eventRef: key)
                     self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 0.75)
                 }
-                print("i'm on bottom")
             }
         }
     }
@@ -91,6 +95,14 @@ extension AddEventVC{
         self.loadingView.backgroundColor = UIColor.blackColor()
         self.loadingView.alpha = 0
         view.addSubview(self.loadingView)
+        
+        exit = UIButton(frame: CGRect(x: 20, y: 20, width: 32, height: 32))
+        exit.setImage(UIImage(named: "deleteWhite"), forState: .Normal)
+        exit.imageView?.contentMode = .ScaleAspectFit
+        exit.addTarget(self, action: #selector(AddEventVC.cancelUpload), forControlEvents: .TouchUpInside)
+        exit.alpha = 0
+        self.view.addSubview(exit)
+        self.view.bringSubviewToFront(exit)
         
         self.spinIndicator = UIActivityIndicatorView()
         self.spinIndicator.center = self.loadingView.center
@@ -103,9 +115,15 @@ extension AddEventVC{
             self.loadingView.alpha = 0.8
         }) { (true) in
             UIView.animateWithDuration(0.5, animations: {
+                self.exit.alpha = 1
                 self.spinIndicator.alpha = 1
                 }, completion: nil)
         }
+    }
+    
+    func cancelUpload(){
+        FIRDatabase.database().purgeOutstandingWrites()
+        loadingViewFade()
     }
     
     func alertProblemUploadingImg(){
@@ -116,8 +134,6 @@ extension AddEventVC{
             let imgSuccess2 = UIImageView(image: UIImage(named: "whiteCheck"))
             imgSuccess2.showCheckmarkAnimatedTempImg(self.view, delay: 0.2, remove: false)
             self.performSelector(#selector(AddEventVC.popOut), withObject: nil, afterDelay: 2)
-            
-            print("info uploaded without image")
         }
         let actionLater = UIAlertAction(title: "Later", style: .Default) {(action: UIAlertAction) in
             self.loadingViewFade()
@@ -139,10 +155,9 @@ extension AddEventVC{
         if let loc = location, let key = eventRef{
             geoFire.setLocation(CLLocation(latitude: loc.latitude, longitude: loc.longitude), forKey: key) { (error) in
                 if error != nil{
-                    print("error")
                     print(error.debugDescription)
                 } else{
-                    print("upload successful!")
+                    //upload successful!
                 }
             }
         }
@@ -152,8 +167,10 @@ extension AddEventVC{
         if loadingView != nil{
             UIView.animateWithDuration(0.3, animations: {
                 self.loadingView.alpha = 0
+                self.exit.alpha = 0
             }) { (true) in
                 self.loadingView.removeFromSuperview()
+                self.exit.removeFromSuperview()
             }
         }
     }

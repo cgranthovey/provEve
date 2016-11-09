@@ -68,7 +68,6 @@ class MapVC: UIViewController {
 
         //if info is passed to vc
         if addressPassed != nil && mkPlacemarkPassed != nil{
-            print("addressPassed \(addressPassed) placemark \(mkPlacemarkPassed.countryCode)")
             dropPinZoomIn(mkPlacemarkPassed, addressString: addressPassed, fromTap: false)
             shouldMapCenter = false
         }
@@ -186,9 +185,7 @@ class MapVC: UIViewController {
     //TapForPin
     
     func tapForPin(tap: UIGestureRecognizer){
-        print("begin")
         if tap.state == UIGestureRecognizerState.Began{
-            print("end")
             mapView.removeAnnotations(mapView.annotations)
             let touchPoint = tap.locationInView(mapView)
             let newCoordinates = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
@@ -204,9 +201,6 @@ class MapVC: UIViewController {
                         return
                     }
                     if placemarks?.count > 0{
-                        
-                        print ("count \(placemarks!.count)")
-                        print(placemarks![0])
                         if placemarks?.count > 1{
                             print("2. \(placemarks![1])")
                         }
@@ -225,7 +219,6 @@ class MapVC: UIViewController {
         let myPlacemark = MKPlacemark(coordinate: coord, addressDictionary: nil)
         self.dropPinZoomIn(myPlacemark, addressString: "\(myPlacemark.coordinate.latitude) \(myPlacemark.coordinate.longitude)", fromTap: true)
     }
-    
     
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
@@ -255,7 +248,7 @@ class MapVC: UIViewController {
         if let coord = selectedPin?.coordinate{
             adjustMapCenter(coord)
         } else{
-            print("no pin set yet")
+            //no pin set yet
         }
     }
     

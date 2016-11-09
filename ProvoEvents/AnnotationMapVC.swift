@@ -10,7 +10,6 @@ import UIKit
 import MapKit
 import FirebaseDatabase
 
-
 class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
 
     let locationManager = CLLocationManager()
@@ -169,7 +168,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         if span.latitudeDelta < 3.5 {
             if region.isRegionValid(){
                 let regionQuery = geoFire.queryWithRegion(region)
-                var queryHandle = regionQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
+                regionQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
                     if self.holdKeysArray.indexOf(key) == nil{
                         self.holdKeysArray.append(key)
                         self.loadEventInfo(key, location: location)
@@ -220,8 +219,8 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
             eventAnnotation.coordinate = location.coordinate
             eventAnnotation.title = event.title
             eventAnnotation.subtitle = event.location
-            let anno = eventAnnotation as? MKAnnotation
-            annotationArray.append(anno!)
+            let anno = eventAnnotation as MKAnnotation
+            annotationArray.append(anno)
             self.mapView.addAnnotation(eventAnnotation)
         }
     }

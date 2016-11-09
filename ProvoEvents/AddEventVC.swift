@@ -40,9 +40,12 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     var holdKeyInCaseError: String!
     var imgSuccess: UIImageView!
     var img = ["football", "outdoors", "service", "theater", "dance", "art", "prayer", "music", "book", "sandwich"]
-    var lbl = ["Sports", "Outdoors", "Service", "Theater/Cinema", "Dance", "Art", "Religous", "Music", "Education", "Culinary"]
+    var lbl = ["Sport", "Outdoor", "Service", "Theater/Cinema", "Dance", "Art", "Religion", "Music", "Education", "Food"]
     var selectedCellInt: Int!
     var cellHold = MapPinCell()
+    var exit: UIButton!
+    var yesNoView: yesNoLauncher!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +55,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         setUpEventImgBtn()
         imgPickerController = UIImagePickerController()
         imgPickerController.delegate = self
+        
+        yesNoView = yesNoLauncher()
+        yesNoView.delegate = self
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
@@ -63,17 +69,12 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     }
     
     override func viewWillAppear(animated: Bool) {
-        print(collection.frame.width)
         correctCollectionViewWidth = collection.frame.width
         viewScrollHeight.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: scrollView.contentSize.height)
         viewScrollHeight.backgroundColor = UIColor.clearColor()
         self.scrollView.addSubview(viewScrollHeight)
         scrollView.sendSubviewToBack(viewScrollHeight)
         setUpTaps()
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "addEventSubmitSlide", object: nil)
     }
     
     func setUpScrollAndCollection(){
@@ -214,7 +215,6 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                 aRect.size.height = aRect.size.height - keyboardHeight
                 
                 if activeTextField != nil{
-                    print("hey")
                     let point = activeTextField.frame.origin
                     if !CGRectContainsPoint(aRect, point){
                         performSelector(#selector(AddEventVC.moveTextFieldIntoView), withObject: nil, afterDelay: 0.0)
@@ -230,7 +230,6 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     }
     
     func moveTextFieldIntoView(){
-        print("none")
         if activeTextField != nil{
             scrollView.scrollRectToVisible(activeTextField.frame, animated: true)       //for this to work you have to remember in addition to setting conent height to make sure content width is at least at wide as view.frame.width
         } else if activeTextView != nil{
@@ -310,7 +309,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     //to firebase then Reset
     @IBAction func submit(sender: UIButton){
         resignAllFirstResponders()
-        performSelector(#selector(AddEventVC.toFireBase), withObject: nil, afterDelay: 0)
+        performSelector(#selector(AddEventVC.areYouSureLauncher), withObject: nil, afterDelay: 0)
     }
     var loadingView: UIView!
     var spinIndicator: UIActivityIndicatorView!
@@ -349,6 +348,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         coordinateOfEvent = CLLocationCoordinate2D()
         currentDate = NSDate()
         timeStampOfEvent = Int()
+        exit.removeFromSuperview()
     }
 
     func makeSuccessView(){
@@ -392,7 +392,6 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
             if let destinationVC = segue.destinationViewController as? MapVC{
                 destinationVC.handleGetEventLocDelegate = self
                 if let pm = holdPlacemark, let ad = holdAddress{
-                    print("holdTo \(ad)")
                     destinationVC.mkPlacemarkPassed = pm
                     destinationVC.addressPassed = ad
                     destinationVC.wasAddressPassed = true

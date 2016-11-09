@@ -98,7 +98,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     }
 
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        var translation: CGPoint = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
+        let translation: CGPoint = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
         if translation.y > 0{
             //dragging finger down
         } else{
@@ -115,6 +115,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     func loadData(){
         
         if geoQuery != nil{
+            print("remove all observers")
             geoQuery.removeAllObservers()       // prevents multiple geoQuery requests if internet connection is poor and users tries making multiple requests by pulling down charger
         }
         
@@ -124,8 +125,10 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         if let miles = prefs.objectForKey(Constants.instance.nsUserDefaultsKeySettingsMiles){
             meters = Int(Double(miles as! NSNumber) * 1609.34)
         } else{
-            meters = Int(25 * 1609.34)
+            meters = Int(50 * 1609.34)
         }
+        
+        performSelector(#selector(EventVC.shouldAddTableViewBackground), withObject: nil, afterDelay: 2.0)
         
         let geoFireRef = DataService.instance.geoFireRef
         let geoFire = GeoFire(firebaseRef: geoFireRef)
@@ -139,7 +142,14 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         todaysStartTime = self.getTodaysStartTime()
 
         var firebaseCalledOnce = false
-        var queryHande = geoQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
+        _ = geoQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
+            
+            if self.keysArray.indexOf(key) != nil{
+                //already have key
+                print("already have key")
+                return
+            }
+            print("don't have key")
             self.keysArray.append(key)
             if !firebaseCalledOnce{
                 DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
@@ -194,9 +204,8 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             tableView.backgroundView = nil
         } else{
             let noDataLbl: UILabel = UILabel(frame: CGRectMake(20, 40, 200, 40))
-            
             noDataLbl.numberOfLines = 10
-            noDataLbl.text = "Post the first event!"
+            noDataLbl.text = "Swipe right to post first event!"
             noDataLbl.font = UIFont(name: "Avenir", size: 20)
             noDataLbl.numberOfLines = 0
             noDataLbl.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.87)
@@ -216,7 +225,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             var section = 0
             for keyEventsCategorized in 0 ..< 4{
                 
-                if let eventArray = EventsCategorized[keyEventsCategorized]{
+                if EventsCategorized[keyEventsCategorized] != nil{
                 
                     if let i = EventsCategorized[keyEventsCategorized]?.indexOf({$0.key == holdKey}){
                         let indexPath = NSIndexPath(forRow: i, inSection: section)
@@ -238,7 +247,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                 for keyEventsCategorized in 0 ..< 4{
                     if let eventArray = EventsCategorized[keyEventsCategorized]{
                         if let i = eventArray.indexOf({$0.key == holdKey}){
-                            var event = eventArray[i]
+                            let event = eventArray[i]
                             event.adjustHeartImgIsLiked(false)
                             let indexPath = NSIndexPath(forRow: i, inSection: section)
                             if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{

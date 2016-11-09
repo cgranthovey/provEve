@@ -16,10 +16,8 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
     
     let loadingView = LoadingView()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         let tap = UITapGestureRecognizer(target: self, action: #selector(CreateEmailPassVC.removeFirstResponder))
         self.view.addGestureRecognizer(tap)
         
@@ -33,6 +31,7 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
     }
 
     @IBAction func next(){
+        removeFirstResponder()
         if let email = emailField.text, let password = passwordField.text, let passwordV = verifyPasswordField.text where (password.characters.count > 0 && email.characters.count > 0 && passwordV.characters.count > 0){
             
             guard password.characters.count >= 6 else {
@@ -45,7 +44,6 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
             }
             
             loadingView.showSpinnerView(self.view)
-            
             AuthService.instance.createUser(password, email: email, onComplete: { (errMsg, data) in
                 guard errMsg == nil else{
                     self.alerts("Error Authenticating", message: errMsg)
@@ -91,6 +89,6 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
     }
     
     @IBAction func popBack(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
 }

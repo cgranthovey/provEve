@@ -31,7 +31,7 @@ extension EventDetailsVC{
                     print("not a 200 response")
                     return
                 }
-                if let ipString = NSString(data: data!, encoding: NSUTF8StringEncoding){
+                if NSString(data: data!, encoding: NSUTF8StringEncoding) != nil{
                     let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                     if let threeHourArray = jsonDict["list"] as? [Dictionary<String, AnyObject>]{
                         for three in threeHourArray{
@@ -39,8 +39,8 @@ extension EventDetailsVC{
                                 if eventTime <= threeTime{
                                     eventWeatherDict = three
                                     if let main = eventWeatherDict["main"] as? Dictionary<String, AnyObject>, weatherArray = eventWeatherDict["weather"] as? [Dictionary<String, AnyObject>]{
-                                        if let weatherDesc = weatherArray[0] as? Dictionary<String, AnyObject>{
-                                            if let eventTemp = main["temp"] as? Double, dateText = eventWeatherDict["dt_txt"], eventWeatherDesc = weatherDesc["description"] as? String, weatherID = weatherDesc["id"] as? Int{
+                                        let weatherDesc = weatherArray[0] as Dictionary<String, AnyObject>
+                                            if let eventTemp = main["temp"] as? Double, eventWeatherDesc = weatherDesc["description"] as? String, weatherID = weatherDesc["id"] as? Int{
                                                 let tempStringFahrenheit = self.kelvinToCelcius(eventTemp)
                                                 dispatch_async(dispatch_get_main_queue()){
                                                     self.weatherTemp.text = tempStringFahrenheit + "°"
@@ -50,7 +50,6 @@ extension EventDetailsVC{
                                                 }
                                             }
                                             return
-                                        }
                                     }
                                 }
                             }
@@ -79,7 +78,7 @@ extension EventDetailsVC{
     func getImageName(id: Int) -> String{
         let interval = NSTimeInterval(self.event.timeStampOfEvent!)
         let eventDate1 = NSDate(timeIntervalSince1970: interval)
-        var hour = eventDate1.hourOfDay()
+        let hour = eventDate1.hourOfDay()
         switch id {
         case 200..<300:
             return "thunder"

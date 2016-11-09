@@ -43,7 +43,7 @@ class MilesVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
                 pickerView.selectRow(a, inComponent: 0, animated: false)
             }
         } else{
-            pickerView.selectRow(4, inComponent: 0, animated: false)
+            pickerView.selectRow(5, inComponent: 0, animated: false)
         }
     }
 
@@ -66,6 +66,7 @@ class MilesVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBAction func set(sender: AnyObject){
         let miles = arrayOfMiles[rowSelected]
         delegate.numberOfMiles(miles)
+        NSNotificationCenter.defaultCenter().postNotificationName("loadDataAfterNewEvent", object: nil)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
