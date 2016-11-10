@@ -45,7 +45,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     var cellHold = MapPinCell()
     var exit: UIButton!
     var yesNoView: yesNoLauncher!
-
+    
+    var delegate: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +59,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         
         yesNoView = yesNoLauncher()
         yesNoView.delegate = self
+        
+        eventImg.image = UIImage(named: "photoAlbumColor")
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)

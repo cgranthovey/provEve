@@ -22,6 +22,16 @@ class snapScrollVC: UIViewController {
         
         //sets up 3 view controllers, addEvent first, main table 2nd and favoritsTable 3rd.  Then offsets scrollview to the middle VC
         
+        performSelector(#selector(snapScrollVC.calledLate), withObject: nil, afterDelay: 1.5)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(snapScrollVC.addEventSubmitSlide), name: "addEventSubmitSlide", object: nil)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+
+
+    }
+    
+    func calledLate(){
         let addEventVC = self.storyboard?.instantiateViewControllerWithIdentifier("addEventVC")
         self.addChildViewController(addEventVC!)
         self.snapScroll.addSubview((addEventVC?.view)!)
@@ -35,6 +45,11 @@ class snapScrollVC: UIViewController {
         self.snapScroll.addSubview((mainTableVC?.view)!)
         mainTableVC?.didMoveToParentViewController(self)
         
+        mainTableVC?.view.alpha = 0
+        UIView.animateWithDuration(0.3) {
+            mainTableVC?.view.alpha = 1
+        }
+        
         let favVC = self.storyboard?.instantiateViewControllerWithIdentifier("favoritesTableVC")
         var frame2 = favVC?.view.frame
         frame2?.origin.x = 2 * self.view.frame.width
@@ -45,13 +60,17 @@ class snapScrollVC: UIViewController {
         
         self.snapScroll.contentSize = CGSizeMake(self.view.frame.width * 3, self.view.frame.height)
         self.snapScroll.contentOffset = CGPoint(x: view.frame.width, y: 0)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(snapScrollVC.addEventSubmitSlide), name: "addEventSubmitSlide", object: nil)
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+    }
+    
     
     //Called after addEvent is called and we want to scroll back to the EventVC
     func addEventSubmitSlide(){
         let point = CGPoint(x: view.frame.width, y: 0)
         self.snapScroll.setContentOffset(point, animated: true)
     }
+
 }

@@ -69,6 +69,8 @@ class CreditsVC: GeneralVC, UITableViewDelegate, UITableViewDataSource, UITextVi
         madeByOliver("mailColor")
         madeByOliver("mailbox")
         makeFlatIconCredit("Y from The Noun Project", imgString: "foxIcon", url: "https://thenounproject.com/y3816627/", urlWebsite: "https://thenounproject.com/")
+        makeFlatIconCredit("Yannick from www.flaticon.com", imgString: "swipeRight", url: "http://www.flaticon.com/authors/yannick")
+        makeFlatIconCredit("Yannick from www.flaticon.com", imgString: "swipeLeft", url: "http://www.flaticon.com/authors/yannick")
     }
     
     func madeByFreePik (image: String){

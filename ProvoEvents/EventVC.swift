@@ -31,7 +31,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpLocationManagerAndTV()
+        setUpLocationManagerAndTableView()
         Constants.instance.initCurrentUser()
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
@@ -39,9 +39,16 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadDataAfterNewEvent", object: nil)
     }
     
-    func setUpLocationManagerAndTV(){
+    func setUpLocationManagerAndTableView(){
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             self.locationManager.requestWhenInUseAuthorization()
+        }
+        
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .Denied, .Restricted: loadData() //will use default location for Provo
+        default:
+            print("do nothing")
         }
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
@@ -97,16 +104,36 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         loadData()
     }
 
+    @IBOutlet weak var bottomView: UIView!
+    var bottomViewShowing = true
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         let translation: CGPoint = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
         if translation.y > 0{
             //dragging finger down
         } else{
             refreshController.endRefreshing()   //prevents spinner from going forever when no internet connection
+            if bottomViewShowing{
+                UIView.animateWithDuration(0.3, animations: {
+                    self.bottomView.center.y = self.bottomView.center.y + 35
+                })
+                bottomViewShowing = false
+            }
+
         }
     }
     
-    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let scrollOffset = scrollView.contentOffset.y
+        if !bottomViewShowing{
+            if scrollOffset <= 0 {
+                bottomViewShowing = true
+                UIView.animateWithDuration(0.3) {
+                    self.bottomView.center.y = self.bottomView.center.y - 35
+                }
+            }
+        }
+    }
+
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //loadData
@@ -132,6 +159,12 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         
         let geoFireRef = DataService.instance.geoFireRef
         let geoFire = GeoFire(firebaseRef: geoFireRef)
+        
+        
+        if currentLoc == nil{
+            currentLoc = CLLocation(latitude: CLLocationDegrees(40.2338), longitude: CLLocationDegrees(-111.6586))
+        }
+        
         let locCoord2d = CLLocationCoordinate2DMake(currentLoc.coordinate.latitude, currentLoc.coordinate.longitude)
         let region = MKCoordinateRegionMakeWithDistance(locCoord2d, CLLocationDistance(meters) * 2, CLLocationDistance(meters) * 2) // need to double to get expected distance
         if !region.isRegionValid(){
@@ -179,6 +212,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                                     }
                                     let post = Event(key: key, dict: postDict, isLiked: isEventLiked)
                                     self.events.append(post)
+                                    self.events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
                                     self.keyOfLast = post.key
                                 }
                             }
@@ -269,8 +303,8 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     @IBAction func settingsBtnPress(sender: UIButton){
         UIView.animateWithDuration(0.5) { 
         }
-        UIView.animateWithDuration(0.5, animations: { 
-            sender.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/2))
+        UIView.animateWithDuration(0.3, animations: {
+            sender.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/3))
             }) { (true) in
                 sender.transform = CGAffineTransformMakeRotation(CGFloat(0))
                 self.performSegueWithIdentifier("SettingsVC", sender: nil)
