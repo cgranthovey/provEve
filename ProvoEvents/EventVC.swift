@@ -155,7 +155,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             meters = Int(50 * 1609.34)
         }
         
-        performSelector(#selector(EventVC.shouldAddTableViewBackground), withObject: nil, afterDelay: 2.0)
+        performSelector(#selector(EventVC.shouldAddTableViewBackground), withObject: nil, afterDelay: 3.5)
         
         let geoFireRef = DataService.instance.geoFireRef
         let geoFire = GeoFire(firebaseRef: geoFireRef)

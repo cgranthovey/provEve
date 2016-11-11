@@ -116,6 +116,10 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         topView.addGestureRecognizer(tap2)
     }
     
+    override func swipePopBack() {
+        //do nothing
+    }
+    
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //animate image btn touch, imagePickerController
@@ -150,7 +154,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         self.presentViewController(imgPickerController, animated: true, completion: nil)
     }
     
+    var imgChoosen = false
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        imgChoosen = true
         imgPickerController.dismissViewControllerAnimated(true, completion: nil)
         eventImg.image = image
         eventImg.roundCornersForAspectFit(5)
@@ -333,6 +339,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
             loadingView.removeFromSuperview()
         }
         
+        imgChoosen = false
         scrollView.scrollRectToVisible(topViewScroll.frame, animated: false)
         titleTextField.text = ""
         dateString = nil

@@ -2733,7 +2733,7 @@
                                                     </mask>
                                                 </variation>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QWb-JR-SRk" customClass="bottomShadowUILabel" customModule="Ibento" customModuleProvider="target">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QWb-JR-SRk" customClass="bottomShadowUILabel" customModule="Ibento" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="42" width="280" height="24"/>
                                                 <color key="backgroundColor" red="1" green="0.96078431372549022" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -2862,6 +2862,12 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N1s-yc-eSU">
+                                                <rect key="frame" x="10" y="42" width="260" height="24"/>
+                                                <fontDescription key="fontDescription" name="Avenir-LightOblique" family="Avenir" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -2870,9 +2876,12 @@
                                             <constraint firstItem="QWb-JR-SRk" firstAttribute="leading" secondItem="GEq-1J-FPT" secondAttribute="leading" id="Efh-XC-lq2"/>
                                             <constraint firstAttribute="trailing" secondItem="aXZ-fk-b1R" secondAttribute="trailing" id="GzA-AX-04y"/>
                                             <constraint firstItem="B7x-Pa-rnL" firstAttribute="leading" secondItem="GEq-1J-FPT" secondAttribute="leading" constant="10" id="M5e-GE-PRh"/>
+                                            <constraint firstItem="N1s-yc-eSU" firstAttribute="leading" secondItem="GEq-1J-FPT" secondAttribute="leading" constant="10" id="TFQ-pl-eFs"/>
                                             <constraint firstAttribute="trailing" secondItem="QWb-JR-SRk" secondAttribute="trailing" id="TUH-ag-SN8"/>
+                                            <constraint firstItem="N1s-yc-eSU" firstAttribute="top" secondItem="aXZ-fk-b1R" secondAttribute="bottom" id="TVf-3M-SNW"/>
                                             <constraint firstItem="B7x-Pa-rnL" firstAttribute="top" secondItem="eFw-i1-h3G" secondAttribute="bottom" constant="10" id="UUP-Gg-A9a"/>
                                             <constraint firstItem="aXZ-fk-b1R" firstAttribute="top" secondItem="GEq-1J-FPT" secondAttribute="top" id="Ujj-l2-qTC"/>
+                                            <constraint firstAttribute="trailing" secondItem="N1s-yc-eSU" secondAttribute="trailing" constant="10" id="VQy-KH-cWF"/>
                                             <constraint firstItem="aXZ-fk-b1R" firstAttribute="leading" secondItem="GEq-1J-FPT" secondAttribute="leading" id="ZZA-cy-fzS"/>
                                             <constraint firstAttribute="trailing" secondItem="eFw-i1-h3G" secondAttribute="trailing" constant="10" id="cDe-gh-wJr"/>
                                             <constraint firstItem="w93-Pq-qr9" firstAttribute="leading" secondItem="GEq-1J-FPT" secondAttribute="leading" id="fO0-9Y-Ucm"/>
@@ -2880,6 +2889,7 @@
                                             <constraint firstAttribute="trailing" secondItem="B7x-Pa-rnL" secondAttribute="trailing" constant="10" id="u5r-sD-04H"/>
                                             <constraint firstItem="w93-Pq-qr9" firstAttribute="top" secondItem="B7x-Pa-rnL" secondAttribute="bottom" constant="10" id="xkH-4z-eL8"/>
                                             <constraint firstItem="eFw-i1-h3G" firstAttribute="top" secondItem="QWb-JR-SRk" secondAttribute="bottom" id="yuQ-50-KAR"/>
+                                            <constraint firstItem="eFw-i1-h3G" firstAttribute="top" secondItem="N1s-yc-eSU" secondAttribute="bottom" id="zDG-ta-zuo"/>
                                             <constraint firstAttribute="trailing" secondItem="w93-Pq-qr9" secondAttribute="trailing" id="zkh-VI-R2S"/>
                                         </constraints>
                                     </view>
@@ -2911,7 +2921,7 @@
                         <outlet property="bottomShadowView" destination="bLS-me-gkG" id="SXh-ha-XDf"/>
                         <outlet property="commentTextView" destination="B7x-Pa-rnL" id="Jwa-NS-p3P"/>
                         <outlet property="commentsTableView" destination="eFw-i1-h3G" id="E4T-fW-OHP"/>
-                        <outlet property="eventTitle" destination="QWb-JR-SRk" id="OQU-Hx-2fA"/>
+                        <outlet property="eventTitle" destination="N1s-yc-eSU" id="PlC-D9-ORi"/>
                         <outlet property="postBtn" destination="w93-Pq-qr9" id="PYb-mo-Htv"/>
                         <outlet property="shadowView" destination="Qm1-Rh-Xjn" id="NsL-3w-PpM"/>
                     </connections>
@@ -4270,7 +4280,7 @@
         <image name="worldFull" width="58" height="58"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IbF-5I-VzH"/>
+        <segue reference="7I6-Yk-FZ1"/>
         <segue reference="fqr-lP-oBX"/>
         <segue reference="mCs-H1-XKM"/>
     </inferredMetricsTieBreakers>

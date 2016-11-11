@@ -98,7 +98,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     func adjustMapCenter(coord: CLLocationCoordinate2D){
         
         let curSpan = mapView.region.span
-        let span = MKCoordinateSpan(latitudeDelta: 0.09, longitudeDelta: 0.09)
+        let span = MKCoordinateSpan(latitudeDelta: 0.16, longitudeDelta: 0.16)
         
         if curSpan.latitudeDelta < span.latitudeDelta{
             let region = MKCoordinateRegion(center: coord, span: curSpan)
@@ -156,7 +156,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         var centerCoord = CLLocationCoordinate2D()
         
         if shouldMapCenter{
-            span = MKCoordinateSpanMake(0.09, 0.09)
+            span = MKCoordinateSpanMake(0.16, 0.16)
             centerCoord = currentLoc.coordinate
         } else{
             span = mapView.region.span
@@ -273,7 +273,7 @@ extension AnnotationMapVC: CLLocationManagerDelegate{
             currentLoc = location
             hasUserLocBeenFound = true
             if shouldMapCenter{
-                let span = MKCoordinateSpan(latitudeDelta: 0.09, longitudeDelta: 0.09)
+                let span = MKCoordinateSpan(latitudeDelta: 0.16, longitudeDelta: 0.16)
                 let region = MKCoordinateRegion(center: location.coordinate, span: span)
                 mapView.setRegion(region, animated: true)
                 shouldMapCenter = false

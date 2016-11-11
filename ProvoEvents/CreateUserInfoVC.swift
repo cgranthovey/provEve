@@ -33,7 +33,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        checkForInternet()
+//        checkForInternet()
         setUpImagePickers()
         userImgBtn.setUpEventImgBtn(userImg)        //when I tried putting the image inside the btn there was an animation delay.  However with a seperate imgview there was no delay
         userImgBtn.delegate = self

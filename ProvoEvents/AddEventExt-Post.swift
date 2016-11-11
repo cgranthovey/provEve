@@ -65,28 +65,38 @@ extension AddEventVC: yesSelectedProtocol{
                 print(err?.localizedDescription)
                 self.alert("Error", message: "Error uploading data, try again soon")
             } else{
-                if let img = self.eventImg.image where img != UIImage(named: "photoAlbumColor"){
-                    if let data: NSData = UIImageJPEGRepresentation(img, 0.8){
-                        let imgName = "\(NSUUID().UUIDString)jpg"
-                        let storageRef = DataService.instance.imgStorageRefData.child(imgName)
-                        storageRef.putData(data, metadata: nil, completion: { (meta, err) in
-                            if err != nil{
-                                self.alertProblemUploadingImg()
-                                return
-                            } else{
-                                self.postGeoFire(self.coordinateOfEvent, eventRef: key)
-                                let downloadURL = meta?.downloadURL()?.absoluteString
-                                DataService.instance.eventRef.child(key).child("image").setValue(downloadURL)
-                                self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 1.5)
-                            }
-                        })
+                
+                print("problem: \(self.eventImg.image)")
+                if self.imgChoosen{
+                    if let img = self.eventImg.image {
+                        if let data: NSData = UIImageJPEGRepresentation(img, 0.8){
+                            let imgName = "\(NSUUID().UUIDString)jpg"
+                            let storageRef = DataService.instance.imgStorageRefData.child(imgName)
+                            storageRef.putData(data, metadata: nil, completion: { (meta, err) in
+                                if err != nil{
+                                    self.alertProblemUploadingImg()
+                                    return
+                                } else{
+                                    self.postGeoFire(self.coordinateOfEvent, eventRef: key)
+                                    let downloadURL = meta?.downloadURL()?.absoluteString
+                                    DataService.instance.eventRef.child(key).child("image").setValue(downloadURL)
+                                    self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 1.5)
+                                }
+                            })
+                        }
+                    } else {
+                        self.noImg(key)
                     }
-                } else {
-                    self.postGeoFire(self.coordinateOfEvent, eventRef: key)
-                    self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 0.75)
+                } else{
+                    self.noImg(key)
                 }
             }
         }
+    }
+    
+    func noImg(key: String){
+        self.postGeoFire(self.coordinateOfEvent, eventRef: key)
+        self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 0.75)
     }
 
     func makeLoadingView(){

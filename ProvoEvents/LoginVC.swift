@@ -40,11 +40,14 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     }
     
     func checkForConnection(){
+        print("checking for internet")
         ConnectedToInternet.instance1.areWeConnected(self.view, showNoInternetView: false) { (connected) in
             if let connect = connected{
                 if  connect{
+                    print("checking connected")
                     self.connectionBool = true
                 } else {
+                    print("checking NOT")
                     self.connectionBool = false
                 }
                 self.checkForUID()
@@ -53,7 +56,9 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     }
     
     func checkForUID(){
-        if FIRAuth.auth()?.currentUser != nil{
+        
+        if self.connectionBool == true && FIRAuth.auth()?.currentUser != nil{
+            print("yes UID")
             checkForUserName()
             return
         } else{
@@ -65,7 +70,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
                         let x = NoConnectionView()
                         x.showNoConnectionView(self.view)
                     }
-                })
+            })
         }
     }
     
@@ -79,6 +84,8 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
                 print("no username")
                 self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
             }
+            self.loadingView.cancelSpinnerAndDarkView(nil)
+
         })
     }
     
@@ -113,21 +120,21 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     let loadingView = LoadingView()
     
     @IBAction func loginBtn(sender: AnyObject){
+        //self.resignFirstResponder()
+        self.view.endEditing(true)
+
         if let email = emailField.text, let password = passwordField.text where (email.characters.count > 0 && password.characters.count > 0){
             guard password.characters.count >= 6 else{
                 alerts("Password", message: "Password must be at least 6 characters")
                 return
             }
             loadingView.showSpinnerView(self.view)
-            
             AuthService.instance.login(password, email: email, onComplete: { (errMsg, data) in
                 guard errMsg == nil else{
                     self.alerts("Error Authenticating", message: errMsg)
                     return
                 }
-                self.resignFirstResponder()
                 self.checkForUserName()
-                self.loadingView.cancelSpinnerAndDarkView(nil)
             })
         } else{
             alerts("Username and Password Required", message: "You must enter a username and password.")
