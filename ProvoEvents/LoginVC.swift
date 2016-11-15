@@ -10,6 +10,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
+import NVActivityIndicatorView
 
 class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
 
@@ -20,6 +21,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     var preView: UIView!
     var backView: UIView!
     var connectionBool: Bool!
+    var activityIndicatorView: NVActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,20 +36,23 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     }
     
     func setUpPreview(){
+        let myWaitingFrame = CGRectMake(0, 0, 40, 40)
+        activityIndicatorView = NVActivityIndicatorView(frame: myWaitingFrame, type: .BallScale, color: UIColor.whiteColor(), padding: 0)
+        activityIndicatorView.center = self.view.center
+        activityIndicatorView.alpha = 0
+        
         preView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        preView.backgroundColor = UIColor(red: 3/255.0, green: 169/255.0, blue: 244.0/255.0, alpha: 1.0)
+        preView.backgroundColor = UIColor(red: 33/255.0, green: 150/255.0, blue: 243.0/255.0, alpha: 1.0)
         self.view.addSubview(preView)
+        self.preView.addSubview(activityIndicatorView)
     }
     
     func checkForConnection(){
-        print("checking for internet")
         ConnectedToInternet.instance1.areWeConnected(self.view, showNoInternetView: false) { (connected) in
             if let connect = connected{
                 if  connect{
-                    print("checking connected")
                     self.connectionBool = true
                 } else {
-                    print("checking NOT")
                     self.connectionBool = false
                 }
                 self.checkForUID()
@@ -56,36 +61,46 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     }
     
     func checkForUID(){
-        
         if self.connectionBool == true && FIRAuth.auth()?.currentUser != nil{
-            print("yes UID")
+            UIView.animateWithDuration(0.9) {
+                self.activityIndicatorView.startAnimation()
+                self.activityIndicatorView.alpha = 1
+            }
             checkForUserName()
             return
         } else{
-            UIView.animateWithDuration(0.5, animations: {
-                self.preView.alpha = 0
+            UIView.animateWithDuration(0.3, animations: { 
+                self.activityIndicatorView.alpha = 0
                 }, completion: { (true) in
-                    self.preView.removeFromSuperview()
-                    if self.connectionBool == false{
-                        let x = NoConnectionView()
-                        x.showNoConnectionView(self.view)
-                    }
+                    UIView.animateWithDuration(0.5, animations: {
+                        self.preView.alpha = 0
+                        }, completion: { (true) in
+                            self.preView.removeFromSuperview()
+                            if self.connectionBool == false{
+                                let x = NoConnectionView()
+                                x.showNoConnectionView(self.view)
+                            }
+                    })
             })
         }
     }
     
     func checkForUserName(){
         DataService.instance.currentUser.child("profile").child("userName").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            print("snapshot \(snapshot)")
             if (snapshot.value as? String) != nil{
-                print("has username")
-                self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+                UIView.animateWithDuration(0.3, animations: {
+                    self.activityIndicatorView.alpha = 0
+                    }, completion: { (true) in
+                        self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+                })
             } else{
-                print("no username")
-                self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
+                UIView.animateWithDuration(0.3, animations: {
+                    self.activityIndicatorView.alpha = 0
+                    }, completion: { (true) in
+                        self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
+                })
             }
             self.loadingView.cancelSpinnerAndDarkView(nil)
-
         })
     }
     

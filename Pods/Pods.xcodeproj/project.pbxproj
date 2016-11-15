@@ -7,385 +7,573 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		13401922048477BB422468EDC9F14A1E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
-		1F4F9D465CB9BC65229C016181A42FA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
-		8D91AAEB3E9B8CC323F28E8F447D40AF /* Pods-ProvoEventsTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CC09BE5D697F4E8C7EBA9D2B806893 /* Pods-ProvoEventsTests-dummy.m */; };
-		9EBF428DAD91FBCF63A0D9B7481833E4 /* Pods-ProvoEventsTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5397B71B6A229E244644AF663BBC9C75 /* Pods-ProvoEventsTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A3F4E424C544F9D7DEB2494C714A45B3 /* Pods-ProvoEvents-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BDA867EE5B0C608F494D797EF9643D14 /* Pods-ProvoEvents-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F42FEA57C6D6A061DE8D05C3667D890E /* Pods-ProvoEvents-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 730729BFA98C4EE7ED93D3A0DCB97C4D /* Pods-ProvoEvents-dummy.m */; };
+		00D65F81BFD05324F2ECE8C7878D4DDE /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517CF183DF1B6F04B1863ABDE57EAF65 /* NVActivityIndicatorAnimationSemiCircleSpin.swift */; };
+		038DDB0012EB2E0B6D7FE15C201CF258 /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A047B8682ABA8E099EAB1BF9837E682 /* NVActivityIndicatorAnimationBallScaleRipple.swift */; };
+		09DBDF3D3492148D90B2AD7F555199DB /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F51CFD46244FACEA7A11F0F41D43E3 /* NVActivityIndicatorAnimationBallGridBeat.swift */; };
+		0C40CC39274674DA872097B2A8ADC836 /* NVActivityIndicatorShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A424E821E299E6817B08E25E436DC77D /* NVActivityIndicatorShape.swift */; };
+		0C45A2D415D84BCA67AF254CD616B3D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A817CAE99C81EE68006DC1E60E295C0A /* Foundation.framework */; };
+		0E75CC376CE0E99D73BA89D4A97CB9A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A817CAE99C81EE68006DC1E60E295C0A /* Foundation.framework */; };
+		1145D6930C6793AF2AF6C1A5AC78DA07 /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD39DD19280182B74CA7389ACBF288EA /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift */; };
+		13FD2444EA0322CD8DDEB1FDCFD5A263 /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D4E8BDB0169BF8DB5A0C3850F36D50 /* NVActivityIndicatorAnimationBallZigZag.swift */; };
+		170124EB9E1CF2F37999849203BF584F /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A563B8CFAD54B641F8C6F0F648A8FEA /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift */; };
+		1EE57F6FDB64BA79ECE939E536F582AF /* NVActivityIndicatorAnimationPacman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D5832D487A2DF5C0425428F86F9E2 /* NVActivityIndicatorAnimationPacman.swift */; };
+		285E3510E161AA62FDD3FA3F4EE19206 /* NVActivityIndicatorAnimationBallRotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1D7B43E8CD447D75E2019FFEFE1DDC /* NVActivityIndicatorAnimationBallRotate.swift */; };
+		296E01BDD6C99B0479B3F22B21D06CD2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A817CAE99C81EE68006DC1E60E295C0A /* Foundation.framework */; };
+		2EF1A056C18B60C8947696A27B120AA6 /* NVActivityIndicatorViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006DAAA135057D0868567B1E18431940 /* NVActivityIndicatorViewable.swift */; };
+		2F465CB061A9C392135D10DEFAA8EDBD /* Pods-Ibento-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDAF243528011A78C3E4A784EA50E2 /* Pods-Ibento-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		395884B15331DC1459292A072651DFBF /* NVActivityIndicatorAnimationBlank.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4A35E3F1D31A81BE8AE0DBA3210EC5 /* NVActivityIndicatorAnimationBlank.swift */; };
+		48645EBE11A8BAD596E0107763FE8239 /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5737726825F77499AD4D7D8FB74DE1B4 /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift */; };
+		4D22781282756EAC3422741CB19401B2 /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6323E4E54CEA1818F45CA66193EAD6DA /* NVActivityIndicatorAnimationBallClipRotatePulse.swift */; };
+		4E51AFA380EE9E94765D8CA26076FC15 /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086CFF15A0FC3FF6C4C5914501A2FAB4 /* NVActivityIndicatorAnimationLineScalePulseOut.swift */; };
+		4F0C37B29405656F70CA5DC3C63BE326 /* NVActivityIndicatorView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 003ACD0909E1B25705767D10C982006C /* NVActivityIndicatorView-dummy.m */; };
+		5197DB2C8706301DD957BBF12F65441A /* NVActivityIndicatorAnimationBallPulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30525F3F1E953481216ED7D3889AFD6 /* NVActivityIndicatorAnimationBallPulse.swift */; };
+		546CBC77A6CFC2F293C184677650FD48 /* NVActivityIndicatorAnimationBallGridPulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C7F0FBBA076916500AC73BC31764D7 /* NVActivityIndicatorAnimationBallGridPulse.swift */; };
+		54DF1B99C159AB05E3C357D4FC75E66C /* NVActivityIndicatorAnimationLineScaleParty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEA10B97F9614EC1CADFC967AF7111F /* NVActivityIndicatorAnimationLineScaleParty.swift */; };
+		56CF179D3887CCAB5DAF25FCAEF00CB5 /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A956CC6FA5F0E3F924D550EB7BFE51A /* NVActivityIndicatorAnimationCubeTransition.swift */; };
+		5BEEF0E031E8B1DCA4D184F70D5F14EF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23016F69B2480F44D0BB5526B39192FA /* QuartzCore.framework */; };
+		663B9304E664A5DF9AF7CA8E76B2706C /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B269EEF5A9184D578A79463E3249362 /* NVActivityIndicatorAnimationBallZigZagDeflect.swift */; };
+		682DE32A4C088F39B441E35933564BB9 /* NVActivityIndicatorAnimationBallScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC87F20FB94F7E0CF4E3E0BF044DA7 /* NVActivityIndicatorAnimationBallScale.swift */; };
+		882AC5431EFBF50D2A1ACAD0B90EFFB1 /* Pods-IbentoTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D2D99C73CA4E500BDA14E62D0402DD /* Pods-IbentoTests-dummy.m */; };
+		8C4AC92E809E76A7894E9C448952ED07 /* NVActivityIndicatorView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 98B72C5E4DB9F1DD162DC242566A758D /* NVActivityIndicatorView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8CEE33181E65FA6744EEB3444D162F7E /* NVActivityIndicatorAnimationBallScaleMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF2C0D60A2652DA64415A377C25CF4B /* NVActivityIndicatorAnimationBallScaleMultiple.swift */; };
+		8F8CCFEDD5A7B1F53AB19875F6DE3121 /* NVActivityIndicatorAnimationSquareSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CE9758A0E825FC072515EBB0C52802 /* NVActivityIndicatorAnimationSquareSpin.swift */; };
+		9CFD2FA5AFEA6BC796E446C3A5CE422A /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08059B856EC557CE65BB00086341612 /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift */; };
+		A01E623A2AA0F1DECB58A7BC7283CFD3 /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FB889E42DA58C105A812CCCDD8260A /* NVActivityIndicatorAnimationBallClipRotate.swift */; };
+		B7C4D4F966506CB018B886010AF3F551 /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B280BFF2FFF54A24256D791CCD9D04 /* NVActivityIndicatorAnimationBallPulseSync.swift */; };
+		BFE22E90824FA5D614C4678F95A759E0 /* NVActivityIndicatorAnimationLineScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7705EF3A3D6436F902A5E995666807A6 /* NVActivityIndicatorAnimationLineScale.swift */; };
+		D31238BDCE95C73192E8B78E5024448D /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EFEF059E3C2A4D29AADFC2B991701F /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift */; };
+		DB10ECA4665E82191A02F507AF685701 /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87F065E9B7AA25C780FEDC82D6885EB /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */; };
+		DD2413FD795B4530FACEAA77A7281680 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091D54A73E1E8BB182C9D7D245AF1C2F /* UIKit.framework */; };
+		DF2B95A1B07342DB88F226B913978F90 /* NVActivityIndicatorAnimationBallRotateChase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A95726E194ABF54C86834E7F263CDD7 /* NVActivityIndicatorAnimationBallRotateChase.swift */; };
+		E274EF7D33FD84094B634F360539556C /* Pods-IbentoTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE94A3D46104FC75F4957A5F33B70F7 /* Pods-IbentoTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E30D46DC367C45B2AE57C90C2600227C /* NVActivityIndicatorAnimationBallBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3677F3E2A07D703A2A295B08401AA8ED /* NVActivityIndicatorAnimationBallBeat.swift */; };
+		EA359A3FBF7FB865AB94C7D09796F10B /* NVActivityIndicatorAnimationBallPulseRise.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBDB7438097D041A8A9930853829DF5 /* NVActivityIndicatorAnimationBallPulseRise.swift */; };
+		F171063E08D01F981CA00BEB27E3F37C /* NVActivityIndicatorAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3295863CAFF1988F1BB0695383653154 /* NVActivityIndicatorAnimationDelegate.swift */; };
+		F7ED4156AF8249504719BF864314F22C /* NVActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619429151534F3F780715E2C60999B91 /* NVActivityIndicatorView.swift */; };
+		F8BEBEDE7A80A6B67139D473F0208907 /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC18352A02C3D588C71F1DCF5FBF3E3 /* NVActivityIndicatorAnimationBallTrianglePath.swift */; };
+		FBAFFF318E8822EB0F3B1014C9D7772A /* Pods-Ibento-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 059B719FBA1B8BE47A7637D0A4F87AD1 /* Pods-Ibento-dummy.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B41C9CB04A1732838E08296416D701E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BDDC4DBF7654960710F7FF7B28F35033;
+			remoteInfo = NVActivityIndicatorView;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		08BC45BE728484ED8A9C3A5E4DEF683F /* GoogleInterchangeUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleInterchangeUtilities.framework; path = Frameworks/GoogleInterchangeUtilities.framework; sourceTree = "<group>"; };
-		185BC64BB0FAAD1C467869A5D528559E /* FirebaseDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseDatabase.framework; path = Frameworks/FirebaseDatabase.framework; sourceTree = "<group>"; };
-		18B9C88879C3A963F453245192DDCC90 /* Pods-ProvoEventsTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ProvoEventsTests-frameworks.sh"; sourceTree = "<group>"; };
-		2BC99F2FF0CD0D98236370CE6869B626 /* Pods-ProvoEventsTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ProvoEventsTests.modulemap"; sourceTree = "<group>"; };
-		2E1231CB6A77FE94297EEB192F9C5396 /* Firebase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Firebase.h; path = Headers/Firebase.h; sourceTree = "<group>"; };
-		35025DD301554303A119274FBF8EE15C /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = Frameworks/GoogleUtilities.framework; sourceTree = "<group>"; };
-		37DC0C0D8A179A6B76DE53362757151E /* Pods-ProvoEvents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProvoEvents.debug.xcconfig"; sourceTree = "<group>"; };
-		5397B71B6A229E244644AF663BBC9C75 /* Pods-ProvoEventsTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ProvoEventsTests-umbrella.h"; sourceTree = "<group>"; };
-		5BB172B2283E6A4E65A3A6DDFAFA50B6 /* Pods-ProvoEvents-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProvoEvents-acknowledgements.plist"; sourceTree = "<group>"; };
-		5C7551742C437FD4B3572AC2118816D1 /* Pods-ProvoEvents.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ProvoEvents.modulemap"; sourceTree = "<group>"; };
-		5D4CA76233D83397A5F8D62FA9B1C530 /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = Frameworks/FirebaseAuth.framework; sourceTree = "<group>"; };
-		5F201DAB064790D7FEE3A639FE2AF444 /* Pods-ProvoEvents-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ProvoEvents-acknowledgements.markdown"; sourceTree = "<group>"; };
-		61A13AFADE3DA00E9AE01D9F62B1F125 /* Pods-ProvoEventsTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ProvoEventsTests-resources.sh"; sourceTree = "<group>"; };
-		722C5E0BDCDF28D982DF4BE7AE6DB50C /* Pods_ProvoEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProvoEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		730729BFA98C4EE7ED93D3A0DCB97C4D /* Pods-ProvoEvents-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ProvoEvents-dummy.m"; sourceTree = "<group>"; };
-		804746DC014E13D14CE722F84E652182 /* FIRInstanceID.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstanceID.h; path = Headers/Public/FIRInstanceID.h; sourceTree = "<group>"; };
-		8BB4CC5623F2E88D42106838D3A88385 /* Pods-ProvoEventsTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ProvoEventsTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		90F7559F26704D1C4B440F7316455E71 /* Pods-ProvoEventsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProvoEventsTests.release.xcconfig"; sourceTree = "<group>"; };
+		0035AB32B9A99315CBEB7E72DAF92DF9 /* Pods_Ibento.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ibento.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		003ACD0909E1B25705767D10C982006C /* NVActivityIndicatorView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NVActivityIndicatorView-dummy.m"; sourceTree = "<group>"; };
+		006DAAA135057D0868567B1E18431940 /* NVActivityIndicatorViewable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorViewable.swift; path = NVActivityIndicatorView/NVActivityIndicatorViewable.swift; sourceTree = "<group>"; };
+		02BD2814188DA672538F08D6BA35F206 /* Pods-IbentoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IbentoTests.release.xcconfig"; sourceTree = "<group>"; };
+		059B719FBA1B8BE47A7637D0A4F87AD1 /* Pods-Ibento-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Ibento-dummy.m"; sourceTree = "<group>"; };
+		086CFF15A0FC3FF6C4C5914501A2FAB4 /* NVActivityIndicatorAnimationLineScalePulseOut.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationLineScalePulseOut.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationLineScalePulseOut.swift; sourceTree = "<group>"; };
+		091D54A73E1E8BB182C9D7D245AF1C2F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		0CBA35CBF9FAE571ED6A0BC33FBCDAE7 /* Pods-IbentoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IbentoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		148C578AF58E36FB4549D62ACFDA82B9 /* Pods-IbentoTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-IbentoTests.modulemap"; sourceTree = "<group>"; };
+		1A95726E194ABF54C86834E7F263CDD7 /* NVActivityIndicatorAnimationBallRotateChase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallRotateChase.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallRotateChase.swift; sourceTree = "<group>"; };
+		23016F69B2480F44D0BB5526B39192FA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		26E68DC56CAAF1C940617E6D1327AA4C /* Pods_IbentoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IbentoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2737040925957D8FE21F459DA8830D69 /* FirebaseDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseDatabase.framework; path = Frameworks/FirebaseDatabase.framework; sourceTree = "<group>"; };
+		29EC22F5EB1FDFBE8779B53273B34627 /* Firebase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Firebase.h; path = Headers/Firebase.h; sourceTree = "<group>"; };
+		2A047B8682ABA8E099EAB1BF9837E682 /* NVActivityIndicatorAnimationBallScaleRipple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallScaleRipple.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallScaleRipple.swift; sourceTree = "<group>"; };
+		3295863CAFF1988F1BB0695383653154 /* NVActivityIndicatorAnimationDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationDelegate.swift; path = NVActivityIndicatorView/NVActivityIndicatorAnimationDelegate.swift; sourceTree = "<group>"; };
+		3677F3E2A07D703A2A295B08401AA8ED /* NVActivityIndicatorAnimationBallBeat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallBeat.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallBeat.swift; sourceTree = "<group>"; };
+		38F15DBA9E86B657BC09DB23FE2FE879 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D7266E3A808FBC9E9E2265014906B03 /* Pods-Ibento-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Ibento-acknowledgements.markdown"; sourceTree = "<group>"; };
+		475A51ACC152B6CB2100FF7045E1AD6C /* NVActivityIndicatorView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = NVActivityIndicatorView.modulemap; sourceTree = "<group>"; };
+		484D5832D487A2DF5C0425428F86F9E2 /* NVActivityIndicatorAnimationPacman.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationPacman.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationPacman.swift; sourceTree = "<group>"; };
+		4FCC87F20FB94F7E0CF4E3E0BF044DA7 /* NVActivityIndicatorAnimationBallScale.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallScale.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallScale.swift; sourceTree = "<group>"; };
+		517CF183DF1B6F04B1863ABDE57EAF65 /* NVActivityIndicatorAnimationSemiCircleSpin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationSemiCircleSpin.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationSemiCircleSpin.swift; sourceTree = "<group>"; };
+		559C1F9D7B8DABD03992128F68B05B5B /* Pods-Ibento.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ibento.release.xcconfig"; sourceTree = "<group>"; };
+		55B463DE4A78BF06EF40D52DAFFA72A5 /* Pods-Ibento-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Ibento-resources.sh"; sourceTree = "<group>"; };
+		5737726825F77499AD4D7D8FB74DE1B4 /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallSpinFadeLoader.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallSpinFadeLoader.swift; sourceTree = "<group>"; };
+		584AD08BE0B92564E084EF0B07355C74 /* Pods-Ibento-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Ibento-frameworks.sh"; sourceTree = "<group>"; };
+		5ADF01CE252134C2156555B53E2EC9C6 /* GoogleNetworkingUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleNetworkingUtilities.framework; path = Frameworks/GoogleNetworkingUtilities.framework; sourceTree = "<group>"; };
+		5B269EEF5A9184D578A79463E3249362 /* NVActivityIndicatorAnimationBallZigZagDeflect.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallZigZagDeflect.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallZigZagDeflect.swift; sourceTree = "<group>"; };
+		5BCCEDDAB929A7FC9C0C0C6CB8451194 /* FIRInstanceID.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstanceID.h; path = Headers/Public/FIRInstanceID.h; sourceTree = "<group>"; };
+		60AB2FCD1B1F238E60B8F1B94CFB1350 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSymbolUtilities.framework; path = Frameworks/GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
+		619429151534F3F780715E2C60999B91 /* NVActivityIndicatorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorView.swift; path = NVActivityIndicatorView/NVActivityIndicatorView.swift; sourceTree = "<group>"; };
+		6323E4E54CEA1818F45CA66193EAD6DA /* NVActivityIndicatorAnimationBallClipRotatePulse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallClipRotatePulse.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallClipRotatePulse.swift; sourceTree = "<group>"; };
+		6957FEE606343969B18239A5F64A22D5 /* Pods-Ibento-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Ibento-acknowledgements.plist"; sourceTree = "<group>"; };
+		7705EF3A3D6436F902A5E995666807A6 /* NVActivityIndicatorAnimationLineScale.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationLineScale.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationLineScale.swift; sourceTree = "<group>"; };
+		779934B7FFB7E7A859C81E0C66CB0F63 /* FirebaseStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseStorage.framework; path = Frameworks/FirebaseStorage.framework; sourceTree = "<group>"; };
+		785CED62CEF11B0422466AE7D336F2C8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7BE94A3D46104FC75F4957A5F33B70F7 /* Pods-IbentoTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-IbentoTests-umbrella.h"; sourceTree = "<group>"; };
+		81FB889E42DA58C105A812CCCDD8260A /* NVActivityIndicatorAnimationBallClipRotate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallClipRotate.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallClipRotate.swift; sourceTree = "<group>"; };
+		83F51CFD46244FACEA7A11F0F41D43E3 /* NVActivityIndicatorAnimationBallGridBeat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallGridBeat.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallGridBeat.swift; sourceTree = "<group>"; };
+		8A956CC6FA5F0E3F924D550EB7BFE51A /* NVActivityIndicatorAnimationCubeTransition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationCubeTransition.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationCubeTransition.swift; sourceTree = "<group>"; };
+		8AEA10B97F9614EC1CADFC967AF7111F /* NVActivityIndicatorAnimationLineScaleParty.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationLineScaleParty.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationLineScaleParty.swift; sourceTree = "<group>"; };
+		8CEC171CC32A2B457CB7A8F0C4FCF8ED /* Pods-IbentoTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IbentoTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		8EF2C0D60A2652DA64415A377C25CF4B /* NVActivityIndicatorAnimationBallScaleMultiple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallScaleMultiple.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallScaleMultiple.swift; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		978C71BFD53C02679E96FA5418A6E8DA /* Pods-ProvoEvents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProvoEvents.release.xcconfig"; sourceTree = "<group>"; };
-		A065F8173B733B41A72710570CA22743 /* Pods_ProvoEventsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProvoEventsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A3A7467365B4AC1DF2E0D3B97EC9CEB4 /* Pods-ProvoEvents-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ProvoEvents-frameworks.sh"; sourceTree = "<group>"; };
-		A476BF7482EA61B0D5177E14B0FBCE0E /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
-		AEC1B886095706A3F9DEFE043A14DF47 /* GoogleNetworkingUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleNetworkingUtilities.framework; path = Frameworks/GoogleNetworkingUtilities.framework; sourceTree = "<group>"; };
-		B79C9AB0F757B63507FD83882788D13A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BC50EF37AE6A31BE9D6AE353A8AD5E8A /* Pods-ProvoEventsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProvoEventsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		BDA867EE5B0C608F494D797EF9643D14 /* Pods-ProvoEvents-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ProvoEvents-umbrella.h"; sourceTree = "<group>"; };
-		C36FE24ADDC6CBFB37BFBAC63119A5C9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		DE0ED84F249C56361D4FCE60CEF8161A /* FirebaseStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseStorage.framework; path = Frameworks/FirebaseStorage.framework; sourceTree = "<group>"; };
-		E2CC09BE5D697F4E8C7EBA9D2B806893 /* Pods-ProvoEventsTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ProvoEventsTests-dummy.m"; sourceTree = "<group>"; };
-		EDEC92271A3BA774BD0A867169642C15 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSymbolUtilities.framework; path = Frameworks/GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
-		F2F1D87F8701C1FB9F628746BE32B2B9 /* Pods-ProvoEventsTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProvoEventsTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		FA9096C2BCC097BF342FB1CDDA1FBA81 /* Pods-ProvoEvents-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ProvoEvents-resources.sh"; sourceTree = "<group>"; };
-		FFB0FFEF05EC59C838C0FF699D6C77F0 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		943988ABC47183553DBACFFC9DC9813B /* NVActivityIndicatorView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NVActivityIndicatorView.xcconfig; sourceTree = "<group>"; };
+		96B0FFCCE4274F32F14D82B36723962F /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = Frameworks/GoogleUtilities.framework; sourceTree = "<group>"; };
+		98360A6EE1A15C50B2275A7263949DBD /* Pods-IbentoTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-IbentoTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		98B72C5E4DB9F1DD162DC242566A758D /* NVActivityIndicatorView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NVActivityIndicatorView-umbrella.h"; sourceTree = "<group>"; };
+		99B280BFF2FFF54A24256D791CCD9D04 /* NVActivityIndicatorAnimationBallPulseSync.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallPulseSync.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallPulseSync.swift; sourceTree = "<group>"; };
+		9A563B8CFAD54B641F8C6F0F648A8FEA /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallScaleRippleMultiple.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallScaleRippleMultiple.swift; sourceTree = "<group>"; };
+		9CF038C53A5FB8B63AE52F717A118208 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		A424E821E299E6817B08E25E436DC77D /* NVActivityIndicatorShape.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorShape.swift; path = NVActivityIndicatorView/NVActivityIndicatorShape.swift; sourceTree = "<group>"; };
+		A817CAE99C81EE68006DC1E60E295C0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		AD5CF6AC5997099D988EFB5FF3621501 /* GoogleInterchangeUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleInterchangeUtilities.framework; path = Frameworks/GoogleInterchangeUtilities.framework; sourceTree = "<group>"; };
+		B2CDAF243528011A78C3E4A784EA50E2 /* Pods-Ibento-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Ibento-umbrella.h"; sourceTree = "<group>"; };
+		B3CF129780C4920C11789E8E87339A1F /* Pods-IbentoTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-IbentoTests-frameworks.sh"; sourceTree = "<group>"; };
+		B4D4E8BDB0169BF8DB5A0C3850F36D50 /* NVActivityIndicatorAnimationBallZigZag.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallZigZag.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallZigZag.swift; sourceTree = "<group>"; };
+		B5CE9758A0E825FC072515EBB0C52802 /* NVActivityIndicatorAnimationSquareSpin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationSquareSpin.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationSquareSpin.swift; sourceTree = "<group>"; };
+		B7C7F0FBBA076916500AC73BC31764D7 /* NVActivityIndicatorAnimationBallGridPulse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallGridPulse.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallGridPulse.swift; sourceTree = "<group>"; };
+		B915933E3BEA158FAF4E072CC54922E3 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		BD39DD19280182B74CA7389ACBF288EA /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallClipRotateMultiple.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallClipRotateMultiple.swift; sourceTree = "<group>"; };
+		BEC18352A02C3D588C71F1DCF5FBF3E3 /* NVActivityIndicatorAnimationBallTrianglePath.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallTrianglePath.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallTrianglePath.swift; sourceTree = "<group>"; };
+		C1D9CAC66899C3F5A5E9EF60DA6EF169 /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = Frameworks/FirebaseAuth.framework; sourceTree = "<group>"; };
+		C30525F3F1E953481216ED7D3889AFD6 /* NVActivityIndicatorAnimationBallPulse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallPulse.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallPulse.swift; sourceTree = "<group>"; };
+		C716BAA5FABBD2711EF6593521907CB0 /* Pods-IbentoTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-IbentoTests-resources.sh"; sourceTree = "<group>"; };
+		C87F065E9B7AA25C780FEDC82D6885EB /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationTriangleSkewSpin.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationTriangleSkewSpin.swift; sourceTree = "<group>"; };
+		CC1D7B43E8CD447D75E2019FFEFE1DDC /* NVActivityIndicatorAnimationBallRotate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallRotate.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallRotate.swift; sourceTree = "<group>"; };
+		D08059B856EC557CE65BB00086341612 /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationLineScalePulseOutRapid.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationLineScalePulseOutRapid.swift; sourceTree = "<group>"; };
+		D5D2D99C73CA4E500BDA14E62D0402DD /* Pods-IbentoTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-IbentoTests-dummy.m"; sourceTree = "<group>"; };
+		DAB1AB468B1107EB14E76F122D676C46 /* Pods-Ibento.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Ibento.modulemap"; sourceTree = "<group>"; };
+		DB03B07D1CD00EA95316E0F54D756CA0 /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NVActivityIndicatorView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFBDB7438097D041A8A9930853829DF5 /* NVActivityIndicatorAnimationBallPulseRise.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallPulseRise.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallPulseRise.swift; sourceTree = "<group>"; };
+		E062A05CD290075BE4BBF5A11C0C8682 /* NVActivityIndicatorView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NVActivityIndicatorView-prefix.pch"; sourceTree = "<group>"; };
+		E4EFEF059E3C2A4D29AADFC2B991701F /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationLineSpinFadeLoader.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationLineSpinFadeLoader.swift; sourceTree = "<group>"; };
+		F64117E04B003CA91AAA744B9558601E /* Pods-Ibento.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ibento.debug.xcconfig"; sourceTree = "<group>"; };
+		FAFF6CBC7CA729DDFD7D8D72BA4D1A10 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FE4A35E3F1D31A81BE8AE0DBA3210EC5 /* NVActivityIndicatorAnimationBlank.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBlank.swift; path = NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBlank.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		946068E86A5FE0EE1EBAAEDFBBA4FD35 /* Frameworks */ = {
+		4C4D39B3F064CEBBCDA531F0D1B5ECAA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13401922048477BB422468EDC9F14A1E /* Foundation.framework in Frameworks */,
+				296E01BDD6C99B0479B3F22B21D06CD2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E2C38D0BD6D816383D4178C7BC6B2EE8 /* Frameworks */ = {
+		7E3EC8C1E7E540249015ED13D6EE42B4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F4F9D465CB9BC65229C016181A42FA5 /* Foundation.framework in Frameworks */,
+				0E75CC376CE0E99D73BA89D4A97CB9A6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECC6720BD354F59E06677636CF7BF9BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C45A2D415D84BCA67AF254CD616B3D5 /* Foundation.framework in Frameworks */,
+				5BEEF0E031E8B1DCA4D184F70D5F14EF /* QuartzCore.framework in Frameworks */,
+				DD2413FD795B4530FACEAA77A7281680 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1CAD65E5D33283D0DAA4AFC474F4D817 /* Products */ = {
+		0E8DA935E586C776CA796F0919187D7D /* FirebaseInstanceID */ = {
 			isa = PBXGroup;
 			children = (
-				722C5E0BDCDF28D982DF4BE7AE6DB50C /* Pods_ProvoEvents.framework */,
-				A065F8173B733B41A72710570CA22743 /* Pods_ProvoEventsTests.framework */,
+				5BCCEDDAB929A7FC9C0C0C6CB8451194 /* FIRInstanceID.h */,
+				2E1318A8D19567F08B89B1011D930B98 /* Frameworks */,
+			);
+			path = FirebaseInstanceID;
+			sourceTree = "<group>";
+		};
+		107BFB1C01E945BB1998E1A5D8C827B4 /* Pods-Ibento */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF6CBC7CA729DDFD7D8D72BA4D1A10 /* Info.plist */,
+				DAB1AB468B1107EB14E76F122D676C46 /* Pods-Ibento.modulemap */,
+				3D7266E3A808FBC9E9E2265014906B03 /* Pods-Ibento-acknowledgements.markdown */,
+				6957FEE606343969B18239A5F64A22D5 /* Pods-Ibento-acknowledgements.plist */,
+				059B719FBA1B8BE47A7637D0A4F87AD1 /* Pods-Ibento-dummy.m */,
+				584AD08BE0B92564E084EF0B07355C74 /* Pods-Ibento-frameworks.sh */,
+				55B463DE4A78BF06EF40D52DAFFA72A5 /* Pods-Ibento-resources.sh */,
+				B2CDAF243528011A78C3E4A784EA50E2 /* Pods-Ibento-umbrella.h */,
+				F64117E04B003CA91AAA744B9558601E /* Pods-Ibento.debug.xcconfig */,
+				559C1F9D7B8DABD03992128F68B05B5B /* Pods-Ibento.release.xcconfig */,
+			);
+			name = "Pods-Ibento";
+			path = "Target Support Files/Pods-Ibento";
+			sourceTree = "<group>";
+		};
+		122DA2E5084A4393C29BE363C764795C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DFDE779C6E5D3445E0CB8CCB8D424449 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		16EE0611903B06B324F496E3A521AE3F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DB03B07D1CD00EA95316E0F54D756CA0 /* NVActivityIndicatorView.framework */,
+				0035AB32B9A99315CBEB7E72DAF92DF9 /* Pods_Ibento.framework */,
+				26E68DC56CAAF1C940617E6D1327AA4C /* Pods_IbentoTests.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1FD76B11933228E2434375AD39F5F1B8 /* Frameworks */ = {
+		1C679BF0F46FEC30E6391AAD24DA2211 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				08BC45BE728484ED8A9C3A5E4DEF683F /* GoogleInterchangeUtilities.framework */,
+				779934B7FFB7E7A859C81E0C66CB0F63 /* FirebaseStorage.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3DCAB2B7CDE207B3958B6CB957FCC758 /* iOS */ = {
+		20FEFE594DA5B029BB9C4E5F0C9596A8 /* FirebaseAnalytics */ = {
 			isa = PBXGroup;
 			children = (
-				CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		4025CB8954820958BC658A286880617D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DE0ED84F249C56361D4FCE60CEF8161A /* FirebaseStorage.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		4813287E6E16C4CEB6C48995A1692B60 /* GoogleUtilities */ = {
-			isa = PBXGroup;
-			children = (
-				87141F7DDDC279CC7BE5823C288995B1 /* Frameworks */,
-			);
-			path = GoogleUtilities;
-			sourceTree = "<group>";
-		};
-		482B2F4B00A33E42BD06F4C2E345532B /* Analytics */ = {
-			isa = PBXGroup;
-			children = (
-				2E1231CB6A77FE94297EEB192F9C5396 /* Firebase.h */,
-			);
-			name = Analytics;
-			sourceTree = "<group>";
-		};
-		4F874B376599FD77EF59A3D4AC9B1C6C /* FirebaseAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				55C2F4F97A1ACBFD3DDE92D9E27F3C52 /* Frameworks */,
+				64281126516957B544AA7B555C06E49C /* Frameworks */,
 			);
 			path = FirebaseAnalytics;
 			sourceTree = "<group>";
 		};
-		55C2F4F97A1ACBFD3DDE92D9E27F3C52 /* Frameworks */ = {
+		2716831FF80D93502BFF9095961ADBAC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A476BF7482EA61B0D5177E14B0FBCE0E /* FirebaseAnalytics.framework */,
+				5ADF01CE252134C2156555B53E2EC9C6 /* GoogleNetworkingUtilities.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5A6995B4AD4E70EB7FA466552C95ED3A /* Frameworks */ = {
+		2E1318A8D19567F08B89B1011D930B98 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5D4CA76233D83397A5F8D62FA9B1C530 /* FirebaseAuth.framework */,
+				B915933E3BEA158FAF4E072CC54922E3 /* FirebaseInstanceID.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7579823DD29B2678748108B7188B8A0A /* Frameworks */ = {
+		346FB40EC49B054C7D23B0883BCD87B7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FFB0FFEF05EC59C838C0FF699D6C77F0 /* FirebaseInstanceID.framework */,
+				2737040925957D8FE21F459DA8830D69 /* FirebaseDatabase.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7CA4D5DC680A626A99EFEB6AF0D077BE /* FirebaseInstanceID */ = {
+		3900710DB43C5B7BB00E3DFE8BA393B6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				804746DC014E13D14CE722F84E652182 /* FIRInstanceID.h */,
-				7579823DD29B2678748108B7188B8A0A /* Frameworks */,
+				7C409AE6BCF553ABEDEAEFED14D0452E /* Firebase */,
+				20FEFE594DA5B029BB9C4E5F0C9596A8 /* FirebaseAnalytics */,
+				E927A7025EAC3A11527F84B21B6B5E51 /* FirebaseAuth */,
+				AB8CFDB984042B1EC4846131222614BE /* FirebaseDatabase */,
+				0E8DA935E586C776CA796F0919187D7D /* FirebaseInstanceID */,
+				BF4721232D9D88D364CBA44F25EFD504 /* FirebaseStorage */,
+				7FFE48B9768D64F59AF478A6E1A43995 /* GoogleInterchangeUtilities */,
+				F84F95F887035589AB252B21DF1F2628 /* GoogleNetworkingUtilities */,
+				B139DDF995269F5027E4134C2AF417FE /* GoogleSymbolUtilities */,
+				C7FA88222DC00EDEE657EB9C7605C621 /* GoogleUtilities */,
+				9D159702398BF27A6F5BA4262C681EFE /* NVActivityIndicatorView */,
 			);
-			path = FirebaseInstanceID;
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		3C5355F1AEEDD200A6073C5C0084E7A2 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				107BFB1C01E945BB1998E1A5D8C827B4 /* Pods-Ibento */,
+				9B99E46721ABB3B9DB4AC5BF45FDF4D1 /* Pods-IbentoTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		64281126516957B544AA7B555C06E49C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9CF038C53A5FB8B63AE52F717A118208 /* FirebaseAnalytics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6849FE0B861D8D867417C9053E832CB9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AD5CF6AC5997099D988EFB5FF3621501 /* GoogleInterchangeUtilities.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6B235860204C1757499E4802286368C4 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				29EC22F5EB1FDFBE8779B53273B34627 /* Firebase.h */,
+			);
+			name = Analytics;
+			sourceTree = "<group>";
+		};
+		7C409AE6BCF553ABEDEAEFED14D0452E /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				6B235860204C1757499E4802286368C4 /* Analytics */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				C7FED9CD22CE586BC66656A1C13A301C /* Pods */,
-				1CAD65E5D33283D0DAA4AFC474F4D817 /* Products */,
-				D73759C2A297AFD7FE34C6F712B9B1AF /* Targets Support Files */,
+				122DA2E5084A4393C29BE363C764795C /* Frameworks */,
+				3900710DB43C5B7BB00E3DFE8BA393B6 /* Pods */,
+				16EE0611903B06B324F496E3A521AE3F /* Products */,
+				3C5355F1AEEDD200A6073C5C0084E7A2 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		87141F7DDDC279CC7BE5823C288995B1 /* Frameworks */ = {
+		7FFE48B9768D64F59AF478A6E1A43995 /* GoogleInterchangeUtilities */ = {
 			isa = PBXGroup;
 			children = (
-				35025DD301554303A119274FBF8EE15C /* GoogleUtilities.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		8739F3F1704841AEC94416A46153DE18 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AEC1B886095706A3F9DEFE043A14DF47 /* GoogleNetworkingUtilities.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		965E6826E279BEF7B3CA9A4A01BFD0C9 /* FirebaseStorage */ = {
-			isa = PBXGroup;
-			children = (
-				4025CB8954820958BC658A286880617D /* Frameworks */,
-			);
-			path = FirebaseStorage;
-			sourceTree = "<group>";
-		};
-		9B819E42F90DB730286B85EF8165F27D /* GoogleInterchangeUtilities */ = {
-			isa = PBXGroup;
-			children = (
-				1FD76B11933228E2434375AD39F5F1B8 /* Frameworks */,
+				6849FE0B861D8D867417C9053E832CB9 /* Frameworks */,
 			);
 			path = GoogleInterchangeUtilities;
 			sourceTree = "<group>";
 		};
-		A237D2D5FEB8F36D97AA2539B5E9D34C /* GoogleNetworkingUtilities */ = {
+		8C459F53D803CB438930352FBA23DA88 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8739F3F1704841AEC94416A46153DE18 /* Frameworks */,
-			);
-			path = GoogleNetworkingUtilities;
-			sourceTree = "<group>";
-		};
-		A36386A92DF30353C7ED642A63197EE3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				185BC64BB0FAAD1C467869A5D528559E /* FirebaseDatabase.framework */,
+				60AB2FCD1B1F238E60B8F1B94CFB1350 /* GoogleSymbolUtilities.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B438F438666FAEA94013231A5E7B9057 /* FirebaseAuth */ = {
+		9B99E46721ABB3B9DB4AC5BF45FDF4D1 /* Pods-IbentoTests */ = {
 			isa = PBXGroup;
 			children = (
-				5A6995B4AD4E70EB7FA466552C95ED3A /* Frameworks */,
+				38F15DBA9E86B657BC09DB23FE2FE879 /* Info.plist */,
+				148C578AF58E36FB4549D62ACFDA82B9 /* Pods-IbentoTests.modulemap */,
+				98360A6EE1A15C50B2275A7263949DBD /* Pods-IbentoTests-acknowledgements.markdown */,
+				8CEC171CC32A2B457CB7A8F0C4FCF8ED /* Pods-IbentoTests-acknowledgements.plist */,
+				D5D2D99C73CA4E500BDA14E62D0402DD /* Pods-IbentoTests-dummy.m */,
+				B3CF129780C4920C11789E8E87339A1F /* Pods-IbentoTests-frameworks.sh */,
+				C716BAA5FABBD2711EF6593521907CB0 /* Pods-IbentoTests-resources.sh */,
+				7BE94A3D46104FC75F4957A5F33B70F7 /* Pods-IbentoTests-umbrella.h */,
+				0CBA35CBF9FAE571ED6A0BC33FBCDAE7 /* Pods-IbentoTests.debug.xcconfig */,
+				02BD2814188DA672538F08D6BA35F206 /* Pods-IbentoTests.release.xcconfig */,
 			);
-			path = FirebaseAuth;
+			name = "Pods-IbentoTests";
+			path = "Target Support Files/Pods-IbentoTests";
 			sourceTree = "<group>";
 		};
-		B9CC7BDA7E82E1A08FCAA4AB64F2CC4F /* GoogleSymbolUtilities */ = {
+		9D159702398BF27A6F5BA4262C681EFE /* NVActivityIndicatorView */ = {
 			isa = PBXGroup;
 			children = (
-				E3339BB0E8199E2CA7F63548E2936510 /* Frameworks */,
+				3677F3E2A07D703A2A295B08401AA8ED /* NVActivityIndicatorAnimationBallBeat.swift */,
+				81FB889E42DA58C105A812CCCDD8260A /* NVActivityIndicatorAnimationBallClipRotate.swift */,
+				BD39DD19280182B74CA7389ACBF288EA /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift */,
+				6323E4E54CEA1818F45CA66193EAD6DA /* NVActivityIndicatorAnimationBallClipRotatePulse.swift */,
+				83F51CFD46244FACEA7A11F0F41D43E3 /* NVActivityIndicatorAnimationBallGridBeat.swift */,
+				B7C7F0FBBA076916500AC73BC31764D7 /* NVActivityIndicatorAnimationBallGridPulse.swift */,
+				C30525F3F1E953481216ED7D3889AFD6 /* NVActivityIndicatorAnimationBallPulse.swift */,
+				DFBDB7438097D041A8A9930853829DF5 /* NVActivityIndicatorAnimationBallPulseRise.swift */,
+				99B280BFF2FFF54A24256D791CCD9D04 /* NVActivityIndicatorAnimationBallPulseSync.swift */,
+				CC1D7B43E8CD447D75E2019FFEFE1DDC /* NVActivityIndicatorAnimationBallRotate.swift */,
+				1A95726E194ABF54C86834E7F263CDD7 /* NVActivityIndicatorAnimationBallRotateChase.swift */,
+				4FCC87F20FB94F7E0CF4E3E0BF044DA7 /* NVActivityIndicatorAnimationBallScale.swift */,
+				8EF2C0D60A2652DA64415A377C25CF4B /* NVActivityIndicatorAnimationBallScaleMultiple.swift */,
+				2A047B8682ABA8E099EAB1BF9837E682 /* NVActivityIndicatorAnimationBallScaleRipple.swift */,
+				9A563B8CFAD54B641F8C6F0F648A8FEA /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift */,
+				5737726825F77499AD4D7D8FB74DE1B4 /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift */,
+				BEC18352A02C3D588C71F1DCF5FBF3E3 /* NVActivityIndicatorAnimationBallTrianglePath.swift */,
+				B4D4E8BDB0169BF8DB5A0C3850F36D50 /* NVActivityIndicatorAnimationBallZigZag.swift */,
+				5B269EEF5A9184D578A79463E3249362 /* NVActivityIndicatorAnimationBallZigZagDeflect.swift */,
+				FE4A35E3F1D31A81BE8AE0DBA3210EC5 /* NVActivityIndicatorAnimationBlank.swift */,
+				8A956CC6FA5F0E3F924D550EB7BFE51A /* NVActivityIndicatorAnimationCubeTransition.swift */,
+				3295863CAFF1988F1BB0695383653154 /* NVActivityIndicatorAnimationDelegate.swift */,
+				7705EF3A3D6436F902A5E995666807A6 /* NVActivityIndicatorAnimationLineScale.swift */,
+				8AEA10B97F9614EC1CADFC967AF7111F /* NVActivityIndicatorAnimationLineScaleParty.swift */,
+				086CFF15A0FC3FF6C4C5914501A2FAB4 /* NVActivityIndicatorAnimationLineScalePulseOut.swift */,
+				D08059B856EC557CE65BB00086341612 /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift */,
+				E4EFEF059E3C2A4D29AADFC2B991701F /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift */,
+				484D5832D487A2DF5C0425428F86F9E2 /* NVActivityIndicatorAnimationPacman.swift */,
+				517CF183DF1B6F04B1863ABDE57EAF65 /* NVActivityIndicatorAnimationSemiCircleSpin.swift */,
+				B5CE9758A0E825FC072515EBB0C52802 /* NVActivityIndicatorAnimationSquareSpin.swift */,
+				C87F065E9B7AA25C780FEDC82D6885EB /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */,
+				A424E821E299E6817B08E25E436DC77D /* NVActivityIndicatorShape.swift */,
+				619429151534F3F780715E2C60999B91 /* NVActivityIndicatorView.swift */,
+				006DAAA135057D0868567B1E18431940 /* NVActivityIndicatorViewable.swift */,
+				DE4384BA0C0B3C52A43AD3286D0F936B /* Support Files */,
 			);
-			path = GoogleSymbolUtilities;
+			path = NVActivityIndicatorView;
 			sourceTree = "<group>";
 		};
-		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+		AB8CFDB984042B1EC4846131222614BE /* FirebaseDatabase */ = {
 			isa = PBXGroup;
 			children = (
-				3DCAB2B7CDE207B3958B6CB957FCC758 /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C7FED9CD22CE586BC66656A1C13A301C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D1B7F6861AE07695DF169E2285241507 /* Firebase */,
-				4F874B376599FD77EF59A3D4AC9B1C6C /* FirebaseAnalytics */,
-				B438F438666FAEA94013231A5E7B9057 /* FirebaseAuth */,
-				C9149CAEFF9578BAA0A20BAE604ADD8A /* FirebaseDatabase */,
-				7CA4D5DC680A626A99EFEB6AF0D077BE /* FirebaseInstanceID */,
-				965E6826E279BEF7B3CA9A4A01BFD0C9 /* FirebaseStorage */,
-				9B819E42F90DB730286B85EF8165F27D /* GoogleInterchangeUtilities */,
-				A237D2D5FEB8F36D97AA2539B5E9D34C /* GoogleNetworkingUtilities */,
-				B9CC7BDA7E82E1A08FCAA4AB64F2CC4F /* GoogleSymbolUtilities */,
-				4813287E6E16C4CEB6C48995A1692B60 /* GoogleUtilities */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		C9149CAEFF9578BAA0A20BAE604ADD8A /* FirebaseDatabase */ = {
-			isa = PBXGroup;
-			children = (
-				A36386A92DF30353C7ED642A63197EE3 /* Frameworks */,
+				346FB40EC49B054C7D23B0883BCD87B7 /* Frameworks */,
 			);
 			path = FirebaseDatabase;
 			sourceTree = "<group>";
 		};
-		D1B7F6861AE07695DF169E2285241507 /* Firebase */ = {
+		B139DDF995269F5027E4134C2AF417FE /* GoogleSymbolUtilities */ = {
 			isa = PBXGroup;
 			children = (
-				482B2F4B00A33E42BD06F4C2E345532B /* Analytics */,
+				8C459F53D803CB438930352FBA23DA88 /* Frameworks */,
 			);
-			path = Firebase;
+			path = GoogleSymbolUtilities;
 			sourceTree = "<group>";
 		};
-		D265FF6229C95FED796AAF0C12A3C160 /* Pods-ProvoEvents */ = {
+		B86D4DCA2E4CA27FD3EAF19E3A1E0326 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B79C9AB0F757B63507FD83882788D13A /* Info.plist */,
-				5C7551742C437FD4B3572AC2118816D1 /* Pods-ProvoEvents.modulemap */,
-				5F201DAB064790D7FEE3A639FE2AF444 /* Pods-ProvoEvents-acknowledgements.markdown */,
-				5BB172B2283E6A4E65A3A6DDFAFA50B6 /* Pods-ProvoEvents-acknowledgements.plist */,
-				730729BFA98C4EE7ED93D3A0DCB97C4D /* Pods-ProvoEvents-dummy.m */,
-				A3A7467365B4AC1DF2E0D3B97EC9CEB4 /* Pods-ProvoEvents-frameworks.sh */,
-				FA9096C2BCC097BF342FB1CDDA1FBA81 /* Pods-ProvoEvents-resources.sh */,
-				BDA867EE5B0C608F494D797EF9643D14 /* Pods-ProvoEvents-umbrella.h */,
-				37DC0C0D8A179A6B76DE53362757151E /* Pods-ProvoEvents.debug.xcconfig */,
-				978C71BFD53C02679E96FA5418A6E8DA /* Pods-ProvoEvents.release.xcconfig */,
-			);
-			name = "Pods-ProvoEvents";
-			path = "Target Support Files/Pods-ProvoEvents";
-			sourceTree = "<group>";
-		};
-		D73759C2A297AFD7FE34C6F712B9B1AF /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				D265FF6229C95FED796AAF0C12A3C160 /* Pods-ProvoEvents */,
-				EBBEC03CD787BDA0F3DED8F3599A2208 /* Pods-ProvoEventsTests */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		E3339BB0E8199E2CA7F63548E2936510 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EDEC92271A3BA774BD0A867169642C15 /* GoogleSymbolUtilities.framework */,
+				96B0FFCCE4274F32F14D82B36723962F /* GoogleUtilities.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EBBEC03CD787BDA0F3DED8F3599A2208 /* Pods-ProvoEventsTests */ = {
+		BF4721232D9D88D364CBA44F25EFD504 /* FirebaseStorage */ = {
 			isa = PBXGroup;
 			children = (
-				C36FE24ADDC6CBFB37BFBAC63119A5C9 /* Info.plist */,
-				2BC99F2FF0CD0D98236370CE6869B626 /* Pods-ProvoEventsTests.modulemap */,
-				8BB4CC5623F2E88D42106838D3A88385 /* Pods-ProvoEventsTests-acknowledgements.markdown */,
-				F2F1D87F8701C1FB9F628746BE32B2B9 /* Pods-ProvoEventsTests-acknowledgements.plist */,
-				E2CC09BE5D697F4E8C7EBA9D2B806893 /* Pods-ProvoEventsTests-dummy.m */,
-				18B9C88879C3A963F453245192DDCC90 /* Pods-ProvoEventsTests-frameworks.sh */,
-				61A13AFADE3DA00E9AE01D9F62B1F125 /* Pods-ProvoEventsTests-resources.sh */,
-				5397B71B6A229E244644AF663BBC9C75 /* Pods-ProvoEventsTests-umbrella.h */,
-				BC50EF37AE6A31BE9D6AE353A8AD5E8A /* Pods-ProvoEventsTests.debug.xcconfig */,
-				90F7559F26704D1C4B440F7316455E71 /* Pods-ProvoEventsTests.release.xcconfig */,
+				1C679BF0F46FEC30E6391AAD24DA2211 /* Frameworks */,
 			);
-			name = "Pods-ProvoEventsTests";
-			path = "Target Support Files/Pods-ProvoEventsTests";
+			path = FirebaseStorage;
+			sourceTree = "<group>";
+		};
+		C7FA88222DC00EDEE657EB9C7605C621 /* GoogleUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				B86D4DCA2E4CA27FD3EAF19E3A1E0326 /* Frameworks */,
+			);
+			path = GoogleUtilities;
+			sourceTree = "<group>";
+		};
+		DE4384BA0C0B3C52A43AD3286D0F936B /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				785CED62CEF11B0422466AE7D336F2C8 /* Info.plist */,
+				475A51ACC152B6CB2100FF7045E1AD6C /* NVActivityIndicatorView.modulemap */,
+				943988ABC47183553DBACFFC9DC9813B /* NVActivityIndicatorView.xcconfig */,
+				003ACD0909E1B25705767D10C982006C /* NVActivityIndicatorView-dummy.m */,
+				E062A05CD290075BE4BBF5A11C0C8682 /* NVActivityIndicatorView-prefix.pch */,
+				98B72C5E4DB9F1DD162DC242566A758D /* NVActivityIndicatorView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/NVActivityIndicatorView";
+			sourceTree = "<group>";
+		};
+		DFDE779C6E5D3445E0CB8CCB8D424449 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A817CAE99C81EE68006DC1E60E295C0A /* Foundation.framework */,
+				23016F69B2480F44D0BB5526B39192FA /* QuartzCore.framework */,
+				091D54A73E1E8BB182C9D7D245AF1C2F /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		E927A7025EAC3A11527F84B21B6B5E51 /* FirebaseAuth */ = {
+			isa = PBXGroup;
+			children = (
+				FFCF70B9B88A036F96FBB45838DEB024 /* Frameworks */,
+			);
+			path = FirebaseAuth;
+			sourceTree = "<group>";
+		};
+		F84F95F887035589AB252B21DF1F2628 /* GoogleNetworkingUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				2716831FF80D93502BFF9095961ADBAC /* Frameworks */,
+			);
+			path = GoogleNetworkingUtilities;
+			sourceTree = "<group>";
+		};
+		FFCF70B9B88A036F96FBB45838DEB024 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C1D9CAC66899C3F5A5E9EF60DA6EF169 /* FirebaseAuth.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		0383AA910320458CA9E47ADF6D213A2D /* Headers */ = {
+		41A330D589E372985EA8D79D5E1CD14A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3F4E424C544F9D7DEB2494C714A45B3 /* Pods-ProvoEvents-umbrella.h in Headers */,
+				2F465CB061A9C392135D10DEFAA8EDBD /* Pods-Ibento-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C3E8C78BD268C51F5783F64FF83B66D8 /* Headers */ = {
+		A36EEB15142A898AEF8A828A02B89FF1 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EBF428DAD91FBCF63A0D9B7481833E4 /* Pods-ProvoEventsTests-umbrella.h in Headers */,
+				8C4AC92E809E76A7894E9C448952ED07 /* NVActivityIndicatorView-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E589A77FF1D4621865964DFC79274761 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E274EF7D33FD84094B634F360539556C /* Pods-IbentoTests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		25DDEBC23BA9A0CACA1EB0A7A3B05C18 /* Pods-ProvoEventsTests */ = {
+		1EB2E602EF253317715978136B056B93 /* Pods-Ibento */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 062891C363D060183C2DC619A6E17660 /* Build configuration list for PBXNativeTarget "Pods-ProvoEventsTests" */;
+			buildConfigurationList = 723EF11E23E669F42C412B78431FD77A /* Build configuration list for PBXNativeTarget "Pods-Ibento" */;
 			buildPhases = (
-				E7CD05EC0238E69EFD2AD2F2A9F5478E /* Sources */,
-				946068E86A5FE0EE1EBAAEDFBBA4FD35 /* Frameworks */,
-				C3E8C78BD268C51F5783F64FF83B66D8 /* Headers */,
+				E7D54FD167105BD2FF9B54D0A74E0323 /* Sources */,
+				7E3EC8C1E7E540249015ED13D6EE42B4 /* Frameworks */,
+				41A330D589E372985EA8D79D5E1CD14A /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				7F840C32ACCC83B0FD96CBEA6798F7BC /* PBXTargetDependency */,
 			);
-			name = "Pods-ProvoEventsTests";
-			productName = "Pods-ProvoEventsTests";
-			productReference = A065F8173B733B41A72710570CA22743 /* Pods_ProvoEventsTests.framework */;
+			name = "Pods-Ibento";
+			productName = "Pods-Ibento";
+			productReference = 0035AB32B9A99315CBEB7E72DAF92DF9 /* Pods_Ibento.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		B4CACE49746F6140BB1FAE369FBFDC11 /* Pods-ProvoEvents */ = {
+		9B6952328E01AF503BE7C2A3A2FCE3D7 /* Pods-IbentoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 01D1FAD6BDBDF1CABF9A16E9C56D4993 /* Build configuration list for PBXNativeTarget "Pods-ProvoEvents" */;
+			buildConfigurationList = 6789C6087BCF2ECB8F902B6146EE15B3 /* Build configuration list for PBXNativeTarget "Pods-IbentoTests" */;
 			buildPhases = (
-				BAFEF1C8528CE45FCE3A5EBDBABAA3B5 /* Sources */,
-				E2C38D0BD6D816383D4178C7BC6B2EE8 /* Frameworks */,
-				0383AA910320458CA9E47ADF6D213A2D /* Headers */,
+				58523461A9D81DBC25D5D26D73A75EFC /* Sources */,
+				4C4D39B3F064CEBBCDA531F0D1B5ECAA /* Frameworks */,
+				E589A77FF1D4621865964DFC79274761 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Pods-ProvoEvents";
-			productName = "Pods-ProvoEvents";
-			productReference = 722C5E0BDCDF28D982DF4BE7AE6DB50C /* Pods_ProvoEvents.framework */;
+			name = "Pods-IbentoTests";
+			productName = "Pods-IbentoTests";
+			productReference = 26E68DC56CAAF1C940617E6D1327AA4C /* Pods_IbentoTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BDDC4DBF7654960710F7FF7B28F35033 /* NVActivityIndicatorView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6D942DA7F9BFE492C69F05484A05AA7 /* Build configuration list for PBXNativeTarget "NVActivityIndicatorView" */;
+			buildPhases = (
+				DB150A0884E6AF133279EBE9D2045532 /* Sources */,
+				ECC6720BD354F59E06677636CF7BF9BB /* Frameworks */,
+				A36EEB15142A898AEF8A828A02B89FF1 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NVActivityIndicatorView;
+			productName = NVActivityIndicatorView;
+			productReference = DB03B07D1CD00EA95316E0F54D756CA0 /* NVActivityIndicatorView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -405,36 +593,151 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 1CAD65E5D33283D0DAA4AFC474F4D817 /* Products */;
+			productRefGroup = 16EE0611903B06B324F496E3A521AE3F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B4CACE49746F6140BB1FAE369FBFDC11 /* Pods-ProvoEvents */,
-				25DDEBC23BA9A0CACA1EB0A7A3B05C18 /* Pods-ProvoEventsTests */,
+				BDDC4DBF7654960710F7FF7B28F35033 /* NVActivityIndicatorView */,
+				1EB2E602EF253317715978136B056B93 /* Pods-Ibento */,
+				9B6952328E01AF503BE7C2A3A2FCE3D7 /* Pods-IbentoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		BAFEF1C8528CE45FCE3A5EBDBABAA3B5 /* Sources */ = {
+		58523461A9D81DBC25D5D26D73A75EFC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F42FEA57C6D6A061DE8D05C3667D890E /* Pods-ProvoEvents-dummy.m in Sources */,
+				882AC5431EFBF50D2A1ACAD0B90EFFB1 /* Pods-IbentoTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E7CD05EC0238E69EFD2AD2F2A9F5478E /* Sources */ = {
+		DB150A0884E6AF133279EBE9D2045532 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D91AAEB3E9B8CC323F28E8F447D40AF /* Pods-ProvoEventsTests-dummy.m in Sources */,
+				E30D46DC367C45B2AE57C90C2600227C /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
+				A01E623A2AA0F1DECB58A7BC7283CFD3 /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */,
+				1145D6930C6793AF2AF6C1A5AC78DA07 /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift in Sources */,
+				4D22781282756EAC3422741CB19401B2 /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */,
+				09DBDF3D3492148D90B2AD7F555199DB /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */,
+				546CBC77A6CFC2F293C184677650FD48 /* NVActivityIndicatorAnimationBallGridPulse.swift in Sources */,
+				5197DB2C8706301DD957BBF12F65441A /* NVActivityIndicatorAnimationBallPulse.swift in Sources */,
+				EA359A3FBF7FB865AB94C7D09796F10B /* NVActivityIndicatorAnimationBallPulseRise.swift in Sources */,
+				B7C4D4F966506CB018B886010AF3F551 /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */,
+				285E3510E161AA62FDD3FA3F4EE19206 /* NVActivityIndicatorAnimationBallRotate.swift in Sources */,
+				DF2B95A1B07342DB88F226B913978F90 /* NVActivityIndicatorAnimationBallRotateChase.swift in Sources */,
+				682DE32A4C088F39B441E35933564BB9 /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
+				8CEE33181E65FA6744EEB3444D162F7E /* NVActivityIndicatorAnimationBallScaleMultiple.swift in Sources */,
+				038DDB0012EB2E0B6D7FE15C201CF258 /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */,
+				170124EB9E1CF2F37999849203BF584F /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */,
+				48645EBE11A8BAD596E0107763FE8239 /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
+				F8BEBEDE7A80A6B67139D473F0208907 /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */,
+				13FD2444EA0322CD8DDEB1FDCFD5A263 /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */,
+				663B9304E664A5DF9AF7CA8E76B2706C /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */,
+				395884B15331DC1459292A072651DFBF /* NVActivityIndicatorAnimationBlank.swift in Sources */,
+				56CF179D3887CCAB5DAF25FCAEF00CB5 /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
+				F171063E08D01F981CA00BEB27E3F37C /* NVActivityIndicatorAnimationDelegate.swift in Sources */,
+				BFE22E90824FA5D614C4678F95A759E0 /* NVActivityIndicatorAnimationLineScale.swift in Sources */,
+				54DF1B99C159AB05E3C357D4FC75E66C /* NVActivityIndicatorAnimationLineScaleParty.swift in Sources */,
+				4E51AFA380EE9E94765D8CA26076FC15 /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */,
+				9CFD2FA5AFEA6BC796E446C3A5CE422A /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift in Sources */,
+				D31238BDCE95C73192E8B78E5024448D /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
+				1EE57F6FDB64BA79ECE939E536F582AF /* NVActivityIndicatorAnimationPacman.swift in Sources */,
+				00D65F81BFD05324F2ECE8C7878D4DDE /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */,
+				8F8CCFEDD5A7B1F53AB19875F6DE3121 /* NVActivityIndicatorAnimationSquareSpin.swift in Sources */,
+				DB10ECA4665E82191A02F507AF685701 /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */,
+				0C40CC39274674DA872097B2A8ADC836 /* NVActivityIndicatorShape.swift in Sources */,
+				4F0C37B29405656F70CA5DC3C63BE326 /* NVActivityIndicatorView-dummy.m in Sources */,
+				F7ED4156AF8249504719BF864314F22C /* NVActivityIndicatorView.swift in Sources */,
+				2EF1A056C18B60C8947696A27B120AA6 /* NVActivityIndicatorViewable.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7D54FD167105BD2FF9B54D0A74E0323 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBAFFF318E8822EB0F3B1014C9D7772A /* Pods-Ibento-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7F840C32ACCC83B0FD96CBEA6798F7BC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = NVActivityIndicatorView;
+			target = BDDC4DBF7654960710F7FF7B28F35033 /* NVActivityIndicatorView */;
+			targetProxy = B41C9CB04A1732838E08296416D701E7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		0033B06B017B693AAF243B823C1F7E96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 02BD2814188DA672538F08D6BA35F206 /* Pods-IbentoTests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-IbentoTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-IbentoTests/Pods-IbentoTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_IbentoTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		36E1B2B35F946B762ED34FA6FF37FD91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 943988ABC47183553DBACFFC9DC9813B /* NVActivityIndicatorView.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/NVActivityIndicatorView/NVActivityIndicatorView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NVActivityIndicatorView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/NVActivityIndicatorView/NVActivityIndicatorView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = NVActivityIndicatorView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		3FA451D268613890FA8A5A03801E11D5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -470,39 +773,6 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		40B3EF7B6A483543CCA388E3E8BF729F /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 90F7559F26704D1C4B440F7316455E71 /* Pods-ProvoEventsTests.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-ProvoEventsTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_ProvoEventsTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -548,75 +818,9 @@
 			};
 			name = Debug;
 		};
-		65FDA90C53F6948B613B398C12DB3F7D /* Debug */ = {
+		805E5526975655CE2B35D74A8AEDD0E6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 37DC0C0D8A179A6B76DE53362757151E /* Pods-ProvoEvents.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-ProvoEvents/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_ProvoEvents;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		A68105E395FD2D980A924BD9FA59B0A1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC50EF37AE6A31BE9D6AE353A8AD5E8A /* Pods-ProvoEventsTests.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-ProvoEventsTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_ProvoEventsTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		E4C0E5E3D4B2496A540B3FC2CE9A3D59 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 978C71BFD53C02679E96FA5418A6E8DA /* Pods-ProvoEvents.release.xcconfig */;
+			baseConfigurationReference = 559C1F9D7B8DABD03992128F68B05B5B /* Pods-Ibento.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -627,18 +831,18 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-ProvoEvents/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-Ibento/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-Ibento/Pods-Ibento.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_ProvoEvents;
+				PRODUCT_NAME = Pods_Ibento;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -647,32 +851,137 @@
 			};
 			name = Release;
 		};
+		A0E2F77C6088BAB3482C549A12250DEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 943988ABC47183553DBACFFC9DC9813B /* NVActivityIndicatorView.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/NVActivityIndicatorView/NVActivityIndicatorView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NVActivityIndicatorView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/NVActivityIndicatorView/NVActivityIndicatorView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = NVActivityIndicatorView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		AB80107C073B0F853B7FA95B14DDABA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F64117E04B003CA91AAA744B9558601E /* Pods-Ibento.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Ibento/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Ibento/Pods-Ibento.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Ibento;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B95805095DE7F91810773067C44BA135 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0CBA35CBF9FAE571ED6A0BC33FBCDAE7 /* Pods-IbentoTests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-IbentoTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-IbentoTests/Pods-IbentoTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_IbentoTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		01D1FAD6BDBDF1CABF9A16E9C56D4993 /* Build configuration list for PBXNativeTarget "Pods-ProvoEvents" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				65FDA90C53F6948B613B398C12DB3F7D /* Debug */,
-				E4C0E5E3D4B2496A540B3FC2CE9A3D59 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		062891C363D060183C2DC619A6E17660 /* Build configuration list for PBXNativeTarget "Pods-ProvoEventsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A68105E395FD2D980A924BD9FA59B0A1 /* Debug */,
-				40B3EF7B6A483543CCA388E3E8BF729F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E62115DE8C09934BF8D2FE5D15FED1E /* Debug */,
 				3FA451D268613890FA8A5A03801E11D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6789C6087BCF2ECB8F902B6146EE15B3 /* Build configuration list for PBXNativeTarget "Pods-IbentoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B95805095DE7F91810773067C44BA135 /* Debug */,
+				0033B06B017B693AAF243B823C1F7E96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		723EF11E23E669F42C412B78431FD77A /* Build configuration list for PBXNativeTarget "Pods-Ibento" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB80107C073B0F853B7FA95B14DDABA5 /* Debug */,
+				805E5526975655CE2B35D74A8AEDD0E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6D942DA7F9BFE492C69F05484A05AA7 /* Build configuration list for PBXNativeTarget "NVActivityIndicatorView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36E1B2B35F946B762ED34FA6FF37FD91 /* Debug */,
+				A0E2F77C6088BAB3482C549A12250DEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -30,7 +30,7 @@ class MapVC: UIViewController {
     var handleGetEventLocDelegate: HandleGetEventLoc? = nil
     var generalSpan: MKCoordinateSpan {
         get{
-            return MKCoordinateSpanMake(0.07, 0.07)
+            return MKCoordinateSpanMake(0.15, 0.15)
         }
     }
 
@@ -264,7 +264,7 @@ class MapVC: UIViewController {
         }
     }
     
-    func adjustMapCenter(centerCoord: CLLocationCoordinate2D, span: MKCoordinateSpan = MKCoordinateSpanMake(0.07, 0.07)){
+    func adjustMapCenter(centerCoord: CLLocationCoordinate2D, span: MKCoordinateSpan = MKCoordinateSpanMake(0.15, 0.15)){
         let curSpan = mapView.region.span
         let span = MKCoordinateSpan(latitudeDelta: span.latitudeDelta, longitudeDelta: span.longitudeDelta)
         if curSpan.latitudeDelta < span.latitudeDelta{

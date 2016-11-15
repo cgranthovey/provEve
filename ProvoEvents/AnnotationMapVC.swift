@@ -224,16 +224,27 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
             self.mapView.addAnnotation(eventAnnotation)
         }
     }
+    
+    var tapGest = UITapGestureRecognizer()
+    let currentAnnoSelected = MKAnnotationView()
+    func annoTapped(tapGest: UITapGestureRecognizer){
+        if let annoView = tapGest.view as? MKAnnotationView{
+            if let key = dictEnterTagForEventKey[annoView.tag]{
+                let event = dictEnterKeyForEvent[key]
+                performSegueWithIdentifier("EventDetailsVC", sender: event)
+            }
+        }
+    }
 }
 
 
 
 extension AnnotationMapVC: MKMapViewDelegate{
+
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation{
             return nil
         }
-
         let myEvent = (annotation as? customMKPointAnnotation)?.event
         let reuseId = "pin"
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
@@ -247,16 +258,29 @@ extension AnnotationMapVC: MKMapViewDelegate{
         button.addTarget(self, action: #selector(AnnotationMapVC.annotationBtnTapped(_:)), forControlEvents: .TouchUpInside)
         button.imageView?.contentMode = .ScaleAspectFit
         button.tag = currentBtnTag
+        pinView?.tag = currentBtnTag
+        
         self.dictEnterTagForEventKey[currentBtnTag] = myEvent!.key
         currentBtnTag = currentBtnTag + 1
         pinView?.leftCalloutAccessoryView = button
         return pinView
+    }
+    
+    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
+        view.removeGestureRecognizer(tapGest)
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        tapGest = UITapGestureRecognizer(target: self, action: #selector(AnnotationMapVC.annoTapped(_:)))
+        view.addGestureRecognizer(tapGest)  //if we add gesture recognizer in the ViewForAnnotation function above instead of showing the call out when we tap the pin, the event details screen shows right away
     }
 
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         geoFireQuery()
     }
 }
+
+
 
 
 

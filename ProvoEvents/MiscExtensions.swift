@@ -42,10 +42,8 @@ extension MKCoordinateRegion{
         let centerBottom = CLLocationCoordinate2D(latitude: bottomLatDegrees, longitude: centerLongDegrees)
         
         if CLLocationCoordinate2DIsValid(centerTop) && CLLocationCoordinate2DIsValid(centerBottom){
-            print("trueeee")
             return true
         } else{
-            print("falseeeee")
             return false
         }
     }

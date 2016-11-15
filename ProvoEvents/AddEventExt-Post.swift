@@ -114,19 +114,25 @@ extension AddEventVC: yesSelectedProtocol{
         self.view.addSubview(exit)
         self.view.bringSubviewToFront(exit)
         
-        self.spinIndicator = UIActivityIndicatorView()
-        self.spinIndicator.center = self.loadingView.center
-        self.spinIndicator.color = UIColor.whiteColor()
-        self.spinIndicator.startAnimating()
-        self.spinIndicator.alpha = 0
-        self.loadingView.addSubview(self.spinIndicator)
+//        self.spinIndicator = UIActivityIndicatorView()
+//        self.spinIndicator.center = self.loadingView.center
+//        self.spinIndicator.color = UIColor.whiteColor()
+//        self.spinIndicator.startAnimating()
+//        self.spinIndicator.alpha = 0
+//        self.loadingView.addSubview(self.spinIndicator)
+        
+        actView.startAnimation()
+        actView.center = self.view.center
+        actView.alpha = 0
+        self.view.addSubview(actView)
         
         UIView.animateWithDuration(0.5, animations: {
             self.loadingView.alpha = 0.8
         }) { (true) in
             UIView.animateWithDuration(0.5, animations: {
                 self.exit.alpha = 1
-                self.spinIndicator.alpha = 1
+                self.actView.alpha = 1
+    //            self.spinIndicator.alpha = 1
                 }, completion: nil)
         }
     }
@@ -178,7 +184,9 @@ extension AddEventVC: yesSelectedProtocol{
             UIView.animateWithDuration(0.3, animations: {
                 self.loadingView.alpha = 0
                 self.exit.alpha = 0
+                self.actView.alpha = 0
             }) { (true) in
+                self.actView.removeFromSuperview()
                 self.loadingView.removeFromSuperview()
                 self.exit.removeFromSuperview()
             }

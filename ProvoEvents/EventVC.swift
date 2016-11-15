@@ -36,8 +36,10 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.loadData), name: "loadDataAfterNewEvent", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.clearTableViewAndReload), name: "loadDataAfterNewEvent", object: nil)
     }
+    
+    
     
     func setUpLocationManagerAndTableView(){
         if CLLocationManager.authorizationStatus() == .NotDetermined {
@@ -138,9 +140,16 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     //////////////////////////////////////////////////////
     //loadData
     
+    func clearTableViewAndReload(){
+        events = []
+        EventsCategorized = [:]
+        tableView.reloadData()
+        loadData()
+    }
+    
     var geoQuery: GFRegionQuery!
     func loadData(){
-        
+        print("load data called")
         if geoQuery != nil{
             print("remove all observers")
             geoQuery.removeAllObservers()       // prevents multiple geoQuery requests if internet connection is poor and users tries making multiple requests by pulling down charger
@@ -211,9 +220,14 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                                         }
                                     }
                                     let post = Event(key: key, dict: postDict, isLiked: isEventLiked)
-                                    self.events.append(post)
-                                    self.events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
-                                    self.keyOfLast = post.key
+                                    
+                                    if !post.beforeToday(){
+                                        
+                                        self.events.append(post)
+                                        self.events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
+                                        self.keyOfLast = post.key
+                                    }
+
                                 }
                             }
                             timesIterated = timesIterated + 1
@@ -258,17 +272,35 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             likesArray.append(holdKey)
             var section = 0
             for keyEventsCategorized in 0 ..< 4{
+                //self.EventsCategorized = self.events.NewDictWithTimeCategories()
+
                 
-                if EventsCategorized[keyEventsCategorized] != nil{
-                
-                    if let i = EventsCategorized[keyEventsCategorized]?.indexOf({$0.key == holdKey}){
+                if let eventArray = EventsCategorized[keyEventsCategorized]{
+                    if let i = eventArray.indexOf({$0.key == holdKey}){
+                        let event = eventArray[i]
+                        event.adjustHeartImgIsLiked(true)
                         let indexPath = NSIndexPath(forRow: i, inSection: section)
                         if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
                             cell.setHeartImgFill()
+                            return
                         }
                     }
                     section = section + 1
                 }
+                
+                
+                
+                
+//                if EventsCategorized[keyEventsCategorized] != nil{
+//                    
+//                    if let i = EventsCategorized[keyEventsCategorized]?.indexOf({$0.key == holdKey}){
+//                        let indexPath = NSIndexPath(forRow: i, inSection: section)
+//                        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
+//                            cell.setHeartImgFill()
+//                        }
+//                    }
+//                    section = section + 1
+//                }
             }
         }
     }

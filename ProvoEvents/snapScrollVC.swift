@@ -22,12 +22,17 @@ class snapScrollVC: UIViewController {
         
         //sets up 3 view controllers, addEvent first, main table 2nd and favoritsTable 3rd.  Then offsets scrollview to the middle VC
         
-        performSelector(#selector(snapScrollVC.calledLate), withObject: nil, afterDelay: 1.5)
+//        performSelector(#selector(snapScrollVC.calledLate), withObject: nil, afterDelay: 1.5)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(snapScrollVC.addEventSubmitSlide), name: "addEventSubmitSlide", object: nil)
     }
     
+    var calledOnce = false
+    
     override func viewDidAppear(animated: Bool) {
-
+        if !calledOnce{
+            calledLate()
+            calledOnce = true
+        }
 
     }
     

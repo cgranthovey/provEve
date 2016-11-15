@@ -197,7 +197,7 @@
                         <outlet property="emailField" destination="X2S-KI-prJ" id="jog-ft-aXj"/>
                         <outlet property="passwordField" destination="wdH-Ff-bpb" id="WWg-sN-JSa"/>
                         <segue destination="3L5-9P-Oqr" kind="show" identifier="createUserInfoVC" id="fqr-lP-oBX"/>
-                        <segue destination="49k-eg-QhJ" kind="show" identifier="snapScrollVC" id="mCs-H1-XKM"/>
+                        <segue destination="49k-eg-QhJ" kind="show" identifier="snapScrollVC" animates="NO" id="mCs-H1-XKM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

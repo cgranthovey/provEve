@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 import MapKit
+import NVActivityIndicatorView
 
 protocol HandleGetEventLoc {
     func getEventLoc(address:String?, name: String?, longitude: Double?, latitude: Double?, placemark: MKPlacemark?)
@@ -45,6 +46,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     var cellHold = MapPinCell()
     var exit: UIButton!
     var yesNoView: yesNoLauncher!
+    var actView: NVActivityIndicatorView!
     
     var delegate: String!
 
@@ -61,6 +63,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         yesNoView.delegate = self
         
         eventImg.image = UIImage(named: "photoAlbumColor")
+        
+        var frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        actView = NVActivityIndicatorView(frame: frame, type: .LineScale, color: UIColor.whiteColor(), padding: 0)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
@@ -329,6 +334,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     }
     
     func reset(){
+        if actView != nil{
+            actView.removeFromSuperview()
+        }
         if spinIndicator != nil{
             spinIndicator.removeFromSuperview()
         }
@@ -365,7 +373,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         imgSuccess = UIImageView(image: UIImage(named: "whiteCheck"))
         NSNotificationCenter.defaultCenter().postNotificationName("loadDataAfterNewEvent", object: nil)
         UIView.animateWithDuration(0.5, animations: {
-            self.spinIndicator.alpha = 0
+  //          self.spinIndicator.alpha = 0
+            self.actView.alpha = 0
         }) { (true) in
             self.imgSuccess.showCheckmarkAnimatedTempImg(self.view, delay: 0.1, remove: false)
             self.performSelector(#selector(AddEventVC.popOut), withObject: nil, afterDelay: 1)

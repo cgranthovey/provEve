@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import ProvoEvents
+@testable import Ibento
 
 class ProvoEventsTests: XCTestCase {
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 protocol GetDateTime {
     func getTheDateTime(date: NSDate)

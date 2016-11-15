@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6DD68AE38D22E1C90D4E95C2 /* Pods_ProvoEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CEEDFE570AF207240677E /* Pods_ProvoEvents.framework */; };
 		A10A93D01D92F54200D07E8E /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93CF1D92F54200D07E8E /* EventVC.swift */; };
 		A10A93D21D92F5D200D07E8E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93D11D92F5D200D07E8E /* Event.swift */; };
 		A10A93D41D93011700D07E8E /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93D31D93011700D07E8E /* EventCell.swift */; };
@@ -88,6 +87,8 @@
 		A1FBBD3C1D8DE86700366761 /* LoginImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FBBD3B1D8DE86700366761 /* LoginImg.swift */; };
 		A1FBBD3E1D8DE9AC00366761 /* GeneralVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */; };
 		A1FFB6F71DA6EEE3008A23EA /* PasswordReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FFB6F61DA6EEE3008A23EA /* PasswordReset.swift */; };
+		D43CCD615786C11F46DEE589 /* Pods_IbentoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94A8FD7E5ECAA0A16B2BC6D2 /* Pods_IbentoTests.framework */; };
+		EA69531C449E03B5D0B2D3F8 /* Pods_Ibento.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74171EF017F1926E7F114349 /* Pods_Ibento.framework */; };
 		F00DC745C3144A27B523A670 /* Pods_ProvoEventsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D888B180E351CC3B9136BA51 /* Pods_ProvoEventsTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -102,10 +103,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14931376E9D372D9FC811599 /* Pods-IbentoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IbentoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IbentoTests/Pods-IbentoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		15261CE4335352C84F8AB820 /* Pods-ProvoEventsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEventsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		213CEEDFE570AF207240677E /* Pods_ProvoEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProvoEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DFAFEF7A7F645CC0C7372B /* Pods-ProvoEventsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEventsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests.release.xcconfig"; sourceTree = "<group>"; };
+		74171EF017F1926E7F114349 /* Pods_Ibento.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ibento.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7427AF2B94B831474D664A5B /* Pods-IbentoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IbentoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IbentoTests/Pods-IbentoTests.release.xcconfig"; sourceTree = "<group>"; };
 		80F2A0096ED62EADEC04EF20 /* Pods-ProvoEvents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEvents.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents.debug.xcconfig"; sourceTree = "<group>"; };
+		94A8FD7E5ECAA0A16B2BC6D2 /* Pods_IbentoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IbentoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10A93CF1D92F54200D07E8E /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		A10A93D11D92F5D200D07E8E /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		A10A93D31D93011700D07E8E /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
@@ -201,8 +206,10 @@
 		A1FBBD3B1D8DE86700366761 /* LoginImg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginImg.swift; sourceTree = "<group>"; };
 		A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralVC.swift; sourceTree = "<group>"; };
 		A1FFB6F61DA6EEE3008A23EA /* PasswordReset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordReset.swift; sourceTree = "<group>"; };
+		BCB49E2A11DE9D58AA208A2C /* Pods-Ibento.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ibento.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ibento/Pods-Ibento.debug.xcconfig"; sourceTree = "<group>"; };
 		C3AC09ECD68FACB7EF481B7B /* Pods-ProvoEvents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEvents.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents.release.xcconfig"; sourceTree = "<group>"; };
 		D888B180E351CC3B9136BA51 /* Pods_ProvoEventsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProvoEventsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCE35429734567C17453289F /* Pods-Ibento.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ibento.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ibento/Pods-Ibento.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,7 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1FBADA11D95C70E004EF835 /* MessageUI.framework in Frameworks */,
-				6DD68AE38D22E1C90D4E95C2 /* Pods_ProvoEvents.framework in Frameworks */,
+				EA69531C449E03B5D0B2D3F8 /* Pods_Ibento.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F00DC745C3144A27B523A670 /* Pods_ProvoEventsTests.framework in Frameworks */,
+				D43CCD615786C11F46DEE589 /* Pods_IbentoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +240,8 @@
 				A1FBADA01D95C70E004EF835 /* MessageUI.framework */,
 				213CEEDFE570AF207240677E /* Pods_ProvoEvents.framework */,
 				D888B180E351CC3B9136BA51 /* Pods_ProvoEventsTests.framework */,
+				74171EF017F1926E7F114349 /* Pods_Ibento.framework */,
+				94A8FD7E5ECAA0A16B2BC6D2 /* Pods_IbentoTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -321,6 +331,13 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		A12756C01DD63FF600C931AF /* activity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = activity;
+			sourceTree = "<group>";
+		};
 		A149F6801D8C64AE009AE58C /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -405,6 +422,7 @@
 		A1B117AB1D8A2AA40036A24E /* ProvoEvents */ = {
 			isa = PBXGroup;
 			children = (
+				A12756C01DD63FF600C931AF /* activity */,
 				A1F7BC311DD13F97003A296A /* Subclass */,
 				A18FA39F1DA7353600773614 /* GeoFire */,
 				A1C466B41D91986B00A62A70 /* Extensions */,
@@ -497,6 +515,10 @@
 				C3AC09ECD68FACB7EF481B7B /* Pods-ProvoEvents.release.xcconfig */,
 				15261CE4335352C84F8AB820 /* Pods-ProvoEventsTests.debug.xcconfig */,
 				27DFAFEF7A7F645CC0C7372B /* Pods-ProvoEventsTests.release.xcconfig */,
+				BCB49E2A11DE9D58AA208A2C /* Pods-Ibento.debug.xcconfig */,
+				FCE35429734567C17453289F /* Pods-Ibento.release.xcconfig */,
+				14931376E9D372D9FC811599 /* Pods-IbentoTests.debug.xcconfig */,
+				7427AF2B94B831474D664A5B /* Pods-IbentoTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -618,7 +640,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ibento/Pods-Ibento-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		1A8C5E169A7CDB3F88A99A4C /* [CP] Embed Pods Frameworks */ = {
@@ -633,7 +655,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IbentoTests/Pods-IbentoTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7C00F45C525BD2C3C524D4C9 /* [CP] Check Pods Manifest.lock */ = {
@@ -678,7 +700,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProvoEventsTests/Pods-ProvoEventsTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IbentoTests/Pods-IbentoTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FE95D18DC54E38703B3B2FED /* [CP] Copy Pods Resources */ = {
@@ -693,7 +715,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ibento/Pods-Ibento-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -904,36 +926,43 @@
 		};
 		A1B117C71D8A2AA50036A24E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 80F2A0096ED62EADEC04EF20 /* Pods-ProvoEvents.debug.xcconfig */;
+			baseConfigurationReference = BCB49E2A11DE9D58AA208A2C /* Pods-Ibento.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ProvoEvents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishovey.ProvoEvents;
 				PRODUCT_NAME = Ibento;
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = ProvoEvents/bridgingHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		A1B117C81D8A2AA50036A24E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C3AC09ECD68FACB7EF481B7B /* Pods-ProvoEvents.release.xcconfig */;
+			baseConfigurationReference = FCE35429734567C17453289F /* Pods-Ibento.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer: cgranthovey@gmail.com (E94CC95GS7)";
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ProvoEvents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrishovey.ProvoEvents;
 				PRODUCT_NAME = Ibento;
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = ProvoEvents/bridgingHeader.h;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		A1B117CA1D8A2AA50036A24E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 15261CE4335352C84F8AB820 /* Pods-ProvoEventsTests.debug.xcconfig */;
+			baseConfigurationReference = 14931376E9D372D9FC811599 /* Pods-IbentoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = ProvoEventsTests/Info.plist;
@@ -946,7 +975,7 @@
 		};
 		A1B117CB1D8A2AA50036A24E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27DFAFEF7A7F645CC0C7372B /* Pods-ProvoEventsTests.release.xcconfig */;
+			baseConfigurationReference = 7427AF2B94B831474D664A5B /* Pods-IbentoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = ProvoEventsTests/Info.plist;
