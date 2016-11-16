@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import MessageUI
 import EventKit
 import MapKit
@@ -51,6 +52,14 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         view.addGestureRecognizer(tapDismiss)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        eventImgHeight = eventImg.frame.height
+        eventImgWidth = eventImg.frame.width
+        if darkView != nil{
+            poppedBackFromImg()
+        }
+    }
+    
     override func viewDidAppear(animated: Bool) {
         scrollView.delaysContentTouches = false
         scrollView.canCancelContentTouches = true
@@ -60,6 +69,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
             scrollView.contentSize.height = self.view.frame.height - 22
         }
         scrollView.contentSize.width = self.view.frame.width
+        
     }
 
     //////////////////////////////////////////////////////
@@ -283,11 +293,89 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         performSegueWithIdentifier("CommentsSegue", sender: nil)
     }
     
+    var darkView: UIView!
+    var zoomImgView = UIImageView()
+    var animationDuration = 0.4
+    var originalFrame = CGRect()
+    var eventImgWidth: CGFloat!
+    var eventImgHeight: CGFloat!
+    
     func toLargeImg(){
+        self.view.userInteractionEnabled = false
         if img != nil{
-            performSegueWithIdentifier("ImageLargeVC", sender: nil)
+            print("frame \(eventImg.frame)")
+            if let startingFrame = eventImg.superview?.convertRect(eventImg.frame, toView: nil){
+                zoomImgView.frame = AVMakeRectWithAspectRatioInsideRect(img.size, eventImg.frame)
+                
+                zoomImgView.frame.origin.y = startingFrame.origin.y
+                var xOffset = (eventImg.frame.width - zoomImgView.frame.width) / 2
+                zoomImgView.frame.origin.x = startingFrame.origin.x + xOffset
+                originalFrame = startingFrame
+                
+                zoomImgView.layer.cornerRadius = 5
+                zoomImgView.contentMode = .ScaleAspectFit
+                zoomImgView.clipsToBounds = true
+                zoomImgView.image = img
+                eventImg.alpha = 0
+                view.addSubview(zoomImgView)
+                
+                darkView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+                darkView.alpha = 0
+                darkView.backgroundColor = UIColor.blackColor()
+                
+                performSelector(#selector(EventDetailsVC.segueImg), withObject: self, afterDelay: animationDuration * 2)
+
+                UIView.animateWithDuration(animationDuration, animations: {
+                    self.view.addSubview(self.darkView)
+                    self.view.bringSubviewToFront(self.zoomImgView)
+                    
+                    var h = self.zoomImgView.bounds.height * UIScreen.mainScreen().bounds.width / self.zoomImgView.bounds.width
+                    var y = self.view.bounds.height / 2 - h / 2
+
+                    self.zoomImgView.frame = CGRect(x: 0, y: y, width: UIScreen.mainScreen().bounds.width, height: h)
+                    
+//                    self.zoomImgView.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
+                    
+                    }, completion: { (true) in
+                        UIView.animateWithDuration(self.animationDuration, animations: {
+                            self.darkView.alpha = 1
+                            }, completion: { (true) in
+                        })
+                })
+            }
         }
     }
+    
+    func segueImg(){
+        self.performSegueWithIdentifier("ImageLargeVC", sender: nil)
+    }
+    
+    func poppedBackFromImg(){
+        
+        UIView.animateWithDuration(self.animationDuration, animations: {
+            self.darkView.alpha = 0
+            }) { (true) in
+                UIView.animateWithDuration(self.animationDuration, animations: {
+                    
+                    self.zoomImgView.frame = CGRect(x: self.originalFrame.origin.x, y: self.originalFrame.origin.y, width: self.eventImg.frame.width, height: self.eventImg.frame.height)
+                    
+                    
+//                    var transform = CGAffineTransform()
+//                    transform = CGAffineTransformMakeScale(0.5, 0.5)
+//                    var x = self.originalFrame.origin.x //- self.originalFrame.width / 2
+//                    var y = self.originalFrame.origin.y - UIScreen.mainScreen().bounds.height/2 + self.originalFrame.height / 2
+//                    var transform2 = CGAffineTransformMakeTranslation(x, y)
+//                    self.zoomImgView.transform = CGAffineTransformConcat(transform, transform2)
+//                    
+                    }, completion: { (true) in
+                    self.eventImg.alpha = 1.0
+                    self.zoomImgView.removeFromSuperview()
+                    self.darkView.removeFromSuperview()
+                    self.view.userInteractionEnabled = true
+                })
+        }
+    }
+    
     
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////

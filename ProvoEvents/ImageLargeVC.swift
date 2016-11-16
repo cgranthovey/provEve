@@ -25,6 +25,7 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
     }
     
     override func viewDidLoad() {
+        print("in img large")
         super.viewDidLoad()
         backImg.userInteractionEnabled = true
 
@@ -62,7 +63,11 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
             UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
             showCheckmark()
         } else if sender == backImgButton{
-            self.navigationController?.popViewControllerAnimated(true)
+            if scrollView.zoomScale != scrollView.minimumZoomScale{
+                scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
+            }
+            handleSingleTap()
+            performSelector(#selector(ImageLargeVC.swipePopBack), withObject: self, afterDelay: 0.5)
         }
     }
     
@@ -127,6 +132,10 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
             zoomRect.origin.y = newCenter.y - ((zoomRect.size.height / 2.0));
         }
         return zoomRect
+    }
+    
+    override func swipePopBack() {
+        self.navigationController?.popViewControllerAnimated(false)
     }
 
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {

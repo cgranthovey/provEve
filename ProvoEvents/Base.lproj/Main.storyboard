@@ -2543,7 +2543,7 @@
                         <outlet property="weatherIconImg" destination="fNE-SS-gtN" id="dhk-hO-MpZ"/>
                         <outlet property="weatherStack" destination="y9z-th-n2V" id="L1D-TV-qfe"/>
                         <outlet property="weatherTemp" destination="Da5-7w-4qn" id="gtZ-cq-FkF"/>
-                        <segue destination="Q2I-ck-ddt" kind="show" identifier="ImageLargeVC" id="aHf-3s-x1G"/>
+                        <segue destination="Q2I-ck-ddt" kind="show" identifier="ImageLargeVC" animates="NO" id="aHf-3s-x1G"/>
                         <segue destination="ltv-Qy-eX3" kind="presentation" identifier="ReminderVC" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="2oV-Sj-gq1"/>
                         <segue destination="j4Q-9H-E4z" kind="custom" identifier="CommentsSegue" customClass="segueCommentsShow" customModule="Ibento" customModuleProvider="target" id="ZOj-bY-SRA"/>
                     </connections>
@@ -2865,7 +2865,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N1s-yc-eSU">
                                                 <rect key="frame" x="10" y="42" width="260" height="24"/>
                                                 <fontDescription key="fontDescription" name="Avenir-LightOblique" family="Avenir" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>

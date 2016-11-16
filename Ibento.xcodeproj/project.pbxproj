@@ -252,6 +252,7 @@
 				A181FD011D943D6800007264 /* EventDetailsVC.swift */,
 				A18089441DBB082F0019D408 /* EventDetailsExtension.swift */,
 				A1F56D961DB0A729009D7F65 /* EventDetailsCommVC.swift */,
+				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
 			);
 			name = EventDetails;
 			sourceTree = "<group>";
@@ -298,7 +299,6 @@
 				A1EE77E71DA7590400781CDF /* AnnotationMapVC.swift */,
 				A1FBBD3D1D8DE9AC00366761 /* GeneralVC.swift */,
 				A1F12B821D99B347007A9447 /* ReminderVC.swift */,
-				A181FD071D946D4100007264 /* ImageLargeVC.swift */,
 				A15602641DA2F39A004ADCAD /* snapScrollVC.swift */,
 				A11B8FA41DC6E98100743E4C /* snapScroll2.swift */,
 			);
@@ -948,7 +948,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer: cgranthovey@gmail.com (E94CC95GS7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ProvoEvents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
