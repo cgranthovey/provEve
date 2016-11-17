@@ -50,6 +50,14 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
         backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdDown(_:)), forControlEvents: UIControlEvents.TouchDown)
         backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseOutside(_:)), forControlEvents: UIControlEvents.TouchUpOutside)
         backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseInside(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ImageLargeVC.swipePopBack))
+        swipeDown.direction = .Down
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ImageLargeVC.swipePopBack))
+        swipeUp.direction = .Up
+        
+        self.view.addGestureRecognizer(swipeDown)
+        self.view.addGestureRecognizer(swipeUp)
     }
     
     func holdDown(sender: UIButton){

@@ -70,7 +70,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
 
         cameraTaker = UIImagePickerController()
         cameraTaker.delegate = self
-        cameraTaker.sourceType = .PhotoLibrary  //change to camera later
+        cameraTaker.sourceType = .Camera  //change to camera later
     }
     
     func hideCameraBtns(){
