@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A101B8B71DDE105000FF4F35 /* coreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A101B8B51DDE105000FF4F35 /* coreData.xcdatamodeld */; };
 		A10A93D01D92F54200D07E8E /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93CF1D92F54200D07E8E /* EventVC.swift */; };
 		A10A93D21D92F5D200D07E8E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93D11D92F5D200D07E8E /* Event.swift */; };
 		A10A93D41D93011700D07E8E /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A93D31D93011700D07E8E /* EventCell.swift */; };
@@ -111,6 +112,7 @@
 		7427AF2B94B831474D664A5B /* Pods-IbentoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IbentoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IbentoTests/Pods-IbentoTests.release.xcconfig"; sourceTree = "<group>"; };
 		80F2A0096ED62EADEC04EF20 /* Pods-ProvoEvents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProvoEvents.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProvoEvents/Pods-ProvoEvents.debug.xcconfig"; sourceTree = "<group>"; };
 		94A8FD7E5ECAA0A16B2BC6D2 /* Pods_IbentoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IbentoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A101B8B61DDE105000FF4F35 /* coreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreData.xcdatamodel; sourceTree = "<group>"; };
 		A10A93CF1D92F54200D07E8E /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		A10A93D11D92F5D200D07E8E /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		A10A93D31D93011700D07E8E /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				A1F7BC321DD156B0003A296A /* NSObject */,
 				A1B117B31D8A2AA40036A24E /* Assets.xcassets */,
 				A1B117AC1D8A2AA40036A24E /* AppDelegate.swift */,
+				A101B8B51DDE105000FF4F35 /* coreData.xcdatamodeld */,
 				A1B117B01D8A2AA40036A24E /* Main.storyboard */,
 				A1B117B51D8A2AA50036A24E /* LaunchScreen.storyboard */,
 				A1B117B81D8A2AA50036A24E /* Info.plist */,
@@ -785,6 +788,7 @@
 				A127C6E21DAD5DA6004017FD /* Comment.swift in Sources */,
 				A1FBBD3E1D8DE9AC00366761 /* GeneralVC.swift in Sources */,
 				A18FA3B21DA7353600773614 /* GFBase32Utils.m in Sources */,
+				A101B8B71DDE105000FF4F35 /* coreData.xcdatamodeld in Sources */,
 				A1D3854A1D909A1F00365348 /* TextView.swift in Sources */,
 				A10A93D21D92F5D200D07E8E /* Event.swift in Sources */,
 				A1B4A18A1DB80D9600FC3D43 /* Constants.swift in Sources */,
@@ -1018,6 +1022,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A101B8B51DDE105000FF4F35 /* coreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A101B8B61DDE105000FF4F35 /* coreData.xcdatamodel */,
+			);
+			currentVersion = A101B8B61DDE105000FF4F35 /* coreData.xcdatamodel */;
+			path = coreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A1B117A11D8A2AA40036A24E /* Project object */;
 }

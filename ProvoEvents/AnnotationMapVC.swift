@@ -27,7 +27,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         mapView.delegate = self
         mapView.showsUserLocation = true
         setUpLocationAndEdgeSwipe()

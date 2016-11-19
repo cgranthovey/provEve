@@ -40,6 +40,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     var myKeyBoardHeight: CGFloat!
     var holdKeyInCaseError: String!
     var imgSuccess: UIImageView!
+    
+    //added to generalVC
     var img = ["football", "outdoors", "service", "theater", "dance", "art", "prayer", "music", "book", "sandwich"]
     var lbl = ["Sport", "Outdoor", "Service", "Theater/Cinema", "Dance", "Art", "Religion", "Music", "Education", "Food"]
     var selectedCellInt: Int!

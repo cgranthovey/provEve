@@ -15,8 +15,9 @@
 import UIKit
 import FirebaseDatabase
 import Firebase
+import CoreData
 
-class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, MilesChosen {
+class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, MilesChosen, settingsProtocol {
     
     var events = [Event]()
     
@@ -31,6 +32,8 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        checkFirstLogin()
         setUpLocationManagerAndTableView()
         Constants.instance.initCurrentUser()
 
@@ -39,13 +42,38 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.clearTableViewAndReload), name: "loadDataAfterNewEvent", object: nil)
     }
     
-    
+    func checkFirstLogin(){
+        let prefs = NSUserDefaults.standardUserDefaults()
+        
+        if prefs.objectForKey("firstLogin") != nil{
+            //has logged in before
+        } else{
+            prefs.setValue("logged in before", forKey: "firstLogin")
+            
+            let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+            let moc = appDel.managedObjectContext
+            
+            let img = ["football", "outdoors", "service", "theater", "dance", "art", "prayer", "music", "book", "sandwich"]
+
+            for i in img{
+                let entity = NSEntityDescription.entityForName("EventTypeSettings", inManagedObjectContext: moc)
+                let managedObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: moc)
+                managedObject.setValue(i, forKey: "eventNumber")
+            }
+            
+            do{
+                try moc.save()
+            } catch let error as NSError {
+                print(error)
+            }
+            
+        }
+    }
     
     func setUpLocationManagerAndTableView(){
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             self.locationManager.requestWhenInUseAuthorization()
         }
-        
         
         switch CLLocationManager.authorizationStatus() {
         case .Denied, .Restricted: loadData() //will use default location for Provo
@@ -141,6 +169,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     //loadData
     
     func clearTableViewAndReload(){
+        print("clear table View")
         events = []
         EventsCategorized = [:]
         tableView.reloadData()
@@ -149,7 +178,6 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     
     var geoQuery: GFRegionQuery!
     func loadData(){
-        print("load data called")
         if geoQuery != nil{
             print("remove all observers")
             geoQuery.removeAllObservers()       // prevents multiple geoQuery requests if internet connection is poor and users tries making multiple requests by pulling down charger
@@ -188,10 +216,8 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             
             if self.keysArray.indexOf(key) != nil{
                 //already have key
-                print("already have key")
                 return
             }
-            print("don't have key")
             self.keysArray.append(key)
             if !firebaseCalledOnce{
                 DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
@@ -221,13 +247,25 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                                     }
                                     let post = Event(key: key, dict: postDict, isLiked: isEventLiked)
                                     
-                                    if !post.beforeToday(){
+                                    if let userCustomEvents = self.findCustomEvents(){
                                         
-                                        self.events.append(post)
-                                        self.events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
-                                        self.keyOfLast = post.key
+                                        
+                                        for customEvent in userCustomEvents{
+                                            if post.eventTypeImgName == customEvent{
+                                                if !post.beforeToday(){
+                                                    self.events.append(post)
+                                                    self.events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
+                                                    self.keyOfLast = post.key
+                                                }
+                                            }
+                                        }
+                                    } else{
+                                        if !post.beforeToday(){
+                                            self.events.append(post)
+                                            self.events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
+                                            self.keyOfLast = post.key
+                                        }
                                     }
-
                                 }
                             }
                             timesIterated = timesIterated + 1
@@ -259,6 +297,46 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             noDataLbl.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.87)
             noDataLbl.textAlignment = .Center
             tableView.backgroundView = noDataLbl
+        }
+    }
+    
+    //uses core data to find which events user wants to see.
+    func findCustomEvents() -> [String]?{
+        var customEventTypes = [String]()
+        let appDel = UIApplication.sharedApplication().delegate as? AppDelegate
+        let moc = appDel?.managedObjectContext
+        
+        let fetchRequest = NSFetchRequest(entityName: "EventTypeSettings")
+        
+        do{
+            if let results = try moc?.executeFetchRequest(fetchRequest) as? [NSManagedObject]{
+                for result in results{
+                    if let eventName = result.valueForKey("eventNumber") as? String{
+                        customEventTypes.append(eventName)
+                    }
+                }
+                
+                if customEventTypes == [String](){
+                    return nil
+                } else{
+                    return customEventTypes
+                }
+            }
+        } catch let error as NSError{
+            print("error \(error)")
+        }
+        return nil
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let EventForSpecificTimeArray = ArrayForSection(indexPath.section)
+        let myEvent = EventForSpecificTimeArray[indexPath.row]
+        if let cell = tableView.dequeueReusableCellWithIdentifier("EventCell") as? EventCell{
+            cell.configureCell(myEvent)
+            return cell
+        } else{
+            
+            return UITableViewCell()
         }
     }
     
@@ -357,7 +435,12 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         }
         if segue.identifier == "AnnotationMapVC" {
             if let destVC = segue.destinationViewController as? AnnotationMapVC{
-                    destVC.likesArray = self.likesArray
+                destVC.likesArray = self.likesArray
+            }
+        }
+        if segue.identifier == "SettingsVC"{
+            if let destVC = segue.destinationViewController as? SettingsVC{
+                destVC.delegate = self
             }
         }
     }

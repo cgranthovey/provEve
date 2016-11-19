@@ -9,6 +9,12 @@
 import UIKit
 import Foundation
 import FirebaseAuth
+import CoreData
+import MapKit
+
+protocol settingsProtocol {
+    func clearTableViewAndReload()
+}
 
 class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChosen {
 
@@ -17,7 +23,12 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     @IBOutlet weak var milesBtnOutlet: UIButton!
     @IBOutlet weak var topStack: UIStackView!
     @IBOutlet weak var logoutBtn: UIButton!
+    @IBOutlet weak var collection: UICollectionView!
     
+    var img = ["football", "outdoors", "service", "theater", "dance", "art", "prayer", "music", "book", "sandwich"]
+    var lbl = ["Sport", "Outdoor", "Service", "Theater/Cinema", "Dance", "Art", "Religion", "Music", "Education", "Food"]
+    
+    var delegate: settingsProtocol!
     var holdOriginalName: String!
     let yesNo = yesNoLauncher()
     var animationShouldBeCalled = true
@@ -26,10 +37,28 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         super.viewDidLoad()
         firstNameTF.delegate = self
         yesNo.delegate = self
+        collection.delegate = self
+        collection.dataSource = self
+        setUpCollectionView()
         setUpUI()
         let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsVC.tapRemoveKeyboard))
+        tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsVC.animateTopStackView), name: UIKeyboardWillShowNotification, object: nil)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        let managedContext = appDelegate?.managedObjectContext
+        
+        let fetchRequest = NSFetchRequest(entityName: "EventTypeSettings")
+        
+        do{
+            let results = try managedContext?.executeFetchRequest(fetchRequest)
+            selectedEvents = results as! [NSManagedObject]
+        } catch let error as NSError{
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
     }
     
     func setUpUI(){
@@ -53,6 +82,11 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         firstNameTF.resignFirstResponder()
     }
     
+    func findCoord(){
+        let geoCode = CLGeocoder()
+        geoCode.geocodeAddressString("84604") { (placemarks: [CLPlacemark]?, error: NSError?) in
+            <#code#>
+        }
 
     
     //////////////////////////////////////////////////////
@@ -148,9 +182,15 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     }
     
     @IBAction func backBtn(sender: AnyObject){
-        self.navigationController?.popViewControllerAnimated(true)
+        swipePopBack()
     }
 
+    override func swipePopBack() {
+        if collectionViewChanged{
+            delegate.clearTableViewAndReload()
+        }
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
@@ -179,8 +219,86 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
             }
         }
     }
-    
-    
 
-
+    var selectedEvents = [NSManagedObject]()
+    var collectionViewChanged: Bool = false
 }
+
+
+extension SettingsVC: UICollectionViewDelegate, UICollectionViewDataSource{
+    
+    func setUpCollectionView(){
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .Horizontal
+        collection.collectionViewLayout = layout
+        collection.backgroundColor = UIColor.clearColor()
+        self.collection.allowsSelection = true
+        self.collection.allowsMultipleSelection = false
+    }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return img.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MapPinCell", forIndexPath: indexPath) as? MapPinCell{
+            cell.configureCell(img[indexPath.row], label: lbl[indexPath.row])
+            cell.checkImg(false)
+            for event in selectedEvents{
+                if img[indexPath.row] == event.valueForKey("eventNumber") as? String{
+                    cell.checkImg(true)
+                }
+            }
+            return cell
+        } else{
+            return UICollectionViewCell()
+        }
+    }
+
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        print(collection.frame.width)
+        return CGSizeMake(85, 70.0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        collectionViewChanged = true
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let moc = appDelegate.managedObjectContext
+        
+        if let cell = collection.cellForItemAtIndexPath(indexPath) as? MapPinCell{
+            if cell.isImgChecked() == false{
+                let entity = NSEntityDescription.entityForName("EventTypeSettings", inManagedObjectContext: moc)
+                let eventNumber = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: moc)
+                
+                eventNumber.setValue(img[indexPath.row], forKey: "eventNumber")
+                
+                do {
+                    try moc.save()
+                    selectedEvents.append(eventNumber)
+                } catch let error as NSError{
+                    print("Could not save \(error), \(error.userInfo)")
+                }
+                cell.backgroundColor = UIColor.clearColor()
+                cell.checkImg(true)
+            } else{
+                var x = 0
+                for event in selectedEvents{
+                    if img[indexPath.row] == event.valueForKey("eventNumber") as? String{
+                        moc.deleteObject(event)
+                        cell.checkImg(false)
+                        selectedEvents.removeAtIndex(x)
+                    }
+                    x = x + 1
+                }
+            }
+        }
+    }
+}
+
+
+
