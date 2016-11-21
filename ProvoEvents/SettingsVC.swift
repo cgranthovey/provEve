@@ -87,7 +87,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         geoCode.geocodeAddressString("84604") { (placemarks: [CLPlacemark]?, error: NSError?) in
             <#code#>
         }
-
+    }
     
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
