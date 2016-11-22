@@ -66,7 +66,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         
         eventImg.image = UIImage(named: "photoAlbumColor")
         
-        var frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        let frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         actView = NVActivityIndicatorView(frame: frame, type: .lineScale, color: UIColor.white, padding: 0)
         
         NotificationCenter.default.addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -392,13 +392,11 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         spinIndicFade()
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
-            self.loadingView
+            _ = self.loadingView
         }
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
-    
-
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DateTimeVC"{

@@ -20,7 +20,7 @@ class GeneralVC: UIViewController {
     }
     
     func swipePopBack(){
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 
     func generalAlert(_ title: String, message: String){

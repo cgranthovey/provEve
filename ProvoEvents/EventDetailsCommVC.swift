@@ -198,16 +198,16 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
         postBtn.backgroundColor = UIColor().boilerPlateColor(233, green: 30, blue: 99)
 
         var numberOfRows: CGFloat = 0
-        if let rows: CGFloat = round( (commentTextView.contentSize.height - commentTextView.textContainerInset.top - commentTextView.textContainerInset.bottom) / commentTextView.font!.lineHeight){
-            numberOfRows = rows
-        }
+        numberOfRows = round( (commentTextView.contentSize.height - commentTextView.textContainerInset.top - commentTextView.textContainerInset.bottom) / commentTextView.font!.lineHeight)
+        
+        
         
         if commentTextView.text == nil || commentTextView.text == ""{
             generalAlert("Error", message: "The comment field is not filled out")
         } else if numberOfRows > 25{
             generalAlert("Error", message: "Comments can not be more than 25 lines")
         } else {
-            print(FIRAuth.auth()?.currentUser?.uid)
+            print((FIRAuth.auth()?.currentUser?.uid)! as String)
             let setComment: Dictionary<String, AnyObject> = ["userId": (FIRAuth.auth()?.currentUser?.uid)! as AnyObject, "comment": commentTextView.text as AnyObject, "timeStamp": timeIntervalSince1970 as AnyObject]
             DataService.instance.commentRef.child(event.key).child(key).setValue(setComment)
             DataService.instance.currentUser.child("comments").child(event.key).child(key).setValue("True")
@@ -299,12 +299,8 @@ extension EventDetailsCommVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        var numberOfSection = 0
         if commentArray.count > 0{
-            numberOfSection = 1
             tableView.backgroundView = nil
-        } else{
-            
         }
         return 1
     }

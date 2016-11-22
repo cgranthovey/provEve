@@ -143,7 +143,7 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
     }
     
     override func swipePopBack() {
-        self.navigationController?.popViewController(animated: false)
+        _ = self.navigationController?.popViewController(animated: false)
     }
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

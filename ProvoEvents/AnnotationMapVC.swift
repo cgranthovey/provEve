@@ -110,7 +110,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func backBtn(_ sender: AnyObject){
-        self.navigationController?.popViewController(animated: true)
+       _ = self.navigationController?.popViewController(animated: true)
     }
 
     @IBAction func mapTypeBtnPressed(){

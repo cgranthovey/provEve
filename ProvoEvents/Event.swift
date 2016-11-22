@@ -153,7 +153,7 @@ class Event{
         
         _isLiked = addLike  // will set the event to whether it is liked or not
         DataService.instance.eventRef.child(_key).child("likes").observeSingleEvent(of: .value, with: {snapshot in
-            if let doesNotExist = snapshot.value as? NSNull{
+            if (snapshot.value as? NSNull) != nil{
                 self._likes = 0
                 self.finalAdjust(addLike)
             } else{

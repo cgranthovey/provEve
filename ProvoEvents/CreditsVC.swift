@@ -86,12 +86,11 @@ class CreditsVC: GeneralVC, UITableViewDelegate, UITableViewDataSource, UITextVi
         let intValueOfFrom = strTotal.characters.distance(from: strTotal.startIndex, to: indexOfFrom!)
         let count =  intValueOfFrom - 1
         print("Int  valueof from  \(intValueOfFrom)")
-        let urlWebsiteCount = urlWebsite.characters.count
         let attString = NSMutableAttributedString(string: strTotal)
         attString.addAttribute(NSLinkAttributeName, value: url, range: NSRange(location: 0, length: count))
 
         if urlWebsite != ""{
-            var beginingOfWebsite = count + 6
+            let beginingOfWebsite = count + 6
             attString.addAttribute(NSLinkAttributeName, value: urlWebsite, range:  NSRange(location: beginingOfWebsite, length: strTotal.characters.count - beginingOfWebsite))
         }
         let credit = Credit(lbl: attString, imageStr: imgString)
@@ -124,6 +123,6 @@ class CreditsVC: GeneralVC, UITableViewDelegate, UITableViewDataSource, UITextVi
     }
     
     @IBAction func popBack(_ sender: AnyObject){
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

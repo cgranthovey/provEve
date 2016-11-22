@@ -153,7 +153,7 @@ class MapVC: UIViewController {
         if selectedPin != nil{
             handleGetEventLocDelegate?.getEventLoc(addressString, name: selectedPin?.name, longitude: selectedPin?.coordinate.longitude, latitude: selectedPin?.coordinate.latitude, placemark: selectedPin)
         }
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func showApproveView(){
@@ -249,7 +249,7 @@ class MapVC: UIViewController {
     //Bottom Btns
     
     @IBAction func cancelBtn(_ sender: AnyObject){
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 
     @IBAction func mapTypeBtnPress(_ sender: AnyObject){

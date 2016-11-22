@@ -67,7 +67,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
         print("uid check")
         
         print(self.connectionBool)
-        print(FIRAuth.auth()?.currentUser?.uid)
+        print(FIRAuth.auth()?.currentUser?.uid as Any)
         if self.connectionBool == true && FIRAuth.auth()?.currentUser != nil{
             UIView.animate(withDuration: 0.9, animations: {
                 print("UID found")

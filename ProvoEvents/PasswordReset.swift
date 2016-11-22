@@ -24,7 +24,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
     }
 
     @IBAction func popBack(_ sender: AnyObject){
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func resetPasswordBtn(_ sender: AnyObject){
@@ -73,7 +73,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
     }
     
     func pop(){
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func removeFirstResponder(){

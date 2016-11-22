@@ -12,7 +12,7 @@ import UIKit
 extension UIButton {
     
     func changeImageAnimated(_ image: UIImage?) {
-        guard let imageView = self.imageView, let currentImage = imageView.image, let newImage = image else {
+        guard let imageView = self.imageView, let _ = imageView.image, let newImage = image else {
             return
         }
 

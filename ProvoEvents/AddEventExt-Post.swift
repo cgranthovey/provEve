@@ -62,7 +62,7 @@ extension AddEventVC: yesSelectedProtocol{
         let childValues: Dictionary<String, AnyObject> = ["/Events/\(key)": toFirebaseDict as AnyObject, "/User/\((FIRAuth.auth()?.currentUser?.uid)!)/posts/\(key)": "True" as AnyObject]
         DataService.instance.mainRef.updateChildValues(childValues) { (err, FIRDatabaseRef) in
             if err != nil{
-                print(err?.localizedDescription)
+                print(err?.localizedDescription as Any)
                 self.alert("Error", message: "Error uploading data, try again soon")
             } else{
                 

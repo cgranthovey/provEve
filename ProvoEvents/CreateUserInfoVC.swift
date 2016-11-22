@@ -45,7 +45,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     override func swipePopBack() {
-        self.navigationController?.popToRootViewController(animated: true)
+        _ = self.navigationController?.popToRootViewController(animated: true)
     }
     
     func checkForInternet(){
@@ -113,7 +113,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
             
             
             DataService.instance.usernamesRef.queryOrdered(byChild: "UserID").queryEqual(toValue: user).observeSingleEvent(of: .value, with: { (snapshot) in
-                if let snap = snapshot.value as? Dictionary<String, AnyObject>{
+                if (snapshot.value as? Dictionary<String, AnyObject>) != nil{
                     self.alerts("Username", message: "This username has already been choosen")
                 } else{
                     
@@ -154,7 +154,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
             if let picData: Data = UIImageJPEGRepresentation(userImg.image!, 0.3){
                 let imgName = "\(UUID().uuidString).jpg"
                 let ref = DataService.instance.imgStorageRefData.child(imgName)
-                let task = ref.put(picData, metadata: nil, completion: { (metaData, err) in
+                _ = ref.put(picData, metadata: nil, completion: { (metaData, err) in
                     if err != nil {
                         print("an error occured in the uploadProfileImg!")
                     } else{

@@ -194,7 +194,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "loadDataAfterNewEvent"), object: event, userInfo: nil)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "eventDeleted"), object: nil, userInfo: nil)
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     //////////////////////////////////////////////////////
@@ -431,6 +431,6 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     }
     
     @IBAction func popBackBtn(_ sender: AnyObject){
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

@@ -172,7 +172,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     func yesPressed() {
         do {
             try FIRAuth.auth()?.signOut()
-            self.navigationController?.popToRootViewController(animated: true)
+            _ = self.navigationController?.popToRootViewController(animated: true)
         } catch {
             let alert = UIAlertController(title: "Error", message: "There was an error logging out, please try again soon", preferredStyle: .alert)
             let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
@@ -189,7 +189,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         if collectionViewChanged{
             delegate.clearTableViewAndReload()
         }
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

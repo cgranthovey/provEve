@@ -76,8 +76,6 @@ class MapSettingsLauncher: NSObject{
         let secondsInToday = (currentHour * 60 * 60 + currentMinute * 60)
         let nowInSeconds = Int(currentDate.timeIntervalSince1970)
         let todayStartInSeconds = nowInSeconds - secondsInToday
-        let todayEnd = todayStartInSeconds + 86400
-        let timeInterval = TimeInterval(todayEnd)
         
         for index in 0...6{
             let daysStart: Double = Double(todayStartInSeconds) + 86400 * Double(index)
