@@ -15,11 +15,11 @@ class LoadingView: NSObject {
     
     typealias CompletionHandler = () -> Void
     
-    func showSpinnerView(view: UIView){
+    func showSpinnerView(_ view: UIView){
         
-        let rect = CGRectMake(0, 0, view.frame.width, view.frame.height)
+        let rect = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         darkView = UIView(frame: rect)
-        darkView.backgroundColor = UIColor.blackColor()
+        darkView.backgroundColor = UIColor.black
         darkView.alpha = 0
         view.addSubview(darkView)
         
@@ -28,11 +28,11 @@ class LoadingView: NSObject {
         spinner.alpha = 0
         darkView.addSubview(spinner)
 
-        UIView.animateWithDuration(0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: {
             self.darkView.alpha = 0.5
             self.spinner.alpha = 1
-            }) { (true) in
-        }
+            }, completion: { (true) in
+        }) 
     }
     
     func cancelImediately(){
@@ -42,33 +42,33 @@ class LoadingView: NSObject {
         self.spinner.removeFromSuperview()
     }
     
-    func cancelSpinnerAndDarkView(completionHandler: CompletionHandler?){
-        UIView.animateWithDuration(0.25, animations: {
+    func cancelSpinnerAndDarkView(_ completionHandler: CompletionHandler?){
+        UIView.animate(withDuration: 0.25, animations: {
             self.darkView.alpha = 0.0
             self.spinner.alpha = 0.0
-            }) { (true) in
+            }, completion: { (true) in
                 self.darkView.removeFromSuperview()
                 self.spinner.removeFromSuperview()
                 if completionHandler != nil{
                     completionHandler!()
                 }
-        }
+        }) 
     }
     
-    func successCancelSpin(completionHandler: CompletionHandler){
-        UIView.animateWithDuration(0.25, animations: {
+    func successCancelSpin(_ completionHandler: @escaping CompletionHandler){
+        UIView.animate(withDuration: 0.25, animations: {
             self.spinner.alpha = 0.0
-        }) { (true) in
+        }, completion: { (true) in
             self.spinner.stopAnimating()
             self.spinner.removeFromSuperview()
             completionHandler()
-        }
+        }) 
     }
     
     func cancelSpinner(){
-        UIView.animateWithDuration(0.25, animations: { 
+        UIView.animate(withDuration: 0.25, animations: { 
             self.spinner.alpha = 0.0
-            }) { (true) in
-        }
+            }, completion: { (true) in
+        }) 
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 class AnnotationPin: MKPinAnnotationView {
 
     override func awakeFromNib() {
-        tintColor = UIColor.redColor()
+        tintColor = UIColor.red
         canShowCallout = true
     }
 }

@@ -9,11 +9,11 @@
 import Foundation
 
 class Comment {
-    private var _userId: String?
-    private var _userName: String?
-    private var _timeStamp: Int?
-    private var _commentText: String?
-    private var _key: String?
+    fileprivate var _userId: String?
+    fileprivate var _userName: String?
+    fileprivate var _timeStamp: Int?
+    fileprivate var _commentText: String?
+    fileprivate var _key: String?
     
     var userId: String?{
         return _userId

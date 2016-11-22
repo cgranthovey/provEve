@@ -11,12 +11,12 @@ import UIKit
 class setCancelColorController: LoginButton {
 
     override func awakeFromNib() {
-        self.addTarget(self, action: #selector(setCancelColorController.onTouchDown), forControlEvents: .TouchDown)
-        self.addTarget(self, action: #selector(setCancelColorController.onTouchUpOutside), forControlEvents: .TouchUpOutside)
+        self.addTarget(self, action: #selector(setCancelColorController.onTouchDown), for: .touchDown)
+        self.addTarget(self, action: #selector(setCancelColorController.onTouchUpOutside), for: .touchUpOutside)
         
-        if self.titleLabel == "SET"{
+        if self.titleLabel?.text == "SET"{
             backgroundColor = UIColor().boilerPlateColor(239, green: 108, blue: 0)
-        } else if self.titleLabel == "CANCEL"{
+        } else if self.titleLabel?.text == "CANCEL"{
             backgroundColor = UIColor().boilerPlateColor(194, green: 24, blue: 91)
         }
     }

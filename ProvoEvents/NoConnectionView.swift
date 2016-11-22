@@ -21,8 +21,8 @@ class NoConnectionView: NSObject, noConnectionGotIt {
         super.init()
     }
     
-    func showNoConnectionView(view: UIView){
-        let frame = CGRectMake(0, 0, 275, 155)
+    func showNoConnectionView(_ view: UIView){
+        let frame = CGRect(x: 0, y: 0, width: 275, height: 155)
         noConnectionView = NoInternetView(frame: frame)
         noConnectionView.center = view.center
         noConnectionView.layer.cornerRadius = 5.0
@@ -30,15 +30,15 @@ class NoConnectionView: NSObject, noConnectionGotIt {
         noConnectionView.alpha = 0
         noConnectionView.delegate = self
         
-        darkView = UIView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
+        darkView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         darkView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         darkView.alpha = 0
         
         view.addSubview(darkView)
         view.addSubview(noConnectionView)
-        view.bringSubviewToFront(noConnectionView)
+        view.bringSubview(toFront: noConnectionView)
         
-        UIView.animateWithDuration(0.3, delay: 0.35, options: .CurveEaseIn, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.35, options: .curveEaseIn, animations: {
             self.darkView.alpha = 0.6
             self.noConnectionView.alpha = 1.0
         }) { (true) in
@@ -46,12 +46,12 @@ class NoConnectionView: NSObject, noConnectionGotIt {
     }
     
     func dismissNoConnectionView(){
-        UIView.animateWithDuration(0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: {
             self.noConnectionView.alpha = 0
             self.darkView.alpha = 0
-            }) { (true) in
+            }, completion: { (true) in
                 self.noConnectionView.removeFromSuperview()
                 self.darkView.removeFromSuperview()
-        }
+        }) 
     }
 }

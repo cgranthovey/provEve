@@ -7,3 +7,4 @@
 //
 
 #import "GeoFire.h"
+#import "SDWebImage/UIImageView+WebCache.h"

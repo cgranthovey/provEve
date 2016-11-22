@@ -11,7 +11,7 @@ import FirebaseAuth
 
 class Constants {
     
-    private static let _instance = Constants()
+    fileprivate static let _instance = Constants()
     
     static var instance: Constants{
         return _instance
@@ -33,7 +33,7 @@ class Constants {
     var currentUser: User!
     func initCurrentUser(){
         
-        DataService.instance.currentUserProfile.observeSingleEventOfType(.Value, withBlock: { snapshot in
+        DataService.instance.currentUserProfile.observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.value == nil{
                 
             } else{

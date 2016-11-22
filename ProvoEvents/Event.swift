@@ -10,24 +10,24 @@ import Foundation
 import FirebaseDatabase
 
 class Event{
-    private var _title: String!
-    private var _location: String!
-    private var _date: String!
-    private var _timeStampOfEvent: Int?
-    private var _datePosted: Int?
-    private var _email: String?
-    private var _imgURL: String?
-    private var _description: String!
-    private var _user: String!
-    private var _key: String!
-    private var _likes: Int!
-    private var _eventTypeImgName: String!
+    fileprivate var _title: String!
+    fileprivate var _location: String!
+    fileprivate var _date: String!
+    fileprivate var _timeStampOfEvent: Int?
+    fileprivate var _datePosted: Int?
+    fileprivate var _email: String?
+    fileprivate var _imgURL: String?
+    fileprivate var _description: String!
+    fileprivate var _user: String!
+    fileprivate var _key: String!
+    fileprivate var _likes: Int!
+    fileprivate var _eventTypeImgName: String!
     
-    private var _pinInfoAddress: String?
-    private var _pinInfoName: String?
-    private var _pinInfoLatitude: Double?
-    private var _pinInfoLongitude: Double?
-    private var _isLiked: Bool!
+    fileprivate var _pinInfoAddress: String?
+    fileprivate var _pinInfoName: String?
+    fileprivate var _pinInfoLatitude: Double?
+    fileprivate var _pinInfoLongitude: Double?
+    fileprivate var _isLiked: Bool!
     
     var title: String{
         if _title == nil{
@@ -125,7 +125,7 @@ class Event{
         }
     }
     
-    func adjustHeartImgIsLiked(isLiked: Bool){
+    func adjustHeartImgIsLiked(_ isLiked: Bool){
         if isLiked{
             _isLiked = true
         } else{
@@ -133,7 +133,7 @@ class Event{
         }
     }
     
-    func adjustLikes(addLike: Bool){
+    func adjustLikes(_ addLike: Bool){
         
         adjustHeartImgIsLiked(addLike)
         
@@ -152,7 +152,7 @@ class Event{
         }
         
         _isLiked = addLike  // will set the event to whether it is liked or not
-        DataService.instance.eventRef.child(_key).child("likes").observeSingleEventOfType(.Value, withBlock: {snapshot in
+        DataService.instance.eventRef.child(_key).child("likes").observeSingleEvent(of: .value, with: {snapshot in
             if let doesNotExist = snapshot.value as? NSNull{
                 self._likes = 0
                 self.finalAdjust(addLike)
@@ -163,7 +163,7 @@ class Event{
         })
     }
     
-    func finalAdjust(addLike: Bool){
+    func finalAdjust(_ addLike: Bool){
         if addLike{
             _likes = _likes + 1
         } else{

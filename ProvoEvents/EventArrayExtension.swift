@@ -7,6 +7,19 @@
 //
 
 import Foundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 extension Array where Element: Event{
     
@@ -37,10 +50,10 @@ extension Array where Element: Event{
     }
     
     func getTodaysEndTime() -> Int{
-        let currentDate = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let currentHour = calendar.component(.Hour, fromDate: currentDate)
-        let currentMinute = calendar.component(.Minute, fromDate: currentDate)
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let currentHour = (calendar as NSCalendar).component(.hour, from: currentDate)
+        let currentMinute = (calendar as NSCalendar).component(.minute, from: currentDate)
         let secondsInToday = (currentHour * 60 * 60 + currentMinute * 60)
         let nowInSeconds = Int(currentDate.timeIntervalSince1970)
         let todayStartInSeconds = nowInSeconds - secondsInToday

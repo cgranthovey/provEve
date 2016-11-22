@@ -13,10 +13,35 @@ import EventKit
 import MapKit
 import FirebaseDatabase
 import FirebaseAuth
+import SDWebImage
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, getReminderInfo, yesSelectedProtocol{
 
-    
     @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var eventDescription: UILabel!
     @IBOutlet weak var eventLocBtn: UIButton!
@@ -37,22 +62,24 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     @IBOutlet weak var weatherDescLbl: UILabel!
     
     var event: Event!
-    var img: UIImage!
     let deleteView = yesNoLauncher()
     var currentView: UIView!
 
     override func viewDidLoad() {
+        print("event details")
         super.viewDidLoad()
         deleteView.delegate = self
         setUpUI()
         setBottomButtons()
+        print("snack3")
         setUpImgs()
         scrollView.delaysContentTouches = false
         let tapDismiss = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.resignKeyboard))
         view.addGestureRecognizer(tapDismiss)
+        print("snack 4")
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         eventImgHeight = eventImg.frame.height
         eventImgWidth = eventImg.frame.width
         if darkView != nil{
@@ -60,7 +87,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         scrollView.delaysContentTouches = false
         scrollView.canCancelContentTouches = true
         if stackView.frame.height + 160 > self.view.frame.height{
@@ -69,7 +96,6 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
             scrollView.contentSize.height = self.view.frame.height - 22
         }
         scrollView.contentSize.width = self.view.frame.width
-        
     }
 
     //////////////////////////////////////////////////////
@@ -79,64 +105,65 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     func setUpImgs(){
         heartBtn.adjustsImageWhenHighlighted = false
         if event.user != FIRAuth.auth()?.currentUser?.uid{
-            garbageOutlet.hidden = true
+            garbageOutlet.isHidden = true
         }
         
-        eventImg.userInteractionEnabled = true
+        eventImg.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.toLargeImg))
         eventImg.addGestureRecognizer(tap)
         
         if event.isLiked{
-            heartBtn.setImage(UIImage(named: "heartFilled"), forState: .Normal)
+            heartBtn.setImage(UIImage(named: "heartFilled"), for: UIControlState())
             
         } else{
-            heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
+            heartBtn.setImage(UIImage(named: "heartEmpty"), for: UIControlState())
         }
     }
 
     func setUpUI(){
         eventTitle.text = event.title
         eventDescription.text = event.description
-        eventLocBtn.setTitle(event.location, forState: .Normal)
+        eventLocBtn.setTitle(event.location, for: UIControlState())
         
         if event.pinInfoLongitude == nil || event.pinInfoLatitude == nil{
-            eventLocBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
-            eventLocBtn.userInteractionEnabled = false
+            eventLocBtn.setTitleColor(UIColor.black, for: UIControlState())
+            eventLocBtn.isUserInteractionEnabled = false
         }
         
         eventDate.text = dateString()//event.date
-        eventEmail.setTitle(event.email, forState: .Normal)
+        eventEmail.setTitle(event.email, for: UIControlState())
         eventEmail.titleLabel?.numberOfLines = 1
         eventEmail.titleLabel?.adjustsFontSizeToFitWidth = true
-        eventEmail.titleLabel?.lineBreakMode = .ByTruncatingMiddle
+        eventEmail.titleLabel?.lineBreakMode = .byTruncatingMiddle
         eventEmail.titleLabel?.minimumScaleFactor = 0.7
         
         self.activityIndicator.startAnimating()
         self.activityIndicator.hidesWhenStopped = true
         
-        if event.timeStampOfEvent > Int(NSDate().timeIntervalSince1970) + 86400 * 4{
-            weatherStack.hidden = true
+        if event.timeStampOfEvent > Int(Date().timeIntervalSince1970) + 86400 * 4{
+            weatherStack.isHidden = true
         } else{
             callWeather(event.timeStampOfEvent!)
         }
         
         if event.email == nil || event.email == ""{
-            emailStack.hidden = true
+            emailStack.isHidden = true
         }
         
         if let holdEventImg = event.imgURL{
-            ImgCacheLoader.sharedLoader.imageForUrl(holdEventImg) { (image, url) in
-                if image != nil{            // without this if no internet connection we receive nil image causing crash.
-                    self.img = image
-                    self.eventImg.image = self.img!
-                    self.eventImg.roundCornersForAspectFit(5)
-                } else{
-                    self.eventImg.hidden = true
+            print("img cache loader")
+            
+            let url = URL(string: holdEventImg)
+            self.eventImg.sd_setImage(with: url, completed: { (image: UIImage?, error: Error?, cache: SDImageCacheType, url: URL?) in
+                if image == nil{
+                    self.eventImg.isHidden = true
+                    
                 }
+                self.eventImg.roundCornersForAspectFit(5)
                 self.activityIndicator.stopAnimating()
-            }
+            })
         }else{
-            eventImg.hidden = true
+            eventImg.isHidden = true
             self.activityIndicator.stopAnimating()
         }
     }
@@ -144,14 +171,14 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     func setBottomButtons(){
         bottomTextMessageBtn.adjustsImageWhenHighlighted = false        //prevents image from becoming darker when touched
         bottomCalenarBtn.adjustsImageWhenHighlighted = false
-        bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.textMessageReleaseInside(_:)), forControlEvents: .TouchUpInside)
-        bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.showReminderVC), forControlEvents: .TouchUpInside)
+        bottomTextMessageBtn.addTarget(self, action: #selector(EventDetailsVC.textMessageReleaseInside(_:)), for: .touchUpInside)
+        bottomCalenarBtn.addTarget(self, action: #selector(EventDetailsVC.showReminderVC), for: .touchUpInside)
     }
     
     func dateString() -> String{
         let timeStamp = event.timeStampOfEvent
-        let timeInterval = NSTimeInterval(timeStamp!)
-        let myDate = NSDate(timeIntervalSince1970: timeInterval)
+        let timeInterval = TimeInterval(timeStamp!)
+        let myDate = Date(timeIntervalSince1970: timeInterval)
         return myDate.dateEventDetailsString()
     }
     
@@ -165,9 +192,9 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         DataService.instance.geoFireRef.child(event.key).removeValue()
         DataService.instance.commentRef.child(event.key).removeValue()
         
-        NSNotificationCenter.defaultCenter().postNotificationName("loadDataAfterNewEvent", object: event, userInfo: nil)
-        NSNotificationCenter.defaultCenter().postNotificationName("eventDeleted", object: nil, userInfo: nil)
-        self.navigationController?.popViewControllerAnimated(true)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "loadDataAfterNewEvent"), object: event, userInfo: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "eventDeleted"), object: nil, userInfo: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     //////////////////////////////////////////////////////
@@ -175,21 +202,21 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //Calendar access
     
     func showReminderVC(){
-        let status = EKEventStore.authorizationStatusForEntityType(EKEntityType.Event)
-        if status == EKAuthorizationStatus.Denied{
+        let status = EKEventStore.authorizationStatus(for: EKEntityType.event)
+        if status == EKAuthorizationStatus.denied{
             self.accessPreviouslyDenied()
-        } else if status == EKAuthorizationStatus.Authorized{
-            performSegueWithIdentifier("ReminderVC", sender: nil)
+        } else if status == EKAuthorizationStatus.authorized{
+            performSegue(withIdentifier: "ReminderVC", sender: nil)
         } else {
             requestAccessToCalendar()
         }
     }
 
     let eventStore = EKEventStore()
-    func calendarReleaseInside(alarm: EKAlarm){     //delegate function
-        let startDate: NSDate
-        startDate = NSDate(timeIntervalSince1970: Double(event.timeStampOfEvent!))
-        let endDate = startDate.dateByAddingTimeInterval(60 * 60)
+    func calendarReleaseInside(_ alarm: EKAlarm){     //delegate function
+        let startDate: Date
+        startDate = Date(timeIntervalSince1970: Double(event.timeStampOfEvent!))
+        let endDate = startDate.addingTimeInterval(60 * 60)
         
         CreateEvent.instance.createEventFunc(self.eventStore, title: self.event.title, startDate: startDate, endDate: endDate, alarm: alarm)
         
@@ -198,63 +225,66 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     }
     
     func accessPreviouslyDenied(){
-        let alertDeniedAccessCalendar = UIAlertController(title: "Access to calendar is denied", message: "Would you like to change your settings", preferredStyle: .Alert)
+        let alertDeniedAccessCalendar = UIAlertController(title: "Access to calendar is denied", message: "Would you like to change your settings", preferredStyle: .alert)
         
-        let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) in
-            let settingsURL = NSURL(string: UIApplicationOpenSettingsURLString)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) in
+            let settingsURL = URL(string: UIApplicationOpenSettingsURLString)
             if let url = settingsURL{
-                UIApplication.sharedApplication().openURL(url)
+                UIApplication.shared.openURL(url)
             }
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         
         alertDeniedAccessCalendar.addAction(settingsAction)
         alertDeniedAccessCalendar.addAction(cancelAction)
         
-        presentViewController(alertDeniedAccessCalendar, animated: true, completion: nil)
+        present(alertDeniedAccessCalendar, animated: true, completion: nil)
     }
     
     func requestAccessToCalendar(){
-        eventStore.requestAccessToEntityType(.Event) { (accessGranted: Bool, error: NSError?) in
-            if accessGranted == true{
-                self.performSegueWithIdentifier("ReminderVC", sender: nil)
+        
+        eventStore.requestAccess(to: .event, completion:  {(granted: Bool, error: Error?) in
+            if granted == true{
+                DispatchQueue.main.async(execute: { 
+                    self.performSegue(withIdentifier: "ReminderVC", sender: nil)
+                })
             } else{
                 print("user declined to let app use calendar.")
             }
-        }
+        } )
     }
     
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //text message, garbage, heart pressed
     
-    func textMessageReleaseInside(sender: UIButton){
-        sender.backgroundColor = UIColor.clearColor()
+    func textMessageReleaseInside(_ sender: UIButton){
+        sender.backgroundColor = UIColor.clear
         let messageVC = MFMessageComposeViewController()
         messageVC.messageComposeDelegate = self
         messageVC.body = "Hi would you want to go to \(event.title) on \(event.date) at \(event.location).\n\(event.description)"
         
         if MFMessageComposeViewController.canSendText(){
-            self.presentViewController(messageVC, animated: true, completion: nil)
+            self.present(messageVC, animated: true, completion: nil)
         }
     }
     
-    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func garbageAction(sender: AnyObject){
+    @IBAction func garbageAction(_ sender: AnyObject){
         deleteView.showDeleteView(self.view, lblText: "Delete Event?")
     }
-    @IBAction func heartBtnPressed(sender: AnyObject){
+    @IBAction func heartBtnPressed(_ sender: AnyObject){
         if event.isLiked{
-            heartBtn.setImage(UIImage(named: "heartEmpty"), forState: .Normal)
+            heartBtn.setImage(UIImage(named: "heartEmpty"), for: UIControlState())
             event.adjustLikes(false)
-            NSNotificationCenter.defaultCenter().postNotificationName("heartDeleted", object: self.event.key, userInfo: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "heartDeleted"), object: self.event.key, userInfo: nil)
         } else{
-            heartBtn.setImage(UIImage(named: "heartFilled"), forState: .Normal)
+            heartBtn.setImage(UIImage(named: "heartFilled"), for: UIControlState())
             event.adjustLikes(true)
-            NSNotificationCenter.defaultCenter().postNotificationName("heartAdded", object: self.event, userInfo: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "heartAdded"), object: self.event, userInfo: nil)
         }
     }
 
@@ -262,14 +292,14 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //////////////////////////////////////////////////////
     //to MailVC, Location, CommentsVC, largeImg
     
-    @IBAction func eventLocBtnPressed(sender: AnyObject){
+    @IBAction func eventLocBtnPressed(_ sender: AnyObject){
         if let eventLong = event.pinInfoLongitude, let eventLat = event.pinInfoLatitude{
             let cord = CLLocationCoordinate2D(latitude: eventLat, longitude: eventLong)
             let placemark = MKPlacemark(coordinate: cord, addressDictionary: nil)
             let mapItem = MKMapItem(placemark: placemark)
             mapItem.name = "\(event.title)"
             let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-            mapItem.openInMapsWithLaunchOptions(launchOptions)
+            mapItem.openInMaps(launchOptions: launchOptions)
         }
     }
 
@@ -281,16 +311,16 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         mailVC.setMessageBody("Hello I have a question regarding \(event.title)\n", isHTML: true)
 
         if MFMailComposeViewController.canSendMail(){
-            self.presentViewController(mailVC, animated: true, completion: nil)
+            self.present(mailVC, animated: true, completion: nil)
         }
     }
     
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func toCommentsVC(sender: AnyObject){
-        performSegueWithIdentifier("CommentsSegue", sender: nil)
+    @IBAction func toCommentsVC(_ sender: AnyObject){
+        performSegue(withIdentifier: "CommentsSegue", sender: nil)
     }
     
     var darkView: UIView!
@@ -301,19 +331,19 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     var eventImgHeight: CGFloat!
     
     func toLargeImg(){
-        self.view.userInteractionEnabled = false
-        if img != nil{
+        self.view.isUserInteractionEnabled = false
+        if let img = self.eventImg.image{
             print("frame \(eventImg.frame)")
-            if let startingFrame = eventImg.superview?.convertRect(eventImg.frame, toView: nil){
-                zoomImgView.frame = AVMakeRectWithAspectRatioInsideRect(img.size, eventImg.frame)
+            if let startingFrame = eventImg.superview?.convert(eventImg.frame, to: nil){
+                zoomImgView.frame = AVMakeRect(aspectRatio: img.size, insideRect: eventImg.frame)
                 
                 zoomImgView.frame.origin.y = startingFrame.origin.y
-                var xOffset = (eventImg.frame.width - zoomImgView.frame.width) / 2
+                let xOffset = (eventImg.frame.width - zoomImgView.frame.width) / 2
                 zoomImgView.frame.origin.x = startingFrame.origin.x + xOffset
                 originalFrame = startingFrame
                 
                 zoomImgView.layer.cornerRadius = 5
-                zoomImgView.contentMode = .ScaleAspectFit
+                zoomImgView.contentMode = .scaleAspectFit
                 zoomImgView.clipsToBounds = true
                 zoomImgView.image = img
                 eventImg.alpha = 0
@@ -321,23 +351,23 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
                 
                 darkView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
                 darkView.alpha = 0
-                darkView.backgroundColor = UIColor.blackColor()
+                darkView.backgroundColor = UIColor.black
                 
-                performSelector(#selector(EventDetailsVC.segueImg), withObject: self, afterDelay: animationDuration * 2)
+                perform(#selector(EventDetailsVC.segueImg), with: self, afterDelay: animationDuration * 2)
 
-                UIView.animateWithDuration(animationDuration, animations: {
+                UIView.animate(withDuration: animationDuration, animations: {
                     self.view.addSubview(self.darkView)
-                    self.view.bringSubviewToFront(self.zoomImgView)
+                    self.view.bringSubview(toFront: self.zoomImgView)
                     
-                    var h = self.zoomImgView.bounds.height * UIScreen.mainScreen().bounds.width / self.zoomImgView.bounds.width
-                    var y = self.view.bounds.height / 2 - h / 2
+                    let h = self.zoomImgView.bounds.height * UIScreen.main.bounds.width / self.zoomImgView.bounds.width
+                    let y = self.view.bounds.height / 2 - h / 2
 
-                    self.zoomImgView.frame = CGRect(x: 0, y: y, width: UIScreen.mainScreen().bounds.width, height: h)
+                    self.zoomImgView.frame = CGRect(x: 0, y: y, width: UIScreen.main.bounds.width, height: h)
                     
 //                    self.zoomImgView.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
                     
                     }, completion: { (true) in
-                        UIView.animateWithDuration(self.animationDuration, animations: {
+                        UIView.animate(withDuration: self.animationDuration, animations: {
                             self.darkView.alpha = 1
                             }, completion: { (true) in
                         })
@@ -347,15 +377,15 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     }
     
     func segueImg(){
-        self.performSegueWithIdentifier("ImageLargeVC", sender: nil)
+        self.performSegue(withIdentifier: "ImageLargeVC", sender: nil)
     }
     
     func poppedBackFromImg(){
         
-        UIView.animateWithDuration(self.animationDuration, animations: {
+        UIView.animate(withDuration: self.animationDuration, animations: {
             self.darkView.alpha = 0
-            }) { (true) in
-                UIView.animateWithDuration(self.animationDuration, animations: {
+            }, completion: { (true) in
+                UIView.animate(withDuration: self.animationDuration, animations: {
                     
                     self.zoomImgView.frame = CGRect(x: self.originalFrame.origin.x, y: self.originalFrame.origin.y, width: self.eventImg.frame.width, height: self.eventImg.frame.height)
                     
@@ -371,9 +401,9 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
                     self.eventImg.alpha = 1.0
                     self.zoomImgView.removeFromSuperview()
                     self.darkView.removeFromSuperview()
-                    self.view.userInteractionEnabled = true
+                    self.view.isUserInteractionEnabled = true
                 })
-        }
+        }) 
     }
     
     
@@ -381,26 +411,26 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //////////////////////////////////////////////////////
     //segue and popBack
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ImageLargeVC"{
-            if let destVC = segue.destinationViewController as? ImageLargeVC{
-                destVC.img = img
+            if let destVC = segue.destination as? ImageLargeVC{
+                destVC.img = self.eventImg.image
             }
         }
         
         if segue.identifier == "ReminderVC"{
-            if let destVC = segue.destinationViewController as? ReminderVC{
+            if let destVC = segue.destination as? ReminderVC{
                     destVC.delegate = self
             }
         }
         if segue.identifier == "CommentsSegue"{
-            if let destVC = segue.destinationViewController as? EventDetailsCommVC{
+            if let destVC = segue.destination as? EventDetailsCommVC{
                 destVC.event = self.event
             }
         }
     }
     
-    @IBAction func popBackBtn(sender: AnyObject){
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func popBackBtn(_ sender: AnyObject){
+        self.navigationController?.popViewController(animated: true)
     }
 }

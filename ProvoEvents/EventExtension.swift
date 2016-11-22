@@ -7,11 +7,24 @@
 //
 
 import Foundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 extension Event{
     
     func beforeToday() -> Bool{
-        let currentDate = NSDate()
+        let currentDate = Date()
         let todayStartInSeconds = todayStart(currentDate)
         if timeStampOfEvent < todayStartInSeconds{
             return true
@@ -20,10 +33,10 @@ extension Event{
         }
     }
     
-    func onThisDay(date: NSDate) -> Bool{
+    func onThisDay(_ date: Date) -> Bool{
         
-        var start = date.timeIntervalSince1970
-        var end = date.timeIntervalSince1970 + 86400
+        let start = date.timeIntervalSince1970
+        let end = date.timeIntervalSince1970 + 86400
         
         let timeOfEvent = Double(self.timeStampOfEvent!)
         
@@ -34,11 +47,11 @@ extension Event{
         }
     }
     
-    func todayStart(date: NSDate) ->Int{
+    func todayStart(_ date: Date) ->Int{
         
-        let calendar = NSCalendar.currentCalendar()
-        let currentHour = calendar.component(.Hour, fromDate: date)
-        let currentMinute = calendar.component(.Minute, fromDate: date)
+        let calendar = Calendar.current
+        let currentHour = (calendar as NSCalendar).component(.hour, from: date)
+        let currentMinute = (calendar as NSCalendar).component(.minute, from: date)
         let secondsInToday = (currentHour * 60 * 60 + currentMinute * 60)
         let nowInSeconds = Int(date.timeIntervalSince1970)
         let todayStartInSeconds = nowInSeconds - secondsInToday

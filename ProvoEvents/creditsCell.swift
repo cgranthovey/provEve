@@ -17,7 +17,7 @@ class creditsCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func configureCell(credit: Credit){
+    func configureCell(_ credit: Credit){
         img.image = UIImage(named: credit.imageString)
         label1.attributedText = credit.labelText
     }

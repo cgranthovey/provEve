@@ -9,38 +9,38 @@
 import Foundation
 import FirebaseAuth
 
-typealias Completion = (errMsg: String!, data: AnyObject?) -> Void
+typealias Completion = (_ errMsg: String?, _ data: AnyObject?) -> Void
 
 class AuthService{
-    private static let _instance = AuthService()
+    fileprivate static let _instance = AuthService()
     
     static var instance: AuthService{
         return _instance
     }
     
-    func login(password: String, email: String, onComplete: Completion){
-        FIRAuth.auth()?.signInWithEmail(email, password: password, completion: { (user, error) in
+    func login(_ password: String, email: String, onComplete: @escaping Completion){
+        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
             if error != nil{
-                self.handleErrors(error!, onComplete: onComplete)
+                self.handleErrors(error! as NSError, onComplete: onComplete)
             } else{
-                onComplete(errMsg: nil, data: user)
+                onComplete(nil, user)
             }
         })
     }
     
-    func createUser(password: String, email: String, onComplete: Completion){
-        FIRAuth.auth()?.createUserWithEmail(email, password: password, completion: { (user, error) in
+    func createUser(_ password: String, email: String, onComplete: @escaping Completion){
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
             if error != nil{
-                self.handleErrors(error!, onComplete: onComplete)
+                self.handleErrors(error! as NSError, onComplete: onComplete)
             } else{
                 if user?.uid != nil{
                     DataService.instance.saveUser(user!.uid)
                     
-                    FIRAuth.auth()?.signInWithEmail(email, password: password, completion: { (user, error) in
+                    FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
                         if error != nil{
-                            self.handleErrors(error!, onComplete: onComplete)
+                            self.handleErrors(error! as NSError, onComplete: onComplete)
                         } else{
-                            onComplete(errMsg: nil, data: user)
+                            onComplete(nil, user)
                         }
                     })
                 }
@@ -48,39 +48,39 @@ class AuthService{
         })
     }
     
-    func passwordReset(password: String, onComplete: Completion){
-        FIRAuth.auth()?.sendPasswordResetWithEmail(password, completion: { (error) in
+    func passwordReset(_ password: String, onComplete: @escaping Completion){
+        FIRAuth.auth()?.sendPasswordReset(withEmail: password, completion: { (error) in
             if error != nil{
-                    self.handlePasswordResetErrors(error!, onComplete: onComplete)
+                    self.handlePasswordResetErrors(error! as NSError, onComplete: onComplete)
             } else{
-                onComplete(errMsg: nil, data: nil)
+                onComplete(nil, nil)
             }
         })
     }
     
-    func handlePasswordResetErrors(error: NSError, onComplete: Completion){
+    func handlePasswordResetErrors(_ error: NSError, onComplete: Completion){
         if let errorCode = FIRAuthErrorCode(rawValue: error.code){
             switch errorCode {
-            case FIRAuthErrorCode.ErrorCodeInvalidEmail: onComplete(errMsg: "This email is not in our system", data: nil)
+            case FIRAuthErrorCode.errorCodeInvalidEmail: onComplete("This email is not in our system", nil)
             default:
-                onComplete(errMsg: "There was a problem sending a password reset", data: nil)
+                onComplete("There was a problem sending a password reset", nil)
             }
         }
     }
     
-    func handleErrors(error: NSError, onComplete: Completion){
+    func handleErrors(_ error: NSError, onComplete: Completion){
         print(error.debugDescription)
         if let errorCode = FIRAuthErrorCode(rawValue: error.code){
             switch errorCode {
-            case FIRAuthErrorCode.ErrorCodeInvalidEmail: onComplete(errMsg: "Invalid Email", data: nil)
-            case FIRAuthErrorCode.ErrorCodeWrongPassword: onComplete(errMsg: "Invalid Password", data: nil)
-            case FIRAuthErrorCode.ErrorCodeWeakPassword: onComplete(errMsg: "Password too weak", data: nil)
-            case FIRAuthErrorCode.ErrorCodeUserDisabled: onComplete(errMsg: "Account disabled", data: nil)
-            case FIRAuthErrorCode.ErrorCodeUserNotFound: onComplete(errMsg: "Account could not be found", data: nil)
-            case FIRAuthErrorCode.ErrorCodeTooManyRequests, .ErrorCodeNetworkError: onComplete(errMsg: "Please try logging in again later", data: nil)
-            case FIRAuthErrorCode.ErrorCodeEmailAlreadyInUse: onComplete(errMsg: "Email address already in use", data: nil)
+            case FIRAuthErrorCode.errorCodeInvalidEmail: onComplete("Invalid Email", nil)
+            case FIRAuthErrorCode.errorCodeWrongPassword: onComplete("Invalid Password", nil)
+            case FIRAuthErrorCode.errorCodeWeakPassword: onComplete("Password too weak", nil)
+            case FIRAuthErrorCode.errorCodeUserDisabled: onComplete("Account disabled", nil)
+            case FIRAuthErrorCode.errorCodeUserNotFound: onComplete("Account could not be found", nil)
+            case FIRAuthErrorCode.errorCodeTooManyRequests, .errorCodeNetworkError: onComplete("Please try logging in again later", nil)
+            case FIRAuthErrorCode.errorCodeEmailAlreadyInUse: onComplete("Email address already in use", nil)
             default:
-                onComplete(errMsg: "There was an error authenticating", data: nil)
+                onComplete("There was an error authenticating", nil)
             }
         }
     }

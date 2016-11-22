@@ -10,23 +10,23 @@ import UIKit
 import NVActivityIndicatorView
 
 protocol GetDateTime {
-    func getTheDateTime(date: NSDate)
+    func getTheDateTime(_ date: Date)
 }
 
 class DateTimeVC: UIViewController {
 
     var delegate: GetDateTime?
-    var currentDate: NSDate?
+    var currentDate: Date?
     
     @IBOutlet weak var timeDatePicker: UIDatePicker!
 
     override func viewDidLoad() {
         super.viewDidLoad()        
         
-        timeDatePicker.datePickerMode = .DateAndTime
+        timeDatePicker.datePickerMode = .dateAndTime
         timeDatePicker.minuteInterval = 5
-        timeDatePicker.minimumDate = NSDate(timeIntervalSinceNow: 0)
-        timeDatePicker.maximumDate = NSDate(timeIntervalSinceNow: 10510000)
+        timeDatePicker.minimumDate = Date(timeIntervalSinceNow: 0)
+        timeDatePicker.maximumDate = Date(timeIntervalSinceNow: 10510000)
         timeDatePicker.backgroundColor = UIColor(red: 245.0/255.0, green: 245.0/255.0, blue: 245.0/255.0, alpha: 1.0)
         
         if let curDate = currentDate{
@@ -36,16 +36,16 @@ class DateTimeVC: UIViewController {
     }
     
     func dismissVC(){
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func set(){
         let nsDate = timeDatePicker.date
         delegate?.getTheDateTime(nsDate)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
     @IBAction func cancel(){
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }

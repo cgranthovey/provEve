@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension UIImageView{
-    func roundCornersForAspectFit(radius: CGFloat){
+    func roundCornersForAspectFit(_ radius: CGFloat){
         if let image = self.image {
             
             //calculate drawingRect
@@ -28,26 +28,26 @@ extension UIImageView{
             }
             let path = UIBezierPath(roundedRect: drawingRect, cornerRadius: radius)
             let mask = CAShapeLayer()
-            mask.path = path.CGPath
+            mask.path = path.cgPath
             self.layer.mask = mask
         }
     }
     
-    func showCheckmarkAnimatedTempImg(supView: UIView, delay: NSTimeInterval = 0.1, remove: Bool = true){
-        self.frame = CGRectMake(0, 0, 150, 150)
-        self.contentMode = .ScaleAspectFit
+    func showCheckmarkAnimatedTempImg(_ supView: UIView, delay: TimeInterval = 0.1, remove: Bool = true){
+        self.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        self.contentMode = .scaleAspectFit
         self.center = supView.center
         self.center.y = self.center.y + 50
         supView.addSubview(self)
-        supView.bringSubviewToFront(self)
+        supView.bringSubview(toFront: self)
         self.alpha = 0
 
-        UIView.animateWithDuration(0.3, delay: delay, usingSpringWithDamping: 2.0, initialSpringVelocity: 3.0, options: .CurveEaseIn, animations: {
+        UIView.animate(withDuration: 0.3, delay: delay, usingSpringWithDamping: 2.0, initialSpringVelocity: 3.0, options: .curveEaseIn, animations: {
             self.alpha = 1
             self.center.y = self.center.y - 75
         }) { (true) in
             if remove{
-                UIView.animateWithDuration(0.3, delay: 0.3, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .CurveEaseIn, animations: {
+                UIView.animate(withDuration: 0.3, delay: 0.3, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseIn, animations: {
                     self.alpha = 0
                     }, completion: { (true) in
                         self.removeFromSuperview()

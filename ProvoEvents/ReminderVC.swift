@@ -10,7 +10,7 @@ import UIKit
 import EventKit
 
 protocol getReminderInfo {
-    func calendarReleaseInside(timeInterval: EKAlarm)
+    func calendarReleaseInside(_ timeInterval: EKAlarm)
 }
 
 class ReminderVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -29,23 +29,23 @@ class ReminderVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return arrayOfTimesForPickerView[row]
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         rowSelected = row
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return arrayOfTimesForPickerView.count
     }
     
-    @IBAction func set(sender: AnyObject){
+    @IBAction func set(_ sender: AnyObject){
         let alarm = EKAlarm()
         switch rowSelected {
         case 0:
@@ -57,22 +57,22 @@ class ReminderVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
         case 3:
             alarm.relativeOffset = -60 * 60
         case 4:
-            alarm.relativeOffset = -60 * 60 * 2
+            alarm.relativeOffset = TimeInterval(-60 * 60 * 2)
         case 5:
-            alarm.relativeOffset = -60 * 60 * 4
+            alarm.relativeOffset = TimeInterval(-60 * 60 * 4)
         case 6:
-            alarm.relativeOffset = -60 * 60 * 12
+            alarm.relativeOffset = TimeInterval(-60 * 60 * 12)
         case 7:
-            alarm.relativeOffset = -60 * 60 * 24
+            alarm.relativeOffset = TimeInterval(-60 * 60 * 24)
         default:
-            alarm.relativeOffset = -60 * 60 * 6
+            alarm.relativeOffset = TimeInterval(-60 * 60 * 6)
         }
         
         delegate?.calendarReleaseInside(alarm)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func cancel(sender: AnyObject){
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancel(_ sender: AnyObject){
+        self.dismiss(animated: true, completion: nil)
     }
 }

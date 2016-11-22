@@ -20,22 +20,22 @@ class CommentsCell: UITableViewCell {
     var thisComment: Comment!
     var commentKey: String!
     
-    func configureCell(comment: Comment){
+    func configureCell(_ comment: Comment){
         self.commentKey = comment.key
         self.thisComment = comment
         name.text = comment.userName
         self.comment.text = comment.commentText
         
-        deleteBtnOutlet.hidden = false
-        deleteImg.hidden = false
+        deleteBtnOutlet.isHidden = false
+        deleteImg.isHidden = false
         
         if comment.userId != FIRAuth.auth()?.currentUser?.uid{
-            deleteBtnOutlet.hidden = true
-            deleteImg.hidden = true
+            deleteBtnOutlet.isHidden = true
+            deleteImg.isHidden = true
         }
     }
     
     @IBAction func deleteTapped(){
-        NSNotificationCenter.defaultCenter().postNotificationName("commentDelete", object: commentKey, userInfo: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "commentDelete"), object: commentKey, userInfo: nil)
     }
 }

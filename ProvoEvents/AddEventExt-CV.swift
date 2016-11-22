@@ -11,14 +11,14 @@ import Foundation
 
 extension AddEventVC: UICollectionViewDelegate, UICollectionViewDataSource{
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MapPinCell", forIndexPath: indexPath) as? MapPinCell{
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MapPinCell", for: indexPath) as? MapPinCell{
             cell.configureCell(img[indexPath.row], label: lbl[indexPath.row])
             if let pickedCell = selectedCellInt{
                 if indexPath.row == pickedCell{
                     cell.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1.0)
                 } else{
-                    cell.backgroundColor = UIColor.clearColor()
+                    cell.backgroundColor = UIColor.clear
                 }
             }
             return cell
@@ -27,27 +27,27 @@ extension AddEventVC: UICollectionViewDelegate, UICollectionViewDataSource{
         }
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return img.count
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         print(collection.frame.width)
-        return CGSizeMake(85, 70.0)
+        return CGSize(width: 85, height: 70.0)
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let pickedCellIndex = selectedCellInt{
-            let indexPath = NSIndexPath(forItem: pickedCellIndex, inSection: 0)
-            if let myCell = collection.cellForItemAtIndexPath(indexPath) as? MapPinCell{
-                myCell.backgroundColor = UIColor.clearColor()
+            let indexPath = IndexPath(item: pickedCellIndex, section: 0)
+            if let myCell = collection.cellForItem(at: indexPath) as? MapPinCell{
+                myCell.backgroundColor = UIColor.clear
             }
         }
-        let cell = collection.cellForItemAtIndexPath(indexPath) as? MapPinCell
+        let cell = collection.cellForItem(at: indexPath) as? MapPinCell
         selectedCellInt = indexPath.row
         cell?.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1.0)
         cellHold = cell!

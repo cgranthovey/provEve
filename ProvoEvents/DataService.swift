@@ -13,7 +13,7 @@ import FirebaseStorage
 
 class DataService{
     
-    private static let _instance = DataService()
+    fileprivate static let _instance = DataService()
     
     static var instance: DataService{
         return _instance
@@ -50,8 +50,8 @@ class DataService{
         return currentUser.child("profile")
     }
     
-    func saveUser(uid: String){
-        let profile: Dictionary<String, AnyObject> = ["firstName": "", "lastName": ""]
+    func saveUser(_ uid: String){
+        let profile: Dictionary<String, AnyObject> = ["firstName": "" as AnyObject, "lastName": "" as AnyObject]
         userRef.child(uid).child("profile").setValue(profile)
     }
     
@@ -68,7 +68,7 @@ class DataService{
     }
     
     var storageRef: FIRStorageReference{
-        return storage.referenceForURL("gs://provo-events.appspot.com")
+        return storage.reference(forURL: "gs://provo-events.appspot.com")
     }
     
     var imgStorageRefData: FIRStorageReference{

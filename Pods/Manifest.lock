@@ -37,6 +37,9 @@ PODS:
   - GoogleUtilities (1.3.1):
     - GoogleSymbolUtilities (~> 1.0)
   - NVActivityIndicatorView (2.7)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
 
 DEPENDENCIES:
   - Firebase
@@ -45,6 +48,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - NVActivityIndicatorView
+  - SDWebImage
 
 SPEC CHECKSUMS:
   Firebase: 6c80ac28d59d06bfd9152a7b6ea17625ca93183d
@@ -58,7 +62,8 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   NVActivityIndicatorView: dc80f18fb27ac92f0aa87246cc13dc39ed3e9ee0
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
 
-PODFILE CHECKSUM: f4bc3c3222e0d085faad0fd6a3faf3c0c019b7d2
+PODFILE CHECKSUM: 9d9d13a45ef79c98378bebac0c685de933d43103
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

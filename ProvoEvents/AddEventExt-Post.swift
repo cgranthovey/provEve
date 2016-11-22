@@ -53,13 +53,13 @@ extension AddEventVC: yesSelectedProtocol{
 
         let selectedCellImgName = img[selectedCellInt]
         makeLoadingView()
-        let timePosted: Int = Int(NSDate().timeIntervalSince1970)
-        let toFirebaseDict: Dictionary<String, AnyObject> = ["title": titleTextField.text!, "location": locationTextField.text!, "pinInfo": pinLocDict,"date": dateString!, "timeStampOfEvent": timeStampOfEvent,"email": emailTextField.text!, "timePosted": timePosted, "description": descriptionTextView.text!, "user": (FIRAuth.auth()?.currentUser?.uid)!, "eventTypeImgName": selectedCellImgName]
+        let timePosted: Int = Int(Date().timeIntervalSince1970)
+        let toFirebaseDict: Dictionary<String, AnyObject> = ["title": titleTextField.text! as AnyObject, "location": locationTextField.text! as AnyObject, "pinInfo": pinLocDict as AnyObject,"date": dateString! as AnyObject, "timeStampOfEvent": timeStampOfEvent as AnyObject,"email": emailTextField.text! as AnyObject, "timePosted": timePosted as AnyObject, "description": descriptionTextView.text! as AnyObject, "user": (FIRAuth.auth()?.currentUser?.uid)! as AnyObject, "eventTypeImgName": selectedCellImgName as AnyObject]
         
         let key = DataService.instance.eventRef.childByAutoId().key
         holdKeyInCaseError = key
         
-        let childValues: Dictionary<String, AnyObject> = ["/Events/\(key)": toFirebaseDict, "/User/\((FIRAuth.auth()?.currentUser?.uid)!)/posts/\(key)": "True"]
+        let childValues: Dictionary<String, AnyObject> = ["/Events/\(key)": toFirebaseDict as AnyObject, "/User/\((FIRAuth.auth()?.currentUser?.uid)!)/posts/\(key)": "True" as AnyObject]
         DataService.instance.mainRef.updateChildValues(childValues) { (err, FIRDatabaseRef) in
             if err != nil{
                 print(err?.localizedDescription)
@@ -69,10 +69,10 @@ extension AddEventVC: yesSelectedProtocol{
                 print("problem: \(self.eventImg.image)")
                 if self.imgChoosen{
                     if let img = self.eventImg.image {
-                        if let data: NSData = UIImageJPEGRepresentation(img, 0.8){
-                            let imgName = "\(NSUUID().UUIDString)jpg"
+                        if let data: Data = UIImageJPEGRepresentation(img, 0.8){
+                            let imgName = "\(UUID().uuidString)jpg"
                             let storageRef = DataService.instance.imgStorageRefData.child(imgName)
-                            storageRef.putData(data, metadata: nil, completion: { (meta, err) in
+                            storageRef.put(data, metadata: nil, completion: { (meta, err) in
                                 if err != nil{
                                     self.alertProblemUploadingImg()
                                     return
@@ -80,7 +80,7 @@ extension AddEventVC: yesSelectedProtocol{
                                     self.postGeoFire(self.coordinateOfEvent, eventRef: key)
                                     let downloadURL = meta?.downloadURL()?.absoluteString
                                     DataService.instance.eventRef.child(key).child("image").setValue(downloadURL)
-                                    self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 1.5)
+                                    self.perform(#selector(AddEventVC.makeSuccessView), with: self, afterDelay: 1.5)
                                 }
                             })
                         }
@@ -94,25 +94,25 @@ extension AddEventVC: yesSelectedProtocol{
         }
     }
     
-    func noImg(key: String){
+    func noImg(_ key: String){
         self.postGeoFire(self.coordinateOfEvent, eventRef: key)
-        self.performSelector(#selector(AddEventVC.makeSuccessView), withObject: self, afterDelay: 0.75)
+        self.perform(#selector(AddEventVC.makeSuccessView), with: self, afterDelay: 0.75)
     }
 
     func makeLoadingView(){
         self.loadingView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         self.loadingView.center = self.view.center
-        self.loadingView.backgroundColor = UIColor.blackColor()
+        self.loadingView.backgroundColor = UIColor.black
         self.loadingView.alpha = 0
         view.addSubview(self.loadingView)
         
         exit = UIButton(frame: CGRect(x: 20, y: 20, width: 32, height: 32))
-        exit.setImage(UIImage(named: "deleteWhite"), forState: .Normal)
-        exit.imageView?.contentMode = .ScaleAspectFit
-        exit.addTarget(self, action: #selector(AddEventVC.cancelUpload), forControlEvents: .TouchUpInside)
+        exit.setImage(UIImage(named: "deleteWhite"), for: UIControlState())
+        exit.imageView?.contentMode = .scaleAspectFit
+        exit.addTarget(self, action: #selector(AddEventVC.cancelUpload), for: .touchUpInside)
         exit.alpha = 0
         self.view.addSubview(exit)
-        self.view.bringSubviewToFront(exit)
+        self.view.bringSubview(toFront: exit)
         
 //        self.spinIndicator = UIActivityIndicatorView()
 //        self.spinIndicator.center = self.loadingView.center
@@ -126,15 +126,15 @@ extension AddEventVC: yesSelectedProtocol{
         actView.alpha = 0
         self.view.addSubview(actView)
         
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.loadingView.alpha = 0.8
-        }) { (true) in
-            UIView.animateWithDuration(0.5, animations: {
+        }, completion: { (true) in
+            UIView.animate(withDuration: 0.5, animations: {
                 self.exit.alpha = 1
                 self.actView.alpha = 1
     //            self.spinIndicator.alpha = 1
                 }, completion: nil)
-        }
+        }) 
     }
     
     func cancelUpload(){
@@ -144,14 +144,14 @@ extension AddEventVC: yesSelectedProtocol{
     
     func alertProblemUploadingImg(){
         spinIndicFade()
-        let alert = UIAlertController(title: "Error Uploading Image", message: "Would you like to post now without the image, or try later with the image", preferredStyle: .Alert)
-        let actionNow = UIAlertAction(title: "Now", style: .Default) {(action: UIAlertAction) in
+        let alert = UIAlertController(title: "Error Uploading Image", message: "Would you like to post now without the image, or try later with the image", preferredStyle: .alert)
+        let actionNow = UIAlertAction(title: "Now", style: .default) {(action: UIAlertAction) in
             
             let imgSuccess2 = UIImageView(image: UIImage(named: "whiteCheck"))
             imgSuccess2.showCheckmarkAnimatedTempImg(self.view, delay: 0.2, remove: false)
-            self.performSelector(#selector(AddEventVC.popOut), withObject: nil, afterDelay: 2)
+            self.perform(#selector(AddEventVC.popOut), with: nil, afterDelay: 2)
         }
-        let actionLater = UIAlertAction(title: "Later", style: .Default) {(action: UIAlertAction) in
+        let actionLater = UIAlertAction(title: "Later", style: .default) {(action: UIAlertAction) in
             self.loadingViewFade()
             if let key = self.holdKeyInCaseError{
                 DataService.instance.eventRef.child(key).removeValue()      //removes firebase data at location, however other users would be able to view post for a second until user deletes it
@@ -159,10 +159,10 @@ extension AddEventVC: yesSelectedProtocol{
         }
         alert.addAction(actionNow)
         alert.addAction(actionLater)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func postGeoFire(location: CLLocationCoordinate2D?, eventRef: String?){
+    func postGeoFire(_ location: CLLocationCoordinate2D?, eventRef: String?){
         var geoFire: GeoFire!
         var geoFireRef: FIRDatabaseReference!
         geoFireRef = DataService.instance.mainRef.child("GeoFire")
@@ -181,21 +181,21 @@ extension AddEventVC: yesSelectedProtocol{
     
     func loadingViewFade(){
         if loadingView != nil{
-            UIView.animateWithDuration(0.3, animations: {
+            UIView.animate(withDuration: 0.3, animations: {
                 self.loadingView.alpha = 0
                 self.exit.alpha = 0
                 self.actView.alpha = 0
-            }) { (true) in
+            }, completion: { (true) in
                 self.actView.removeFromSuperview()
                 self.loadingView.removeFromSuperview()
                 self.exit.removeFromSuperview()
-            }
+            }) 
         }
     }
     
     func spinIndicFade(){
         if spinIndicator != nil{
-            UIView.animateWithDuration(0.5, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 self.spinIndicator.alpha = 0
                 }, completion: nil)
         }

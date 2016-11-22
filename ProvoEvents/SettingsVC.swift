@@ -44,17 +44,17 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsVC.tapRemoveKeyboard))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsVC.animateTopStackView), name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsVC.animateTopStackView), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+    override func viewWillAppear(_ animated: Bool) {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let managedContext = appDelegate?.managedObjectContext
         
-        let fetchRequest = NSFetchRequest(entityName: "EventTypeSettings")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "EventTypeSettings")
         
         do{
-            let results = try managedContext?.executeFetchRequest(fetchRequest)
+            let results = try managedContext?.fetch(fetchRequest)
             selectedEvents = results as! [NSManagedObject]
         } catch let error as NSError{
             print("Could not fetch \(error), \(error.userInfo)")
@@ -68,13 +68,13 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
             holdOriginalName = currUser.firstName
         }
         self.topStack.alpha = 0
-        topStack.hidden = true
-        let prefs = NSUserDefaults.standardUserDefaults()
+        topStack.isHidden = true
+        let prefs = UserDefaults.standard
         
-        if let miles = prefs.objectForKey(Constants.instance.nsUserDefaultsKeySettingsMiles){
-            milesBtnOutlet.setTitle("EVENTS WITHIN \(miles) MILES", forState: .Normal)
+        if let miles = prefs.object(forKey: Constants.instance.nsUserDefaultsKeySettingsMiles){
+            milesBtnOutlet.setTitle("EVENTS WITHIN \(miles) MILES", for: UIControlState())
         }  else {
-            milesBtnOutlet.setTitle("EVENTS WITHIN 50 MILES", forState: .Normal)
+            milesBtnOutlet.setTitle("EVENTS WITHIN 50 MILES", for: UIControlState())
         }
     }
 
@@ -82,12 +82,12 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         firstNameTF.resignFirstResponder()
     }
     
-    func findCoord(){
-        let geoCode = CLGeocoder()
-        geoCode.geocodeAddressString("84604") { (placemarks: [CLPlacemark]?, error: NSError?) in
-            <#code#>
-        }
-    }
+//    func findCoord(){
+//        let geoCode = CLGeocoder()
+//        geoCode.geocodeAddressString("84604") { (placemarks: [CLPlacemark]?, error: NSError?) in
+//            <#code#>
+//        } as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler
+//    }
     
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
@@ -99,26 +99,26 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         if animationShouldBeCalled{
             animationShouldBeCalled = false
             self.milesTopConstraint.constant = self.milesTopConstraint.constant + 40
-            self.topStack.hidden = false
+            self.topStack.isHidden = false
             
-            UIView.animateWithDuration(3.15, delay: 0.2, options: .CurveEaseInOut, animations: {
+            UIView.animate(withDuration: 3.15, delay: 0.2, options: UIViewAnimationOptions(), animations: {
                 self.topStack.alpha = 1
                 
                 }, completion: nil)
             
-            UIView.animateWithDuration(3.15, delay: 0.0, options: .CurveEaseIn, animations: {
+            UIView.animate(withDuration: 3.15, delay: 0.0, options: .curveEaseIn, animations: {
                 self.view.layoutIfNeeded()
             }) { (true) in
             }
         }
     }
     
-    @IBAction func cancel(sender: AnyObject){
+    @IBAction func cancel(_ sender: AnyObject){
         firstNameTF.text = holdOriginalName
         dismissTopStack()
     }
     
-    @IBAction func applyBtn(sender: AnyObject){
+    @IBAction func applyBtn(_ sender: AnyObject){
         textColorChange()
         dismissTopStack()
         let firstName: String!
@@ -135,27 +135,27 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     func dismissTopStack(){
         self.view.endEditing(true)
 
-        UIView.animateWithDuration(0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: {
             self.topStack.alpha = 0
-        }) { (true) in
-            self.topStack.hidden = true
+        }, completion: { (true) in
+            self.topStack.isHidden = true
             self.milesTopConstraint.constant = self.milesTopConstraint.constant - 40
-            UIView.animateWithDuration(0.25, delay: 0, options: .CurveEaseOut, animations: {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
                 }, completion: { (true) in
                     self.animationShouldBeCalled = true
             })
-        }
+        }) 
     }
     
     func textColorChange(){
-        UIView.transitionWithView(firstNameTF, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
-            self.firstNameTF.textColor = UIColor.greenColor()
+        UIView.transition(with: firstNameTF, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
+            self.firstNameTF.textColor = UIColor.green
             }) { (true) in
-                UIView.transitionWithView(self.firstNameTF, duration: 0.45, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+                UIView.transition(with: self.firstNameTF, duration: 0.45, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
                     }, completion: { (true) in
-                        UIView.transitionWithView(self.firstNameTF, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
-                            self.firstNameTF.textColor = UIColor.blackColor()
+                        UIView.transition(with: self.firstNameTF, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
+                            self.firstNameTF.textColor = UIColor.black
                             }, completion: nil)
                 })
         }
@@ -165,23 +165,23 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     //////////////////////////////////////////////////////
     //Logout, backbtn, credits, miles, segue
     
-    @IBAction func logOutBtn(sender: AnyObject){
+    @IBAction func logOutBtn(_ sender: AnyObject){
         yesNo.showDeleteView(self.view, lblText: "Log out?")
     }
     
     func yesPressed() {
         do {
             try FIRAuth.auth()?.signOut()
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            self.navigationController?.popToRootViewController(animated: true)
         } catch {
-            let alert = UIAlertController(title: "Error", message: "There was an error logging out, please try again soon", preferredStyle: .Alert)
-            let alertAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            let alert = UIAlertController(title: "Error", message: "There was an error logging out, please try again soon", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             alert.addAction(alertAction)
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
     }
     
-    @IBAction func backBtn(sender: AnyObject){
+    @IBAction func backBtn(_ sender: AnyObject){
         swipePopBack()
     }
 
@@ -189,32 +189,32 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         if collectionViewChanged{
             delegate.clearTableViewAndReload()
         }
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    @IBAction func creditsVC(sender: AnyObject){
-        performSegueWithIdentifier("CreditsVC", sender: nil)
+    @IBAction func creditsVC(_ sender: AnyObject){
+        performSegue(withIdentifier: "CreditsVC", sender: nil)
     }
 
-    @IBAction func milesVC(sender: AnyObject){
-        performSegueWithIdentifier("MilesVC", sender: nil)
+    @IBAction func milesVC(_ sender: AnyObject){
+        performSegue(withIdentifier: "MilesVC", sender: nil)
     }
     
     
-    func numberOfMiles(miles: Int) {
-        milesBtnOutlet.setTitle("\(miles) MILE RADIUS", forState: .Normal)
-        let prefs = NSUserDefaults.standardUserDefaults()
-        prefs.setObject(miles, forKey: Constants.instance.nsUserDefaultsKeySettingsMiles)
+    func numberOfMiles(_ miles: Int) {
+        milesBtnOutlet.setTitle("\(miles) MILE RADIUS", for: UIControlState())
+        let prefs = UserDefaults.standard
+        prefs.set(miles, forKey: Constants.instance.nsUserDefaultsKeySettingsMiles)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MilesVC"{
-            if let VC = segue.destinationViewController as? MilesVC{
+            if let VC = segue.destination as? MilesVC{
                 VC.delegate = self
             }
         }
@@ -230,27 +230,27 @@ extension SettingsVC: UICollectionViewDelegate, UICollectionViewDataSource{
     func setUpCollectionView(){
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         collection.collectionViewLayout = layout
-        collection.backgroundColor = UIColor.clearColor()
+        collection.backgroundColor = UIColor.clear
         self.collection.allowsSelection = true
         self.collection.allowsMultipleSelection = false
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return img.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MapPinCell", forIndexPath: indexPath) as? MapPinCell{
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MapPinCell", for: indexPath) as? MapPinCell{
             cell.configureCell(img[indexPath.row], label: lbl[indexPath.row])
             cell.checkImg(false)
             for event in selectedEvents{
-                if img[indexPath.row] == event.valueForKey("eventNumber") as? String{
+                if img[indexPath.row] == event.value(forKey: "eventNumber") as? String{
                     cell.checkImg(true)
                 }
             }
@@ -260,20 +260,20 @@ extension SettingsVC: UICollectionViewDelegate, UICollectionViewDataSource{
         }
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         print(collection.frame.width)
-        return CGSizeMake(85, 70.0)
+        return CGSize(width: 85, height: 70.0)
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionViewChanged = true
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let moc = appDelegate.managedObjectContext
         
-        if let cell = collection.cellForItemAtIndexPath(indexPath) as? MapPinCell{
+        if let cell = collection.cellForItem(at: indexPath) as? MapPinCell{
             if cell.isImgChecked() == false{
-                let entity = NSEntityDescription.entityForName("EventTypeSettings", inManagedObjectContext: moc)
-                let eventNumber = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: moc)
+                let entity = NSEntityDescription.entity(forEntityName: "EventTypeSettings", in: moc)
+                let eventNumber = NSManagedObject(entity: entity!, insertInto: moc)
                 
                 eventNumber.setValue(img[indexPath.row], forKey: "eventNumber")
                 
@@ -283,15 +283,15 @@ extension SettingsVC: UICollectionViewDelegate, UICollectionViewDataSource{
                 } catch let error as NSError{
                     print("Could not save \(error), \(error.userInfo)")
                 }
-                cell.backgroundColor = UIColor.clearColor()
+                cell.backgroundColor = UIColor.clear
                 cell.checkImg(true)
             } else{
                 var x = 0
                 for event in selectedEvents{
-                    if img[indexPath.row] == event.valueForKey("eventNumber") as? String{
-                        moc.deleteObject(event)
+                    if img[indexPath.row] == event.value(forKey: "eventNumber") as? String{
+                        moc.delete(event)
                         cell.checkImg(false)
-                        selectedEvents.removeAtIndex(x)
+                        selectedEvents.remove(at: x)
                     }
                     x = x + 1
                 }

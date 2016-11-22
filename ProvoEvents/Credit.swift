@@ -10,8 +10,8 @@ import Foundation
 
 class Credit {
     
-    private var _labelText: NSMutableAttributedString!
-    private var _imageString: String!
+    fileprivate var _labelText: NSMutableAttributedString!
+    fileprivate var _imageString: String!
     
     var labelText: NSMutableAttributedString{
         return _labelText

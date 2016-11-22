@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 
 protocol MilesChosen {
-    func numberOfMiles(miles: Int)
+    func numberOfMiles(_ miles: Int)
 }
 
 class MilesVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -35,11 +35,11 @@ class MilesVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func setUpPickerViewPreset(){
-        let pres = NSUserDefaults.standardUserDefaults()
-        if let miles = pres.objectForKey(Constants.instance.nsUserDefaultsKeySettingsMiles){
-            let milesInt = miles.integerValue
-            if let index = arrayOfMiles.indexOf(milesInt){
-                let a = arrayOfMiles.startIndex.distanceTo(index)
+        let pres = UserDefaults.standard
+        if let miles = pres.object(forKey: Constants.instance.nsUserDefaultsKeySettingsMiles){
+            let milesInt = miles as! Int//(miles as AnyObject).intValue
+            if let index = arrayOfMiles.index(of: milesInt){
+                let a = arrayOfMiles.startIndex.distance(to: index)
                 pickerView.selectRow(a, inComponent: 0, animated: false)
             }
         } else{
@@ -47,31 +47,31 @@ class MilesVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         }
     }
 
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return arrayOfMilesString[row]
     }
 
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         rowSelected = row
     }
 
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return arrayOfMiles.count
     }
 
-    @IBAction func set(sender: AnyObject){
+    @IBAction func set(_ sender: AnyObject){
         let miles = arrayOfMiles[rowSelected]
         delegate.numberOfMiles(miles)
-        NSNotificationCenter.defaultCenter().postNotificationName("loadDataAfterNewEvent", object: nil)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "loadDataAfterNewEvent"), object: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func cancel(sender:AnyObject){
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancel(_ sender:AnyObject){
+        self.dismiss(animated: true, completion: nil)
     }
 
 }

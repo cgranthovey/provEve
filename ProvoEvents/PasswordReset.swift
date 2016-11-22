@@ -23,11 +23,11 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
         self.view.addGestureRecognizer(tap)
     }
 
-    @IBAction func popBack(sender: AnyObject){
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func popBack(_ sender: AnyObject){
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func resetPasswordBtn(sender: AnyObject){
+    @IBAction func resetPasswordBtn(_ sender: AnyObject){
         removeFirstResponder()
         
         if email.text == nil || email.text == ""{
@@ -36,11 +36,11 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
             passwordResetLoading.showSpinnerView(self.view)
             AuthService.instance.passwordReset(email.text!, onComplete: { (errMsg, data) in
                 if errMsg != nil{
-                    self.alerts("Error", message: errMsg)
+                    self.alerts("Error", message: errMsg!)
                 } else{
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.passwordResetLoading.cancelSpinnerAndDarkView(nil)
-                        self.performSelector(#selector(PasswordReset.animateMail), withObject: nil, afterDelay: 0.5)
+                        self.perform(#selector(PasswordReset.animateMail), with: nil, afterDelay: 0.5)
                     })
                 }
             })
@@ -57,15 +57,15 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
         let mailBoxOriginX = self.mailBox.frame.origin.x
         let mailBoxOriginY = self.mailBox.frame.origin.y
         
-        UIView.animateWithDuration(1.0, delay: 0, options: .CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 1.0, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.mailImg.frame.origin = CGPoint(x: 20, y: newMailOriginY)
-            self.mailImg.transform = CGAffineTransformMakeScale(0.9, 0.9)
+            self.mailImg.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }) { (true) in
-                UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseInOut, animations: {
-                    self.mailImg.transform = CGAffineTransformMakeScale(0.5, 0.5)
+                UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions(), animations: {
+                    self.mailImg.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
                     self.mailImg.frame.origin = CGPoint(x: mailBoxOriginX + 30, y: mailBoxOriginY + 30)
                     }, completion: { (true) in
-                        self.mailImg.hidden = true
+                        self.mailImg.isHidden = true
                         let myImg = UIImageView(image: UIImage(named: "checkmark"))
                         myImg.showCheckmarkAnimatedTempImg(self.view, delay: 0.7, remove: true)
                 })
@@ -73,26 +73,26 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
     }
     
     func pop(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func removeFirstResponder(){
         email.resignFirstResponder()
     }
     
-    func alerts(title: String, message: String){
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let alertAction = UIAlertAction(title: "Ok", style: .Cancel) { (action) in
+    func alerts(_ title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ok", style: .cancel) { (action) in
         }
         
         alert.addAction(alertAction)
-        NSOperationQueue.mainQueue().addOperationWithBlock {
+        OperationQueue.main.addOperation {
             self.passwordResetLoading.cancelSpinnerAndDarkView(nil)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }

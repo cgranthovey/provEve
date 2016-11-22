@@ -18,31 +18,31 @@ class SettingsCell: BaseCell {
         return label
     }()
     
-    func configureCell(dayOfWeek: String, weekInfo: String?, currentlySelected: Bool){
+    func configureCell(_ dayOfWeek: String, weekInfo: String?, currentlySelected: Bool){
         if weekInfo != nil{
             nameLabel.text = dayOfWeek + " " + weekInfo!
         } else{
             nameLabel.text = dayOfWeek
         }
         if currentlySelected{
-            iconImgView.hidden = false
+            iconImgView.isHidden = false
         } else{
-            iconImgView.hidden = true
+            iconImgView.isHidden = true
         }
     }
 
     func makeImgHidden(){
-        iconImgView.hidden = true
+        iconImgView.isHidden = true
     }
     
     func makeImgViewable(){
-        iconImgView.hidden = false
+        iconImgView.isHidden = false
     }
     
     let iconImgView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "checkMap")
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -54,6 +54,6 @@ class SettingsCell: BaseCell {
         addConstraintWithFormat("V:|[v0]|", views: nameLabel)
         addConstraintWithFormat("V:[v0(20)]", views: iconImgView)
         
-        addConstraint(NSLayoutConstraint(item: iconImgView, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: iconImgView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
     }
 }

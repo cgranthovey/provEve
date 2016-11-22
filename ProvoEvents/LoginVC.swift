@@ -36,8 +36,8 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     }
     
     func setUpPreview(){
-        let myWaitingFrame = CGRectMake(0, 0, 40, 40)
-        activityIndicatorView = NVActivityIndicatorView(frame: myWaitingFrame, type: .BallScale, color: UIColor.whiteColor(), padding: 0)
+        let myWaitingFrame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        activityIndicatorView = NVActivityIndicatorView(frame: myWaitingFrame, type: .ballScale, color: UIColor.white, padding: 0)
         activityIndicatorView.center = self.view.center
         activityIndicatorView.alpha = 0
         
@@ -48,11 +48,14 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     }
     
     func checkForConnection(){
+        print("check for internet")
         ConnectedToInternet.instance1.areWeConnected(self.view, showNoInternetView: false) { (connected) in
             if let connect = connected{
                 if  connect{
+                    print("connected")
                     self.connectionBool = true
                 } else {
+                    print("not connected")
                     self.connectionBool = false
                 }
                 self.checkForUID()
@@ -61,18 +64,24 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     }
     
     func checkForUID(){
+        print("uid check")
+        
+        print(self.connectionBool)
+        print(FIRAuth.auth()?.currentUser?.uid)
         if self.connectionBool == true && FIRAuth.auth()?.currentUser != nil{
-            UIView.animateWithDuration(0.9) {
+            UIView.animate(withDuration: 0.9, animations: {
+                print("UID found")
                 self.activityIndicatorView.startAnimation()
                 self.activityIndicatorView.alpha = 1
-            }
+            }) 
             checkForUserName()
             return
         } else{
-            UIView.animateWithDuration(0.3, animations: { 
+            print("no UID")
+            UIView.animate(withDuration: 0.3, animations: { 
                 self.activityIndicatorView.alpha = 0
                 }, completion: { (true) in
-                    UIView.animateWithDuration(0.5, animations: {
+                    UIView.animate(withDuration: 0.5, animations: {
                         self.preView.alpha = 0
                         }, completion: { (true) in
                             self.preView.removeFromSuperview()
@@ -86,40 +95,40 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     }
     
     func checkForUserName(){
-        DataService.instance.currentUser.child("profile").child("userName").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+        DataService.instance.currentUser.child("profile").child("userName").observeSingleEvent(of: .value, with: { (snapshot) in
             if (snapshot.value as? String) != nil{
-                UIView.animateWithDuration(0.3, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.activityIndicatorView.alpha = 0
                     }, completion: { (true) in
-                        self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+                        self.performSegue(withIdentifier: "snapScrollVC", sender: nil)
                 })
             } else{
-                UIView.animateWithDuration(0.3, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.activityIndicatorView.alpha = 0
                     }, completion: { (true) in
-                        self.performSegueWithIdentifier("createUserInfoVC", sender: nil)
+                        self.performSegue(withIdentifier: "createUserInfoVC", sender: nil)
                 })
             }
             self.loadingView.cancelSpinnerAndDarkView(nil)
         })
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "createUserInfoVC"{
-            if let vc = segue.destinationViewController as? CreateUserInfoVC{
+            if let vc = segue.destination as? CreateUserInfoVC{
                 vc.preventPopVC = true
                 vc.isConnected = connectionBool
             }
         }
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         self.preView.removeFromSuperview()
         passwordField.text = ""
         emailField.text = ""
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         removeFirstResponder()
     }
     
@@ -127,26 +136,28 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
         self.view.endEditing(true)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
     let loadingView = LoadingView()
     
-    @IBAction func loginBtn(sender: AnyObject){
+    @IBAction func loginBtn(_ sender: AnyObject){
         //self.resignFirstResponder()
         self.view.endEditing(true)
 
-        if let email = emailField.text, let password = passwordField.text where (email.characters.count > 0 && password.characters.count > 0){
+        if let email = emailField.text, let password = passwordField.text, (email.characters.count > 0 && password.characters.count > 0){
             guard password.characters.count >= 6 else{
                 alerts("Password", message: "Password must be at least 6 characters")
                 return
             }
             loadingView.showSpinnerView(self.view)
+
+            
             AuthService.instance.login(password, email: email, onComplete: { (errMsg, data) in
                 guard errMsg == nil else{
-                    self.alerts("Error Authenticating", message: errMsg)
+                    self.alerts("Error Authenticating", message: errMsg!)
                     return
                 }
                 self.checkForUserName()
@@ -156,10 +167,10 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
         }
     }
 
-    func alerts(title: String, message: String){
+    func alerts(_ title: String, message: String){
         loadingView.cancelSpinnerAndDarkView(nil)
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }

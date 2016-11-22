@@ -20,21 +20,21 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
     
     var img: UIImage!
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
     override func viewDidLoad() {
         print("in img large")
         super.viewDidLoad()
-        backImg.userInteractionEnabled = true
+        backImg.isUserInteractionEnabled = true
 
         scrollView.delegate = self
         imgView.image = img
         self.scrollView.minimumZoomScale = 1.0
         self.scrollView.maximumZoomScale = 5.0
         
-        bottomView.hidden = true
+        bottomView.isHidden = true
         setUpTargets()
         setUpTaps()
     }
@@ -44,29 +44,29 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
     //targets for bottom back and download button
     
     func setUpTargets(){
-        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdDown(_:)), forControlEvents: UIControlEvents.TouchDown)
-        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseInside(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseOutside(_:)), forControlEvents: UIControlEvents.TouchUpOutside)
-        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdDown(_:)), forControlEvents: UIControlEvents.TouchDown)
-        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseOutside(_:)), forControlEvents: UIControlEvents.TouchUpOutside)
-        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseInside(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdDown(_:)), for: UIControlEvents.touchDown)
+        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseInside(_:)), for: UIControlEvents.touchUpInside)
+        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseOutside(_:)), for: UIControlEvents.touchUpOutside)
+        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdDown(_:)), for: UIControlEvents.touchDown)
+        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseOutside(_:)), for: UIControlEvents.touchUpOutside)
+        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseInside(_:)), for: UIControlEvents.touchUpInside)
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ImageLargeVC.swipePopBack))
-        swipeDown.direction = .Down
+        swipeDown.direction = .down
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ImageLargeVC.swipePopBack))
-        swipeUp.direction = .Up
+        swipeUp.direction = .up
         
         self.view.addGestureRecognizer(swipeDown)
         self.view.addGestureRecognizer(swipeUp)
     }
     
-    func holdDown(sender: UIButton){
-        sender.backgroundColor = UIColor.blackColor()
+    func holdDown(_ sender: UIButton){
+        sender.backgroundColor = UIColor.black
         sender.alpha = 0.3
     }
     
-    func holdReleaseInside(sender: UIButton){
-        sender.backgroundColor = UIColor.clearColor()
+    func holdReleaseInside(_ sender: UIButton){
+        sender.backgroundColor = UIColor.clear
         if sender == downloadImgButton{
             UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
             showCheckmark()
@@ -75,12 +75,12 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
                 scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
             }
             handleSingleTap()
-            performSelector(#selector(ImageLargeVC.swipePopBack), withObject: self, afterDelay: 0.5)
+            perform(#selector(ImageLargeVC.swipePopBack), with: self, afterDelay: 0.5)
         }
     }
     
-    func holdReleaseOutside(sender: UIButton){
-        sender.backgroundColor = UIColor.clearColor()
+    func holdReleaseOutside(_ sender: UIButton){
+        sender.backgroundColor = UIColor.clear
     }
     
     func showCheckmark(){
@@ -98,44 +98,44 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
         scrollView.addGestureRecognizer(doubleTap)
         
         let oneTap = UITapGestureRecognizer(target: self, action: #selector(ImageLargeVC.handleSingleTap))
-        oneTap.requireGestureRecognizerToFail(doubleTap)
+        oneTap.require(toFail: doubleTap)
         scrollView.addGestureRecognizer(oneTap)
     }
     
     func handleSingleTap(){
-        if self.bottomView.hidden == true{
-            self.bottomView.hidden = false
+        if self.bottomView.isHidden == true{
+            self.bottomView.isHidden = false
             self.bottomView.center.y = self.bottomView.center.y + 52
 
-            UIView.animateWithDuration(0.2, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.bottomView.center.y = self.bottomView.center.y - 52
             })
         } else{
-            UIView.animateWithDuration(0.2, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.bottomView.center.y = self.bottomView.center.y + 52
                 }, completion: { (true) in
-                    self.bottomView.hidden = true
+                    self.bottomView.isHidden = true
                     self.bottomView.center.y = self.bottomView.center.y - 52
             })
         }
     }
     
-    func handleDoubleTap(recognizer: UITapGestureRecognizer){
+    func handleDoubleTap(_ recognizer: UITapGestureRecognizer){
         if (scrollView.zoomScale > scrollView.minimumZoomScale){
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
             
         }else{
-            let zoomRect = self.zoomRectForScale(scrollView.maximumZoomScale/2, center: recognizer.locationInView(recognizer.view))
-            self.scrollView.zoomToRect(zoomRect, animated: true)
+            let zoomRect = self.zoomRectForScale(scrollView.maximumZoomScale/2, center: recognizer.location(in: recognizer.view))
+            self.scrollView.zoom(to: zoomRect, animated: true)
         }
     }
     
-    func zoomRectForScale(scale: CGFloat, center: CGPoint) -> CGRect{
-        var zoomRect = CGRectZero
+    func zoomRectForScale(_ scale: CGFloat, center: CGPoint) -> CGRect{
+        var zoomRect = CGRect.zero
         if let imageV = self.imgView{
             zoomRect.size.height = imageV.frame.size.height / scale;
             zoomRect.size.width  = imageV.frame.size.width  / scale;
-            let newCenter = imageV.convertPoint(center, fromView: self.scrollView)
+            let newCenter = imageV.convert(center, from: self.scrollView)
             zoomRect.origin.x = newCenter.x - ((zoomRect.size.width / 2.0));
             zoomRect.origin.y = newCenter.y - ((zoomRect.size.height / 2.0));
         }
@@ -143,10 +143,10 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
     }
     
     override func swipePopBack() {
-        self.navigationController?.popViewControllerAnimated(false)
+        self.navigationController?.popViewController(animated: false)
     }
 
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.imgView
     }
 }

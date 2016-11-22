@@ -19,15 +19,15 @@ class NoInternetView: UIView {
 
     @IBOutlet var img: UIImageView!
     
-    @IBAction func gotItBtnPressed(sender: UIButton){
+    @IBAction func gotItBtnPressed(_ sender: UIButton){
         delegate.dismissNoConnectionView()
     }
     
-    @IBAction func gotItBtnTouchDown(sender: UIButton) {
+    @IBAction func gotItBtnTouchDown(_ sender: UIButton) {
         sender.backgroundColor = UIColor().boilerPlateColor(198, green: 40, blue: 40)
     }
     
-    @IBAction func gotItBtnTouchUpOutside(sender: UIButton) {
+    @IBAction func gotItBtnTouchUpOutside(_ sender: UIButton) {
         sender.backgroundColor = UIColor().boilerPlateColor(244, green: 67, blue: 54)
     }
     
@@ -49,7 +49,7 @@ class NoInternetView: UIView {
         
         view = loadViewFromNib()
         view.frame = bounds
-        view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         
         print("mice20")
@@ -57,10 +57,10 @@ class NoInternetView: UIView {
     }
     
     func loadViewFromNib() -> UIView{
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "NoInternetView", bundle: bundle)
         
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as? UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as? UIView
         print("mice10")
         return view!
     }

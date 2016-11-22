@@ -45,7 +45,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     override func swipePopBack() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func checkForInternet(){
@@ -55,7 +55,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         removeFirstResponder()
     }
     
@@ -70,19 +70,19 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
 
         cameraTaker = UIImagePickerController()
         cameraTaker.delegate = self
-        cameraTaker.sourceType = .Camera  //change to camera later
+        cameraTaker.sourceType = .photoLibrary  //change to camera later
     }
     
     func hideCameraBtns(){
-        photoLibBtnOutlet.hidden = true
-        cameraBtnOutlet.hidden = true
-        screenViewForCameraOutlets.hidden = true
+        photoLibBtnOutlet.isHidden = true
+        cameraBtnOutlet.isHidden = true
+        screenViewForCameraOutlets.isHidden = true
         photoLibBtnOutlet.alpha = 0
         cameraBtnOutlet.alpha = 0
         screenViewForCameraOutlets.alpha = 0
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
@@ -91,15 +91,15 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         showImgOptions()
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == " "{
             return false
         }
         return true
     }
     
-    @IBAction func finished(sender: AnyObject){
-        if let user = userName.text where (user.characters.count > 2){
+    @IBAction func finished(_ sender: AnyObject){
+        if let user = userName.text, (user.characters.count > 2){
             loadingView.showSpinnerView(self.view)
             let fireBaseDict: Dictionary<String, String>!
 
@@ -112,12 +112,12 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
             print("user \(user)")
             
             
-            DataService.instance.usernamesRef.queryOrderedByChild("UserID").queryEqualToValue(user).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            DataService.instance.usernamesRef.queryOrdered(byChild: "UserID").queryEqual(toValue: user).observeSingleEvent(of: .value, with: { (snapshot) in
                 if let snap = snapshot.value as? Dictionary<String, AnyObject>{
                     self.alerts("Username", message: "This username has already been choosen")
                 } else{
                     
-                    let dict: Dictionary<String, AnyObject> = ["/User/\((FIRAuth.auth()?.currentUser?.uid)!)/profile": fireBaseDict, "/Usernames/\(DataService.instance.usernamesRef.childByAutoId().key)/UserID" : "\(user)"]
+                    let dict: Dictionary<String, AnyObject> = ["/User/\((FIRAuth.auth()?.currentUser?.uid)!)/profile": fireBaseDict as AnyObject, "/Usernames/\(DataService.instance.usernamesRef.childByAutoId().key)/UserID" : "\(user)" as AnyObject]
                     DataService.instance.mainRef.updateChildValues(dict, withCompletionBlock: { (error, FIRDatabaseReference) in
                         if error != nil{
                             self.alerts("Error", message: "There was an error uploading your info")
@@ -125,12 +125,12 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
                             self.uploadProfileImg()
                             
                             // setting username in nsdefualts
-                            let prefs = NSUserDefaults.standardUserDefaults()
+                            let prefs = UserDefaults.standard
                             let uid = FIRAuth.auth()?.currentUser?.uid
                             prefs.setValue(user, forKey: "\(uid)Username")
                             
                             self.loadingView.successCancelSpin({
-                                self.performSegueWithIdentifier("snapScrollVC", sender: nil)
+                                self.performSegue(withIdentifier: "snapScrollVC", sender: nil)
                             })
                         }
                     })
@@ -141,20 +141,20 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         }
     }
     
-    @IBAction func photoLibBtn(sender: AnyObject){
-        self.presentViewController(imgPicker, animated: true, completion: nil)
+    @IBAction func photoLibBtn(_ sender: AnyObject){
+        self.present(imgPicker, animated: true, completion: nil)
     }
     
-    @IBAction func cameraBtn(sender: AnyObject){
-        self.presentViewController(cameraTaker, animated: true, completion: nil)
+    @IBAction func cameraBtn(_ sender: AnyObject){
+        self.present(cameraTaker, animated: true, completion: nil)
     }
     
     func uploadProfileImg(){
         if userImg.image != UIImage(named: "profile"){
-            if let picData: NSData = UIImageJPEGRepresentation(userImg.image!, 0.3){
-                let imgName = "\(NSUUID().UUIDString).jpg"
+            if let picData: Data = UIImageJPEGRepresentation(userImg.image!, 0.3){
+                let imgName = "\(UUID().uuidString).jpg"
                 let ref = DataService.instance.imgStorageRefData.child(imgName)
-                let task = ref.putData(picData, metadata: nil, completion: { (metaData, err) in
+                let task = ref.put(picData, metadata: nil, completion: { (metaData, err) in
                     if err != nil {
                         print("an error occured in the uploadProfileImg!")
                     } else{
@@ -169,13 +169,13 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     
     func showImgOptions(){
         removeFirstResponder()
-        screenViewForCameraOutlets.hidden = false
-        UIView.animateWithDuration(0.4, animations: {
+        screenViewForCameraOutlets.isHidden = false
+        UIView.animate(withDuration: 0.4, animations: {
             self.screenViewForCameraOutlets.alpha = 0.65
-            }) { (true) in
-                self.photoLibBtnOutlet.hidden = false
-                self.cameraBtnOutlet.hidden = false
-                UIView.animateWithDuration(0.4, animations: {
+            }, completion: { (true) in
+                self.photoLibBtnOutlet.isHidden = false
+                self.cameraBtnOutlet.isHidden = false
+                UIView.animate(withDuration: 0.4, animations: {
                     self.photoLibBtnOutlet.alpha = 1.0
                     self.cameraBtnOutlet.alpha = 1.0
                     }, completion: { (true) in
@@ -183,29 +183,29 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
                         tapAnywhereButButton.addTarget(self, action: #selector(CreateUserInfoVC.removeCameraPhotoLibOptions))
                         self.screenViewForCameraOutlets.addGestureRecognizer(tapAnywhereButButton)
                 })
-        }
+        }) 
     }
     
     func removeCameraPhotoLibOptions(){
-        UIView.animateWithDuration(0.6, animations: {
+        UIView.animate(withDuration: 0.6, animations: {
             self.screenViewForCameraOutlets.alpha = 0
             self.photoLibBtnOutlet.alpha = 0
             self.cameraBtnOutlet.alpha = 0
-            }) { (true) in
-                self.screenViewForCameraOutlets.hidden = true
-                self.photoLibBtnOutlet.hidden = true
-                self.cameraBtnOutlet.hidden = true
-        }
+            }, completion: { (true) in
+                self.screenViewForCameraOutlets.isHidden = true
+                self.photoLibBtnOutlet.isHidden = true
+                self.cameraBtnOutlet.isHidden = true
+        }) 
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        if picker.sourceType == UIImagePickerControllerSourceType.Camera{
-            cameraTaker.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        if picker.sourceType == UIImagePickerControllerSourceType.camera{
+            cameraTaker.dismiss(animated: true, completion: nil)
             userImg.image = image
             hideCameraBtns()
             makeProfilePicRound()
         } else{
-            imgPicker.dismissViewControllerAnimated(true, completion: nil)
+            imgPicker.dismiss(animated: true, completion: nil)
             userImg.image = image
             hideCameraBtns()
             makeProfilePicRound()
@@ -214,17 +214,17 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     
     func makeProfilePicRound(){
         if userImg.image != UIImage(named: "profile"){
-            userImg.contentMode = UIViewContentMode.ScaleAspectFill
+            userImg.contentMode = UIViewContentMode.scaleAspectFill
             userImg.layer.cornerRadius = (userImg.frame.height) / 2
             userImg.clipsToBounds = true
         }
     }
     
-    func alerts(title: String, message: String){
+    func alerts(_ title: String, message: String){
         loadingView.cancelSpinnerAndDarkView(nil)
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     

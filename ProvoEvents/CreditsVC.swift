@@ -73,17 +73,17 @@ class CreditsVC: GeneralVC, UITableViewDelegate, UITableViewDataSource, UITextVi
         makeFlatIconCredit("Yannick from www.flaticon.com", imgString: "swipeLeft", url: "http://www.flaticon.com/authors/yannick")
     }
     
-    func madeByFreePik (image: String){
+    func madeByFreePik (_ image: String){
         makeFlatIconCredit("Freepik from www.flaticon.com", imgString: image, url: "http://www.freepik.com/")
     }
     
-    func madeByOliver(image: String){
+    func madeByOliver(_ image: String){
         makeFlatIconCredit("Madebyoliver from www.flaticon.com", imgString: image, url: "http://www.flaticon.com/authors/madebyoliver")
     }
     
-    func makeFlatIconCredit(strTotal: String, imgString: String, url: String, urlWebsite: String = "http://www.flaticon.com/"){
+    func makeFlatIconCredit(_ strTotal: String, imgString: String, url: String, urlWebsite: String = "http://www.flaticon.com/"){
         let indexOfFrom = (strTotal.indexOf("from "))
-        let intValueOfFrom = strTotal.startIndex.distanceTo(indexOfFrom!)
+        let intValueOfFrom = strTotal.characters.distance(from: strTotal.startIndex, to: indexOfFrom!)
         let count =  intValueOfFrom - 1
         print("Int  valueof from  \(intValueOfFrom)")
         let urlWebsiteCount = urlWebsite.characters.count
@@ -102,28 +102,28 @@ class CreditsVC: GeneralVC, UITableViewDelegate, UITableViewDataSource, UITextVi
     //////////////////////////////////////////////////////
     //tableView
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("cell") as? creditsCell{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? creditsCell{
             cell.configureCell(creditsArray[indexPath.row])
             return cell
         }
         return UITableViewCell()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return creditsArray.count
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-        UIApplication.sharedApplication().openURL(URL)
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
+        UIApplication.shared.openURL(URL)
         return false
     }
     
-    @IBAction func popBack(sender: AnyObject){
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func popBack(_ sender: AnyObject){
+        self.navigationController?.popViewController(animated: true)
     }
 }

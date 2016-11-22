@@ -13,7 +13,7 @@ import MapKit
 import NVActivityIndicatorView
 
 protocol HandleGetEventLoc {
-    func getEventLoc(address:String?, name: String?, longitude: Double?, latitude: Double?, placemark: MKPlacemark?)
+    func getEventLoc(_ address:String?, name: String?, longitude: Double?, latitude: Double?, placemark: MKPlacemark?)
 }
 
 class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, GetDateTime, HandleGetEventLoc {
@@ -67,37 +67,37 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         eventImg.image = UIImage(named: "photoAlbumColor")
         
         var frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        actView = NVActivityIndicatorView(frame: frame, type: .LineScale, color: UIColor.whiteColor(), padding: 0)
+        actView = NVActivityIndicatorView(frame: frame, type: .lineScale, color: UIColor.white, padding: 0)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.view.layoutIfNeeded()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         correctCollectionViewWidth = collection.frame.width
         viewScrollHeight.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: scrollView.contentSize.height)
-        viewScrollHeight.backgroundColor = UIColor.clearColor()
+        viewScrollHeight.backgroundColor = UIColor.clear
         self.scrollView.addSubview(viewScrollHeight)
-        scrollView.sendSubviewToBack(viewScrollHeight)
+        scrollView.sendSubview(toBack: viewScrollHeight)
         setUpTaps()
     }
     
     func setUpScrollAndCollection(){
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         collection.collectionViewLayout = layout
-        collection.backgroundColor = UIColor.clearColor()
+        collection.backgroundColor = UIColor.clear
         self.collection.allowsSelection = true
         
         scrollView.contentSize.height = 760
         scrollView.contentSize.width = view.frame.width
-        scrollView.directionalLockEnabled = true
+        scrollView.isDirectionalLockEnabled = true
     }
     
     func setUpDelegates(){
@@ -111,9 +111,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
 
     func setUpEventImgBtn(){
         eventImg.image = UIImage(named: "photoAlbumColor")
-        eventImgBtn.addTarget(self, action: #selector(AddEventVC.eventImgBtnTouchDown), forControlEvents: .TouchDown)
-        eventImgBtn.addTarget(self, action: #selector(AddEventVC.eventImgBtnTouchUpInside), forControlEvents: .TouchUpInside)
-        eventImgBtn.addTarget(self, action: #selector(AddEventVC.touchUpOutside), forControlEvents: .TouchUpOutside)
+        eventImgBtn.addTarget(self, action: #selector(AddEventVC.eventImgBtnTouchDown), for: .touchDown)
+        eventImgBtn.addTarget(self, action: #selector(AddEventVC.eventImgBtnTouchUpInside), for: .touchUpInside)
+        eventImgBtn.addTarget(self, action: #selector(AddEventVC.touchUpOutside), for: .touchUpOutside)
     }
     
     func setUpTaps(){
@@ -132,17 +132,17 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     //animate image btn touch, imagePickerController
     
     func eventImgBtnTouchDown(){
-        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: {
-            self.eventImg.transform = CGAffineTransformMakeScale(1.05, 1.05)
+        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
+            self.eventImg.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
             }, completion: nil)
     }
     
     func eventImgBtnTouchUpInside(){
-        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: {
-            self.eventImg.transform = CGAffineTransformMakeScale(0.85, 0.85)
+        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
+            self.eventImg.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
         }) { (true) in
-            UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: { 
-                self.eventImg.transform = CGAffineTransformMakeScale(1, 1)
+            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: { 
+                self.eventImg.transform = CGAffineTransform(scaleX: 1, y: 1)
                 self.imageTapped()
 
                 }, completion: { (true) in
@@ -151,52 +151,52 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     }
     
     func touchUpOutside(){
-        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: { 
-            self.eventImg.transform = CGAffineTransformMakeScale(1, 1)
+        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: { 
+            self.eventImg.transform = CGAffineTransform(scaleX: 1, y: 1)
             }, completion: nil)
     }
     
     
     func imageTapped(){
-        self.presentViewController(imgPickerController, animated: true, completion: nil)
+        self.present(imgPickerController, animated: true, completion: nil)
     }
     
     var imgChoosen = false
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         imgChoosen = true
-        imgPickerController.dismissViewControllerAnimated(true, completion: nil)
+        imgPickerController.dismiss(animated: true, completion: nil)
         eventImg.image = image
         eventImg.roundCornersForAspectFit(5)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        imgPickerController.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        imgPickerController.dismiss(animated: true, completion: nil)
     }
     
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //active textfield/view.  Increase scroll view size
     
-    func keyboardWillBeHidden(input: NSNotification){
-        scrollView.contentInset.bottom = UIEdgeInsetsZero.bottom    //without this the views go up a bit
+    func keyboardWillBeHidden(_ input: Notification){
+        scrollView.contentInset.bottom = UIEdgeInsets.zero.bottom    //without this the views go up a bit
     }
 
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         activeTextField = textField
         return true
     }
     
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         activeTextField = nil
         return true
     }
     
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         activeTextView = textView
         return true
     }
     
-    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         activeTextView = nil
         return true
     }
@@ -212,18 +212,18 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         resignAllFirstResponders()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
     
-    func makeLarger(input: NSNotification){
-        scrollView.contentInset.right = UIEdgeInsetsZero.right    //without this the views go up a few pixels
+    func makeLarger(_ input: Notification){
+        scrollView.contentInset.right = UIEdgeInsets.zero.right    //without this the views go up a few pixels
 
         if let userInfo = input.userInfo{
             let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey]
-            let keyboardRect = keyboardFrame?.CGRectValue()
+            let keyboardRect = (keyboardFrame as AnyObject).cgRectValue
             if let keyboardHeight = keyboardRect?.height{
                 myKeyBoardHeight = keyboardHeight
                 scrollView.contentInset.bottom = keyboardHeight
@@ -232,13 +232,13 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
                 
                 if activeTextField != nil{
                     let point = activeTextField.frame.origin
-                    if !CGRectContainsPoint(aRect, point){
-                        performSelector(#selector(AddEventVC.moveTextFieldIntoView), withObject: nil, afterDelay: 0.0)
+                    if !aRect.contains(point){
+                        perform(#selector(AddEventVC.moveTextFieldIntoView), with: nil, afterDelay: 0.0)
                     }
                 } else if activeTextView != nil{
                     let point = activeTextView.frame.origin
-                    if !CGRectContainsPoint(aRect, point){
-                        performSelector(#selector(AddEventVC.moveTextFieldIntoView), withObject: nil, afterDelay: 0.0)
+                    if !aRect.contains(point){
+                        perform(#selector(AddEventVC.moveTextFieldIntoView), with: nil, afterDelay: 0.0)
                     }
                 }
             }
@@ -260,79 +260,79 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     var holdPlacemark: MKPlacemark!
     var holdAddress: String!
     var coordinateOfEvent: CLLocationCoordinate2D!
-    func getEventLoc(address: String?, name: String?, longitude: Double?, latitude: Double?, placemark: MKPlacemark?) {
+    func getEventLoc(_ address: String?, name: String?, longitude: Double?, latitude: Double?, placemark: MKPlacemark?) {
         
         if let placemark = placemark?.coordinate{
             coordinateOfEvent = placemark
         }
         
         if let address = address, let name = name{
-            if address.containsString(name){
-                setPinBtnOutlet.setTitle(address, forState: .Normal)
+            if address.contains(name){
+                setPinBtnOutlet.setTitle(address, for: UIControlState())
             } else{
-                setPinBtnOutlet.setTitle("\(name) - \(address)", forState: .Normal)
+                setPinBtnOutlet.setTitle("\(name) - \(address)", for: UIControlState())
             }
         } else if let coordLat = latitude, let coordLong = longitude{
-            setPinBtnOutlet.setTitle("\(coordLat), \(coordLong)", forState: .Normal)
+            setPinBtnOutlet.setTitle("\(coordLat), \(coordLong)", for: UIControlState())
         } else{
-            setPinBtnOutlet.setTitle("SET PIN", forState: .Normal)
+            setPinBtnOutlet.setTitle("SET PIN", for: UIControlState())
         }
 
         holdAddress = address
         holdPlacemark = placemark
-        pinLocDict["address"] = address
-        pinLocDict["name"] = name
-        pinLocDict["longitude"] = longitude
-        pinLocDict["latitude"] = latitude
+        pinLocDict["address"] = address as AnyObject?
+        pinLocDict["name"] = name as AnyObject?
+        pinLocDict["longitude"] = longitude as AnyObject?
+        pinLocDict["latitude"] = latitude as AnyObject?
     }
     
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //Date and Time
     
-    @IBAction func dateButtonTapped(sender: UIButton){
+    @IBAction func dateButtonTapped(_ sender: UIButton){
         resignAllFirstResponders()
-        performSegueWithIdentifier("DateTimeVC", sender: nil)
+        performSegue(withIdentifier: "DateTimeVC", sender: nil)
     }
     
-    @IBAction func addPinButtonTapped(sender: UIButton){
+    @IBAction func addPinButtonTapped(_ sender: UIButton){
         resignAllFirstResponders()
-        performSegueWithIdentifier("MapVC", sender: nil)
+        performSegue(withIdentifier: "MapVC", sender: nil)
     }
     
-    var currentDate: NSDate?
+    var currentDate: Date?
     var dateString: String!
     var timeStampOfEvent: Int!
-    func getTheDateTime(date: NSDate){
+    func getTheDateTime(_ date: Date){
         timeStampOfEvent = Int(date.timeIntervalSince1970)
         currentDate = date
         
-        let dateForm = NSDateFormatter()
-        dateForm.dateStyle = .MediumStyle
-        var dateDayString = dateForm.stringFromDate(date)
+        let dateForm = DateFormatter()
+        dateForm.dateStyle = .medium
+        var dateDayString = dateForm.string(from: date)
         
-        let dateForm2 = NSDateFormatter()
-        dateForm2.timeStyle = .ShortStyle
-        let timeString = dateForm2.stringFromDate(date)
+        let dateForm2 = DateFormatter()
+        dateForm2.timeStyle = .short
+        let timeString = dateForm2.string(from: date)
         
-        dateDayString.removeRange(dateDayString.endIndex.advancedBy(-6)..<dateDayString.endIndex)
+        dateDayString.removeSubrange(dateDayString.characters.index(dateDayString.endIndex, offsetBy: -6)..<dateDayString.endIndex)
         dateString = dateDayString + ", " + timeString
-        dateButtonTappedOutlet.setTitle(dateString, forState: .Normal)
+        dateButtonTappedOutlet.setTitle(dateString, for: UIControlState())
     }
 
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //to firebase then Reset
-    @IBAction func submit(sender: UIButton){
+    @IBAction func submit(_ sender: UIButton){
         resignAllFirstResponders()
-        performSelector(#selector(AddEventVC.areYouSureLauncher), withObject: nil, afterDelay: 0)
+        perform(#selector(AddEventVC.areYouSureLauncher), with: nil, afterDelay: 0)
     }
     var loadingView: UIView!
     var spinIndicator: UIActivityIndicatorView!
 
     func popOut(){
-        NSNotificationCenter.defaultCenter().postNotificationName("addEventSubmitSlide", object: nil)
-        performSelector(#selector(AddEventVC.reset), withObject: nil, afterDelay: 0.5)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "addEventSubmitSlide"), object: nil)
+        perform(#selector(AddEventVC.reset), with: nil, afterDelay: 0.5)
     }
     
     func reset(){
@@ -356,31 +356,31 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         locationTextField.text = ""
         emailTextField.text = ""
         descriptionTextView.text = ""
-        setPinBtnOutlet.setTitle("ADD PIN", forState: .Normal)
-        dateButtonTappedOutlet.setTitle("DATE/TIME", forState: .Normal)
+        setPinBtnOutlet.setTitle("ADD PIN", for: UIControlState())
+        dateButtonTappedOutlet.setTitle("DATE/TIME", for: UIControlState())
         eventImg.image = UIImage(named: "photoAlbumColor")
         eventImg.roundCornersForAspectFit(0)
-        cellHold.backgroundColor = UIColor.clearColor()
+        cellHold.backgroundColor = UIColor.clear
         selectedCellInt = nil
         pinLocDict = [:]
         holdPlacemark = nil
         holdAddress = nil
         coordinateOfEvent = CLLocationCoordinate2D()
-        currentDate = NSDate()
+        currentDate = Date()
         timeStampOfEvent = Int()
         exit.removeFromSuperview()
     }
 
     func makeSuccessView(){
         imgSuccess = UIImageView(image: UIImage(named: "whiteCheck"))
-        NSNotificationCenter.defaultCenter().postNotificationName("loadDataAfterNewEvent", object: nil)
-        UIView.animateWithDuration(0.5, animations: {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "loadDataAfterNewEvent"), object: nil)
+        UIView.animate(withDuration: 0.5, animations: {
   //          self.spinIndicator.alpha = 0
             self.actView.alpha = 0
-        }) { (true) in
+        }, completion: { (true) in
             self.imgSuccess.showCheckmarkAnimatedTempImg(self.view, delay: 0.1, remove: false)
-            self.performSelector(#selector(AddEventVC.popOut), withObject: nil, afterDelay: 1)
-        }
+            self.perform(#selector(AddEventVC.popOut), with: nil, afterDelay: 1)
+        }) 
     }
     
     
@@ -388,21 +388,21 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     //////////////////////////////////////////////////////
     //Alerts, segue
     
-    func alert(title: String, message: String){
+    func alert(_ title: String, message: String){
         spinIndicFade()
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let action = UIAlertAction(title: "Ok", style: .Cancel) { (UIAlertAction) in
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
             self.loadingView
         }
         alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
 
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DateTimeVC"{
-            if let destinationVC = segue.destinationViewController as? DateTimeVC{
+            if let destinationVC = segue.destination as? DateTimeVC{
                 destinationVC.delegate = self
                 if let curDate = currentDate{
                     destinationVC.currentDate = curDate
@@ -410,7 +410,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
             }
         }
         if segue.identifier == "MapVC"{
-            if let destinationVC = segue.destinationViewController as? MapVC{
+            if let destinationVC = segue.destination as? MapVC{
                 destinationVC.handleGetEventLocDelegate = self
                 if let pm = holdPlacemark, let ad = holdAddress{
                     destinationVC.mkPlacemarkPassed = pm

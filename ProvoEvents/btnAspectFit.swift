@@ -11,6 +11,6 @@ import UIKit
 class btnAspectFit: UIButton {
 
     override func awakeFromNib() {
-        self.imageView?.contentMode = .ScaleAspectFit
+        self.imageView?.contentMode = .scaleAspectFit
     }
 }

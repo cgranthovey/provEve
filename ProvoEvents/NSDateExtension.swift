@@ -8,13 +8,13 @@
 
 import Foundation
 
-extension NSDate {
+extension Date {
     
     func weekInfo() -> String{
-        let format = NSDateFormatter()
-        format.dateStyle = .ShortStyle
-        var day = format.stringFromDate(self)
-        day.removeRange(day.endIndex.advancedBy(-3)..<day.endIndex)
+        let format = DateFormatter()
+        format.dateStyle = .short
+        var day = format.string(from: self)
+        day.removeSubrange(day.characters.index(day.endIndex, offsetBy: -3)..<day.endIndex)
         return day
     }
     
@@ -29,23 +29,23 @@ extension NSDate {
             "Sat"
         ]
         
-        let calendar: NSCalendar = NSCalendar.currentCalendar()
-        let components: NSDateComponents = calendar.components(.Weekday, fromDate: self)
-        return weekdays[components.weekday - 1]
+        let calendar: Calendar = Calendar.current
+        let components: DateComponents = (calendar as NSCalendar).components(.weekday, from: self)
+        return weekdays[components.weekday! - 1]
     }
     
     func hourOfDay() -> Int {
-        let calendar = NSCalendar.currentCalendar()
-        let hour = calendar.component(.Hour, fromDate: self)
+        let calendar = Calendar.current
+        let hour = (calendar as NSCalendar).component(.hour, from: self)
         return hour
     }
     
     
     func isTodayOrTomorrow() -> String?{
-        let currentDate = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let currentHour = calendar.component(.Hour, fromDate: currentDate)
-        let currentMinute = calendar.component(.Minute, fromDate: currentDate)
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let currentHour = (calendar as NSCalendar).component(.hour, from: currentDate)
+        let currentMinute = (calendar as NSCalendar).component(.minute, from: currentDate)
         let secondsInToday = (currentHour * 60 * 60 + currentMinute * 60)
         let nowInSeconds = Int(currentDate.timeIntervalSince1970)
         let todayStartInSeconds = nowInSeconds - secondsInToday
@@ -65,24 +65,24 @@ extension NSDate {
     
     func dateEventDetailsString() -> String{
         
-        let dateForm = NSDateFormatter()
-        dateForm.dateStyle = .MediumStyle
-        var dateDayString = dateForm.stringFromDate(self)
+        let dateForm = DateFormatter()
+        dateForm.dateStyle = .medium
+        var dateDayString = dateForm.string(from: self)
         
-        let dateForm2 = NSDateFormatter()
-        dateForm2.timeStyle = .ShortStyle
-        let timeString = dateForm2.stringFromDate(self)
+        let dateForm2 = DateFormatter()
+        dateForm2.timeStyle = .short
+        let timeString = dateForm2.string(from: self)
         
         let day = dayOfTheWeek()
         
-        dateDayString.removeRange(dateDayString.endIndex.advancedBy(-6)..<dateDayString.endIndex)
+        dateDayString.removeSubrange(dateDayString.characters.index(dateDayString.endIndex, offsetBy: -6)..<dateDayString.endIndex)
         
-        var todayTomorrow = isTodayOrTomorrow()
+        let todayTomorrow = isTodayOrTomorrow()
         
         if let string1 = todayTomorrow{
             return string1 + " " + timeString
         } else{
-            return day + " " + dateDayString + ", " + timeString
+            return day! + " " + dateDayString + ", " + timeString
         }
     }
 }

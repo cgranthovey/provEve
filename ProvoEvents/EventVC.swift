@@ -16,6 +16,19 @@ import UIKit
 import FirebaseDatabase
 import Firebase
 import CoreData
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, MilesChosen, settingsProtocol {
     
@@ -37,27 +50,34 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         setUpLocationManagerAndTableView()
         Constants.instance.initCurrentUser()
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.addLike(_:)), name: "heartAdded", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: "heartDeleted", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventVC.clearTableViewAndReload), name: "loadDataAfterNewEvent", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(EventVC.addLike(_:)), name: NSNotification.Name(rawValue: "heartAdded"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(EventVC.subtractLike(_:)), name: NSNotification.Name(rawValue: "heartDeleted"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(EventVC.clearTableViewAndReload), name: NSNotification.Name(rawValue: "loadDataAfterNewEvent"), object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("view will disappear")
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        print("view disappear")
     }
     
     func checkFirstLogin(){
-        let prefs = NSUserDefaults.standardUserDefaults()
+        let prefs = UserDefaults.standard
         
-        if prefs.objectForKey("firstLogin") != nil{
+        if prefs.object(forKey: "firstLogin") != nil{
             //has logged in before
         } else{
             prefs.setValue("logged in before", forKey: "firstLogin")
             
-            let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+            let appDel = UIApplication.shared.delegate as! AppDelegate
             let moc = appDel.managedObjectContext
             
             let img = ["football", "outdoors", "service", "theater", "dance", "art", "prayer", "music", "book", "sandwich"]
 
             for i in img{
-                let entity = NSEntityDescription.entityForName("EventTypeSettings", inManagedObjectContext: moc)
-                let managedObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: moc)
+                let entity = NSEntityDescription.entity(forEntityName: "EventTypeSettings", in: moc)
+                let managedObject = NSManagedObject(entity: entity!, insertInto: moc)
                 managedObject.setValue(i, forKey: "eventNumber")
             }
             
@@ -66,17 +86,16 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             } catch let error as NSError {
                 print(error)
             }
-            
         }
     }
     
     func setUpLocationManagerAndTableView(){
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             self.locationManager.requestWhenInUseAuthorization()
         }
         
         switch CLLocationManager.authorizationStatus() {
-        case .Denied, .Restricted: loadData() //will use default location for Provo
+        case .denied, .restricted: loadData() //will use default location for Provo
         default:
             print("do nothing")
         }
@@ -91,7 +110,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         tableView.addSubview(refreshController)
     }
     
-    func numberOfMiles(miles: Int) {    //called when miles radius changes in settings
+    func numberOfMiles(_ miles: Int) {    //called when miles radius changes in settings
         loadData()
     }
     
@@ -99,14 +118,14 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     //////////////////////////////////////////////////////
     //locationManager
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedWhenInUse {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
             locationManager.requestLocation()
         }
     }
     var currentLoc: CLLocation!
     var hasUserLocBeenFound = false
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !hasUserLocBeenFound{
             if let location = locations.first {
                 currentLoc = location
@@ -116,7 +135,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         }
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error:: \(error)")
     }
 
@@ -126,24 +145,24 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     
     lazy var refreshController: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(EventVC.handleRefresh), forControlEvents: .ValueChanged)
+        refreshControl.addTarget(self, action: #selector(EventVC.handleRefresh), for: .valueChanged)
         return refreshControl
     }()
     
-    func handleRefresh(refreshControl: UIRefreshControl){
+    func handleRefresh(_ refreshControl: UIRefreshControl){
         loadData()
     }
 
     @IBOutlet weak var bottomView: UIView!
     var bottomViewShowing = true
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        let translation: CGPoint = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        let translation: CGPoint = scrollView.panGestureRecognizer.translation(in: scrollView.superview)
         if translation.y > 0{
             //dragging finger down
         } else{
             refreshController.endRefreshing()   //prevents spinner from going forever when no internet connection
             if bottomViewShowing{
-                UIView.animateWithDuration(0.3, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.bottomView.center.y = self.bottomView.center.y + 35
                 })
                 bottomViewShowing = false
@@ -152,14 +171,14 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollOffset = scrollView.contentOffset.y
         if !bottomViewShowing{
             if scrollOffset <= 0 {
                 bottomViewShowing = true
-                UIView.animateWithDuration(0.3) {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.bottomView.center.y = self.bottomView.center.y - 35
-                }
+                }) 
             }
         }
     }
@@ -184,15 +203,15 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         }
         
         //checking for preset radius to use in query
-        let prefs = NSUserDefaults.standardUserDefaults()
+        let prefs = UserDefaults.standard
         let meters: Int!
-        if let miles = prefs.objectForKey(Constants.instance.nsUserDefaultsKeySettingsMiles){
+        if let miles = prefs.object(forKey: Constants.instance.nsUserDefaultsKeySettingsMiles){
             meters = Int(Double(miles as! NSNumber) * 1609.34)
         } else{
             meters = Int(50 * 1609.34)
         }
         
-        performSelector(#selector(EventVC.shouldAddTableViewBackground), withObject: nil, afterDelay: 3.5)
+        perform(#selector(EventVC.shouldAddTableViewBackground), with: nil, afterDelay: 3.5)
         
         let geoFireRef = DataService.instance.geoFireRef
         let geoFire = GeoFire(firebaseRef: geoFireRef)
@@ -207,20 +226,24 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         if !region.isRegionValid(){
             return
         }
-        geoQuery = geoFire.queryWithRegion(region)
+        geoQuery = geoFire?.query(with: region)
         keysArray = []
         todaysStartTime = self.getTodaysStartTime()
 
         var firebaseCalledOnce = false
-        _ = geoQuery.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
+        _ = geoQuery.observe(.keyEntered, with: { (key: String?, location: CLLocation?) in
             
-            if self.keysArray.indexOf(key) != nil{
+            if key == nil || location == nil{
+                return
+            }
+            
+            if self.keysArray.index(of: key!) != nil{
                 //already have key
                 return
             }
-            self.keysArray.append(key)
+            self.keysArray.append(key!)
             if !firebaseCalledOnce{
-                DataService.instance.currentUser.child("likes").observeSingleEventOfType(.Value, withBlock: { snapshot in
+                DataService.instance.currentUser.child("likes").observeSingleEvent(of: .value, with: { snapshot in
                     if snapshot.value == nil{
                     } else{
                         self.events = []
@@ -234,7 +257,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                     }
                     var timesIterated = 0
                     for key in self.keysArray{
-                        DataService.instance.mainRef.child("Events").child(key).observeSingleEventOfType(.Value, withBlock: { snapshot in
+                        DataService.instance.mainRef.child("Events").child(key).observeSingleEvent(of: .value, with: { snapshot in
                             if snapshot.value == nil{
                             } else{
                                 if let postDict = snapshot.value as? Dictionary<String, AnyObject>{
@@ -254,7 +277,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                                             if post.eventTypeImgName == customEvent{
                                                 if !post.beforeToday(){
                                                     self.events.append(post)
-                                                    self.events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
+                                                    self.events.sort(by: {$0.timeStampOfEvent < $1.timeStampOfEvent})
                                                     self.keyOfLast = post.key
                                                 }
                                             }
@@ -262,7 +285,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                                     } else{
                                         if !post.beforeToday(){
                                             self.events.append(post)
-                                            self.events.sortInPlace({$0.timeStampOfEvent < $1.timeStampOfEvent})
+                                            self.events.sort(by: {$0.timeStampOfEvent < $1.timeStampOfEvent})
                                             self.keyOfLast = post.key
                                         }
                                     }
@@ -273,7 +296,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                                 self.EventsCategorized = self.events.NewDictWithTimeCategories()
                                 self.shouldAddTableViewBackground()
                                 self.tableView.reloadData()
-                                if self.refreshController.refreshing{
+                                if self.refreshController.isRefreshing{
                                     self.refreshController.endRefreshing()
                                 }
                             }
@@ -289,13 +312,13 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         if EventsCategorized.count > 0{
             tableView.backgroundView = nil
         } else{
-            let noDataLbl: UILabel = UILabel(frame: CGRectMake(20, 40, 200, 40))
+            let noDataLbl: UILabel = UILabel(frame: CGRect(x: 20, y: 40, width: 200, height: 40))
             noDataLbl.numberOfLines = 10
             noDataLbl.text = "Swipe right to post first event!"
             noDataLbl.font = UIFont(name: "Avenir", size: 20)
             noDataLbl.numberOfLines = 0
             noDataLbl.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.87)
-            noDataLbl.textAlignment = .Center
+            noDataLbl.textAlignment = .center
             tableView.backgroundView = noDataLbl
         }
     }
@@ -303,15 +326,15 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     //uses core data to find which events user wants to see.
     func findCustomEvents() -> [String]?{
         var customEventTypes = [String]()
-        let appDel = UIApplication.sharedApplication().delegate as? AppDelegate
+        let appDel = UIApplication.shared.delegate as? AppDelegate
         let moc = appDel?.managedObjectContext
         
-        let fetchRequest = NSFetchRequest(entityName: "EventTypeSettings")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "EventTypeSettings")
         
         do{
-            if let results = try moc?.executeFetchRequest(fetchRequest) as? [NSManagedObject]{
+            if let results = try moc?.fetch(fetchRequest) as? [NSManagedObject]{
                 for result in results{
-                    if let eventName = result.valueForKey("eventNumber") as? String{
+                    if let eventName = result.value(forKey: "eventNumber") as? String{
                         customEventTypes.append(eventName)
                     }
                 }
@@ -328,10 +351,10 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         return nil
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let EventForSpecificTimeArray = ArrayForSection(indexPath.section)
         let myEvent = EventForSpecificTimeArray[indexPath.row]
-        if let cell = tableView.dequeueReusableCellWithIdentifier("EventCell") as? EventCell{
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell") as? EventCell{
             cell.configureCell(myEvent)
             return cell
         } else{
@@ -344,7 +367,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     //////////////////////////////////////////////////////
     //Likes
     
-    func addLike(notif: NSNotification){        // these 2 chunks of code make sure that heart image appears immediately after tapping from event details page
+    func addLike(_ notif: Notification){        // these 2 chunks of code make sure that heart image appears immediately after tapping from event details page
         if let holdEvent = notif.object as? Event{
             let holdKey = holdEvent.key
             likesArray.append(holdKey)
@@ -354,11 +377,11 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
 
                 
                 if let eventArray = EventsCategorized[keyEventsCategorized]{
-                    if let i = eventArray.indexOf({$0.key == holdKey}){
+                    if let i = eventArray.index(where: {$0.key == holdKey}){
                         let event = eventArray[i]
                         event.adjustHeartImgIsLiked(true)
-                        let indexPath = NSIndexPath(forRow: i, inSection: section)
-                        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
+                        let indexPath = IndexPath(row: i, section: section)
+                        if let cell = tableView.cellForRow(at: indexPath) as? EventCell{
                             cell.setHeartImgFill()
                             return
                         }
@@ -383,18 +406,18 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         }
     }
     
-    func subtractLike(notif: NSNotification){
+    func subtractLike(_ notif: Notification){
         if let holdKey = notif.object as? String{
-            if let index = likesArray.indexOf(holdKey){
-                likesArray.removeAtIndex(index)
+            if let index = likesArray.index(of: holdKey){
+                likesArray.remove(at: index)
                 var section = 0
                 for keyEventsCategorized in 0 ..< 4{
                     if let eventArray = EventsCategorized[keyEventsCategorized]{
-                        if let i = eventArray.indexOf({$0.key == holdKey}){
+                        if let i = eventArray.index(where: {$0.key == holdKey}){
                             let event = eventArray[i]
                             event.adjustHeartImgIsLiked(false)
-                            let indexPath = NSIndexPath(forRow: i, inSection: section)
-                            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EventCell{
+                            let indexPath = IndexPath(row: i, section: section)
+                            if let cell = tableView.cellForRow(at: indexPath) as? EventCell{
                                 cell.setHeartImgEmpty()
                                 return
                             }
@@ -410,36 +433,36 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     //////////////////////////////////////////////////////
     //SettingBtn, GeoBtn, Segue
     
-    @IBAction func settingsBtnPress(sender: UIButton){
-        UIView.animateWithDuration(0.5) { 
-        }
-        UIView.animateWithDuration(0.3, animations: {
-            sender.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/3))
-            }) { (true) in
-                sender.transform = CGAffineTransformMakeRotation(CGFloat(0))
-                self.performSegueWithIdentifier("SettingsVC", sender: nil)
-        }
+    @IBAction func settingsBtnPress(_ sender: UIButton){
+        UIView.animate(withDuration: 0.5, animations: { 
+        }) 
+        UIView.animate(withDuration: 0.3, animations: {
+            sender.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI/3))
+            }, completion: { (true) in
+                sender.transform = CGAffineTransform(rotationAngle: CGFloat(0))
+                self.performSegue(withIdentifier: "SettingsVC", sender: nil)
+        }) 
     }
     
-    @IBAction func geoMarkerTapped(sender: AnyObject){
-        performSegueWithIdentifier("AnnotationMapVC", sender: nil)
+    @IBAction func geoMarkerTapped(_ sender: AnyObject){
+        performSegue(withIdentifier: "AnnotationMapVC", sender: nil)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EventDetailsVC"{
-            if let destVC = segue.destinationViewController as? EventDetailsVC{
+            if let destVC = segue.destination as? EventDetailsVC{
                 if let event = sender as? Event{
                     destVC.event = event
                 }
             }
         }
         if segue.identifier == "AnnotationMapVC" {
-            if let destVC = segue.destinationViewController as? AnnotationMapVC{
+            if let destVC = segue.destination as? AnnotationMapVC{
                 destVC.likesArray = self.likesArray
             }
         }
         if segue.identifier == "SettingsVC"{
-            if let destVC = segue.destinationViewController as? SettingsVC{
+            if let destVC = segue.destination as? SettingsVC{
                 destVC.delegate = self
             }
         }

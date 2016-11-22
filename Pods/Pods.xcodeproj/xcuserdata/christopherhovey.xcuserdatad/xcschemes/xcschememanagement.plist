@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>NVActivityIndicatorView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Ibento.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-IbentoTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>2EDC65F98C5445F7264DA45B24A51C8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>309AF3B350CD5CB998120FE10D9EB6C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8CF22044E18A93A8CE0F2EF74DA33C46</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C4263FB84E91AF3C71AF92FEE9C1433B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

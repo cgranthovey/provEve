@@ -9,34 +9,33 @@
 import Foundation
 import UIKit
 
-typealias isConnected = ((connected: Bool!) -> Void)?
+typealias isConnected = ((_ connected: Bool?) -> Void)?
 
 class ConnectedToInternet{
-    private static let _instance1 = ConnectedToInternet()
+    fileprivate static let _instance1 = ConnectedToInternet()
     
     static var instance1: ConnectedToInternet{
         return _instance1
     }
     
-    func areWeConnected(view: UIView, showNoInternetView: Bool, onComplete: isConnected){
-                let task = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: "https://www.google.com/")!, completionHandler: { (data, response, error) -> Void in
-                    dispatch_async(dispatch_get_main_queue(), { 
+    func areWeConnected(_ view: UIView, showNoInternetView: Bool, onComplete: isConnected){
+                let task = URLSession.shared.dataTask(with: URL(string: "https://www.google.com/")!, completionHandler: { (data, response, error) -> Void in
+                    DispatchQueue.main.async(execute: { 
                         if error != nil{
-                            if let errorCode = NSURLError(rawValue: error!.code){
-                                if errorCode.rawValue == NSURLErrorNotConnectedToInternet{
-                                    print("not connected!!!")
-                                    if showNoInternetView{
-                                        print("antArmy2")
-                                        NoConnectionView().showNoConnectionView(view)
-                                    }
-                                    if onComplete != nil{
-                                        onComplete!(connected: false)
-                                    }
+                            let myError = error as! NSError
+                            let errCode = URLError(_nsError: myError)
+                            if errCode.errorCode == NSURLErrorNotConnectedToInternet{
+                                print("not connected!!!")
+                                if showNoInternetView{
+                                    NoConnectionView().showNoConnectionView(view)
+                                }
+                                if onComplete != nil{
+                                    onComplete!(false)
                                 }
                             }
                         } else{
                             if onComplete != nil{
-                                onComplete!(connected: true)
+                                onComplete!(true)
                             }
                         }
                     })

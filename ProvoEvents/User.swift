@@ -11,9 +11,9 @@ import FirebaseDatabase
 
 class User{
 
-    private var _firstName: String?
-    private var _profileImg: String?
-    private var _userName: String?
+    fileprivate var _firstName: String?
+    fileprivate var _profileImg: String?
+    fileprivate var _userName: String?
 
     var firstName: String?{
         if _firstName == nil{

@@ -13,32 +13,32 @@ class MapPinCell: UICollectionViewCell {
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var lbl: UILabel!
     @IBOutlet weak var checkImg: UIImageView?
-    func configureCell(image: String, label: String, isChecked: Bool = false){
+    func configureCell(_ image: String, label: String, isChecked: Bool = false){
         img.image = UIImage(named: image)
         lbl.text = label
         checkImg?.image = UIImage(named: "checkMap")
         if isChecked{
-            checkImg?.hidden = false
+            checkImg?.isHidden = false
         } else{
-            checkImg?.hidden = true
+            checkImg?.isHidden = true
         }
     }
     
     func isImgChecked() -> Bool{
-        if checkImg?.hidden == true{
+        if checkImg?.isHidden == true{
             return false
         } else{
             return true
         }
     }
     
-    func checkImg(shouldShow: Bool){
+    func checkImg(_ shouldShow: Bool){
         if shouldShow{
             img.alpha = 1.0
-            checkImg?.hidden = false
+            checkImg?.isHidden = false
         } else{
             img.alpha = 0.5
-            checkImg?.hidden = true
+            checkImg?.isHidden = true
         }
     }
 }

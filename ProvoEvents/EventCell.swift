@@ -21,11 +21,11 @@ class EventCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         let tap = UITapGestureRecognizer(target: self, action: #selector(EventCell.heartTapped))
-        heartImg.userInteractionEnabled = true
+        heartImg.isUserInteractionEnabled = true
         heartImg.addGestureRecognizer(tap)
     }
 
-    func configureCell(event: Event){
+    func configureCell(_ event: Event){
         self.event = event
         let eventLiked = event.isLiked
         title.text = event.title
@@ -55,11 +55,11 @@ class EventCell: UITableViewCell {
     func heartTapped(){
         if !event.isLiked{
             self.heartImg.image = UIImage(named: "heartFilled")
-            NSNotificationCenter.defaultCenter().postNotificationName("heartAdded", object: self.event, userInfo: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "heartAdded"), object: self.event, userInfo: nil)
             self.event.adjustLikes(true)
         } else{
             self.heartImg.image = UIImage(named: "heartEmpty")
-            NSNotificationCenter.defaultCenter().postNotificationName("heartDeleted", object: self.event.key, userInfo: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "heartDeleted"), object: self.event.key, userInfo: nil)
             self.event.adjustLikes(false)
         }
     }

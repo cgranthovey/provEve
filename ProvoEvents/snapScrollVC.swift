@@ -23,12 +23,12 @@ class snapScrollVC: UIViewController {
         //sets up 3 view controllers, addEvent first, main table 2nd and favoritsTable 3rd.  Then offsets scrollview to the middle VC
         
 //        performSelector(#selector(snapScrollVC.calledLate), withObject: nil, afterDelay: 1.5)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(snapScrollVC.addEventSubmitSlide), name: "addEventSubmitSlide", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(snapScrollVC.addEventSubmitSlide), name: NSNotification.Name(rawValue: "addEventSubmitSlide"), object: nil)
     }
     
     var calledOnce = false
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if !calledOnce{
             calledLate()
             calledOnce = true
@@ -37,37 +37,37 @@ class snapScrollVC: UIViewController {
     }
     
     func calledLate(){
-        let addEventVC = self.storyboard?.instantiateViewControllerWithIdentifier("addEventVC")
+        let addEventVC = self.storyboard?.instantiateViewController(withIdentifier: "addEventVC")
         self.addChildViewController(addEventVC!)
         self.snapScroll.addSubview((addEventVC?.view)!)
-        addEventVC?.didMoveToParentViewController(self)
+        addEventVC?.didMove(toParentViewController: self)
         
-        let mainTableVC = self.storyboard?.instantiateViewControllerWithIdentifier("mainTableVC")
+        let mainTableVC = self.storyboard?.instantiateViewController(withIdentifier: "mainTableVC")
         var frame1 = mainTableVC?.view.frame
         frame1?.origin.x = self.view.frame.width
         mainTableVC!.view.frame = frame1!
         self.addChildViewController(mainTableVC!)
         self.snapScroll.addSubview((mainTableVC?.view)!)
-        mainTableVC?.didMoveToParentViewController(self)
+        mainTableVC?.didMove(toParentViewController: self)
         
         mainTableVC?.view.alpha = 0
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             mainTableVC?.view.alpha = 1
-        }
+        }) 
         
-        let favVC = self.storyboard?.instantiateViewControllerWithIdentifier("favoritesTableVC")
+        let favVC = self.storyboard?.instantiateViewController(withIdentifier: "favoritesTableVC")
         var frame2 = favVC?.view.frame
         frame2?.origin.x = 2 * self.view.frame.width
         favVC!.view.frame = frame2!
         self.addChildViewController(favVC!)
         self.snapScroll.addSubview((favVC?.view)!)
-        favVC?.didMoveToParentViewController(self)
+        favVC?.didMove(toParentViewController: self)
         
-        self.snapScroll.contentSize = CGSizeMake(self.view.frame.width * 3, self.view.frame.height)
+        self.snapScroll.contentSize = CGSize(width: self.view.frame.width * 3, height: self.view.frame.height)
         self.snapScroll.contentOffset = CGPoint(x: view.frame.width, y: 0)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
     }
     

@@ -26,7 +26,7 @@ class LoginTextField: UITextField {
     
     @IBInspectable var borderColor: UIColor?{
         didSet{
-            layer.borderColor = borderColor?.CGColor
+            layer.borderColor = borderColor?.cgColor
         }
     }
 
@@ -70,7 +70,7 @@ class LoginTextView: UITextView {
     
     @IBInspectable var borderColor: UIColor?{
         didSet{
-            layer.borderColor = borderColor?.CGColor
+            layer.borderColor = borderColor?.cgColor
         }
     }
     

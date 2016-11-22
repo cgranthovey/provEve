@@ -26,13 +26,13 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
         verifyPasswordField.delegate = self
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         removeFirstResponder()
     }
 
     @IBAction func next(){
         removeFirstResponder()
-        if let email = emailField.text, let password = passwordField.text, let passwordV = verifyPasswordField.text where (password.characters.count > 0 && email.characters.count > 0 && passwordV.characters.count > 0){
+        if let email = emailField.text, let password = passwordField.text, let passwordV = verifyPasswordField.text, (password.characters.count > 0 && email.characters.count > 0 && passwordV.characters.count > 0){
             
             guard password.characters.count >= 6 else {
                 alerts("Minimum Length", message: "Password must be at least 6 characters")
@@ -46,12 +46,12 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
             loadingView.showSpinnerView(self.view)
             AuthService.instance.createUser(password, email: email, onComplete: { (errMsg, data) in
                 guard errMsg == nil else{
-                    self.alerts("Error Authenticating", message: errMsg)
+                    self.alerts("Error Authenticating", message: errMsg!)
                     return
                 }
                 AuthService.instance.login(password, email: email, onComplete: { (errMsg, data) in
                     guard errMsg == nil else{
-                        self.alerts("Error Authenticating", message: errMsg)
+                        self.alerts("Error Authenticating", message: errMsg!)
                         return
                     }
                     DataService.instance.currentUser.setValue("TRUE", withCompletionBlock: { (error, FIRDatabaseReference) in
@@ -59,7 +59,7 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
                             self.alerts("Error", message: "There was an error uploading your info")
                         } else{
                             self.loadingView.successCancelSpin({
-                                self.performSegueWithIdentifier("CreateUserInfoVC", sender: nil)
+                                self.performSegue(withIdentifier: "CreateUserInfoVC", sender: nil)
                             })
                         }
                     })
@@ -70,7 +70,7 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
@@ -81,14 +81,14 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
         verifyPasswordField.resignFirstResponder()
     }
     
-    func alerts(title: String, message: String){
+    func alerts(_ title: String, message: String){
         self.loadingView.cancelSpinnerAndDarkView(nil)
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func popBack(){
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }
