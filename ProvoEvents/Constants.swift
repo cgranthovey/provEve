@@ -30,6 +30,19 @@ class Constants {
         return ("\(uid)Setting-Miles")
     }
     
+    var nsUserDefaultsPresetLatitudeKey: String{
+        return "presetLatitude"
+    }
+    
+    var nsUserDefaultsPresetLongitudeKey: String{
+        return "presetLongitude"
+    }
+    
+    var nsUserDefaultsZipCodeKey: String{
+        return "zipCode"
+    }
+
+    
     var currentUser: User!
     func initCurrentUser(){
         

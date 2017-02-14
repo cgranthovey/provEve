@@ -167,7 +167,6 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
                 })
                 bottomViewShowing = false
             }
-
         }
     }
     
@@ -188,7 +187,6 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     //loadData
     
     func clearTableViewAndReload(){
-        print("clear table View")
         events = []
         EventsCategorized = [:]
         tableView.reloadData()
@@ -198,7 +196,6 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     var geoQuery: GFRegionQuery!
     func loadData(){
         if geoQuery != nil{
-            print("remove all observers")
             geoQuery.removeAllObservers()       // prevents multiple geoQuery requests if internet connection is poor and users tries making multiple requests by pulling down charger
         }
         
@@ -211,15 +208,34 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
             meters = Int(50 * 1609.34)
         }
         
-        perform(#selector(EventVC.shouldAddTableViewBackground), with: nil, afterDelay: 3.5)
+        var longitude = Double()
+        var latitude = Double()
+        print("kylevannoy \(longitude)")
         
+        if let long = prefs.object(forKey: Constants.instance.nsUserDefaultsPresetLongitudeKey) as? Double, let lat = prefs.object(forKey: Constants.instance.nsUserDefaultsPresetLatitudeKey) as? Double{
+            longitude = long
+            latitude = lat
+            print("long: \(long)")
+            print("lat: \(lat)")
+        } else{
+            print("no long or lat preset")
+        }
+        
+        perform(#selector(EventVC.shouldAddTableViewBackground), with: nil, afterDelay: 3.5)
         let geoFireRef = DataService.instance.geoFireRef
         let geoFire = GeoFire(firebaseRef: geoFireRef)
         
-        
-        if currentLoc == nil{
-            currentLoc = CLLocation(latitude: CLLocationDegrees(40.2338), longitude: CLLocationDegrees(-111.6586))
+        if longitude != 0.0 || latitude != 0.0{
+            print("there is a current NSUserDefault")
+            currentLoc = CLLocation(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+        } else{
+            print("no current nsuserdefault")
+            if currentLoc == nil{
+                print("no current loc")
+                currentLoc = CLLocation(latitude: CLLocationDegrees(40.2338), longitude: CLLocationDegrees(-111.6586))
+            }
         }
+
         
         let locCoord2d = CLLocationCoordinate2DMake(currentLoc.coordinate.latitude, currentLoc.coordinate.longitude)
         let region = MKCoordinateRegionMakeWithDistance(locCoord2d, CLLocationDistance(meters) * 2, CLLocationDistance(meters) * 2) // need to double to get expected distance

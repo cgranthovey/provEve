@@ -44,8 +44,6 @@ class DataService{
         return userRef.child((FIRAuth.auth()?.currentUser?.uid)!)
     }
     
-    
-    
     var currentUserProfile: FIRDatabaseReference{
         return currentUser.child("profile")
     }
