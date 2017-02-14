@@ -70,7 +70,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
         if self.connectionBool == true && FIRAuth.auth()?.currentUser != nil{
             UIView.animate(withDuration: 0.9, animations: {
                 print("UID found")
-                self.activityIndicatorView.startAnimation()
+                self.activityIndicatorView.startAnimating()
                 self.activityIndicatorView.alpha = 1
             }) 
             checkForUserName()

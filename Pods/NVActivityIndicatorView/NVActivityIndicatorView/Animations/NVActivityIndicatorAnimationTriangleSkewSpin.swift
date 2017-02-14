@@ -2,15 +2,34 @@
 //  NVActivityIndicatorAnimationTriangleSkewSpin.swift
 //  NVActivityIndicatorViewDemo
 //
-//  Created by Nguyen Vinh on 7/24/15.
-//  Copyright (c) 2015 Nguyen Vinh. All rights reserved.
+// The MIT License (MIT)
+
+// Copyright (c) 2016 Vinh Nguyen
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 //
 
 import UIKit
 
 class NVActivityIndicatorAnimationTriangleSkewSpin: NVActivityIndicatorAnimationDelegate {
     
-    func setUpAnimationInLayer(_ layer: CALayer, size: CGSize, color: UIColor) {
+    func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let x = (layer.bounds.size.width - size.width) / 2
         let y = (layer.bounds.size.height - size.height) / 2
         let duration: CFTimeInterval = 3
@@ -32,7 +51,7 @@ class NVActivityIndicatorAnimationTriangleSkewSpin: NVActivityIndicatorAnimation
         animation.isRemovedOnCompletion = false
         
         // Draw triangle
-        let triangle = NVActivityIndicatorShape.triangle.createLayerWith(size: size, color: color)
+        let triangle = NVActivityIndicatorShape.triangle.layerWith(size: size, color: color)
         
         triangle.frame = CGRect(x: x, y: y, width: size.width, height: size.height)
         triangle.add(animation, forKey: "animation")

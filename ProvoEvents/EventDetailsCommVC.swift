@@ -138,7 +138,7 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
             if !keyboardUp{
                 keyboardUp = true
                 if keyboardSize.height == offset.height {
-                    self.botstomShadowView.constant = self.bottomShadowView.constant + keyboardSize.height
+                    self.bottomShadowView.constant = self.bottomShadowView.constant + keyboardSize.height
                     self.view.layoutIfNeeded()
 
                 } else {

@@ -2,15 +2,34 @@
 //  NVActivityIndicatorAnimationBallTrianglePath.swift
 //  NVActivityIndicatorViewDemo
 //
-//  Created by Nguyen Vinh on 7/23/15.
-//  Copyright (c) 2015 Nguyen Vinh. All rights reserved.
+// The MIT License (MIT)
+
+// Copyright (c) 2016 Vinh Nguyen
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 //
 
 import UIKit
 
 class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimationDelegate {
     
-    func setUpAnimationInLayer(_ layer: CALayer, size: CGSize, color: UIColor) {
+    func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let circleSize = size.width / 5
         let deltaX = size.width / 2 - circleSize / 2
         let deltaY = size.height / 2 - circleSize / 2
@@ -29,7 +48,7 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
         animation.isRemovedOnCompletion = false
         
         // Top-center circle
-        let topCenterCircle = NVActivityIndicatorShape.ring.createLayerWith(size: CGSize(width: circleSize, height: circleSize), color: color)
+        let topCenterCircle = NVActivityIndicatorShape.ring.layerWith(size: CGSize(width: circleSize, height: circleSize), color: color)
         
         changeAnimation(animation, values:["{0,0}", "{hx,fy}", "{-hx,fy}", "{0,0}"], deltaX: deltaX, deltaY: deltaY)
         topCenterCircle.frame = CGRect(x: x + size.width / 2 - circleSize / 2, y: y, width: circleSize, height: circleSize)
@@ -37,7 +56,7 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
         layer.addSublayer(topCenterCircle)
         
         // Bottom-left circle
-        let bottomLeftCircle = NVActivityIndicatorShape.ring.createLayerWith(size: CGSize(width: circleSize, height: circleSize), color: color)
+        let bottomLeftCircle = NVActivityIndicatorShape.ring.layerWith(size: CGSize(width: circleSize, height: circleSize), color: color)
         
         changeAnimation(animation, values: ["{0,0}", "{hx,-fy}", "{fx,0}", "{0,0}"], deltaX: deltaX, deltaY: deltaY)
         bottomLeftCircle.frame = CGRect(x: x, y: y + size.height - circleSize, width: circleSize, height: circleSize)
@@ -45,7 +64,7 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
         layer.addSublayer(bottomLeftCircle)
         
         // Bottom-right circle
-        let bottomRightCircle = NVActivityIndicatorShape.ring.createLayerWith(size: CGSize(width: circleSize, height: circleSize), color: color)
+        let bottomRightCircle = NVActivityIndicatorShape.ring.layerWith(size: CGSize(width: circleSize, height: circleSize), color: color)
         
         changeAnimation(animation, values: ["{0,0}", "{-fx,0}", "{-hx,-fy}", "{0,0}"], deltaX: deltaX, deltaY:deltaY)
         bottomRightCircle.frame = CGRect(x: x + size.width - circleSize, y: y + size.height - circleSize, width: circleSize, height: circleSize)
@@ -53,7 +72,7 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
         layer.addSublayer(bottomRightCircle)
     }
     
-    func changeAnimation(_ animation: CAKeyframeAnimation, values rawValues: [String], deltaX: CGFloat, deltaY: CGFloat) -> CAAnimation {
+    func changeAnimation(_ animation: CAKeyframeAnimation, values rawValues: [String], deltaX: CGFloat, deltaY: CGFloat) {
         let values = NSMutableArray(capacity: 5)
         
         for rawValue in rawValues {
@@ -62,8 +81,6 @@ class NVActivityIndicatorAnimationBallTrianglePath: NVActivityIndicatorAnimation
             values.add(NSValue(caTransform3D: CATransform3DMakeTranslation(point.x, point.y, 0)))
         }
         animation.values = values as [AnyObject]
-        
-        return animation
     }
     
     func translateString(_ valueString: String, deltaX: CGFloat, deltaY: CGFloat) -> String {

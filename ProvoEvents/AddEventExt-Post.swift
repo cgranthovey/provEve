@@ -121,7 +121,7 @@ extension AddEventVC: yesSelectedProtocol{
 //        self.spinIndicator.alpha = 0
 //        self.loadingView.addSubview(self.spinIndicator)
         
-        actView.startAnimation()
+        actView.startAnimating()
         actView.center = self.view.center
         actView.alpha = 0
         self.view.addSubview(actView)

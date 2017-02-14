@@ -151,7 +151,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
             print("img cache loader")
             
             let url = URL(string: holdEventImg)
-            self.eventImg.ll(with: url, completed: { (image: UIImage?, error: Error?, cache: SDImageCacheType, url: URL?) in
+            self.eventImg.sd_setImage(with: url, completed: { (image: UIImage?, error: Error?, cache: SDImageCacheType, url: URL?) in
                 if image == nil{
                     self.eventImg.isHidden = true
                 }

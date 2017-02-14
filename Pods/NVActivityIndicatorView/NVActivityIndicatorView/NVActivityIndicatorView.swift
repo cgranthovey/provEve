@@ -2,8 +2,27 @@
 //  NVActivityIndicatorView.swift
 //  NVActivityIndicatorViewDemo
 //
-//  Created by Nguyen Vinh on 7/21/15.
-//  Copyright (c) 2015 Nguyen Vinh. All rights reserved.
+// The MIT License (MIT)
+
+// Copyright (c) 2016 Vinh Nguyen
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 //
 
 import UIKit
@@ -41,6 +60,8 @@ import UIKit
  - BallGridBeat:            BallGridBeat animation.
  - SemiCircleSpin:          SemiCircleSpin animation.
  - BallRotateChase:         BallRotateChase animation.
+ - Orbit:                   Orbit animation.
+ - AudioEqualizer:          AudioEqualizer animation.
  */
 public enum NVActivityIndicatorType: Int {
     /**
@@ -223,10 +244,22 @@ public enum NVActivityIndicatorType: Int {
      - returns: Instance of NVActivityIndicatorAnimationBallRotateChase.
      */
     case ballRotateChase
+    /**
+     Orbit.
+     
+     - returns: Instance of NVActivityIndicatorAnimationOrbit.
+     */
+    case orbit
+    /**
+     AudioEqualizer.
+     
+     - returns: Instance of NVActivityIndicatorAnimationAudioEqualizer.
+     */
+    case audioEqualizer
     
-    fileprivate static let allTypes = (blank.rawValue ... ballRotateChase.rawValue).map{ NVActivityIndicatorType(rawValue: $0)! }
-
-    fileprivate func animation() -> NVActivityIndicatorAnimationDelegate {
+    static let allTypes = (blank.rawValue ... audioEqualizer.rawValue).map{ NVActivityIndicatorType(rawValue: $0)! }
+    
+    func animation() -> NVActivityIndicatorAnimationDelegate {
         switch self {
         case .blank:
             return NVActivityIndicatorAnimationBlank()
@@ -288,70 +321,95 @@ public enum NVActivityIndicatorType: Int {
             return NVActivityIndicatorAnimationSemiCircleSpin()
         case .ballRotateChase:
             return NVActivityIndicatorAnimationBallRotateChase()
+        case .orbit:
+            return NVActivityIndicatorAnimationOrbit()
+        case .audioEqualizer:
+            return NVActivityIndicatorAnimationAudioEqualizer()
         }
     }
 }
 
 /// Activity indicator view with nice animations
-open class NVActivityIndicatorView: UIView {
-    open static var DEFAULT_TYPE: NVActivityIndicatorType = .ballSpinFadeLoader
-    open static var DEFAULT_COLOR = UIColor.white
-    open static var DEFAULT_PADDING: CGFloat = 0
+public final class NVActivityIndicatorView: UIView {
+    /// Default type. Default value is .BallSpinFadeLoader.
+    public static var DEFAULT_TYPE: NVActivityIndicatorType = .ballSpinFadeLoader
     
-    /// Animation type, value of NVActivityIndicatorType enum.
-    open var type: NVActivityIndicatorType = NVActivityIndicatorView.DEFAULT_TYPE
-
+    /// Default color of activity indicator. Default value is UIColor.white.
+    public static var DEFAULT_COLOR = UIColor.white
+    
+    /// Default color of text. Default value is UIColor.white.
+    public static var DEFAULT_TEXT_COLOR = UIColor.white
+    
+    /// Default padding. Default value is 0.
+    public static var DEFAULT_PADDING: CGFloat = 0
+    
+    /// Default size of activity indicator view in UI blocker. Default value is 60x60.
+    public static var DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
+    
+    /// Default display time threshold to actually display UI blocker. Default value is 0 ms.
+    public static var DEFAULT_BLOCKER_DISPLAY_TIME_THRESHOLD = 0
+    
+    /// Default minimum display time of UI blocker. Default value is 0 ms.
+    public static var DEFAULT_BLOCKER_MINIMUM_DISPLAY_TIME = 0
+    
+    /// Default message displayed in UI blocker. Default value is nil.
+    public static var DEFAULT_BLOCKER_MESSAGE: String? = nil
+    
+    /// Default font of message displayed in UI blocker. Default value is bold system font, size 20.
+    public static var DEFAULT_BLOCKER_MESSAGE_FONT = UIFont.boldSystemFont(ofSize: 20)
+    
+    /// Default background color of UI blocker. Default value is UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+    public static var DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+    
+    /// Animation type.
+    public var type: NVActivityIndicatorType = NVActivityIndicatorView.DEFAULT_TYPE
+    
     @available(*, unavailable, message: "This property is reserved for Interface Builder. Use 'type' instead.")
     @IBInspectable var typeName: String {
         get {
-            return String(describing: self.type)
+            return getTypeName()
         }
-        set (typeString) {
-            for item in NVActivityIndicatorType.allTypes {
-                if String(describing: item).caseInsensitiveCompare(typeString) == ComparisonResult.orderedSame {
-                    self.type = item
-                    break
-                }
-            }
+        set {
+            _setTypeName(newValue)
         }
     }
-
-    /// Color of activity indicator view.
-    @IBInspectable open var color: UIColor = NVActivityIndicatorView.DEFAULT_COLOR
-
-    /// Padding of activity indicator view.
-    @IBInspectable open var padding: CGFloat = NVActivityIndicatorView.DEFAULT_PADDING
-
-    /// Current status of animation, this is not used to start or stop animation.
-    open var animating: Bool = false
     
-    /// Specify whether activity indicator view should hide once stopped.
-    @IBInspectable open var hidesWhenStopped: Bool = true
+    /// Color of activity indicator view.
+    @IBInspectable public var color: UIColor = NVActivityIndicatorView.DEFAULT_COLOR
+    
+    /// Padding of activity indicator view.
+    @IBInspectable public var padding: CGFloat = NVActivityIndicatorView.DEFAULT_PADDING
+    
+    /// Current status of animation, read-only.
+    @available(*, deprecated: 3.1)
+    public var animating: Bool { return isAnimating }
+    
+    /// Current status of animation, read-only.
+    public private(set) var isAnimating: Bool = false
     
     /**
-     Create a activity indicator view with default type, color and padding.
-     This is used by storyboard to initiate the view.
+     Returns an object initialized from data in a given unarchiver.
+     self, initialized using the data in decoder.
      
-     - Default type is BallSpinFadeLoader.
-     - Default color is white.
-     - Default padding is 0.
+     - parameter decoder: an unarchiver object.
      
-     - parameter decoder:
-     
-     - returns: The activity indicator view.
+     - returns: self, initialized using the data in decoder.
      */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         backgroundColor = UIColor.clear
+        isHidden = true
     }
     
     /**
-     Create a activity indicator view with specified frame, type, color and padding.
+     Create a activity indicator view.
      
-     - parameter frame: view's frame.
-     - parameter type: animation type, value of NVActivityIndicatorType enum. Default type is BallSpinFadeLoader.
-     - parameter color: color of activity indicator view. Default color is white.
-     - parameter padding: view's padding. Default padding is 0.
+     Appropriate NVActivityIndicatorView.DEFAULT_* values are used for omitted params.
+     
+     - parameter frame:   view's frame.
+     - parameter type:    animation type.
+     - parameter color:   color of activity indicator view.
+     - parameter padding: padding of activity indicator view.
      
      - returns: The activity indicator view.
      */
@@ -360,42 +418,66 @@ open class NVActivityIndicatorView: UIView {
         self.color = color ?? NVActivityIndicatorView.DEFAULT_COLOR
         self.padding = padding ?? NVActivityIndicatorView.DEFAULT_PADDING
         super.init(frame: frame)
+        isHidden = true
+    }
+    
+    // Fix issue #62
+    // Intrinsic content size is used in autolayout
+    // that causes mislayout when using with MBProgressHUD.
+    /**
+     Returns the natural size for the receiving view, considering only properties of the view itself.
+     
+     A size indicating the natural size for the receiving view based on its intrinsic properties.
+     
+     - returns: A size indicating the natural size for the receiving view based on its intrinsic properties.
+     */
+    public override var intrinsicContentSize : CGSize {
+        return CGSize(width: bounds.width, height: bounds.height)
     }
     
     /**
-     Start animation.
+     Start animating.
      */
-    open func startAnimation() {
-        if hidesWhenStopped && isHidden {
-            isHidden = false
-        }
-        if (self.layer.sublayers == nil) {
-            setUpAnimation()
-        }
-        self.layer.speed = 1
-        self.animating = true
+    public final func startAnimating() {
+        isHidden = false
+        isAnimating = true
+        layer.speed = 1
+        setUpAnimation()
     }
     
     /**
-     Stop animation.
+     Stop animating.
      */
-    open func stopAnimation() {
-        self.layer.sublayers = nil
-        self.animating = false
-        if hidesWhenStopped && !isHidden {
-            isHidden = true
+    public final func stopAnimating() {
+        isHidden = true
+        isAnimating = false
+        layer.sublayers?.removeAll()
+    }
+    
+    // MARK: Internal
+    
+    func _setTypeName(_ typeName: String) {
+        for item in NVActivityIndicatorType.allTypes {
+            if String(describing: item).caseInsensitiveCompare(typeName) == ComparisonResult.orderedSame {
+                type = item
+                break
+            }
         }
+    }
+    
+    func getTypeName() -> String {
+        return String(describing: type)
     }
     
     // MARK: Privates
     
-    fileprivate func setUpAnimation() {
-        let animation: NVActivityIndicatorAnimationDelegate = self.type.animation()
-        var animationRect = UIEdgeInsetsInsetRect(self.frame, UIEdgeInsetsMake(padding, padding, padding, padding))
+    private final func setUpAnimation() {
+        let animation: NVActivityIndicatorAnimationDelegate = type.animation()
+        var animationRect = UIEdgeInsetsInsetRect(frame, UIEdgeInsetsMake(padding, padding, padding, padding))
         let minEdge = min(animationRect.width, animationRect.height)
         
-        self.layer.sublayers = nil
+        layer.sublayers = nil
         animationRect.size = CGSize(width: minEdge, height: minEdge)
-        animation.setUpAnimationInLayer(self.layer, size: animationRect.size, color: self.color)
+        animation.setUpAnimation(in: layer, size: animationRect.size, color: color)
     }
 }
