@@ -31,7 +31,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
         removeFirstResponder()
         
         if email.text == nil || email.text == ""{
-            alerts("Email Required", message: "Enter an email send a password reset")
+            alerts("Email Required", message: "Enter an email to send a password reset")
         } else{
             passwordResetLoading.showSpinnerView(self.view)
             AuthService.instance.passwordReset(email.text!, onComplete: { (errMsg, data) in
@@ -67,7 +67,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
                     }, completion: { (true) in
                         self.mailImg.isHidden = true
                         let myImg = UIImageView(image: UIImage(named: "checkmark"))
-                        myImg.showCheckmarkAnimatedTempImg(self.view, delay: 0.7, remove: true)
+                        myImg.showCheckmarkAnimatedTempImg(self.view, delay: 0.3, remove: true)
                 })
         }
     }

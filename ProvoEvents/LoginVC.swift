@@ -65,7 +65,6 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
     
     func checkForUID(){
         print("uid check")
-        
         print(self.connectionBool)
         print(FIRAuth.auth()?.currentUser?.uid as Any)
         if self.connectionBool == true && FIRAuth.auth()?.currentUser != nil{
