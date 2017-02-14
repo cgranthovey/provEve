@@ -19,25 +19,23 @@ protocol settingsProtocol {
 class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChosen {
 
     @IBOutlet weak var userNameTF: UITextField!
-    @IBOutlet weak var zipCodeTF: UITextField!
-    @IBOutlet weak var myCurrentLocLbl: UILabel!
+    @IBOutlet weak var firstNameTF: UITextField!
     @IBOutlet weak var milesBtnOutlet: UIButton!
     @IBOutlet weak var topStack: UIStackView!
     @IBOutlet weak var logoutBtn: UIButton!
     @IBOutlet weak var collection: UICollectionView!
-    @IBOutlet weak var geoLocCheckImg: UIImageView!
     
     var img = ["football", "outdoors", "service", "theater", "dance", "art", "prayer", "music", "book", "sandwich"]
     var lbl = ["Sport", "Outdoor", "Service", "Theater/Cinema", "Dance", "Art", "Religion", "Music", "Education", "Food"]
     
     var delegate: settingsProtocol!
-    var holdOriginalZip = ""
+    var holdOriginalName: String!
     let yesNo = yesNoLauncher()
     var animationShouldBeCalled = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        zipCodeTF.delegate = self
+        firstNameTF.delegate = self
         yesNo.delegate = self
         collection.delegate = self
         collection.dataSource = self
@@ -50,16 +48,24 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let managedContext = appDelegate?.managedObjectContext
         
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "EventTypeSettings")
+        
+        do{
+            let results = try managedContext?.fetch(fetchRequest)
+            selectedEvents = results as! [NSManagedObject]
+        } catch let error as NSError{
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
     }
-    
-    @IBOutlet weak var geoLocCheckTopConstraint: NSLayoutConstraint!
-    var geoLocCheckUp: Bool!
     
     func setUpUI(){
         if let currUser = Constants.instance.currentUser{
             userNameTF.text = currUser.userName
+            firstNameTF.text = currUser.firstName
+            holdOriginalName = currUser.firstName
         }
         self.topStack.alpha = 0
         topStack.isHidden = true
@@ -70,96 +76,25 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         }  else {
             milesBtnOutlet.setTitle("EVENTS WITHIN 50 MILES", for: UIControlState())
         }
-        
-        if UserDefaults.standard.object(forKey: Constants.instance.nsUserDefaultsPresetLongitudeKey) == nil || UserDefaults.standard.object(forKey: Constants.instance.nsUserDefaultsPresetLatitudeKey) == nil{
-            geoLocCheckTopConstraint.constant += 37
-            self.view.layoutIfNeeded()
-            geoLocCheckUp = false
-        } else{
-            if let zip = UserDefaults.standard.object(forKey: Constants.instance.nsUserDefaultsZipCodeKey){
-                zipCodeTF.text = "\(zip)"
-                holdOriginalZip = "\(zip)"
-            }
-            geoLocCheckUp = true
-            print("myU: \(UserDefaults.standard.object(forKey: Constants.instance.nsUserDefaultsPresetLongitudeKey))")
-        }
-        
-        let tapCurrentLoc = UITapGestureRecognizer(target: self, action: #selector(myCurrentLocTapped(sender:)))
-        myCurrentLocLbl.addGestureRecognizer(tapCurrentLoc)
-        myCurrentLocLbl.isUserInteractionEnabled = true
-        
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        let managedContext = appDelegate?.managedObjectContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "EventTypeSettings")
-        do{
-            let results = try managedContext?.fetch(fetchRequest)
-            selectedEvents = results as! [NSManagedObject]
-        } catch let error as NSError{
-            print("Could not fetch \(error), \(error.userInfo)")
-        }
-        collection.reloadData()
-    }
-    
-    func myCurrentLocTapped(sender: AnyObject){
-        print("In current")
-        if geoLocCheckUp == true{
-            print("true")
-            geoLocCheckTopConstraint.constant += 37
-            UIView.animate(withDuration: 0.2, animations: {
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-        } else{
-            print("false")
-        }
     }
 
     func tapRemoveKeyboard(){
-        zipCodeTF.resignFirstResponder()
+        firstNameTF.resignFirstResponder()
     }
     
-    func findCoord(userZip: String){
-        print("In findCoord")
-        let endPoint = "http://ziplocate.us/api/v1/\(userZip)"
-        let url = URL(string: endPoint)!
-        let session = URLSession.shared
-        
-        session.dataTask(with: url) {(data, response, error) in
-            do {
-                guard let realResponse = response as? HTTPURLResponse, realResponse.statusCode ==  200  else{
-                    print("not a 200 respone")
-                    self.showAlert(alertTitle: "Error", message: "There was an error with the zip code request")
-                    return
-                }
-                if NSString(data: data!, encoding: String.Encoding.utf8.rawValue) != nil{
-                    print("inside")
-                    let jsonDict = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-
-                    if let zipDict = jsonDict as? [String: AnyObject]{
-                        if let long = zipDict["lng"] as? Double, let lat = zipDict["lat"] as? Double{
-                            let userDefault = UserDefaults.standard
-                            userDefault.set(userZip, forKey: Constants.instance.nsUserDefaultsZipCodeKey)
-                            userDefault.set(lat, forKey: Constants.instance.nsUserDefaultsPresetLatitudeKey)
-                            userDefault.set(long, forKey: Constants.instance.nsUserDefaultsPresetLongitudeKey)
-                        }
-                    }
-                }
-            } catch {
-                self.showAlert(alertTitle: "Error", message: "There was an error with the zip code request")
-                print("zip code request unsuccessful")
-            }
-        }.resume()
-    }
-    //
+//    func findCoord(){
+//        let geoCode = CLGeocoder()
+//        geoCode.geocodeAddressString("84604") { (placemarks: [CLPlacemark]?, error: NSError?) in
+//            <#code#>
+//        } as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler as! CLGeocodeCompletionHandler
+//    }
+    
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //Top Stack View
     
     @IBOutlet weak var milesTopConstraint: NSLayoutConstraint!
 
-    
-
-    
-    
     func animateTopStackView(){
         if animationShouldBeCalled{
             animationShouldBeCalled = false
@@ -179,29 +114,22 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     }
     
     @IBAction func cancel(_ sender: AnyObject){
-        zipCodeTF.text = "\(holdOriginalZip)"
+        firstNameTF.text = holdOriginalName
         dismissTopStack()
     }
     
     @IBAction func applyBtn(_ sender: AnyObject){
-        
-        
-        guard zipCodeTF.text?.characters.count == 5 else {
-            showAlert(alertTitle: "Error", message: "Zip code must have 5 numbers")
-            return
-        }
-        
         textColorChange()
         dismissTopStack()
-        tableViewReloadNeeded = true
-        let zip: String!
-        if zipCodeTF.text == nil{
-            zip = ""
+        let firstName: String!
+        if firstNameTF.text == nil{
+            firstName = ""
         } else{
-            zip = zipCodeTF.text
-            findCoord(userZip: zip)
+            firstName = firstNameTF.text
         }
-        holdOriginalZip = zip
+        holdOriginalName = firstName
+        DataService.instance.currentUserProfile.child(Constants.instance.FirConsFirstName).setValue(firstName)
+        Constants.instance.initCurrentUser()
     }
     
     func dismissTopStack(){
@@ -221,15 +149,15 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     }
     
     func textColorChange(){
-        UIView.transition(with: zipCodeTF, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
-            self.zipCodeTF.textColor = UIColor.green
+        UIView.transition(with: firstNameTF, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
+            self.firstNameTF.textColor = UIColor.green
             }) { (true) in
-                UIView.transition(with: self.zipCodeTF, duration: 0.45, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
+                UIView.transition(with: self.firstNameTF, duration: 0.45, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
                     }, completion: { (true) in
-                        UIView.transition(with: self.zipCodeTF, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
-                            self.zipCodeTF.textColor = UIColor.black
+                        UIView.transition(with: self.firstNameTF, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
+                            self.firstNameTF.textColor = UIColor.black
                             }, completion: nil)
-            })
+                })
         }
     }
     
@@ -258,7 +186,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     }
 
     override func swipePopBack() {
-        if tableViewReloadNeeded{
+        if collectionViewChanged{
             delegate.clearTableViewAndReload()
         }
         _ = self.navigationController?.popViewController(animated: true)
@@ -268,19 +196,6 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         self.view.endEditing(true)
         return false
     }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        textField.text = ""
-        textField.keyboardType = .numberPad
-        return true
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = textField.text ?? ""
-        let prospectiveText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        return prospectiveText.characters.count < 6
-    }
-    
     
     @IBAction func creditsVC(_ sender: AnyObject){
         performSegue(withIdentifier: "CreditsVC", sender: nil)
@@ -304,15 +219,9 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
             }
         }
     }
-    
-    func showAlert(alertTitle: String, message: String){
-        let alert = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
 
     var selectedEvents = [NSManagedObject]()
-    var tableViewReloadNeeded: Bool = false
+    var collectionViewChanged: Bool = false
 }
 
 
@@ -352,12 +261,12 @@ extension SettingsVC: UICollectionViewDelegate, UICollectionViewDataSource{
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-        print("collectionViewWidth \(collection.frame.width)")
+        print(collection.frame.width)
         return CGSize(width: 85, height: 70.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        tableViewReloadNeeded = true
+        collectionViewChanged = true
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let moc = appDelegate.managedObjectContext
         

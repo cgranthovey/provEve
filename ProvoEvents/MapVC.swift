@@ -170,6 +170,7 @@ class MapVC: UIViewController {
     
     var darkView: UIView!
     @IBAction func questionPress(_ sender: AnyObject){
+        
         let rect = CGRect(x: 0, y: -100, width: self.view.frame.width, height: self.view.frame.height + 100)
         self.darkView = UIView(frame: rect)
         darkView.backgroundColor = UIColor.black

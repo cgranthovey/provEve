@@ -11,15 +11,12 @@ import FirebaseAuth
 
 typealias Completion = (_ errMsg: String?, _ data: AnyObject?) -> Void
 
-
 class AuthService{
     fileprivate static let _instance = AuthService()
     
     static var instance: AuthService{
         return _instance
     }
-    
-    
     
     func login(_ password: String, email: String, onComplete: @escaping Completion){
         FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in

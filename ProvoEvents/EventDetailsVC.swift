@@ -66,14 +66,17 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     var currentView: UIView!
 
     override func viewDidLoad() {
+        print("event details")
         super.viewDidLoad()
         deleteView.delegate = self
         setUpUI()
         setBottomButtons()
+        print("snack3")
         setUpImgs()
         scrollView.delaysContentTouches = false
         let tapDismiss = UITapGestureRecognizer(target: self, action: #selector(EventDetailsVC.resignKeyboard))
         view.addGestureRecognizer(tapDismiss)
+        print("snack 4")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,7 +124,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         eventTitle.text = event.title
         eventDescription.text = event.description
         eventLocBtn.setTitle(event.location, for: UIControlState())
-        eventLocBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        
         if event.pinInfoLongitude == nil || event.pinInfoLatitude == nil{
             eventLocBtn.setTitleColor(UIColor.black, for: UIControlState())
             eventLocBtn.isUserInteractionEnabled = false
@@ -151,9 +154,10 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
             print("img cache loader")
             
             let url = URL(string: holdEventImg)
-            self.eventImg.ll(with: url, completed: { (image: UIImage?, error: Error?, cache: SDImageCacheType, url: URL?) in
+            self.eventImg.sd_setImage(with: url, completed: { (image: UIImage?, error: Error?, cache: SDImageCacheType, url: URL?) in
                 if image == nil{
                     self.eventImg.isHidden = true
+                    
                 }
                 self.eventImg.roundCornersForAspectFit(5)
                 self.activityIndicator.stopAnimating()
@@ -258,9 +262,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         sender.backgroundColor = UIColor.clear
         let messageVC = MFMessageComposeViewController()
         messageVC.messageComposeDelegate = self
-        
-        
-        messageVC.body = "Hi would you want to go to \(event.title) on \(event.date) at \(event.location).\n\(event.description!)"
+        messageVC.body = "Hi would you want to go to \(event.title) on \(event.date) at \(event.location).\n\(event.description)"
         
         if MFMessageComposeViewController.canSendText(){
             self.present(messageVC, animated: true, completion: nil)
@@ -385,7 +387,16 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
             }, completion: { (true) in
                 UIView.animate(withDuration: self.animationDuration, animations: {
                     
-                    self.zoomImgView.frame = CGRect(x: self.originalFrame.origin.x, y: self.originalFrame.origin.y, width: self.eventImg.frame.width, height: self.eventImg.frame.height)    
+                    self.zoomImgView.frame = CGRect(x: self.originalFrame.origin.x, y: self.originalFrame.origin.y, width: self.eventImg.frame.width, height: self.eventImg.frame.height)
+                    
+                    
+//                    var transform = CGAffineTransform()
+//                    transform = CGAffineTransformMakeScale(0.5, 0.5)
+//                    var x = self.originalFrame.origin.x //- self.originalFrame.width / 2
+//                    var y = self.originalFrame.origin.y - UIScreen.mainScreen().bounds.height/2 + self.originalFrame.height / 2
+//                    var transform2 = CGAffineTransformMakeTranslation(x, y)
+//                    self.zoomImgView.transform = CGAffineTransformConcat(transform, transform2)
+//                    
                     }, completion: { (true) in
                     self.eventImg.alpha = 1.0
                     self.zoomImgView.removeFromSuperview()

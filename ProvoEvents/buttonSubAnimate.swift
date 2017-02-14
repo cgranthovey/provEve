@@ -19,6 +19,7 @@ class buttonSubAnimate: UIButton {
     var myImg: UIImageView!
     
     func setUpEventImgBtn(_ img: UIImageView){
+        print("called")
         myImg = img
         self.addTarget(self, action: #selector(buttonSubAnimate.eventImgBtnTouchDown), for: .touchDown)
         self.addTarget(self, action: #selector(buttonSubAnimate.eventImgBtnTouchUpInside), for: .touchUpInside)
@@ -26,6 +27,7 @@ class buttonSubAnimate: UIButton {
     }
     
     func eventImgBtnTouchDown(){
+        print("2ne")
         UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.myImg.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
             }, completion: nil)
