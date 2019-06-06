@@ -42,7 +42,7 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         NotificationCenter.default.addObserver(self, selector: #selector(FavoritesVC.loadData), name: NSNotification.Name(rawValue: "eventDeleted"), object: nil)
     }
     
-    func loadData(){
+    @objc func loadData(){
         events = [Event]()
         likesArray = [String]()
         self.shouldAddTableViewBackground()
@@ -78,7 +78,7 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         self.tableView.reloadData()
     }
 
-    func addCell(_ notif: Notification){
+    @objc func addCell(_ notif: Notification){
         if let event = notif.object as? Event{
             likesArray.append(event.key)
             events.append(event)
@@ -89,7 +89,7 @@ class FavoritesVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource {
         self.shouldAddTableViewBackground()
     }
     
-    func removeCell(_ notif: Notification){
+    @objc func removeCell(_ notif: Notification){
         if let key = notif.object as? String{
             if let indexValue = self.likesArray.index(of: key), let favIndexValue = self.events.index(where: {$0.key == key}){
                 var section = 0         //need this b/c index finds key in dictionary

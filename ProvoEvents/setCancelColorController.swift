@@ -21,7 +21,7 @@ class setCancelColorController: LoginButton {
         }
     }
     
-    func onTouchDown(){
+    @objc func onTouchDown(){
         if self.currentTitle == "SET"{
             backgroundColor = UIColor().boilerPlateColor(230, green: 81, blue: 0)
         } else if self.currentTitle == "CANCEL"{
@@ -29,7 +29,7 @@ class setCancelColorController: LoginButton {
         }
     }
     
-    func onTouchUpOutside(){
+    @objc func onTouchUpOutside(){
         if self.currentTitle == "SET"{
             backgroundColor = UIColor().boilerPlateColor(239, green: 108, blue: 0)
         } else if self.currentTitle == "CANCEL"{

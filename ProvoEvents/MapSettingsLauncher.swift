@@ -57,7 +57,7 @@ class MapSettingsLauncher: NSObject{
         }
     }
 
-    func dismissSettings(){
+    @objc func dismissSettings(){
         UIView.animate(withDuration: 0.5, animations: { 
             self.blackView.alpha = 0
             self.holdingView.center.x = self.holdingView.center.x - self.collectionWidth
@@ -84,7 +84,7 @@ class MapSettingsLauncher: NSObject{
         }
     }
 
-    func itemSelected(_ timer: Timer){
+    @objc func itemSelected(_ timer: Timer){
         dismissSettings()
         if let indexPathInt = timer.userInfo as? Int{
             if indexPathInt == 0 {

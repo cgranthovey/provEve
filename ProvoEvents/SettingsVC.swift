@@ -100,7 +100,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         collection.reloadData()
     }
     
-    func myCurrentLocTapped(sender: AnyObject){
+    @objc func myCurrentLocTapped(sender: AnyObject){
         print("In current")
         if geoLocCheckUp == true{
             print("true")
@@ -113,7 +113,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         }
     }
 
-    func tapRemoveKeyboard(){
+    @objc func tapRemoveKeyboard(){
         zipCodeTF.resignFirstResponder()
     }
     
@@ -160,7 +160,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
 
     
     
-    func animateTopStackView(){
+    @objc func animateTopStackView(){
         if animationShouldBeCalled{
             animationShouldBeCalled = false
             self.milesTopConstraint.constant = self.milesTopConstraint.constant + 40

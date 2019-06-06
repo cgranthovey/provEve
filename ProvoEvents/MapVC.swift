@@ -136,16 +136,16 @@ class MapVC: UIViewController {
         approveBtn.addTarget(self, action: #selector(MapVC.approveTouchDown), for: .touchDown)
     }
     
-    func approveTouchDown(){
+    @objc func approveTouchDown(){
         self.thumbsUpImage.alpha = 1
         approveColorView.backgroundColor = UIColor(red: 211/255, green: 47/255, blue: 47/255, alpha: 1.0)
 
     }
-    func approveTouchUpOutside(){
+    @objc func approveTouchUpOutside(){
         self.thumbsUpImage.alpha = 0.6
         approveColorView.backgroundColor = UIColor(red: 244/255, green: 67/255, blue: 54/255, alpha: 1.0)
     }
-    func approveTouchUpInside(){
+    @objc func approveTouchUpInside(){
         approvePin()
     }
     
@@ -156,7 +156,7 @@ class MapVC: UIViewController {
         _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func showApproveView(){
+    @objc func showApproveView(){
         approveView.isHidden = false
         UIView.animate(withDuration: 0.3, animations: {
             self.approveView.alpha = 1
@@ -207,7 +207,7 @@ class MapVC: UIViewController {
     //////////////////////////////////////////////////////
     //TapForPin
     
-    func tapForPin(_ tap: UIGestureRecognizer){
+    @objc func tapForPin(_ tap: UIGestureRecognizer){
         if tap.state == UIGestureRecognizerState.began{
             mapView.removeAnnotations(mapView.annotations)
             let touchPoint = tap.location(in: mapView)

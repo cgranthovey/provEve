@@ -71,7 +71,7 @@ class snapScrollVC: UIViewController {
     }
     
     //Called after addEvent is called and we want to scroll back to the EventVC
-    func addEventSubmitSlide(){
+    @objc func addEventSubmitSlide(){
         let point = CGPoint(x: view.frame.width, y: 0)
         self.snapScroll.setContentOffset(point, animated: true)
     }

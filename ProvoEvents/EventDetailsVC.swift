@@ -178,7 +178,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         return myDate.dateEventDetailsString()
     }
     
-    func resignKeyboard(){
+    @objc func resignKeyboard(){
         view.endEditing(true)
     }
     
@@ -197,7 +197,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //////////////////////////////////////////////////////
     //Calendar access
     
-    func showReminderVC(){
+    @objc func showReminderVC(){
         let status = EKEventStore.authorizationStatus(for: EKEntityType.event)
         if status == EKAuthorizationStatus.denied{
             self.accessPreviouslyDenied()
@@ -254,7 +254,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //////////////////////////////////////////////////////
     //text message, garbage, heart pressed
     
-    func textMessageReleaseInside(_ sender: UIButton){
+    @objc func textMessageReleaseInside(_ sender: UIButton){
         sender.backgroundColor = UIColor.clear
         let messageVC = MFMessageComposeViewController()
         messageVC.messageComposeDelegate = self
@@ -328,7 +328,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     var eventImgWidth: CGFloat!
     var eventImgHeight: CGFloat!
     
-    func toLargeImg(){
+    @objc func toLargeImg(){
         self.view.isUserInteractionEnabled = false
         if let img = self.eventImg.image{
             print("frame \(eventImg.frame)")
@@ -374,7 +374,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         }
     }
     
-    func segueImg(){
+    @objc func segueImg(){
         self.performSegue(withIdentifier: "ImageLargeVC", sender: nil)
     }
     

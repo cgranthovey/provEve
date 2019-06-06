@@ -59,7 +59,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         removeFirstResponder()
     }
     
-    func removeFirstResponder(){
+    @objc func removeFirstResponder(){
         firstName.resignFirstResponder()
         userName.resignFirstResponder()
     }
@@ -186,7 +186,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         }) 
     }
     
-    func removeCameraPhotoLibOptions(){
+    @objc func removeCameraPhotoLibOptions(){
         UIView.animate(withDuration: 0.6, animations: {
             self.screenViewForCameraOutlets.alpha = 0
             self.photoLibBtnOutlet.alpha = 0

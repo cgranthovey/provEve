@@ -48,7 +48,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
     }
     
     var mailOriginalOrigin: CGPoint!
-    func animateMail(){
+    @objc func animateMail(){
         
         let screenHeigh = self.view.frame.height
         let animationHeight = self.mailImg.frame.height
@@ -76,7 +76,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
         _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func removeFirstResponder(){
+    @objc func removeFirstResponder(){
         email.resignFirstResponder()
     }
     

@@ -75,7 +75,7 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
         return false
     }
     
-    func removeFirstResponder(){
+    @objc func removeFirstResponder(){
         emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
         verifyPasswordField.resignFirstResponder()

@@ -78,15 +78,15 @@ class yesNoLauncher: NSObject {
                 }, completion: nil)
     }
     
-    func touchUpOutside(_ btn: UIButton){
+    @objc func touchUpOutside(_ btn: UIButton){
         btn.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
     }
     
-    func touchDownChgBtnColor(_ btn: UIButton){
+    @objc func touchDownChgBtnColor(_ btn: UIButton){
         btn.backgroundColor = UIColor(red: 210/255, green: 210/255, blue: 210/255, alpha: 1)
     }
     
-    func deleteCommentYes(){
+    @objc func deleteCommentYes(){
         yesBtn.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
         
         UIView.animate(withDuration: 0.3, animations: {
@@ -100,7 +100,7 @@ class yesNoLauncher: NSObject {
         }) 
     }
     
-    func deleteCommentNo(){
+    @objc func deleteCommentNo(){
         noBtn.backgroundColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
         UIView.animate(withDuration: 0.3, animations: {
             self.darkView.alpha = 0

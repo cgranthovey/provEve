@@ -52,7 +52,7 @@ class EventCell: UITableViewCell {
         self.heartImg.image = UIImage(named: "heartEmpty")
     }
     
-    func heartTapped(){
+    @objc func heartTapped(){
         if !event.isLiked{
             self.heartImg.image = UIImage(named: "heartFilled")
             NotificationCenter.default.post(name: Notification.Name(rawValue: "heartAdded"), object: self.event, userInfo: nil)

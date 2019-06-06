@@ -131,7 +131,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
         removeFirstResponder()
     }
     
-    func removeFirstResponder(){
+    @objc func removeFirstResponder(){
         self.view.endEditing(true)
     }
     

@@ -245,7 +245,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         }
     }
     
-    @objc @objc func moveTextFieldIntoView(){
+    @objc func moveTextFieldIntoView(){
         if activeTextField != nil{
             scrollView.scrollRectToVisible(activeTextField.frame, animated: true)       //for this to work you have to remember in addition to setting conent height to make sure content width is at least at wide as view.frame.width
         } else if activeTextView != nil{

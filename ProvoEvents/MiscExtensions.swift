@@ -68,7 +68,7 @@ extension NSMutableAttributedString{
     func setLink(_ text: String, link: String){
         let findString = self.mutableString.range(of: text)
         if findString.location != NSNotFound{
-            self.addAttribute(NSLinkAttributeName, value: link, range: findString)
+            self.addAttribute(NSAttributedStringKey.link, value: link, range: findString)
         }
     }
 }
