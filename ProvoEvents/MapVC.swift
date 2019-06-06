@@ -54,7 +54,7 @@ class MapVC: UIViewController {
     var handleGetEventLocDelegate: HandleGetEventLoc? = nil
     var generalSpan: MKCoordinateSpan {
         get{
-            return MKCoordinateSpanMake(0.15, 0.15)
+            return MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
         }
     }
 
@@ -136,16 +136,16 @@ class MapVC: UIViewController {
         approveBtn.addTarget(self, action: #selector(MapVC.approveTouchDown), for: .touchDown)
     }
     
-    func approveTouchDown(){
+    @objc func approveTouchDown(){
         self.thumbsUpImage.alpha = 1
         approveColorView.backgroundColor = UIColor(red: 211/255, green: 47/255, blue: 47/255, alpha: 1.0)
 
     }
-    func approveTouchUpOutside(){
+    @objc func approveTouchUpOutside(){
         self.thumbsUpImage.alpha = 0.6
         approveColorView.backgroundColor = UIColor(red: 244/255, green: 67/255, blue: 54/255, alpha: 1.0)
     }
-    func approveTouchUpInside(){
+    @objc func approveTouchUpInside(){
         approvePin()
     }
     
@@ -156,7 +156,7 @@ class MapVC: UIViewController {
         _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func showApproveView(){
+    @objc func showApproveView(){
         approveView.isHidden = false
         UIView.animate(withDuration: 0.3, animations: {
             self.approveView.alpha = 1
@@ -175,7 +175,7 @@ class MapVC: UIViewController {
         darkView.backgroundColor = UIColor.black
         darkView.alpha = 0
         self.view.addSubview(darkView)
-        self.view.bringSubview(toFront: questionView)
+        self.view.bringSubviewToFront(questionView)
         questionView.isHidden = false
         UIView.animate(withDuration: 0.3, animations: { 
             self.darkView.alpha = 0.5
@@ -207,8 +207,8 @@ class MapVC: UIViewController {
     //////////////////////////////////////////////////////
     //TapForPin
     
-    func tapForPin(_ tap: UIGestureRecognizer){
-        if tap.state == UIGestureRecognizerState.began{
+    @objc func tapForPin(_ tap: UIGestureRecognizer){
+        if tap.state == UIGestureRecognizer.State.began{
             mapView.removeAnnotations(mapView.annotations)
             let touchPoint = tap.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
@@ -287,7 +287,7 @@ class MapVC: UIViewController {
         }
     }
     
-    func adjustMapCenter(_ centerCoord: CLLocationCoordinate2D, span: MKCoordinateSpan = MKCoordinateSpanMake(0.15, 0.15)){
+    func adjustMapCenter(_ centerCoord: CLLocationCoordinate2D, span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)){
         let curSpan = mapView.region.span
         let span = MKCoordinateSpan(latitudeDelta: span.latitudeDelta, longitudeDelta: span.longitudeDelta)
         if curSpan.latitudeDelta < span.latitudeDelta{
@@ -353,11 +353,18 @@ extension MapVC: HandleMapSearch {
             let state = placemark.administrativeArea {
             annotation.subtitle = "\(city) \(state)"
         }
+        
         mapView.addAnnotation(annotation)
         if fromTap != true{
-            let region = MKCoordinateRegionMake(placemark.coordinate, generalSpan)
+            let region = MKCoordinateRegion(center: placemark.coordinate, span: generalSpan)
             mapView.setRegion(region, animated: true)
+
         }
+//        
+//        mapView.addAnnotation(annotation annotationMKCoordinateRegion=center:  true{
+//            letspan:  region = MKCoordinateRegionMake(placemark.coordinate, generalSpan)
+//            mapView.setRegion(region, animated: true)
+//        }
         searchBar.text = addressString
         shouldMapCenter = false
     }

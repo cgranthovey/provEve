@@ -45,7 +45,7 @@ class LoginTextField: UITextField {
     @IBInspectable var placeHolderColor: UIColor?{
         didSet{
             let rawString = attributedPlaceholder?.string != nil ? attributedPlaceholder!.string : ""
-            let str = NSAttributedString(string: rawString, attributes: [NSForegroundColorAttributeName: placeHolderColor!])
+            let str = NSAttributedString(string: rawString, attributes: [NSAttributedString.Key.foregroundColor: placeHolderColor!])
             attributedPlaceholder = str
         }
     }

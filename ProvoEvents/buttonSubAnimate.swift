@@ -25,22 +25,22 @@ class buttonSubAnimate: UIButton {
         self.addTarget(self, action: #selector(buttonSubAnimate.touchUpOutside), for: .touchUpOutside)
     }
     
-    func eventImgBtnTouchDown(){
-        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
+    @objc func eventImgBtnTouchDown(){
+        UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
             self.myImg.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
             }, completion: nil)
     }
     
-    func eventImgBtnTouchUpInside(){
-        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
+    @objc func eventImgBtnTouchUpInside(){
+        UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
             self.myImg.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
             
         }) { (true) in
-            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
+            UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
                 self.myImg.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
                 
             }) { (true) in
-                UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
+                UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
                     self.myImg.transform = CGAffineTransform(scaleX: 1, y: 1)
                     //         self.imageTapped()
                     self.delegate!.imageCompletedPop()
@@ -50,8 +50,8 @@ class buttonSubAnimate: UIButton {
         }
     }
     
-    func touchUpOutside(){
-        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
+    @objc func touchUpOutside(){
+        UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
             self.myImg.transform = CGAffineTransform(scaleX: 1, y: 1)
             }, completion: nil)
     }

@@ -13,7 +13,7 @@ import FirebaseDatabase
 //extension includes all parts dealing with posting from AddEventVC
 extension AddEventVC: yesSelectedProtocol{
     
-    func areYouSureLauncher(){
+    @objc func areYouSureLauncher(){
         if titleTextField.text == nil || titleTextField.text == ""{
             alert("Error", message: "Title Missing")
             return
@@ -69,7 +69,7 @@ extension AddEventVC: yesSelectedProtocol{
                 print("problem: \(self.eventImg.image)")
                 if self.imgChoosen{
                     if let img = self.eventImg.image {
-                        if let data: Data = UIImageJPEGRepresentation(img, 0.8){
+                        if let data: Data = img.jpegData(compressionQuality: 0.8){
                             let imgName = "\(UUID().uuidString)jpg"
                             let storageRef = DataService.instance.imgStorageRefData.child(imgName)
                             storageRef.put(data, metadata: nil, completion: { (meta, err) in
@@ -107,12 +107,12 @@ extension AddEventVC: yesSelectedProtocol{
         view.addSubview(self.loadingView)
         
         exit = UIButton(frame: CGRect(x: 20, y: 20, width: 32, height: 32))
-        exit.setImage(UIImage(named: "deleteWhite"), for: UIControlState())
+        exit.setImage(UIImage(named: "deleteWhite"), for: UIControl.State())
         exit.imageView?.contentMode = .scaleAspectFit
         exit.addTarget(self, action: #selector(AddEventVC.cancelUpload), for: .touchUpInside)
         exit.alpha = 0
         self.view.addSubview(exit)
-        self.view.bringSubview(toFront: exit)
+        self.view.bringSubviewToFront(exit)
         
 //        self.spinIndicator = UIActivityIndicatorView()
 //        self.spinIndicator.center = self.loadingView.center
@@ -137,7 +137,7 @@ extension AddEventVC: yesSelectedProtocol{
         }) 
     }
     
-    func cancelUpload(){
+    @objc func cancelUpload(){
         FIRDatabase.database().purgeOutstandingWrites()
         loadingViewFade()
     }

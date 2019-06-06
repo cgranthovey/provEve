@@ -20,7 +20,7 @@ extension UIButton {
         UIView.animate(withDuration: 0.5, animations: {
             self.alpha = 0
             }, completion: { (true) in
-                self.setImage(newImage, for: UIControlState())
+                self.setImage(newImage, for: UIControl.State())
                 UIView.animate(withDuration: 0.5, animations: {
                     self.alpha = 1
                 }, completion: { (true) in
@@ -58,7 +58,7 @@ extension UIView{
             view.translatesAutoresizingMaskIntoConstraints = false
             viewsDictionary[key] = view
         }
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))       
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))       
     }
 }
 
@@ -68,7 +68,7 @@ extension NSMutableAttributedString{
     func setLink(_ text: String, link: String){
         let findString = self.mutableString.range(of: text)
         if findString.location != NSNotFound{
-            self.addAttribute(NSLinkAttributeName, value: link, range: findString)
+            self.addAttribute(NSAttributedString.Key.link, value: link, range: findString)
         }
     }
 }

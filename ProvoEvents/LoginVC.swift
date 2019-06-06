@@ -131,7 +131,7 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
         removeFirstResponder()
     }
     
-    func removeFirstResponder(){
+    @objc func removeFirstResponder(){
         self.view.endEditing(true)
     }
     
@@ -146,8 +146,8 @@ class LoginVC: GeneralVC, UITextFieldDelegate, NSURLConnectionDelegate {
         //self.resignFirstResponder()
         self.view.endEditing(true)
 
-        if let email = emailField.text, let password = passwordField.text, (email.characters.count > 0 && password.characters.count > 0){
-            guard password.characters.count >= 6 else{
+        if let email = emailField.text, let password = passwordField.text, (email.count > 0 && password.count > 0){
+            guard password.count >= 6 else{
                 alerts("Password", message: "Password must be at least 6 characters")
                 return
             }

@@ -83,15 +83,15 @@ class CreditsVC: GeneralVC, UITableViewDelegate, UITableViewDataSource, UITextVi
     
     func makeFlatIconCredit(_ strTotal: String, imgString: String, url: String, urlWebsite: String = "http://www.flaticon.com/"){
         let indexOfFrom = (strTotal.indexOf("from "))
-        let intValueOfFrom = strTotal.characters.distance(from: strTotal.startIndex, to: indexOfFrom!)
+        let intValueOfFrom = strTotal.distance(from: strTotal.startIndex, to: indexOfFrom!)
         let count =  intValueOfFrom - 1
         print("Int  valueof from  \(intValueOfFrom)")
         let attString = NSMutableAttributedString(string: strTotal)
-        attString.addAttribute(NSLinkAttributeName, value: url, range: NSRange(location: 0, length: count))
+        attString.addAttribute(NSAttributedString.Key.link, value: url, range: NSRange(location: 0, length: count))
 
         if urlWebsite != ""{
             let beginingOfWebsite = count + 6
-            attString.addAttribute(NSLinkAttributeName, value: urlWebsite, range:  NSRange(location: beginingOfWebsite, length: strTotal.characters.count - beginingOfWebsite))
+            attString.addAttribute(NSAttributedString.Key.link, value: urlWebsite, range:  NSRange(location: beginingOfWebsite, length: strTotal.count - beginingOfWebsite))
         }
         let credit = Credit(lbl: attString, imageStr: imgString)
         creditsArray.append(credit)

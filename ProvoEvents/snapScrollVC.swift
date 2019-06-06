@@ -37,17 +37,17 @@ class snapScrollVC: UIViewController {
     
     func calledLate(){
         let addEventVC = self.storyboard?.instantiateViewController(withIdentifier: "addEventVC")
-        self.addChildViewController(addEventVC!)
+        self.addChild(addEventVC!)
         self.snapScroll.addSubview((addEventVC?.view)!)
-        addEventVC?.didMove(toParentViewController: self)
+        addEventVC?.didMove(toParent: self)
         
         let mainTableVC = self.storyboard?.instantiateViewController(withIdentifier: "mainTableVC")
         var frame1 = mainTableVC?.view.frame
         frame1?.origin.x = self.view.frame.width
         mainTableVC!.view.frame = frame1!
-        self.addChildViewController(mainTableVC!)
+        self.addChild(mainTableVC!)
         self.snapScroll.addSubview((mainTableVC?.view)!)
-        mainTableVC?.didMove(toParentViewController: self)
+        mainTableVC?.didMove(toParent: self)
         
         mainTableVC?.view.alpha = 0
         UIView.animate(withDuration: 0.3, animations: {
@@ -58,9 +58,9 @@ class snapScrollVC: UIViewController {
         var frame2 = favVC?.view.frame
         frame2?.origin.x = 2 * self.view.frame.width
         favVC!.view.frame = frame2!
-        self.addChildViewController(favVC!)
+        self.addChild(favVC!)
         self.snapScroll.addSubview((favVC?.view)!)
-        favVC?.didMove(toParentViewController: self)
+        favVC?.didMove(toParent: self)
         
         self.snapScroll.contentSize = CGSize(width: self.view.frame.width * 3, height: self.view.frame.height)
         self.snapScroll.contentOffset = CGPoint(x: view.frame.width, y: 0)
@@ -71,7 +71,7 @@ class snapScrollVC: UIViewController {
     }
     
     //Called after addEvent is called and we want to scroll back to the EventVC
-    func addEventSubmitSlide(){
+    @objc func addEventSubmitSlide(){
         let point = CGPoint(x: view.frame.width, y: 0)
         self.snapScroll.setContentOffset(point, animated: true)
     }

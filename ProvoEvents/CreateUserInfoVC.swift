@@ -59,7 +59,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         removeFirstResponder()
     }
     
-    func removeFirstResponder(){
+    @objc func removeFirstResponder(){
         firstName.resignFirstResponder()
         userName.resignFirstResponder()
     }
@@ -99,7 +99,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     @IBAction func finished(_ sender: AnyObject){
-        if let user = userName.text, (user.characters.count > 2){
+        if let user = userName.text, (user.count > 2){
             loadingView.showSpinnerView(self.view)
             let fireBaseDict: Dictionary<String, String>!
 
@@ -151,7 +151,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     
     func uploadProfileImg(){
         if userImg.image != UIImage(named: "profile"){
-            if let picData: Data = UIImageJPEGRepresentation(userImg.image!, 0.3){
+            if let picData: Data = userImg.image!.jpegData(compressionQuality: 0.3){
                 let imgName = "\(UUID().uuidString).jpg"
                 let ref = DataService.instance.imgStorageRefData.child(imgName)
                 _ = ref.put(picData, metadata: nil, completion: { (metaData, err) in
@@ -186,7 +186,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
         }) 
     }
     
-    func removeCameraPhotoLibOptions(){
+    @objc func removeCameraPhotoLibOptions(){
         UIView.animate(withDuration: 0.6, animations: {
             self.screenViewForCameraOutlets.alpha = 0
             self.photoLibBtnOutlet.alpha = 0
@@ -199,7 +199,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        if picker.sourceType == UIImagePickerControllerSourceType.camera{
+        if picker.sourceType == UIImagePickerController.SourceType.camera{
             cameraTaker.dismiss(animated: true, completion: nil)
             userImg.image = image
             hideCameraBtns()
@@ -214,7 +214,7 @@ class CreateUserInfoVC: GeneralVC, UIImagePickerControllerDelegate, UINavigation
     
     func makeProfilePicRound(){
         if userImg.image != UIImage(named: "profile"){
-            userImg.contentMode = UIViewContentMode.scaleAspectFill
+            userImg.contentMode = UIView.ContentMode.scaleAspectFill
             userImg.layer.cornerRadius = (userImg.frame.height) / 2
             userImg.clipsToBounds = true
         }

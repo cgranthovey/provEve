@@ -48,7 +48,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
     }
     
     var mailOriginalOrigin: CGPoint!
-    func animateMail(){
+    @objc func animateMail(){
         
         let screenHeigh = self.view.frame.height
         let animationHeight = self.mailImg.frame.height
@@ -57,11 +57,11 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
         let mailBoxOriginX = self.mailBox.frame.origin.x
         let mailBoxOriginY = self.mailBox.frame.origin.y
         
-        UIView.animate(withDuration: 1.0, delay: 0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 1.0, delay: 0, options: UIView.AnimationOptions(), animations: {
             self.mailImg.frame.origin = CGPoint(x: 20, y: newMailOriginY)
             self.mailImg.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }) { (true) in
-                UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions(), animations: {
+                UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
                     self.mailImg.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
                     self.mailImg.frame.origin = CGPoint(x: mailBoxOriginX + 30, y: mailBoxOriginY + 30)
                     }, completion: { (true) in
@@ -76,7 +76,7 @@ class PasswordReset: GeneralVC, UITextFieldDelegate {
         _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func removeFirstResponder(){
+    @objc func removeFirstResponder(){
         email.resignFirstResponder()
     }
     

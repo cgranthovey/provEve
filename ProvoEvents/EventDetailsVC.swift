@@ -110,25 +110,25 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         eventImg.addGestureRecognizer(tap)
         
         if event.isLiked{
-            heartBtn.setImage(UIImage(named: "heartFilled"), for: UIControlState())
+            heartBtn.setImage(UIImage(named: "heartFilled"), for: UIControl.State())
             
         } else{
-            heartBtn.setImage(UIImage(named: "heartEmpty"), for: UIControlState())
+            heartBtn.setImage(UIImage(named: "heartEmpty"), for: UIControl.State())
         }
     }
 
     func setUpUI(){
         eventTitle.text = event.title
         eventDescription.text = event.description
-        eventLocBtn.setTitle(event.location, for: UIControlState())
+        eventLocBtn.setTitle(event.location, for: UIControl.State())
         eventLocBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         if event.pinInfoLongitude == nil || event.pinInfoLatitude == nil{
-            eventLocBtn.setTitleColor(UIColor.black, for: UIControlState())
+            eventLocBtn.setTitleColor(UIColor.black, for: UIControl.State())
             eventLocBtn.isUserInteractionEnabled = false
         }
         
         eventDate.text = dateString()//event.date
-        eventEmail.setTitle(event.email, for: UIControlState())
+        eventEmail.setTitle(event.email, for: UIControl.State())
         eventEmail.titleLabel?.numberOfLines = 1
         eventEmail.titleLabel?.adjustsFontSizeToFitWidth = true
         eventEmail.titleLabel?.lineBreakMode = .byTruncatingMiddle
@@ -178,7 +178,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         return myDate.dateEventDetailsString()
     }
     
-    func resignKeyboard(){
+    @objc func resignKeyboard(){
         view.endEditing(true)
     }
     
@@ -197,7 +197,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //////////////////////////////////////////////////////
     //Calendar access
     
-    func showReminderVC(){
+    @objc func showReminderVC(){
         let status = EKEventStore.authorizationStatus(for: EKEntityType.event)
         if status == EKAuthorizationStatus.denied{
             self.accessPreviouslyDenied()
@@ -224,7 +224,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         let alertDeniedAccessCalendar = UIAlertController(title: "Access to calendar is denied", message: "Would you like to change your settings", preferredStyle: .alert)
         
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) in
-            let settingsURL = URL(string: UIApplicationOpenSettingsURLString)
+            let settingsURL = URL(string: UIApplication.openSettingsURLString)
             if let url = settingsURL{
                 UIApplication.shared.openURL(url)
             }
@@ -254,7 +254,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     //////////////////////////////////////////////////////
     //text message, garbage, heart pressed
     
-    func textMessageReleaseInside(_ sender: UIButton){
+    @objc func textMessageReleaseInside(_ sender: UIButton){
         sender.backgroundColor = UIColor.clear
         let messageVC = MFMessageComposeViewController()
         messageVC.messageComposeDelegate = self
@@ -276,11 +276,11 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     }
     @IBAction func heartBtnPressed(_ sender: AnyObject){
         if event.isLiked{
-            heartBtn.setImage(UIImage(named: "heartEmpty"), for: UIControlState())
+            heartBtn.setImage(UIImage(named: "heartEmpty"), for: UIControl.State())
             event.adjustLikes(false)
             NotificationCenter.default.post(name: Notification.Name(rawValue: "heartDeleted"), object: self.event.key, userInfo: nil)
         } else{
-            heartBtn.setImage(UIImage(named: "heartFilled"), for: UIControlState())
+            heartBtn.setImage(UIImage(named: "heartFilled"), for: UIControl.State())
             event.adjustLikes(true)
             NotificationCenter.default.post(name: Notification.Name(rawValue: "heartAdded"), object: self.event, userInfo: nil)
         }
@@ -328,7 +328,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
     var eventImgWidth: CGFloat!
     var eventImgHeight: CGFloat!
     
-    func toLargeImg(){
+    @objc func toLargeImg(){
         self.view.isUserInteractionEnabled = false
         if let img = self.eventImg.image{
             print("frame \(eventImg.frame)")
@@ -355,7 +355,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
 
                 UIView.animate(withDuration: animationDuration, animations: {
                     self.view.addSubview(self.darkView)
-                    self.view.bringSubview(toFront: self.zoomImgView)
+                    self.view.bringSubviewToFront(self.zoomImgView)
                     
                     let h = self.zoomImgView.bounds.height * UIScreen.main.bounds.width / self.zoomImgView.bounds.width
                     let y = self.view.bounds.height / 2 - h / 2
@@ -374,7 +374,7 @@ class EventDetailsVC: GeneralVC, MFMailComposeViewControllerDelegate, MFMessageC
         }
     }
     
-    func segueImg(){
+    @objc func segueImg(){
         self.performSegue(withIdentifier: "ImageLargeVC", sender: nil)
     }
     

@@ -36,7 +36,7 @@ class NoConnectionView: NSObject, noConnectionGotIt {
         
         view.addSubview(darkView)
         view.addSubview(noConnectionView)
-        view.bringSubview(toFront: noConnectionView)
+        view.bringSubviewToFront(noConnectionView)
         
         UIView.animate(withDuration: 0.3, delay: 0.35, options: .curveEaseIn, animations: {
             self.darkView.alpha = 0.6

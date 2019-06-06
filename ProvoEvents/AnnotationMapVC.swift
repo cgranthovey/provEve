@@ -58,7 +58,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     @IBAction func settings(){
         settingsLauncher.showSettings()
     }
-    func showSettings(_ recoginizer: UIScreenEdgePanGestureRecognizer){
+    @objc func showSettings(_ recoginizer: UIScreenEdgePanGestureRecognizer){
         if recoginizer.state == .began{
             mapView.isScrollEnabled = false
             settingsLauncher.showSettings()
@@ -69,7 +69,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     }
 
     var choosenDate: Date?
-    func newParameters(_ notif: Notification){
+    @objc func newParameters(_ notif: Notification){
         mapView.removeAnnotations(annotationArray)
         dictEnterKeyForEvent = [:]
         dictEnterTagForEventKey = [:]
@@ -124,7 +124,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func annotationBtnTapped(_ button: UIButton){
+    @objc func annotationBtnTapped(_ button: UIButton){
         let buttonTag = button.tag
         if let key = dictEnterTagForEventKey[buttonTag]{
             let event = dictEnterKeyForEvent[key]
@@ -156,14 +156,14 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         var centerCoord = CLLocationCoordinate2D()
         
         if shouldMapCenter{
-            span = MKCoordinateSpanMake(0.16, 0.16)
+            span = MKCoordinateSpan(latitudeDelta: 0.16, longitudeDelta: 0.16)
             centerCoord = currentLoc.coordinate
         } else{
             span = mapView.region.span
             centerCoord = mapView.centerCoordinate
         }
         
-        let region = MKCoordinateRegionMake(centerCoord, span)
+        let region = MKCoordinateRegion(center: centerCoord, span: span)
         
         if span.latitudeDelta < 3.5 {
             if region.isRegionValid(){
@@ -231,7 +231,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     
     var tapGest = UITapGestureRecognizer()
     let currentAnnoSelected = MKAnnotationView()
-    func annoTapped(_ tapGest: UITapGestureRecognizer){
+    @objc func annoTapped(_ tapGest: UITapGestureRecognizer){
         if let annoView = tapGest.view as? MKAnnotationView{
             if let key = dictEnterTagForEventKey[annoView.tag]{
                 let event = dictEnterKeyForEvent[key]
@@ -258,7 +258,7 @@ extension AnnotationMapVC: MKMapViewDelegate{
 
         let smallSquare = CGSize(width: 30, height: 30)
         let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: smallSquare))
-        button.setImage(UIImage(named: (myEvent?.eventTypeImgName)!), for: UIControlState())
+        button.setImage(UIImage(named: (myEvent?.eventTypeImgName)!), for: UIControl.State())
         button.addTarget(self, action: #selector(AnnotationMapVC.annotationBtnTapped(_:)), for: .touchUpInside)
         button.imageView?.contentMode = .scaleAspectFit
         button.tag = currentBtnTag
