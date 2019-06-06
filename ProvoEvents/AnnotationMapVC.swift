@@ -156,14 +156,14 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         var centerCoord = CLLocationCoordinate2D()
         
         if shouldMapCenter{
-            span = MKCoordinateSpanMake(0.16, 0.16)
+            span = MKCoordinateSpan(latitudeDelta: 0.16, longitudeDelta: 0.16)
             centerCoord = currentLoc.coordinate
         } else{
             span = mapView.region.span
             centerCoord = mapView.centerCoordinate
         }
         
-        let region = MKCoordinateRegionMake(centerCoord, span)
+        let region = MKCoordinateRegion(center: centerCoord, span: span)
         
         if span.latitudeDelta < 3.5 {
             if region.isRegionValid(){
@@ -258,7 +258,7 @@ extension AnnotationMapVC: MKMapViewDelegate{
 
         let smallSquare = CGSize(width: 30, height: 30)
         let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: smallSquare))
-        button.setImage(UIImage(named: (myEvent?.eventTypeImgName)!), for: UIControlState())
+        button.setImage(UIImage(named: (myEvent?.eventTypeImgName)!), for: UIControl.State())
         button.addTarget(self, action: #selector(AnnotationMapVC.annotationBtnTapped(_:)), for: .touchUpInside)
         button.imageView?.contentMode = .scaleAspectFit
         button.tag = currentBtnTag

@@ -20,17 +20,17 @@ class snapScroll2: UIViewController {
         super.viewDidLoad()
 
         let mainEventVC = self.storyboard?.instantiateViewController(withIdentifier: "mapVC")
-        self.addChildViewController(mainEventVC!)
+        self.addChild(mainEventVC!)
         self.snapScroll.addSubview((mainEventVC?.view)!)
-        mainEventVC?.didMove(toParentViewController: self)
+        mainEventVC?.didMove(toParent: self)
         
         let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "mainTableVC")
         var frame1 = mapVC?.view.frame
         frame1?.origin.y = self.view.frame.height
         mapVC!.view.frame = frame1!
-        self.addChildViewController(mapVC!)
+        self.addChild(mapVC!)
         self.snapScroll.addSubview((mapVC?.view)!)
-        mapVC?.didMove(toParentViewController: self)
+        mapVC?.didMove(toParent: self)
         
         self.snapScroll.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height * 2)
         self.snapScroll.contentOffset = CGPoint(x: 0, y:  view.frame.height)

@@ -46,7 +46,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsVC.tapRemoveKeyboard))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
-        NotificationCenter.default.addObserver(self, selector: #selector(SettingsVC.animateTopStackView), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsVC.animateTopStackView), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,9 +66,9 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
         let prefs = UserDefaults.standard
         
         if let miles = prefs.object(forKey: Constants.instance.nsUserDefaultsKeySettingsMiles){
-            milesBtnOutlet.setTitle("EVENTS WITHIN \(miles) MILES", for: UIControlState())
+            milesBtnOutlet.setTitle("EVENTS WITHIN \(miles) MILES", for: UIControl.State())
         }  else {
-            milesBtnOutlet.setTitle("EVENTS WITHIN 50 MILES", for: UIControlState())
+            milesBtnOutlet.setTitle("EVENTS WITHIN 50 MILES", for: UIControl.State())
         }
         
         if UserDefaults.standard.object(forKey: Constants.instance.nsUserDefaultsPresetLongitudeKey) == nil || UserDefaults.standard.object(forKey: Constants.instance.nsUserDefaultsPresetLatitudeKey) == nil{
@@ -166,7 +166,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
             self.milesTopConstraint.constant = self.milesTopConstraint.constant + 40
             self.topStack.isHidden = false
             
-            UIView.animate(withDuration: 3.15, delay: 0.2, options: UIViewAnimationOptions(), animations: {
+            UIView.animate(withDuration: 3.15, delay: 0.2, options: UIView.AnimationOptions(), animations: {
                 self.topStack.alpha = 1
                 
                 }, completion: nil)
@@ -186,7 +186,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     @IBAction func applyBtn(_ sender: AnyObject){
         
         
-        guard zipCodeTF.text?.characters.count == 5 else {
+        guard zipCodeTF.text?.count == 5 else {
             showAlert(alertTitle: "Error", message: "Zip code must have 5 numbers")
             return
         }
@@ -221,12 +221,12 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     }
     
     func textColorChange(){
-        UIView.transition(with: zipCodeTF, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
+        UIView.transition(with: zipCodeTF, duration: 0.3, options: UIView.AnimationOptions.transitionCrossDissolve, animations: {
             self.zipCodeTF.textColor = UIColor.green
             }) { (true) in
-                UIView.transition(with: self.zipCodeTF, duration: 0.45, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
+                UIView.transition(with: self.zipCodeTF, duration: 0.45, options: UIView.AnimationOptions.transitionCrossDissolve, animations: {
                     }, completion: { (true) in
-                        UIView.transition(with: self.zipCodeTF, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
+                        UIView.transition(with: self.zipCodeTF, duration: 0.3, options: UIView.AnimationOptions.transitionCrossDissolve, animations: {
                             self.zipCodeTF.textColor = UIColor.black
                             }, completion: nil)
             })
@@ -278,7 +278,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         let prospectiveText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        return prospectiveText.characters.count < 6
+        return prospectiveText.count < 6
     }
     
     
@@ -292,7 +292,7 @@ class SettingsVC: GeneralVC, UITextFieldDelegate, yesSelectedProtocol, MilesChos
     
     
     func numberOfMiles(_ miles: Int) {
-        milesBtnOutlet.setTitle("\(miles) MILE RADIUS", for: UIControlState())
+        milesBtnOutlet.setTitle("\(miles) MILE RADIUS", for: UIControl.State())
         let prefs = UserDefaults.standard
         prefs.set(miles, forKey: Constants.instance.nsUserDefaultsKeySettingsMiles)
     }

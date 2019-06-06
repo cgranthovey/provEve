@@ -32,9 +32,9 @@ class CreateEmailPassVC: GeneralVC, UITextFieldDelegate {
 
     @IBAction func next(){
         removeFirstResponder()
-        if let email = emailField.text, let password = passwordField.text, let passwordV = verifyPasswordField.text, (password.characters.count > 0 && email.characters.count > 0 && passwordV.characters.count > 0){
+        if let email = emailField.text, let password = passwordField.text, let passwordV = verifyPasswordField.text, (password.count > 0 && email.count > 0 && passwordV.count > 0){
             
-            guard password.characters.count >= 6 else {
+            guard password.count >= 6 else {
                 alerts("Minimum Length", message: "Password must be at least 6 characters")
                 return
             }

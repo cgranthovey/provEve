@@ -69,8 +69,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         let frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         actView = NVActivityIndicatorView(frame: frame, type: .lineScale, color: UIColor.white, padding: 0)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddEventVC.makeLarger(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddEventVC.keyboardWillBeHidden(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     
@@ -83,7 +83,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         viewScrollHeight.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: scrollView.contentSize.height)
         viewScrollHeight.backgroundColor = UIColor.clear
         self.scrollView.addSubview(viewScrollHeight)
-        scrollView.sendSubview(toBack: viewScrollHeight)
+        scrollView.sendSubviewToBack(viewScrollHeight)
         setUpTaps()
     }
     
@@ -132,16 +132,16 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     //animate image btn touch, imagePickerController
     
     @objc func eventImgBtnTouchDown(){
-        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
             self.eventImg.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
             }, completion: nil)
     }
     
     @objc func eventImgBtnTouchUpInside(){
-        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
             self.eventImg.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
         }) { (true) in
-            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: { 
+            UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
                 self.eventImg.transform = CGAffineTransform(scaleX: 1, y: 1)
                 self.imageTapped()
 
@@ -151,7 +151,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     }
     
     @objc func touchUpOutside(){
-        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: { 
+        UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
             self.eventImg.transform = CGAffineTransform(scaleX: 1, y: 1)
             }, completion: nil)
     }
@@ -222,7 +222,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         scrollView.contentInset.right = UIEdgeInsets.zero.right    //without this the views go up a few pixels
 
         if let userInfo = input.userInfo{
-            let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey]
+            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey]
             let keyboardRect = (keyboardFrame as AnyObject).cgRectValue
             if let keyboardHeight = keyboardRect?.height{
                 myKeyBoardHeight = keyboardHeight
@@ -268,14 +268,14 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         
         if let address = address, let name = name{
             if address.contains(name){
-                setPinBtnOutlet.setTitle(address, for: UIControlState())
+                setPinBtnOutlet.setTitle(address, for: UIControl.State())
             } else{
-                setPinBtnOutlet.setTitle("\(name) - \(address)", for: UIControlState())
+                setPinBtnOutlet.setTitle("\(name) - \(address)", for: UIControl.State())
             }
         } else if let coordLat = latitude, let coordLong = longitude{
-            setPinBtnOutlet.setTitle("\(coordLat), \(coordLong)", for: UIControlState())
+            setPinBtnOutlet.setTitle("\(coordLat), \(coordLong)", for: UIControl.State())
         } else{
-            setPinBtnOutlet.setTitle("SET PIN", for: UIControlState())
+            setPinBtnOutlet.setTitle("SET PIN", for: UIControl.State())
         }
 
         holdAddress = address
@@ -315,9 +315,9 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         dateForm2.timeStyle = .short
         let timeString = dateForm2.string(from: date)
         
-        dateDayString.removeSubrange(dateDayString.characters.index(dateDayString.endIndex, offsetBy: -6)..<dateDayString.endIndex)
+        dateDayString.removeSubrange(dateDayString.index(dateDayString.endIndex, offsetBy: -6)..<dateDayString.endIndex)
         dateString = dateDayString + ", " + timeString
-        dateButtonTappedOutlet.setTitle(dateString, for: UIControlState())
+        dateButtonTappedOutlet.setTitle(dateString, for: UIControl.State())
     }
 
     //////////////////////////////////////////////////////
@@ -356,8 +356,8 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         locationTextField.text = ""
         emailTextField.text = ""
         descriptionTextView.text = ""
-        setPinBtnOutlet.setTitle("ADD PIN", for: UIControlState())
-        dateButtonTappedOutlet.setTitle("DATE/TIME", for: UIControlState())
+        setPinBtnOutlet.setTitle("ADD PIN", for: UIControl.State())
+        dateButtonTappedOutlet.setTitle("DATE/TIME", for: UIControl.State())
         eventImg.image = UIImage(named: "photoAlbumColor")
         eventImg.roundCornersForAspectFit(0)
         cellHold.backgroundColor = UIColor.clear

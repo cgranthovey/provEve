@@ -44,12 +44,12 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
     //targets for bottom back and download button
     
     func setUpTargets(){
-        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdDown(_:)), for: UIControlEvents.touchDown)
-        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseInside(_:)), for: UIControlEvents.touchUpInside)
-        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseOutside(_:)), for: UIControlEvents.touchUpOutside)
-        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdDown(_:)), for: UIControlEvents.touchDown)
-        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseOutside(_:)), for: UIControlEvents.touchUpOutside)
-        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseInside(_:)), for: UIControlEvents.touchUpInside)
+        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdDown(_:)), for: UIControl.Event.touchDown)
+        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseInside(_:)), for: UIControl.Event.touchUpInside)
+        downloadImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseOutside(_:)), for: UIControl.Event.touchUpOutside)
+        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdDown(_:)), for: UIControl.Event.touchDown)
+        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseOutside(_:)), for: UIControl.Event.touchUpOutside)
+        backImgButton.addTarget(self, action: #selector(ImageLargeVC.holdReleaseInside(_:)), for: UIControl.Event.touchUpInside)
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ImageLargeVC.swipePopBack))
         swipeDown.direction = .down

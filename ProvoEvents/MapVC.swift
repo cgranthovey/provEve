@@ -54,7 +54,7 @@ class MapVC: UIViewController {
     var handleGetEventLocDelegate: HandleGetEventLoc? = nil
     var generalSpan: MKCoordinateSpan {
         get{
-            return MKCoordinateSpanMake(0.15, 0.15)
+            return MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
         }
     }
 
@@ -175,7 +175,7 @@ class MapVC: UIViewController {
         darkView.backgroundColor = UIColor.black
         darkView.alpha = 0
         self.view.addSubview(darkView)
-        self.view.bringSubview(toFront: questionView)
+        self.view.bringSubviewToFront(questionView)
         questionView.isHidden = false
         UIView.animate(withDuration: 0.3, animations: { 
             self.darkView.alpha = 0.5
@@ -208,7 +208,7 @@ class MapVC: UIViewController {
     //TapForPin
     
     @objc func tapForPin(_ tap: UIGestureRecognizer){
-        if tap.state == UIGestureRecognizerState.began{
+        if tap.state == UIGestureRecognizer.State.began{
             mapView.removeAnnotations(mapView.annotations)
             let touchPoint = tap.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
@@ -287,7 +287,7 @@ class MapVC: UIViewController {
         }
     }
     
-    func adjustMapCenter(_ centerCoord: CLLocationCoordinate2D, span: MKCoordinateSpan = MKCoordinateSpanMake(0.15, 0.15)){
+    func adjustMapCenter(_ centerCoord: CLLocationCoordinate2D, span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)){
         let curSpan = mapView.region.span
         let span = MKCoordinateSpan(latitudeDelta: span.latitudeDelta, longitudeDelta: span.longitudeDelta)
         if curSpan.latitudeDelta < span.latitudeDelta{
@@ -353,11 +353,18 @@ extension MapVC: HandleMapSearch {
             let state = placemark.administrativeArea {
             annotation.subtitle = "\(city) \(state)"
         }
+        
         mapView.addAnnotation(annotation)
         if fromTap != true{
-            let region = MKCoordinateRegionMake(placemark.coordinate, generalSpan)
+            let region = MKCoordinateRegion(center: placemark.coordinate, span: generalSpan)
             mapView.setRegion(region, animated: true)
+
         }
+//        
+//        mapView.addAnnotation(annotation annotationMKCoordinateRegion=center:  true{
+//            letspan:  region = MKCoordinateRegionMake(placemark.coordinate, generalSpan)
+//            mapView.setRegion(region, animated: true)
+//        }
         searchBar.text = addressString
         shouldMapCenter = false
     }

@@ -35,8 +35,8 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
         setUpCommentTB()
         
         NotificationCenter.default.addObserver(self, selector: #selector(EventDetailsCommVC.deleteComment(_:)), name: NSNotification.Name(rawValue: "commentDelete"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(EventDetailsCommVC.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: self.view.window)
-        NotificationCenter.default.addObserver(self, selector: #selector(EventDetailsCommVC.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: self.view.window)
+        NotificationCenter.default.addObserver(self, selector: #selector(EventDetailsCommVC.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: self.view.window)
+        NotificationCenter.default.addObserver(self, selector: #selector(EventDetailsCommVC.keyboardWillHide(_:)), name:UIResponder.keyboardWillHideNotification, object: self.view.window)
         
         initiateAlphaBgView()
         getComments()
@@ -45,8 +45,8 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
     
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "commentDelete"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         
         self.view.endEditing(true)
         if let height = keyboardHeight{
@@ -63,9 +63,9 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
     func setUpCommentTB(){
         commentsTableView.dataSource = self
         commentsTableView.delegate = self
-        commentsTableView.rowHeight = UITableViewAutomaticDimension
+        commentsTableView.rowHeight = UITableView.automaticDimension
         commentsTableView.estimatedRowHeight = 40
-        commentsTableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
+        commentsTableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         commentTextView.delegate = self
     }
     
@@ -123,7 +123,7 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
     @objc func keyboardWillHide(_ sender: Notification) {
         keyboardUp = false
         let userInfo: [AnyHashable: Any] = sender.userInfo!
-        let keyboardSize: CGSize = (userInfo[UIKeyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue.size
+        let keyboardSize: CGSize = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue.size
         self.bottomShadowView.constant = self.bottomShadowView.constant - keyboardSize.height
         self.view.layoutIfNeeded()
     }
@@ -131,8 +131,8 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
     @objc func keyboardWillShow(_ sender: Notification) {
 
             let userInfo: [AnyHashable: Any] = sender.userInfo!
-            let keyboardSize: CGSize = (userInfo[UIKeyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue.size
-            let offset: CGSize = (userInfo[UIKeyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue.size
+        let keyboardSize: CGSize = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue.size
+        let offset: CGSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue.size
             keyboardHeight = keyboardSize.height
 
             if !keyboardUp{
@@ -254,7 +254,7 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
             if let index = self.indexOfSnap(snapshot){
                 self.commentArray.remove(at: index)
                 let indexPath = IndexPath(row: index, section: 0)
-                self.commentsTableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                self.commentsTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
             }
         })
     }

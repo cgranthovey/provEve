@@ -14,7 +14,7 @@ extension Date {
         let format = DateFormatter()
         format.dateStyle = .short
         var day = format.string(from: self)
-        day.removeSubrange(day.characters.index(day.endIndex, offsetBy: -3)..<day.endIndex)
+        day.removeSubrange(day.index(day.endIndex, offsetBy: -3)..<day.endIndex)
         return day
     }
     
@@ -75,7 +75,7 @@ extension Date {
         
         let day = dayOfTheWeek()
         
-        dateDayString.removeSubrange(dateDayString.characters.index(dateDayString.endIndex, offsetBy: -6)..<dateDayString.endIndex)
+        dateDayString.removeSubrange(dateDayString.index(dateDayString.endIndex, offsetBy: -6)..<dateDayString.endIndex)
         
         let todayTomorrow = isTodayOrTomorrow()
         

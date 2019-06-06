@@ -39,7 +39,7 @@ extension UIImageView{
         self.center = supView.center
         self.center.y = self.center.y + 50
         supView.addSubview(self)
-        supView.bringSubview(toFront: self)
+        supView.bringSubviewToFront(self)
         self.alpha = 0
 
         UIView.animate(withDuration: 0.3, delay: delay, usingSpringWithDamping: 2.0, initialSpringVelocity: 3.0, options: .curveEaseIn, animations: {

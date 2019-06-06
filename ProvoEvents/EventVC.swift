@@ -238,7 +238,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
 
         
         let locCoord2d = CLLocationCoordinate2DMake(currentLoc.coordinate.latitude, currentLoc.coordinate.longitude)
-        let region = MKCoordinateRegionMakeWithDistance(locCoord2d, CLLocationDistance(meters) * 2, CLLocationDistance(meters) * 2) // need to double to get expected distance
+        let region = MKCoordinateRegion(center: locCoord2d, latitudinalMeters: CLLocationDistance(meters) * 2, longitudinalMeters: CLLocationDistance(meters) * 2) // need to double to get expected distance
         if !region.isRegionValid(){
             return
         }
