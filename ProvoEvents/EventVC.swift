@@ -149,7 +149,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         return refreshControl
     }()
     
-    func handleRefresh(_ refreshControl: UIRefreshControl){
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl){
         loadData()
     }
 
@@ -186,7 +186,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     //////////////////////////////////////////////////////
     //loadData
     
-    func clearTableViewAndReload(){
+    @objc func clearTableViewAndReload(){
         events = []
         EventsCategorized = [:]
         tableView.reloadData()
@@ -324,7 +324,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         })
     }
     
-    func shouldAddTableViewBackground(){
+    @objc func shouldAddTableViewBackground(){
         if EventsCategorized.count > 0{
             tableView.backgroundView = nil
         } else{
@@ -383,7 +383,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
     //////////////////////////////////////////////////////
     //Likes
     
-    func addLike(_ notif: Notification){        // these 2 chunks of code make sure that heart image appears immediately after tapping from event details page
+    @objc func addLike(_ notif: Notification){        // these 2 chunks of code make sure that heart image appears immediately after tapping from event details page
         if let holdEvent = notif.object as? Event{
             let holdKey = holdEvent.key
             likesArray.append(holdKey)
@@ -422,7 +422,7 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         }
     }
     
-    func subtractLike(_ notif: Notification){
+    @objc func subtractLike(_ notif: Notification){
         if let holdKey = notif.object as? String{
             if let index = likesArray.index(of: holdKey){
                 likesArray.remove(at: index)

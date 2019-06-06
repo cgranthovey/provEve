@@ -13,7 +13,7 @@ import FirebaseDatabase
 //extension includes all parts dealing with posting from AddEventVC
 extension AddEventVC: yesSelectedProtocol{
     
-    func areYouSureLauncher(){
+    @objc func areYouSureLauncher(){
         if titleTextField.text == nil || titleTextField.text == ""{
             alert("Error", message: "Title Missing")
             return
@@ -137,7 +137,7 @@ extension AddEventVC: yesSelectedProtocol{
         }) 
     }
     
-    func cancelUpload(){
+    @objc func cancelUpload(){
         FIRDatabase.database().purgeOutstandingWrites()
         loadingViewFade()
     }

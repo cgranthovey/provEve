@@ -60,12 +60,12 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
         self.view.addGestureRecognizer(swipeUp)
     }
     
-    func holdDown(_ sender: UIButton){
+    @objc func holdDown(_ sender: UIButton){
         sender.backgroundColor = UIColor.black
         sender.alpha = 0.3
     }
     
-    func holdReleaseInside(_ sender: UIButton){
+    @objc func holdReleaseInside(_ sender: UIButton){
         sender.backgroundColor = UIColor.clear
         if sender == downloadImgButton{
             UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
@@ -79,7 +79,7 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
         }
     }
     
-    func holdReleaseOutside(_ sender: UIButton){
+    @objc func holdReleaseOutside(_ sender: UIButton){
         sender.backgroundColor = UIColor.clear
     }
     
@@ -102,7 +102,7 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
         scrollView.addGestureRecognizer(oneTap)
     }
     
-    func handleSingleTap(){
+    @objc func handleSingleTap(){
         if self.bottomView.isHidden == true{
             self.bottomView.isHidden = false
             self.bottomView.center.y = self.bottomView.center.y + 52
@@ -120,7 +120,7 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
         }
     }
     
-    func handleDoubleTap(_ recognizer: UITapGestureRecognizer){
+    @objc func handleDoubleTap(_ recognizer: UITapGestureRecognizer){
         if (scrollView.zoomScale > scrollView.minimumZoomScale){
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
             
@@ -142,7 +142,7 @@ class ImageLargeVC: GeneralVC, UIScrollViewDelegate {
         return zoomRect
     }
     
-    override func swipePopBack() {
+    @objc override func swipePopBack() {
         _ = self.navigationController?.popViewController(animated: false)
     }
 

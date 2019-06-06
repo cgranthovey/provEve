@@ -16,7 +16,7 @@ pod 'NVActivityIndicatorView'
 pod 'SDWebImage'
 
 
-  target ‘IbentoTests' do
+  target 'IbentoTests' do
     inherit! :search_paths
     # Pods for testing
   end

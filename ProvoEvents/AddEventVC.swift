@@ -131,13 +131,13 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     //////////////////////////////////////////////////////
     //animate image btn touch, imagePickerController
     
-    func eventImgBtnTouchDown(){
+    @objc func eventImgBtnTouchDown(){
         UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.eventImg.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
             }, completion: nil)
     }
     
-    func eventImgBtnTouchUpInside(){
+    @objc func eventImgBtnTouchUpInside(){
         UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.eventImg.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
         }) { (true) in
@@ -150,7 +150,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         }
     }
     
-    func touchUpOutside(){
+    @objc func touchUpOutside(){
         UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: { 
             self.eventImg.transform = CGAffineTransform(scaleX: 1, y: 1)
             }, completion: nil)
@@ -177,7 +177,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     //////////////////////////////////////////////////////
     //active textfield/view.  Increase scroll view size
     
-    func keyboardWillBeHidden(_ input: Notification){
+    @objc func keyboardWillBeHidden(_ input: Notification){
         scrollView.contentInset.bottom = UIEdgeInsets.zero.bottom    //without this the views go up a bit
     }
 
@@ -208,7 +208,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         descriptionTextView.resignFirstResponder()
     }
     
-    func dismissKeyboard(){
+    @objc func dismissKeyboard(){
         resignAllFirstResponders()
     }
     
@@ -218,7 +218,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     }
     
     
-    func makeLarger(_ input: Notification){
+    @objc func makeLarger(_ input: Notification){
         scrollView.contentInset.right = UIEdgeInsets.zero.right    //without this the views go up a few pixels
 
         if let userInfo = input.userInfo{
@@ -245,7 +245,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         }
     }
     
-    func moveTextFieldIntoView(){
+    @objc @objc func moveTextFieldIntoView(){
         if activeTextField != nil{
             scrollView.scrollRectToVisible(activeTextField.frame, animated: true)       //for this to work you have to remember in addition to setting conent height to make sure content width is at least at wide as view.frame.width
         } else if activeTextView != nil{
@@ -330,12 +330,12 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
     var loadingView: UIView!
     var spinIndicator: UIActivityIndicatorView!
 
-    func popOut(){
+    @objc func popOut(){
         NotificationCenter.default.post(name: Notification.Name(rawValue: "addEventSubmitSlide"), object: nil)
         perform(#selector(AddEventVC.reset), with: nil, afterDelay: 0.5)
     }
     
-    func reset(){
+    @objc func reset(){
         if actView != nil{
             actView.removeFromSuperview()
         }
@@ -371,7 +371,7 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         exit.removeFromSuperview()
     }
 
-    func makeSuccessView(){
+    @objc func makeSuccessView(){
         imgSuccess = UIImageView(image: UIImage(named: "whiteCheck"))
         NotificationCenter.default.post(name: Notification.Name(rawValue: "loadDataAfterNewEvent"), object: nil)
         UIView.animate(withDuration: 0.5, animations: {

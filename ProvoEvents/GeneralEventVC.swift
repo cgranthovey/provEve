@@ -94,7 +94,7 @@ class GeneralEventVC: UIViewController {
         }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    @objc func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfRowsForSection(section)
     }
     

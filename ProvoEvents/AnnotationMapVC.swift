@@ -58,7 +58,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     @IBAction func settings(){
         settingsLauncher.showSettings()
     }
-    func showSettings(_ recoginizer: UIScreenEdgePanGestureRecognizer){
+    @objc func showSettings(_ recoginizer: UIScreenEdgePanGestureRecognizer){
         if recoginizer.state == .began{
             mapView.isScrollEnabled = false
             settingsLauncher.showSettings()
@@ -69,7 +69,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     }
 
     var choosenDate: Date?
-    func newParameters(_ notif: Notification){
+    @objc func newParameters(_ notif: Notification){
         mapView.removeAnnotations(annotationArray)
         dictEnterKeyForEvent = [:]
         dictEnterTagForEventKey = [:]
@@ -124,7 +124,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func annotationBtnTapped(_ button: UIButton){
+    @objc func annotationBtnTapped(_ button: UIButton){
         let buttonTag = button.tag
         if let key = dictEnterTagForEventKey[buttonTag]{
             let event = dictEnterKeyForEvent[key]
@@ -231,7 +231,7 @@ class AnnotationMapVC: UIViewController, UIGestureRecognizerDelegate {
     
     var tapGest = UITapGestureRecognizer()
     let currentAnnoSelected = MKAnnotationView()
-    func annoTapped(_ tapGest: UITapGestureRecognizer){
+    @objc func annoTapped(_ tapGest: UITapGestureRecognizer){
         if let annoView = tapGest.view as? MKAnnotationView{
             if let key = dictEnterTagForEventKey[annoView.tag]{
                 let event = dictEnterKeyForEvent[key]

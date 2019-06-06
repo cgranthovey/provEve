@@ -94,7 +94,7 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
     //////////////////////////////////////////////////////
     //Delete Comments
     
-    func deleteComment(_ notif: Notification){
+    @objc func deleteComment(_ notif: Notification){
         if let commentKey = notif.object as? String{
             deleteCommentKey = commentKey
             deleteLauncher.showDeleteView(self.view, lblText: "Delete Comment?")
@@ -116,11 +116,11 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
     //////////////////////////////////////////////////////
     //Keyboard
 
-    func tapToDismiss(){
+    @objc func tapToDismiss(){
         self.view.endEditing(true)
     }
     
-    func keyboardWillHide(_ sender: Notification) {
+    @objc func keyboardWillHide(_ sender: Notification) {
         keyboardUp = false
         let userInfo: [AnyHashable: Any] = sender.userInfo!
         let keyboardSize: CGSize = (userInfo[UIKeyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue.size
@@ -128,7 +128,7 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
         self.view.layoutIfNeeded()
     }
 
-    func keyboardWillShow(_ sender: Notification) {
+    @objc func keyboardWillShow(_ sender: Notification) {
 
             let userInfo: [AnyHashable: Any] = sender.userInfo!
             let keyboardSize: CGSize = (userInfo[UIKeyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue.size
@@ -156,11 +156,11 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
     //////////////////////////////////////////////////////
     //Dismiss VC
     
-    func swipeLeft1(){
+    @objc func swipeLeft1(){
         animateCommentsOut(-self.view.frame.width)
     }
     
-    func swipeRight1(){
+    @objc func swipeRight1(){
         animateCommentsOut(self.view.frame.width)
     }
     

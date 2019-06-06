@@ -25,13 +25,13 @@ class buttonSubAnimate: UIButton {
         self.addTarget(self, action: #selector(buttonSubAnimate.touchUpOutside), for: .touchUpOutside)
     }
     
-    func eventImgBtnTouchDown(){
+    @objc func eventImgBtnTouchDown(){
         UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.myImg.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
             }, completion: nil)
     }
     
-    func eventImgBtnTouchUpInside(){
+    @objc func eventImgBtnTouchUpInside(){
         UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.myImg.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
             
@@ -50,7 +50,7 @@ class buttonSubAnimate: UIButton {
         }
     }
     
-    func touchUpOutside(){
+    @objc func touchUpOutside(){
         UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.myImg.transform = CGAffineTransform(scaleX: 1, y: 1)
             }, completion: nil)
