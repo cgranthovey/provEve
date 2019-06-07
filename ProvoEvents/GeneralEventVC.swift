@@ -98,11 +98,13 @@ class GeneralEventVC: UIViewController {
         return numberOfRowsForSection(section)
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
-        let eventArray = ArrayForSection(indexPath.section)
-        performSegue(withIdentifier: "EventDetailsVC", sender: eventArray[indexPath.row])
-    }
-    
+
+//    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+//        let eventArray = ArrayForSection(indexPath.section)
+//        print("didSelectRow", eventArray)
+//        performSegue(withIdentifier: "EventDetailsVC", sender: eventArray[indexPath.row])
+//    }
+//    
     @objc(numberOfSectionsInTableView:) func numberOfSections(in tableView: UITableView) -> Int {
         return EventsCategorized.count
     }

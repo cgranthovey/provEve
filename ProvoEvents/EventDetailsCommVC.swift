@@ -156,6 +156,10 @@ class EventDetailsCommVC: GeneralVC, UITextViewDelegate, yesSelectedProtocol{
     //////////////////////////////////////////////////////
     //Dismiss VC
     
+    @IBAction func exitBtnPress(_ sender: AnyObject){
+        animateCommentsOut(self.view.frame.width)
+    }
+    
     @objc func swipeLeft1(){
         animateCommentsOut(-self.view.frame.width)
     }

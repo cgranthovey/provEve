@@ -379,6 +379,14 @@ class EventVC: GeneralEventVC, UITableViewDelegate, UITableViewDataSource, CLLoc
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let eventArray = ArrayForSection(indexPath.section)
+        print("didSelectRow", eventArray)
+        performSegue(withIdentifier: "EventDetailsVC", sender: eventArray[indexPath.row])
+    }
+
+    
+    
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     //Likes

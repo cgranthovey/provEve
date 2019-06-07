@@ -161,15 +161,23 @@ class AddEventVC: GeneralVC, UITextViewDelegate, UIImagePickerControllerDelegate
         self.present(imgPickerController, animated: true, completion: nil)
     }
     
-    var imgChoosen = false
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imgChoosen = true
         imgPickerController.dismiss(animated: true, completion: nil)
-        eventImg.image = image
+        print("imgPicker piced")
+
+        if let img = info[.originalImage] as? UIImage{
+            print("imgPicker piced2")
+            eventImg.image = img
+        }
+        
         eventImg.roundCornersForAspectFit(5)
     }
+    var imgChoosen = false
+
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("imgPickerDismissed")
         imgPickerController.dismiss(animated: true, completion: nil)
     }
     
