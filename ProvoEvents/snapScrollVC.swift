@@ -25,7 +25,9 @@ class snapScrollVC: UIViewController {
 //        performSelector(#selector(snapScrollVC.calledLate), withObject: nil, afterDelay: 1.5)
         NotificationCenter.default.addObserver(self, selector: #selector(snapScrollVC.addEventSubmitSlide), name: NSNotification.Name(rawValue: "addEventSubmitSlide"), object: nil)
         print("snapScroll1")
+        snapScroll.delegate = self
     }
+    
     
     var calledOnce = false
     
@@ -70,6 +72,8 @@ class snapScrollVC: UIViewController {
         
         print("uiScreen", UIScreen.main.bounds.height)
         print("frame height", self.view.frame.height)
+        print("snapScroll", self.snapScroll.contentSize.height)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,5 +84,11 @@ class snapScrollVC: UIViewController {
     @objc func addEventSubmitSlide(){
         let point = CGPoint(x: view.frame.width, y: 0)
         self.snapScroll.setContentOffset(point, animated: true)
+    }
+}
+
+extension snapScrollVC: UIScrollViewDelegate{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.contentOffset.y = 0
     }
 }

@@ -268,7 +268,9 @@ class MapVC: UIViewController {
     }
     
     @IBAction func pinLocBtn(_ sender: AnyObject){
+        print("pin loc btn")
         if let coord = selectedPin?.coordinate{
+            print("pin loc btn2")
             adjustMapCenter(coord)
         } else{
             //no pin set yet
